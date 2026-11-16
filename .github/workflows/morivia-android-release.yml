@@ -1,0 +1,326 @@
+name: Morivia Android Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/morivia-android-release.yml'
+      - 'androidApp/**'
+      - 'composeApp/**'
+      - 'gradle/**'
+      - 'gradle.properties'
+      - '**.gradle.kts'
+      - 'CHANGELOG.md'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: morivia-android-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Prepare Android-only Morivia 1.0.0
+        shell: bash
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import os,re,shutil,subprocess,json
+          R=Path.cwd()
+
+          def edit(p,fn):
+              p=R/p; old=p.read_text(); new=fn(old)
+              if new!=old: p.write_text(new)
+
+          def remove_block(s,start):
+              i=s.index(start); b=s.index('{',i); depth=1; j=b+1
+              while depth:
+                  if s[j]=='{': depth+=1
+                  elif s[j]=='}': depth-=1
+                  j+=1
+              return s[:i]+s[j:]
+
+          if 'morivia.versionName=' not in (R/'gradle.properties').read_text():
+              for p in ('androidApp/build.gradle.kts','composeApp/build.gradle.kts'):
+                  s=(R/p).read_text()
+                  s=remove_block(s,'fun readXcconfigValue(')
+                  start=s.index('val appVersionConfigFile =')
+                  end=s.index('val requestedTaskNames' if p.startswith('androidApp') else 'val iosDistribution',start)
+                  s=s[:start]+'''val releaseAppVersionName = providers.gradleProperty("morivia.versionName").get()
+          val releaseAppVersionCode = providers.gradleProperty("morivia.versionCode").get().toInt()
+          '''+s[end:]
+                  if p.startswith('composeApp'):
+                      start=s.index('val iosDistribution ='); end=s.index('val fullCommonSourceDir',start)
+                      s=s[:start]+s[end:]
+                      start=s.index('    val iosTargets = listOf('); end=s.index('    sourceSets {',start)
+                      s=s[:start]+s[end:]
+                      start=s.index('val bootIosTestSimulator'); end=s.index('configurations.all {',start)
+                      s=s[:start]+s[end:]
+                      s='\n'.join(line for line in s.split('\n') if not any(x in line for x in (
+                          'import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable',
+                          'import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeSimulatorTest',
+                          'import org.gradle.process.CommandLineArgumentProvider')))
+                  else:
+                      # Stable install identity and reusable development signing for personal builds.
+                      s=s.replace('"com.morivia.app.debug"','"com.morivia.app"')
+                      s=s.replace('    signingConfigs {','''    signingConfigs {
+                  getByName("debug") {
+                      storeFile = rootProject.file(".ci/morivia-development.keystore")
+                      storePassword = "android"
+                      keyAlias = "androiddebugkey"
+                      keyPassword = "android"
+                  }
+          ''',1)
+                      s=s.replace('signingConfig = signingConfigs.getByName("release")','signingConfig = signingConfigs.getByName("debug")')
+                      s=s.replace('include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")','include("arm64-v8a")')
+                  (R/p).write_text(s)
+              edit('gradle.properties',lambda s:s.replace('kotlin.daemon.jvmargs=-Xmx8192M','kotlin.daemon.jvmargs=-Xmx2048M').replace('kotlin.native.jvmArgs=-Xmx16384M\n','').replace('kotlin.mpp.enableCInteropCommonization=true\n','').replace('org.gradle.jvmargs=-Xmx12288M -Dfile.encoding=UTF-8 -XX:MaxMetaspaceSize=2048m','org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8 -XX:MaxMetaspaceSize=1g')+'\n# Morivia Android semantic version (single source of truth)\nmorivia.versionName=1.0.0\nmorivia.versionCode=1\nkotlin.compiler.execution.strategy=in-process\norg.gradle.workers.max=2\norg.gradle.parallel=false\n')
+              # Shared source remains: Android compiles commonMain and fullCommonMain.
+              for rel in ('iosApp','composeApp/src/iosMain','composeApp/src/iosFull','composeApp/src/iosAppStore','composeApp/src/iosTest','composeApp/src/desktopMain','composeApp/src/nativeInterop'):
+                  p=R/rel
+                  if p.exists(): shutil.rmtree(p)
+              for rel in ('store.json','.gitmodules','scripts/build-ios-ipa.sh','scripts/prepare-ios-dependencies.sh','scripts/update-store-source.py','scripts/release-metadata.sh','scripts/generate-release-notes.sh','scripts/run-mobile.sh','scripts/generate_app_icon_assets.py','scripts/generate_logo_colorways.py'):
+                  (R/rel).unlink(missing_ok=True)
+              subprocess.run(['git','rm','-f','--ignore-unmatch','MPVKit','libass-android'],check=True)
+              for p in (R/'docs').rglob('*'):
+                  if p.is_file() and any(x in p.name.lower() for x in ('ios','apple','desktop','macos')): p.unlink()
+              # Remove unused Apple dependency declarations from the version catalog.
+              edit('gradle/libs.versions.toml',lambda s:'\n'.join(l for l in s.split('\n') if 'ktor-client-darwin' not in l))
+              ci=R/'.ci';ci.mkdir(exist_ok=True)
+              subprocess.run(['keytool','-genkeypair','-keystore',str(ci/'morivia-development.keystore'),'-storetype','JKS','-storepass','android','-keypass','android','-alias','androiddebugkey','-dname','CN=Morivia Development,O=Morivia,C=FI','-keyalg','RSA','-keysize','2048','-validity','10000','-noprompt'],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+              (ci/'README.md').write_text('''# Development signing
+
+          This is a conventional development keystore using the standard Android debug credentials. It is not a production signing secret. It provides a consistent signature for this personal app so later versions can install as updates. Keep production signing keys in GitHub Actions secrets if public production distribution is introduced.
+          ''')
+              (R/'AGENTS.md').write_text('''# Morivia Android project rules
+
+          This project is Android-only. Keep shared Kotlin code required by Android; do not reintroduce iOS, Apple, desktop, or their release tooling.
+
+          ## Required release process for every app change
+
+          - First release: 1.0.0, titled `Morivia Android 1.0.0`, tag `v1.0.0`.
+          - Patch: bug fixes, crashes, small text/design adjustments (1.0.0 -> 1.0.1).
+          - Minor: new backward-compatible features (1.0.0 -> 1.1.0).
+          - Major: total redesign or major changes to the app experience (1.0.0 -> 2.0.0).
+          - Choose the appropriate bump before committing app changes. Run `python3 scripts/bump-version.py patch|minor|major` and increment the Android versionCode exactly once per release.
+          - Update CHANGELOG.md with the actual changes. Build, validate, and publish the matching release after every completed app update. Never overwrite an existing version or release.
+          - The release title must be `Morivia Android X.Y.Z`, marked Latest, with the matching APK, README.md and CHANGELOG.md as assets.
+          - Preserve the original Nuvio logo and provider identity on Nuvio account sign-in. Use Morivia branding elsewhere, while preserving legal attribution and technical integration contracts.
+          - Launcher icon has black backing. In-app and repository logos have transparent backgrounds.
+          - Do not commit service credentials or production signing secrets. The checked-in development keystore is only for personal/development builds.
+          ''')
+              (R/'CHANGELOG.md').write_text('''# Changelog
+
+          ## 1.0.0
+
+          - First Morivia Android release.
+          - Morivia app name, launcher icon, transparent in-app logo and repository branding.
+          - Original Nuvio account sign-in identity retained.
+          - Android-only source tree and build configuration; Apple and desktop files removed.
+          - Independent Android versioning and a consistent development signing identity.
+          - Semantic version policy for every future app update.
+          ''')
+              scripts=R/'scripts';scripts.mkdir(exist_ok=True)
+              (scripts/'bump-version.py').write_text('''#!/usr/bin/env python3
+          from pathlib import Path
+          import re,sys
+          kind=sys.argv[1] if len(sys.argv)==2 else ""
+          if kind not in ("patch","minor","major"): raise SystemExit("Usage: python3 scripts/bump-version.py patch|minor|major")
+          p=Path(__file__).resolve().parents[1]/"gradle.properties"
+          s=p.read_text()
+          old=re.search(r"^morivia.versionName=(\\d+)\\.(\\d+)\\.(\\d+)$",s,re.M)
+          a,b,c=map(int,old.groups())
+          a,b,c=(a+1,0,0) if kind=="major" else (a,b+1,0) if kind=="minor" else (a,b,c+1)
+          version=f"{a}.{b}.{c}"
+          s=s[:old.start()]+f"morivia.versionName={version}"+s[old.end():]
+          s=re.sub(r"^morivia.versionCode=(\\d+)$",lambda m:f"morivia.versionCode={int(m[1])+1}",s,flags=re.M)
+          p.write_text(s)
+          previous=old[0].split("=")[1]
+          r=p.parent/"README.md"
+          text=r.read_text().replace(f"## Version {previous}",f"## Version {version}").replace(f"Morivia Android {previous}",f"Morivia Android {version}").replace(f"Morivia-Android-{previous}-",f"Morivia-Android-{version}-")
+          r.write_text(text)
+          print(f"Morivia Android {version}. Update CHANGELOG.md before committing.")
+          ''')
+              (scripts/'run-android.sh').write_text('#!/usr/bin/env bash\nset -euo pipefail\ncd "$(dirname "$0")/.."\ntouch local.properties\n./gradlew :androidApp:installFullDebug -Pnuvio.android.distribution=full\n')
+              (R/'README.md').write_text('''<p align="center"><img src="assets/branding/morivia-symbol.png" alt="Morivia" width="160" /></p>
+
+          <h1 align="center">Morivia Android</h1>
+          <p align="center">Your media. Your layout. Your Android app.</p>
+
+          ## Version 1.0.0
+
+          A personal Android media app with addon catalogs, search, profiles, a library, subtitles, playback controls and watch progress.
+
+          ## Install
+
+          1. Open this repository's **Latest release: Morivia Android 1.0.0**.
+          2. Download `Morivia-Android-1.0.0-arm64-v8a.apk` on your phone.
+          3. Open the APK and allow installation from your browser/file manager when Android asks.
+
+          Requires Android 7.0 or newer and a 64-bit ARM device. The app uses package ID `com.morivia.app` and can coexist with Nuvio. This first personal release uses a persistent development signing key.
+
+          ## Appearance
+
+          - Installed name: **Morivia**.
+          - Launcher: purple, blue and cyan symbol on black.
+          - In-app and GitHub logo: transparent background.
+          - Nuvio account sign-in: original provider name and logo.
+
+          ## Accounts and services
+
+          Nuvio account sign-in remains a third-party integration. It requires valid backend configuration; reusing the source does not include backend credentials. Guest mode is available. Catalog and tracking integrations may require their own configuration or API keys.
+
+          ## Build
+
+          Use Java 17 and the Android SDK version defined in `gradle/libs.versions.toml`.
+
+          ```sh
+          touch local.properties
+          ./gradlew :androidApp:assembleFullRelease -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          ```
+
+          GitHub Actions builds the Android APK and publishes its matching release. Runtime configuration can be supplied with the repository secret `MORIVIA_LOCAL_PROPERTIES_BASE64`.
+
+          ## Version policy
+
+          | Change | Example | Use |
+          | --- | --- | --- |
+          | Patch | 1.0.0 → 1.0.1 | Bugs, crashes and small text/design fixes |
+          | Minor | 1.0.0 → 1.1.0 | New compatible features |
+          | Major | 1.0.0 → 2.0.0 | Major redesign or changes to the app experience |
+
+          Before every app update, run `python3 scripts/bump-version.py patch`, `minor` or `major`, update `CHANGELOG.md`, then commit. Each release is titled **Morivia Android X.Y.Z** and includes the APK, README and changelog. Existing versions are never overwritten.
+
+          ## Project structure
+
+          - `androidApp`: Android application and manifest.
+          - `composeApp/src/android*`: Android implementation and distributions.
+          - `composeApp/src/commonMain` and `fullCommonMain`: shared Kotlin code used by Android.
+          - `baselineprofile`: Android startup/performance tooling.
+          - `assets/branding`: Morivia artwork.
+
+          ## Credits and license
+
+          Morivia is an independent modified version of [Nuvio Mobile](https://github.com/NuvioMedia/NuvioMobile). Original authorship, third-party notices and the [GNU GPL v3 license](LICENSE) are preserved. Technical namespaces and service protocols retain compatible identifiers where necessary.
+          ''')
+              # Preserve refs for ordinary Git recovery before removing inherited upstream tags.
+              if not os.environ.get('MORIVIA_LOCAL_VALIDATION'):
+                  repository=os.environ['GITHUB_REPOSITORY']
+                  releases=json.loads(subprocess.check_output(['gh','api',f'repos/{repository}/releases?per_page=100']))
+                  if releases: raise RuntimeError('Existing published releases need review before deletion; source cleanup is prepared.')
+                  pages=json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',f'repos/{repository}/git/matching-refs/tags']))
+                  refs=[ref for page in pages for ref in page]
+                  (R/'docs').mkdir(exist_ok=True)
+                  (R/'docs/upstream-tags.json').write_text(json.dumps(refs,indent=2)+'\n')
+                  if refs:
+                      subprocess.run(['git','push','origin',*(':'+item['ref'] for item in refs)],check=True)
+                  print(f'Removed {len(refs)} inherited upstream tags; no published releases existed.')
+              print('Android-only migration to Morivia 1.0.0 completed.')
+
+          assert not (R/'iosApp').exists()
+          assert not (R/'composeApp/src/desktopMain').exists()
+          assert 'iosTargets' not in (R/'composeApp/build.gradle.kts').read_text()
+          for p in ('androidApp/build.gradle.kts','composeApp/build.gradle.kts'):
+              assert 'Version.xcconfig' not in (R/p).read_text()
+          assert (R/'composeApp/src/commonMain/composeResources/drawable/nuvio_auth_wordmark.png').exists()
+          print('Android-only structure and independent version sources verified.')
+          PYTHON
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- . ':!.github/workflows'
+          git add -f AGENTS.md scripts/bump-version.py scripts/run-android.sh
+          if ! git diff --cached --quiet; then
+            git commit -m "Prepare Morivia Android 1.0.0 and remove other platforms"
+            git push origin HEAD:main
+          fi
+      - name: Read and validate release version
+        id: version
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import os,re
+          props=Path('gradle.properties').read_text()
+          version=re.search(r'^morivia.versionName=(\d+\.\d+\.\d+)$',props,re.M)[1]
+          code=re.search(r'^morivia.versionCode=(\d+)$',props,re.M)[1]
+          assert f'## {version}' in Path('CHANGELOG.md').read_text(), 'Update CHANGELOG.md before release'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              out.write(f'version={version}\ncode={code}\n')
+          PYTHON
+          if gh release view "v$(sed -n 's/^morivia.versionName=//p' gradle.properties)" >/dev/null 2>&1; then
+            echo 'This version is already published. Choose patch, minor or major and bump the version.' >&2
+            exit 1
+          fi
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Prepare runtime configuration
+        env:
+          CONFIG_BASE64: ${{ secrets.MORIVIA_LOCAL_PROPERTIES_BASE64 }}
+        run: |
+          if [ -n "$CONFIG_BASE64" ]; then
+            printf '%s' "$CONFIG_BASE64" | base64 --decode > local.properties
+            sed -i -E '/^[[:space:]]*sdk\.dir[[:space:]]*=/d' local.properties
+          else
+            touch local.properties
+          fi
+      - name: Build Android release APK
+        run: >-
+          ./gradlew :androidApp:assembleFullRelease
+          -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8'
+          -Pkotlin.compiler.execution.strategy=in-process
+          --max-workers=1 --no-parallel --no-daemon --stacktrace
+      - name: Verify APK identity, version and signature
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+          RELEASE_CODE: ${{ steps.version.outputs.code }}
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import os,subprocess,shutil,hashlib
+          apk=next(Path('androidApp/build/outputs/apk/full/release').glob('*arm64-v8a-release.apk'))
+          tools=sorted((Path(os.environ['ANDROID_HOME'])/'build-tools').glob('*/aapt'))[-1].parent
+          badging=subprocess.check_output([str(tools/'aapt'),'dump','badging',str(apk)]).decode()
+          assert "name='com.morivia.app'" in badging
+          assert "versionName='"+os.environ['RELEASE_VERSION']+"'" in badging
+          assert "versionCode='"+os.environ['RELEASE_CODE']+"'" in badging
+          assert "application-label:'Morivia'" in badging
+          subprocess.run([str(tools/'apksigner'),'verify',str(apk)],check=True)
+          dist=Path('dist');dist.mkdir(exist_ok=True)
+          name=f"Morivia-Android-{os.environ['RELEASE_VERSION']}-arm64-v8a.apk"
+          shutil.copyfile(apk,dist/name)
+          for file in ('README.md','CHANGELOG.md','LICENSE'): shutil.copyfile(file,dist/file)
+          (dist/'SHA256SUMS.txt').write_text(hashlib.sha256((dist/name).read_bytes()).hexdigest()+'  '+name+'\n')
+          print('Verified signed Morivia APK:',name)
+          PYTHON
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Morivia-Android-${{ steps.version.outputs.version }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish latest Morivia Android release
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import os
+          v=os.environ['RELEASE_VERSION']
+          notes=Path('CHANGELOG.md').read_text().split('## '+v,1)[1].split('\n## ',1)[0].strip()
+          notes+='\n\nDownload the ARM64 Android APK below. README.md, CHANGELOG.md, LICENSE and SHA256SUMS.txt are included. This personal build uses a consistent development signing identity. Nuvio account services require separate backend configuration.\n'
+          Path('RELEASE_NOTES.md').write_text(notes)
+          PYTHON
+          gh release create "v$RELEASE_VERSION" dist/* --title "Morivia Android $RELEASE_VERSION" --notes-file RELEASE_NOTES.md --target "$(git rev-parse HEAD)" --latest

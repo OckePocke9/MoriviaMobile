@@ -1,0 +1,47 @@
+name: Fix Morivia login configuration
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/morivia-login-fix.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix default account configuration and bump patch
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, subprocess
+          p=Path("composeApp/build.gradle.kts")
+          s=p.read_text()
+          marker='val generateRuntimeConfigs = tasks.register<GenerateRuntimeConfigsTask>("generateRuntimeConfigs") {'
+          assert s.count(marker)==1
+          config='// Official public client configuration (not a service-role secret):\n// https://github.com/NuvioMedia/self-host/blob/main/.env.example\nval configuredAuthUrl = runtimeConfigValue("NUVIO_SUPABASE_URL")\nval configuredAuthKey = runtimeConfigValue("NUVIO_SUPABASE_ANON_KEY")\nrequire(configuredAuthUrl.isBlank() == configuredAuthKey.isBlank()) {\n    "Set NUVIO_SUPABASE_URL and NUVIO_SUPABASE_ANON_KEY together, or leave both unset for Nuvio Cloud."\n}\nval authBackendUrl = configuredAuthUrl.ifBlank { "https://api.nuvio.tv" }\nval authPublishableKey = configuredAuthKey.ifBlank { "sb_publishable_1Clq8rlTVACkdcZuqr6_AD__xUUC_EN" }\n\n'
+          assert 'val authBackendUrl' not in s
+          s=s.replace(marker,config+marker)
+          s=s.replace('supabaseUrl.set(runtimeConfigValue("NUVIO_SUPABASE_URL"))','supabaseUrl.set(authBackendUrl)')
+          s=s.replace('supabaseAnonKey.set(runtimeConfigValue("NUVIO_SUPABASE_ANON_KEY"))','supabaseAnonKey.set(authPublishableKey)')
+          p.write_text(s)
+          assert 'morivia.versionName=1.0.0' in Path('gradle.properties').read_text()
+          subprocess.run(['python3','scripts/bump-version.py','patch'],check=True)
+          p=Path('README.md');s=p.read_text()
+          s=s.replace('Nuvio account sign-in remains a third-party integration. It requires valid backend configuration; reusing the source does not include backend credentials. Guest mode is available.', 'Nuvio account sign-in remains a third-party integration. Email/password and Sign in with link use the official Nuvio Cloud endpoint and its publicly documented publishable client key by default. No account password or administrative key is bundled. Guest mode is available.')
+          s=s.replace('Runtime configuration can be supplied with the repository secret `MORIVIA_LOCAL_PROPERTIES_BASE64`.', 'Optional runtime overrides can be supplied with the repository secret `MORIVIA_LOCAL_PROPERTIES_BASE64`. Set `NUVIO_SUPABASE_URL` and `NUVIO_SUPABASE_ANON_KEY` together; leaving both unset uses Nuvio Cloud. Partial overrides fail the build.')
+          s=s.replace('/releases/tag/v1.0.0','/releases/tag/v1.0.1')
+          p.write_text(s)
+          p=Path('CHANGELOG.md');s=p.read_text();s=s.replace('# Changelog','# Changelog\n\n## 1.0.1\n\n- Restore Nuvio Cloud configuration for email/password and Sign in with link.\n- Use the official public publishable client key when no backend override is configured.\n- Reject incomplete backend overrides during the build instead of producing a broken login.',1);p.write_text(s)
+      - name: Commit patch and build release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add composeApp/build.gradle.kts gradle.properties README.md CHANGELOG.md
+          git commit -m "Fix Nuvio account configuration for Morivia 1.0.1"
+          git push
+          gh workflow run morivia-android-release.yml --ref main
