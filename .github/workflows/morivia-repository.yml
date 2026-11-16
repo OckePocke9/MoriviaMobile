@@ -1,0 +1,116 @@
+name: Organize Morivia repository
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/morivia-repository.yml]
+permissions:
+  contents: write
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Organize project guides
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import shutil
+          r=Path.cwd(); d=r/'docs'; d.mkdir(exist_ok=True)
+          for n in ('BRANDING.md','CONTRIBUTING.md'):
+              p=r/n
+              if p.exists(): shutil.move(str(p),str(d/n))
+          p=r/'Docs/Stremio addons refer'
+          if p.exists():
+              shutil.move(str(p),str(d/'addon-reference'))
+              if not any((r/'Docs').iterdir()): (r/'Docs').rmdir()
+          (d/'BRANDING.md').write_text('''# Morivia Android branding
+
+          - App name: Morivia. Android package: com.morivia.app.
+          - Launcher: supplied purple, blue and cyan symbol on black.
+          - In-app and GitHub artwork: transparent backgrounds.
+          - Original Nuvio branding is retained for Nuvio account sign-in.
+          - Legal attribution and technical integration contracts are preserved.
+          - Artwork is under assets/branding; Android resources are in the app modules.
+          ''')
+          (d/'CONTRIBUTING.md').write_text('''# Working on Morivia Android
+
+          Use main for Morivia development. This project targets Android only.
+
+          For every completed app update:
+
+          1. Choose patch for fixes/small adjustments, minor for compatible new features, or major for large redesigns.
+          2. Run python3 scripts/bump-version.py patch, minor or major.
+          3. Update CHANGELOG.md and validate the build.
+          4. Commit the changes. The release workflow builds and publishes the matching APK and documentation.
+
+          Follow AGENTS.md at repository root. Preserve Nuvio's provider identity on Nuvio account sign-in, legal attribution and functional service contracts. Do not commit service credentials or production signing secrets.
+          ''')
+          (d/'README.md').write_text('''# Project documentation
+
+          - [Branding](BRANDING.md)
+          - [Development and versioning](CONTRIBUTING.md)
+          - [Addon reference](addon-reference/README.md)
+          - [Subtitle autosync](subtitle-autosync.md)
+          - upstream-tags.json: recovery references for removed inherited tags.
+
+          The main README, LICENSE, CHANGELOG, AGENTS and Gradle entry-point files stay at repository root for GitHub and build-tool discovery.
+          ''')
+          p=r/'README.md';s=p.read_text()
+          s=s.replace("Open this repository's **Latest release: Morivia Android 1.0.0**.","Open [Latest release: Morivia Android 1.0.0](https://github.com/OckePocke9/Morivia-Android/releases/latest).")
+          a=s.index('## Project structure');b=s.index('## Credits and license',a)
+          s=s[:a]+'''## Project structure
+
+          | Folder | Contents |
+          | --- | --- |
+          | androidApp/ | Android application and manifest |
+          | composeApp/ | App logic, Compose interface and Android implementations |
+          | baselineprofile/ | Android startup and performance tooling |
+          | assets/branding/ | Morivia logos and launcher artwork |
+          | docs/ | Project guides and addon reference |
+          | scripts/ | Versioning and Android helper commands |
+          | gradle/ | Gradle wrapper and dependency catalog |
+          | testFixtures/ | Subtitle test samples |
+          | vendor/ | External Android dependencies |
+          | .github/ | Builds, releases and repository automation |
+          | .ci/ | Personal development-signing support |
+
+          All app source is in the app folders. README, LICENSE, CHANGELOG, AGENTS and Gradle entry-point files remain at root because GitHub and build tools expect them there. See [project documentation](docs/README.md).
+
+          ## Languages and formats
+
+          GitHub Languages describes source code, not the languages available in the app interface.
+
+          | Language or format | Purpose |
+          | --- | --- |
+          | Kotlin | Android app logic and the Compose interface |
+          | Kotlin DSL (.gradle.kts) | Build and dependency configuration; counted as Kotlin |
+          | XML | Android manifest, themes, resources and translated text |
+          | Python | Versioning and helper scripts |
+          | Shell / Batch | Build and developer commands |
+          | YAML | GitHub Actions workflows |
+          | JSON / TOML | Configuration, metadata and dependency versions |
+
+          Swift belonged to the removed iOS application. It is no longer part of main. GitHub groups small helper-language shares under Other; generated, vendored and data files may be excluded from its language statistics.
+
+          ## Branches
+
+          main is the independent Morivia Android development and release branch. cmp-rewrite is an inherited upstream branch with 44 commits not present in main, including subtitle, tracking, TorBox and translation work. It is not needed to build Morivia, but is retained for reviewing useful upstream changes. Do not merge it wholesale, since that would reintroduce other-platform files and upstream branding.
+
+          '''+s[b:]
+          p.write_text(s)
+          assert (d/'BRANDING.md').exists() and (d/'addon-reference/README.md').exists()
+          assert (r/'README.md').exists() and (r/'settings.gradle.kts').exists()
+          print('Guides organized; required root files preserved; README updated.')
+          PYTHON
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- . ':!.github/workflows'
+          if ! git diff --cached --quiet; then
+            git commit -m "Organize Morivia documentation and explain repository languages and branches"
+            git push origin HEAD:main
+          fi
+      - name: Update release README
+        run: gh release upload v1.0.0 README.md --clobber

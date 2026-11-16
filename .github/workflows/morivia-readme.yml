@@ -1,0 +1,65 @@
+name: Sync README with latest release
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+  workflow_run:
+    workflows: [Morivia Android Release]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths: [.github/workflows/morivia-readme.yml]
+permissions:
+  contents: write
+concurrency:
+  group: morivia-readme-latest
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Read latest published release and update README
+        shell: python
+        run: |
+          from pathlib import Path
+          import json, os, re, subprocess
+          release = json.loads(subprocess.check_output(['gh', 'api', f"repos/{os.environ['GITHUB_REPOSITORY']}/releases/latest"]))
+          assert not release['draft'] and not release['prerelease']
+          version = release['tag_name'].removeprefix('v')
+          assert re.fullmatch(r'\d+\.\d+\.\d+', version)
+          apk = next(a for a in release['assets'] if a['name'].endswith('-arm64-v8a.apk'))
+          base = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}"
+          p = Path('README.md')
+          text = p.read_text()
+          text, count = re.subn(r'^## Version \d+\.\d+\.\d+$', f'## Version {version}', text, flags=re.M)
+          assert count == 1, 'README version heading not found'
+          text = text.replace('https://github.com/OckePocke9/Morivia-Android', base)
+          text, count = re.subn(r'^1\. Open .*Latest release.*$', f"1. Open [Latest release: {release['name']}]({base}/releases/latest).", text, flags=re.M)
+          assert count == 1, 'README install link not found'
+          text, count = re.subn(r'^2\. Download .* on your phone\.$', f"2. Download `{apk['name']}` under **Assets** on your phone.", text, flags=re.M)
+          assert count == 1, 'README APK instructions not found'
+          marker = '<!-- latest-release-sync -->'
+          if marker not in text:
+              text = text.replace('## Install\n', f"{marker}\nVersion and APK information are automatically refreshed from the latest published release.\n\n## Install\n", 1)
+          p.write_text(text)
+          Path('/tmp/morivia-latest-tag').write_text(release['tag_name'])
+          assert f'## Version {version}' in text and apk['name'] in text
+          assert f']({base}/releases/latest)' in text
+          print(f"README checked against published release {release['tag_name']} and asset {apk['name']}")
+      - name: Save README and update latest release attachment
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: sync README with latest published Morivia release"
+            git push origin HEAD:main
+          fi
+          gh release upload "$(cat /tmp/morivia-latest-tag)" README.md --clobber
