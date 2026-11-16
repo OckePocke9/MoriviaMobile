@@ -1,0 +1,241 @@
+name: Morivia Release
+
+# Builds Morivia for Android (phones and tablets) and iOS (iPhone and iPad) and publishes
+# both in one GitHub release named "Morivia X.Y.Z". A version is published only once: raise it
+# with scripts/bump-version.py and add its CHANGELOG.md section before pushing app changes.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/morivia-release.yml'
+      - 'androidApp/**'
+      - 'composeApp/**'
+      - 'iosApp/**'
+      - 'MPVKit'
+      - 'gradle/**'
+      - 'gradle.properties'
+      - '**.gradle.kts'
+      - 'scripts/build-ios-ipa.sh'
+      - 'scripts/prepare-ios-dependencies.sh'
+      - 'CHANGELOG.md'
+      - 'README.md'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish a release (off = only build and keep the files as workflow artifacts)
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: morivia-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Read version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.read.outputs.version }}
+      code: ${{ steps.read.outputs.code }}
+      publish: ${{ steps.read.outputs.publish }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WANT_PUBLISH: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish) }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Read and check the version
+        id: read
+        run: |
+          version="$(sed -n 's/^morivia\.versionName=//p' gradle.properties)"
+          code="$(sed -n 's/^morivia\.versionCode=//p' gradle.properties)"
+          [[ "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid morivia.versionName: ${version}" >&2; exit 1; }
+          [[ "${code}" =~ ^[0-9]+$ ]] || { echo "Invalid morivia.versionCode: ${code}" >&2; exit 1; }
+          grep -q "^MARKETING_VERSION=${version}$" iosApp/Configuration/Version.xcconfig || { echo "Version.xcconfig does not match ${version}. Use scripts/bump-version.py." >&2; exit 1; }
+          grep -q "^CURRENT_PROJECT_VERSION=${code}$" iosApp/Configuration/Version.xcconfig || { echo "Version.xcconfig does not match build ${code}. Use scripts/bump-version.py." >&2; exit 1; }
+          grep -q "^## ${version}$" CHANGELOG.md || { echo "CHANGELOG.md has no '## ${version}' section." >&2; exit 1; }
+          grep -q "^## What's new in ${version}$" README.md || { echo "README.md has no 'What's new in ${version}' section." >&2; exit 1; }
+          grep -q "<!-- version -->${version}<!-- /version -->" README.md || { echo "README.md shows another version than ${version}." >&2; exit 1; }
+          ! grep -q "TODO: describe this update" README.md || { echo "Describe the update in README.md before releasing." >&2; exit 1; }
+          publish="${WANT_PUBLISH}"
+          if [[ "${publish}" == "true" ]] && gh release view "v${version}" >/dev/null 2>&1; then
+            echo "::warning::Morivia ${version} is already published. Nothing new is released; raise the version with scripts/bump-version.py to publish these changes."
+            publish=false
+          fi
+          {
+            echo "version=${version}"
+            echo "code=${code}"
+            echo "publish=${publish}"
+          } >> "${GITHUB_OUTPUT}"
+
+  android:
+    name: Android APK
+    needs: version
+    if: needs.version.outputs.publish == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Prepare runtime configuration
+        env:
+          CONFIG_BASE64: ${{ secrets.MORIVIA_LOCAL_PROPERTIES_BASE64 }}
+        run: |
+          if [ -n "$CONFIG_BASE64" ]; then
+            printf '%s' "$CONFIG_BASE64" | base64 --decode > local.properties
+            sed -i -E '/^[[:space:]]*sdk\.dir[[:space:]]*=/d' local.properties
+          else
+            touch local.properties
+          fi
+      - name: Test Android
+        run: >-
+          ./gradlew :composeApp:testAndroidHostTest :androidApp:lintFullRelease
+          -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8'
+          --max-workers=1 --no-parallel --no-daemon --stacktrace
+      - name: Build Android release APK
+        run: >-
+          ./gradlew :androidApp:assembleFullRelease
+          -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8'
+          --max-workers=1 --no-parallel --no-daemon --stacktrace
+      - name: Check APK identity, version and signature
+        env:
+          RELEASE_VERSION: ${{ needs.version.outputs.version }}
+          RELEASE_CODE: ${{ needs.version.outputs.code }}
+        run: |
+          apk="$(find androidApp/build/outputs/apk/full/release -name '*arm64-v8a-release.apk' -print -quit)"
+          [ -n "${apk}" ] || { echo "No APK was built." >&2; exit 1; }
+          tools="$(ls -d "${ANDROID_HOME}"/build-tools/* | sort -V | tail -n 1)"
+          badging="$("${tools}/aapt" dump badging "${apk}")"
+          grep -q "name='com.morivia.app'" <<< "${badging}"
+          grep -q "versionName='${RELEASE_VERSION}'" <<< "${badging}"
+          grep -q "versionCode='${RELEASE_CODE}'" <<< "${badging}"
+          grep -q "application-label:'Morivia'" <<< "${badging}"
+          "${tools}/apksigner" verify "${apk}"
+          mkdir -p dist
+          cp "${apk}" "dist/Morivia-Android-${RELEASE_VERSION}-arm64-v8a.apk"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: android
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
+  ios:
+    name: iOS IPA
+    needs: version
+    if: needs.version.outputs.publish == 'true' || github.event_name == 'workflow_dispatch'
+    # GitHub has too few Apple silicon Macs; the Intel image starts sooner and builds the same arm64 app.
+    runs-on: macos-15-intel
+    # GitHub stops hosted jobs after 6 hours; the release link of the iOS framework is slow on 4 cores.
+    timeout-minutes: 360
+    env:
+      IOS_CONFIGURATION: Release
+      GRADLE_OPTS: -Dfile.encoding=UTF-8
+      KOTLIN_DAEMON_JVMARGS: -Xmx2048M
+    steps:
+      - uses: actions/checkout@v6
+      - name: Use the newest Xcode on the runner
+        run: |
+          xcode="$(ls -d /Applications/Xcode*.app | sort -V | tail -n 1)"
+          sudo xcode-select -s "${xcode}/Contents/Developer"
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Cache Kotlin/Native
+        uses: actions/cache@v5
+        with:
+          path: ~/.konan
+          key: konan-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('gradle/libs.versions.toml') }}
+          restore-keys: |
+            konan-${{ runner.os }}-${{ runner.arch }}-
+      - name: Prepare runtime configuration
+        env:
+          CONFIG_BASE64: ${{ secrets.MORIVIA_LOCAL_PROPERTIES_BASE64 }}
+        run: |
+          if [ -n "$CONFIG_BASE64" ]; then
+            printf '%s' "$CONFIG_BASE64" | base64 --decode > local.properties
+            sed -i '' -E '/^[[:space:]]*sdk\.dir[[:space:]]*=/d' local.properties
+          else
+            touch local.properties
+          fi
+      - name: Give Gradle and Kotlin/Native more memory
+        # Linking the release framework needs more than the 4 GB the project's gradle.properties
+        # gives Android builds. The user-level file overrides it on this 14 GB runner only.
+        run: |
+          mkdir -p ~/.gradle
+          {
+            echo "org.gradle.jvmargs=-Xmx9g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8"
+            echo "kotlin.native.jvmArgs=-Xmx9g"
+            echo "kotlin.daemon.jvmargs=-Xmx2g"
+          } >> ~/.gradle/gradle.properties
+          sysctl -n hw.memsize | awk '{ printf "Runner memory: %.1f GB\n", $1 / 1073741824 }'
+      - name: Download MPVKit and the streaming engine
+        run: ./scripts/prepare-ios-dependencies.sh
+      - name: Build unsigned iOS IPA
+        run: ./scripts/build-ios-ipa.sh
+      - name: Collect IPA
+        env:
+          RELEASE_VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          mkdir -p dist
+          cp "build/ios-ipa/Morivia-iOS-${RELEASE_VERSION}-release.ipa" "dist/Morivia-iOS-${RELEASE_VERSION}.ipa"
+          {
+            echo "## Morivia iOS ${RELEASE_VERSION}"
+            echo
+            echo "- File: Morivia-iOS-${RELEASE_VERSION}.ipa ($(du -h "dist/Morivia-iOS-${RELEASE_VERSION}.ipa" | cut -f1))"
+            echo "- Devices: iPhone and iPad"
+            echo "- Signing: unsigned (sign it when installing, for example with AltStore, SideStore or Sideloadly)"
+          } >> "${GITHUB_STEP_SUMMARY}"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ios
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Publish release
+    needs: [version, android, ios]
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish Morivia ${{ needs.version.outputs.version }}
+        run: |
+          cp README.md CHANGELOG.md LICENSE dist/
+          (cd dist && sha256sum Morivia-* > SHA256SUMS.txt)
+          awk -v v="## ${RELEASE_VERSION}" '$0==v{on=1;next} /^## /{on=0} on' CHANGELOG.md > RELEASE_NOTES.md
+          cat >> RELEASE_NOTES.md <<EOF
+
+          ## Download
+
+          - **Android phones and tablets:** \`Morivia-Android-${RELEASE_VERSION}-arm64-v8a.apk\`
+          - **iPhone and iPad:** \`Morivia-iOS-${RELEASE_VERSION}.ipa\` (unsigned, see README for how to install)
+
+          SHA256SUMS.txt lists the checksums of both files.
+          EOF
+          gh release create "v${RELEASE_VERSION}" dist/* \
+            --title "Morivia ${RELEASE_VERSION}" \
+            --notes-file RELEASE_NOTES.md \
+            --target "$(git rev-parse HEAD)" \
+            --latest
