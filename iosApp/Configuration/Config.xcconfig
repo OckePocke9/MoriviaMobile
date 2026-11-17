@@ -1,0 +1,6 @@
+#include? "Version.xcconfig"
+
+// Apple team used for signing. Builds from GitHub Actions are unsigned and leave this empty.
+TEAM_ID=
+
+PRODUCT_NAME=Morivia
