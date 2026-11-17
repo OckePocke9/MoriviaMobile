@@ -1,0 +1,154 @@
+package com.nuvio.app.features.settings
+
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BugReport
+import androidx.compose.material.icons.rounded.Policy
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.nuvio.app.core.build.AppVersionConfig
+import nuvio.composeapp.generated.resources.Res
+import nuvio.composeapp.generated.resources.about_licenses_attributions_subtitle
+import nuvio.composeapp.generated.resources.about_supporters_contributors_subtitle
+import nuvio.composeapp.generated.resources.compose_about_made_with
+import nuvio.composeapp.generated.resources.compose_about_version_format
+import nuvio.composeapp.generated.resources.compose_settings_page_licenses_attributions
+import nuvio.composeapp.generated.resources.compose_settings_page_privacy_policy
+import nuvio.composeapp.generated.resources.compose_settings_page_supporters_contributors
+import nuvio.composeapp.generated.resources.compose_settings_root_about_section
+import nuvio.composeapp.generated.resources.compose_settings_root_check_updates_description
+import nuvio.composeapp.generated.resources.compose_settings_root_check_updates_title
+import nuvio.composeapp.generated.resources.compose_settings_root_privacy_policy_description
+import nuvio.composeapp.generated.resources.updates_debug_test_description
+import nuvio.composeapp.generated.resources.updates_debug_test_title
+import org.jetbrains.compose.resources.stringResource
+
+private const val PRIVACY_POLICY_URL = "https://nuvio.tv/privacy-policy"
+
+internal fun LazyListScope.aboutSettingsContent(
+    isTablet: Boolean,
+    onSupportersContributorsClick: () -> Unit,
+    onLicensesAttributionsClick: () -> Unit,
+    onCheckForUpdatesClick: (() -> Unit)?,
+    onTestUpdateBannerClick: (() -> Unit)?,
+    showSupportersContributorsPage: Boolean,
+) {
+    item {
+        val uriHandler = LocalUriHandler.current
+        SettingsSection(
+            title = stringResource(Res.string.compose_settings_root_about_section),
+            isTablet = isTablet,
+        ) {
+            SettingsGroup(isTablet = isTablet) {
+                if (showSupportersContributorsPage) {
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.compose_settings_page_supporters_contributors),
+                        description = stringResource(Res.string.about_supporters_contributors_subtitle),
+                        icon = SettingsPage.SupportersContributors.icon,
+                        isTablet = isTablet,
+                        onClick = onSupportersContributorsClick,
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                }
+                SettingsNavigationRow(
+                    title = stringResource(Res.string.compose_settings_page_privacy_policy),
+                    description = stringResource(Res.string.compose_settings_root_privacy_policy_description),
+                    icon = Icons.Rounded.Policy,
+                    isTablet = isTablet,
+                    onClick = { uriHandler.openUri(PRIVACY_POLICY_URL) },
+                )
+                SettingsGroupDivider(isTablet = isTablet)
+                SettingsNavigationRow(
+                    title = stringResource(Res.string.compose_settings_page_licenses_attributions),
+                    description = stringResource(Res.string.about_licenses_attributions_subtitle),
+                    icon = SettingsPage.LicensesAttributions.icon,
+                    isTablet = isTablet,
+                    onClick = onLicensesAttributionsClick,
+                )
+                if (onCheckForUpdatesClick != null) {
+                    SettingsGroupDivider(isTablet = isTablet)
+                    UpdateChannelSettingsRow(isTablet = isTablet)
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.compose_settings_root_check_updates_title),
+                        description = stringResource(Res.string.compose_settings_root_check_updates_description),
+                        icon = SettingsSearchTarget.CheckForUpdates.icon,
+                        isTablet = isTablet,
+                        onClick = onCheckForUpdatesClick,
+                    )
+                }
+                if (onTestUpdateBannerClick != null) {
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.updates_debug_test_title),
+                        description = stringResource(Res.string.updates_debug_test_description),
+                        icon = Icons.Default.BugReport,
+                        isTablet = isTablet,
+                        onClick = onTestUpdateBannerClick,
+                    )
+                }
+            }
+        }
+    }
+}
+
+// The Morivia icon, name and version appear only on the Profile tab, under its Settings card.
+internal fun LazyListScope.settingsFooterContent(isTablet: Boolean) {
+    item {
+        androidx.compose.foundation.layout.Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = if (isTablet) 20.dp else 16.dp),
+        ) {
+            val iconState by AppIconRepository.state.collectAsStateWithLifecycle()
+            androidx.compose.foundation.layout.Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp),
+            ) {
+                androidx.compose.foundation.Image(
+                    painter = org.jetbrains.compose.resources.painterResource(iconState.selected.symbolResource),
+                    contentDescription = null,
+                    modifier = Modifier.height(if (isTablet) 58.dp else 52.dp).width(if (isTablet) 58.dp else 52.dp),
+                )
+                // Same style and size as "Morivia" on the profile selection screen.
+                Text(
+                    text = "Morivia",
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        fontSize = 24.sp,
+                        letterSpacing = 0.sp,
+                    ),
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                )
+            }
+            androidx.compose.foundation.layout.Spacer(
+                modifier = Modifier.height(if (isTablet) 10.dp else 8.dp),
+            )
+            Text(
+                text = stringResource(
+                    Res.string.compose_about_version_format,
+                    AppVersionConfig.VERSION_NAME,
+                    AppVersionConfig.VERSION_CODE,
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+            )
+        }
+    }
+}
