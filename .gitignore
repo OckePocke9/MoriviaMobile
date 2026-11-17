@@ -1,0 +1,36 @@
+# Gradle and Kotlin
+*.iml
+.kotlin
+.gradle
+**/build/
+!composeApp/src/**/kotlin/com/nuvio/app/core/build/
+!composeApp/src/**/kotlin/com/nuvio/app/core/build/**
+!src/**/build/
+local.properties
+captures
+.externalNativeBuild
+.cxx
+
+# IDEs and systems
+.idea
+.DS_Store
+
+# Xcode
+xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+iosApp/Configuration/DeviceSigning.local.json
+# Local MPVKit iOS build environment (sparse APFS image, see MPVKit docs)
+.mpvkit-build.sparseimage
+
+# Signing keys other than the shared development keystore in .ci/
+keystore/
+
+# Local tools and logs
+node_modules/
+logs/
+analysis/
