@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Downloads / Releases
+    url: https://github.com/OckePocke9/MoriviaMobile/releases/latest
+    about: Download the latest Morivia for Android and iOS.
+  - name: Documentation
+    url: https://github.com/OckePocke9/MoriviaMobile#readme
+    about: Read the README for installation and build instructions.

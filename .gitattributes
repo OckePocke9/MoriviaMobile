@@ -1,0 +1,10 @@
+# GitHub's language bar (Linguist) puts every language under about 0.1 % of the code into
+# "Other". These small files are left out of the statistics so the bar names each language
+# it shows: Kotlin, Swift and Shell. README.md lists every language used in the project.
+*.py linguist-detectable=false
+*.m linguist-detectable=false
+*.h linguist-detectable=false
+
+# Generated Android startup profiles are data, not source code.
+androidApp/src/**/baseline-prof.txt linguist-generated=true
+androidApp/src/**/startup-prof.txt linguist-generated=true
