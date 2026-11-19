@@ -1,0 +1,25 @@
+# Gradle and Kotlin
+*.iml
+.kotlin
+.gradle
+**/build/
+!composeApp/src/**/kotlin/com/nuvio/app/core/build/
+!composeApp/src/**/kotlin/com/nuvio/app/core/build/**
+!src/**/build/
+local.properties
+captures
+.externalNativeBuild
+.cxx
+
+# IDEs and systems
+.idea
+.DS_Store
+
+
+# Signing keys other than the shared development keystore in .ci/
+keystore/
+
+# Local tools and logs
+node_modules/
+logs/
+analysis/

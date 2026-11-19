@@ -1,0 +1,5 @@
+<resources>
+<string name="morivia_profile_local">Local profile</string>
+<string name="morivia_profile_synced">Synced profile</string>
+<string name="morivia_profile_settings_description">Appearance, addons, playback and connected services.</string>
+</resources>

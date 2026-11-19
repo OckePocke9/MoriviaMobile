@@ -1,0 +1,10 @@
+# GitHub's language bar (Linguist) shows only the app's own language, Kotlin: the release
+# and icon helper scripts and the Gradle wrapper are left out.
+*.py linguist-detectable=false
+*.ps1 linguist-detectable=false
+gradlew linguist-detectable=false
+gradlew.bat linguist-detectable=false
+
+# Generated Android startup profiles are data, not source code.
+androidApp/src/**/baseline-prof.txt linguist-generated=true
+androidApp/src/**/startup-prof.txt linguist-generated=true
