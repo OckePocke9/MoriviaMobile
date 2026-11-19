@@ -83,6 +83,9 @@ import com.nuvio.app.features.cloud.CloudLibraryUiState
 import com.nuvio.app.features.debrid.DebridSettingsRepository
 import com.nuvio.app.features.home.HomeCatalogSection
 import com.nuvio.app.features.home.MetaPreview
+import androidx.compose.material.icons.rounded.VideoLibrary
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import com.nuvio.app.features.home.components.HomeEmptyStateCard
 import com.nuvio.app.features.servers.ServerRepository
 import com.nuvio.app.features.home.components.HomePosterCard
@@ -186,6 +189,43 @@ private fun LibraryScreenWithCatalogs(
     }.collectAsStateWithLifecycle()
     val networkStatusUiState by NetworkStatusRepository.uiState.collectAsStateWithLifecycle()
     var observedOfflineState by remember { mutableStateOf(false) }
+
+    // The earlier Morivia app's Library: the chosen chip and sort start from Library settings.
+    val moriviaLayout by remember {
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.ensureLoaded()
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.settings
+    }.collectAsStateWithLifecycle()
+    var moriviaSectionName by rememberSaveable(moriviaLayout.librarySection) { mutableStateOf(moriviaLayout.librarySection.name) }
+    var moriviaSortName by rememberSaveable(moriviaLayout.librarySort) { mutableStateOf(moriviaLayout.librarySort.name) }
+    val moriviaSection = runCatching { com.nuvio.app.features.settings.MoriviaLibrarySection.valueOf(moriviaSectionName) }
+        .getOrDefault(com.nuvio.app.features.settings.MoriviaLibrarySection.RECENTLY_ADDED)
+    val moriviaSort = runCatching { com.nuvio.app.features.settings.MoriviaLibrarySort.valueOf(moriviaSortName) }
+        .getOrDefault(com.nuvio.app.features.settings.MoriviaLibrarySort.ADDED)
+    val watchProgressUiState by remember {
+        com.nuvio.app.features.watchprogress.WatchProgressRepository.ensureLoaded()
+        com.nuvio.app.features.watchprogress.WatchProgressRepository.uiState
+    }.collectAsStateWithLifecycle()
+    val moriviaEntries = remember(uiState.items, uiState.sections, watchProgressUiState.entries, moriviaSection, moriviaSort) {
+        val progress = watchProgressUiState.entries
+        val lastWatchedById = progress.groupBy { it.parentMetaId }
+            .mapValues { (_, entries) -> entries.maxOf { it.lastUpdatedEpochMs } }
+        val continueWatching = progress
+            .filter { !it.isEffectivelyCompleted && it.parentMetaId.isNotBlank() }
+            .sortedByDescending { it.lastUpdatedEpochMs }
+            .distinctBy { it.parentMetaId }
+            .map { entry ->
+                MetaPreview(
+                    id = entry.parentMetaId,
+                    type = entry.parentMetaType,
+                    name = entry.title,
+                    poster = entry.poster,
+                    banner = entry.background,
+                    logo = entry.logo,
+                )
+            }
+        val savedItems = uiState.items.ifEmpty { uiState.sections.flatMap { it.items } }
+        moriviaLibraryEntries(savedItems, continueWatching, lastWatchedById, moriviaSection, moriviaSort)
+    }
     val serversUiState by remember {
         ServerRepository.ensureLoaded()
         ServerRepository.uiState
@@ -378,57 +418,36 @@ private fun LibraryScreenWithCatalogs(
                             .fillMaxWidth()
                             .padding(LocalVerticalBarPadding.current),
                     ) {
-                        NuvioScreenHeader(
-                            title = if (sourceMode != LibraryViewMode.Saved) {
-                                stringResource(Res.string.library_title)
-                            } else {
-                                when (uiState.sourceMode) {
-                                    LibrarySourceMode.LOCAL -> stringResource(Res.string.library_title)
-                                    LibrarySourceMode.TRAKT -> stringResource(Res.string.library_trakt_title)
-                                    LibrarySourceMode.SIMKL -> stringResource(Res.string.library_simkl_title)
-                                    LibrarySourceMode.MDBLIST -> stringResource(Res.string.library_mdblist_title)
-                                }
-                            },
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            actions = {
-                                if (sourceMode == LibraryViewMode.Saved) {
-                                    LibraryListManagementButton()
-                                    val targetLayout = if (displaySettings.layoutMode == LibraryLayoutMode.HORIZONTAL) {
-                                        LibraryLayoutMode.VERTICAL
-                                    } else {
-                                        LibraryLayoutMode.HORIZONTAL
+                        // The earlier Morivia app's Library pill, with the list and download buttons.
+                        val statusBarTop = androidx.compose.foundation.layout.WindowInsets.statusBars
+                            .asPaddingValues().calculateTopPadding()
+                        androidx.compose.foundation.layout.Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 8.dp, top = statusBarTop + 12.dp, bottom = 14.dp),
+                            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                        ) {
+                            com.nuvio.app.core.ui.MoriviaPagePill(
+                                label = if (sourceMode != LibraryViewMode.Saved) {
+                                    stringResource(Res.string.library_title)
+                                } else {
+                                    when (uiState.sourceMode) {
+                                        LibrarySourceMode.LOCAL -> stringResource(Res.string.library_title)
+                                        LibrarySourceMode.TRAKT -> stringResource(Res.string.library_trakt_title)
+                                        LibrarySourceMode.SIMKL -> stringResource(Res.string.library_simkl_title)
+                                        LibrarySourceMode.MDBLIST -> stringResource(Res.string.library_mdblist_title)
                                     }
-                                    IconButton(
-                                        onClick = {
-                                            LibraryDisplaySettingsRepository.setLayoutMode(targetLayout)
-                                        },
-                                    ) {
-                                        Crossfade(
-                                            targetState = targetLayout,
-                                            animationSpec = tween(durationMillis = 140),
-                                            label = "libraryLayoutAction",
-                                        ) { animatedTargetLayout ->
-                                            Icon(
-                                                imageVector = if (animatedTargetLayout == LibraryLayoutMode.VERTICAL) {
-                                                    Icons.Rounded.GridView
-                                                } else {
-                                                    Icons.Rounded.ViewAgenda
-                                                },
-                                                contentDescription = if (animatedTargetLayout == LibraryLayoutMode.VERTICAL) {
-                                                    stringResource(Res.string.library_layout_show_vertical)
-                                                } else {
-                                                    stringResource(Res.string.library_layout_show_horizontal)
-                                                },
-                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            )
-                                        }
-                                    }
-                                }
-                                if (onDownloadsClick != null) {
-                                    LibraryDownloadsButton(onClick = onDownloadsClick)
-                                }
-                            },
-                        )
+                                },
+                                icon = Icons.Rounded.VideoLibrary,
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            if (sourceMode == LibraryViewMode.Saved) {
+                                LibraryListManagementButton()
+                            }
+                            if (onDownloadsClick != null) {
+                                LibraryDownloadsButton(onClick = onDownloadsClick)
+                            }
+                        }
                         LibrarySourceSwitch(
                             selectedMode = sourceMode,
                             showServers = hasServers,
@@ -543,50 +562,37 @@ private fun LibraryScreenWithCatalogs(
                         }
                     }
 
-                    else -> {
-                        item(
-                            key = "library-saved-controls:${uiState.sourceMode}:" +
-                                "${displaySettings.layoutMode}:$effectiveSortOption",
-                        ) {
-                            LibrarySavedControls(
-                                layoutMode = displaySettings.layoutMode,
-                                sourceMode = uiState.sourceMode,
-                                sortOption = effectiveSortOption,
-                                verticalProjection = verticalProjection,
-                                watchedFilter = libraryWatchedFilter,
-                                onSectionSelected = LibraryDisplaySettingsRepository::setSelectedSection,
-                                onTypeSelected = LibraryDisplaySettingsRepository::setSelectedType,
-                                onGenreSelected = { genre -> libraryGenre = genre },
-                                onYearSelected = { year -> libraryYear = year },
-                                onWatchedFilterSelected = { filter -> libraryWatchedFilterName = filter.name },
-                                onSortSelected = LibraryDisplaySettingsRepository::setSortOption,
-                                modifier = libraryContentTransitionModifier()
-                                    .padding(horizontal = 16.dp),
-                            )
-                        }
-                        when (displaySettings.layoutMode) {
-                            LibraryLayoutMode.HORIZONTAL -> librarySections(
-                                displaySections = librarySectionsDisplay,
+                    // The earlier Morivia app's Library: chips, a heading with counts, Sort and a grid.
+                    else -> moriviaLibraryContent(
+                        entries = moriviaEntries,
+                        section = moriviaSection,
+                        sort = moriviaSort,
+                        columns = 3,
+                        horizontalPadding = 16.dp,
+                        isWatched = { entry ->
+                            moriviaLayout.libraryWatchedMarks && WatchingState.isPosterWatched(
                                 watchedKeys = watchedUiState.watchedKeys,
+                                item = entry.preview,
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
-                                sortOption = effectiveSortOption,
-                                posterPattern = effectivePosterPattern,
-                                onPosterClick = onPosterClick,
-                                onSectionViewAllClick = onSectionViewAllClick,
-                                onPosterLongClick = onPosterLongClick,
-                                onDisintegrated = disintegration::onExited,
                             )
-                            LibraryLayoutMode.VERTICAL -> libraryVerticalContent(
-                                projection = verticalProjection,
-                                columns = gridColumns,
-                                watchedKeys = watchedUiState.watchedKeys,
-                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
-                                posterPattern = effectivePosterPattern,
-                                onPosterClick = onPosterClick,
-                                onPosterLongClick = onPosterLongClick,
-                            )
-                        }
-                    }
+                        },
+                        onSectionChange = { moriviaSectionName = it.name },
+                        onSortChange = { moriviaSortName = it.name },
+                        onEntryClick = { entry ->
+                            val libraryItem = entry.libraryItem
+                            if (libraryItem != null) onPosterClick?.invoke(libraryItem) else onPreviewClick?.invoke(entry.preview)
+                        },
+                        onEntryLongClick = { entry ->
+                            val libraryItem = entry.libraryItem
+                            val section = libraryItem?.let { item -> uiState.sections.firstOrNull { s -> s.items.any { it.id == item.id && it.type == item.type } } }
+                            if (libraryItem != null && section != null) {
+                                onPosterLongClick?.invoke(libraryItem, section)
+                            } else {
+                                onPreviewLongClick?.invoke(entry.preview)
+                            }
+                        },
+                    )
+
                 }
             }
         }

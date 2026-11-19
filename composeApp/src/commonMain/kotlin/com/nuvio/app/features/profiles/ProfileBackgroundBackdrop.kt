@@ -118,8 +118,9 @@ internal fun MoriviaThemedBackground(
                 colorScheme = colorScheme.copy(background = Color.Transparent),
                 typography = androidx.compose.material3.MaterialTheme.typography,
                 shapes = androidx.compose.material3.MaterialTheme.shapes,
-                content = content,
-            )
+            ) {
+                ProvideMoriviaHeaderBackdrop(content)
+            }
         }
     }
 }
@@ -140,15 +141,42 @@ internal fun profileGlowColors(
 }
 
 internal fun Modifier.earlierMoriviaBackground(leftGlow: Color, rightGlow: Color): Modifier = drawBehind {
-    val w = size.width
-    val h = size.height
-    drawRect(Color.Black)
+    drawMoriviaGlow(size, leftGlow, rightGlow)
+}
+
+/**
+ * Lets sticky headers on a see-through screen draw the same background behind themselves, as it
+ * is at their place on the screen, so content scrolling under a header is hidden.
+ */
+@Composable
+internal fun ProvideMoriviaHeaderBackdrop(content: @Composable () -> Unit) {
+    val theme = com.nuvio.app.core.ui.LocalAppTheme.current
+    val palette = com.nuvio.app.core.ui.LocalThemePalette.current
+    val (leftGlow, rightGlow) = remember(theme, palette) { profileGlowColors(theme, palette) }
+    val backdrop: androidx.compose.ui.graphics.drawscope.DrawScope.(Size) -> Unit = remember(leftGlow, rightGlow) {
+        { screenSize -> drawMoriviaGlow(screenSize, leftGlow, rightGlow) }
+    }
+    androidx.compose.runtime.CompositionLocalProvider(
+        com.nuvio.app.core.ui.LocalHeaderBackdrop provides backdrop,
+        content = content,
+    )
+}
+
+private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawMoriviaGlow(
+    canvas: Size,
+    leftGlow: Color,
+    rightGlow: Color,
+) {
+    val w = canvas.width
+    val h = canvas.height
+    drawRect(Color.Black, size = canvas)
     // Bottom layer: right glow at 95 % / 15 %, ellipse 90 % x 65 %, fading to black at 75 %.
     ellipticalGlow(
         center = Offset(w * 0.95f, h * 0.15f),
         radiusX = w * 0.90f,
         radiusY = h * 0.65f,
         stops = arrayOf(0f to rightGlow, 0.75f to Color.Black, 1f to Color.Black),
+        canvas = canvas,
     )
     // Top layer: left glow at 5 % / 5 %, ellipse 100 % x 65 %, fading to transparent at 70 %.
     ellipticalGlow(
@@ -156,6 +184,7 @@ internal fun Modifier.earlierMoriviaBackground(leftGlow: Color, rightGlow: Color
         radiusX = w * 1.00f,
         radiusY = h * 0.65f,
         stops = arrayOf(0f to leftGlow, 0.70f to Color.Transparent, 1f to Color.Transparent),
+        canvas = canvas,
     )
 }
 
@@ -165,13 +194,14 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.ellipticalGlow(
     radiusX: Float,
     radiusY: Float,
     stops: Array<Pair<Float, Color>>,
+    canvas: Size,
 ) {
     val squash = radiusY / radiusX
     withTransform({ scale(scaleX = 1f, scaleY = squash, pivot = center) }) {
         drawRect(
             brush = Brush.radialGradient(*stops, center = center, radius = radiusX),
-            topLeft = Offset(-size.width, center.y - size.height * 2f / squash),
-            size = Size(size.width * 3f, size.height * 4f / squash),
+            topLeft = Offset(-canvas.width, center.y - canvas.height * 2f / squash),
+            size = Size(canvas.width * 3f, canvas.height * 4f / squash),
         )
     }
 }

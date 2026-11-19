@@ -8,7 +8,7 @@ class AppUpdaterRepositoryTest {
     @Test
     fun channelsUseTheSameReleaseEndpointsAsTv() {
         assertEquals(
-            "https://api.github.com/repos/OckePocke9/MoriviaUpdates/releases/latest",
+            "https://api.github.com/repos/OckePocke9/MoriviaMobile/releases/latest",
             AppUpdaterRepository.releaseApiUrl(UpdateChannel.STABLE),
         )
         assertEquals("releases/latest", AppUpdaterRepository.releasePath(UpdateChannel.STABLE))

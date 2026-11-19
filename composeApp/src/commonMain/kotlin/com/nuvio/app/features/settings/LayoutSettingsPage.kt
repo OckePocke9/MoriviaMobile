@@ -31,6 +31,7 @@ import nuvio.composeapp.generated.resources.settings_content_discovery_meta_scre
 import nuvio.composeapp.generated.resources.settings_nav_bar_glow_off
 import nuvio.composeapp.generated.resources.settings_nav_bar_glow_on
 import nuvio.composeapp.generated.resources.settings_nav_bar_summary
+import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.layoutSettingsContent(
@@ -42,6 +43,7 @@ internal fun LazyListScope.layoutSettingsContent(
     onCollectionsClick: () -> Unit,
     onContinueWatchingClick: () -> Unit,
     onPosterCustomizationClick: () -> Unit,
+    onMoriviaPageClick: (SettingsPage) -> Unit = {},
 ) {
     item {
         SettingsSection(
@@ -49,6 +51,14 @@ internal fun LazyListScope.layoutSettingsContent(
             isTablet = isTablet,
         ) {
             SettingsGroup(isTablet = isTablet) {
+                // The earlier Morivia app's Home & Layout page, first in Home.
+                SettingsNavigationRow(
+                    title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_title),
+                    description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_description),
+                    isTablet = isTablet,
+                    onClick = { onMoriviaPageClick(SettingsPage.MoriviaHomeLayout) },
+                )
+                SettingsGroupDivider(isTablet = isTablet)
                 SettingsNavigationRow(
                     title = stringResource(Res.string.compose_settings_page_homescreen),
                     description = stringResource(Res.string.settings_content_discovery_homescreen_description),
@@ -75,6 +85,28 @@ internal fun LazyListScope.layoutSettingsContent(
                     description = stringResource(Res.string.settings_appearance_poster_customization_description),
                     isTablet = isTablet,
                     onClick = onPosterCustomizationClick,
+                )
+            }
+        }
+    }
+    item {
+        SettingsSection(
+            title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_search_library_section),
+            isTablet = isTablet,
+        ) {
+            SettingsGroup(isTablet = isTablet) {
+                SettingsNavigationRow(
+                    title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_search_settings_title),
+                    description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_search_settings_description),
+                    isTablet = isTablet,
+                    onClick = { onMoriviaPageClick(SettingsPage.MoriviaSearch) },
+                )
+                SettingsGroupDivider(isTablet = isTablet)
+                SettingsNavigationRow(
+                    title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_library_settings_title),
+                    description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_library_settings_description),
+                    isTablet = isTablet,
+                    onClick = { onMoriviaPageClick(SettingsPage.MoriviaLibrary) },
                 )
             }
         }

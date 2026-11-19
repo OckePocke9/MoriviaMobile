@@ -1,6 +1,7 @@
 package com.nuvio.app.features.profiles
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -78,10 +79,30 @@ fun parseHexColor(hex: String): Color {
     }.getOrDefault(Color(0xFF1E88E5))
 }
 
-/** The profile colours of nuvio.tv's account page (it also allows any other colour). */
+/**
+ * The profile colours: the main colour of each Morivia theme, in the order of the themes, with
+ * Original first as the default. A profile colour is saved on the Nuvio profile as a plain
+ * #RRGGBB, which Nuvio accepts for any colour, so these sync with Nuvio.
+ */
 val PROFILE_COLORS = listOf(
-    "#1E88E5", "#43A047", "#FB8C00", "#8E24AA", "#00ACC1", "#E53935",
+    "#6B4BF5", // Original
+    "#E8A91C", // Gold
+    "#22D37C", // Jade
+    "#EC70A9", // Rose Gold
+    "#3185F5", // Arctic Blue
+    "#AAB2BE", // Graphite
+    "#E53935", // Crimson
+    "#1E88E5", // Ocean
+    "#8E24AA", // Violet
+    "#43A047", // Emerald
+    "#FB8C00", // Amber
+    "#D81B60", // Rose
+    "#F5F5F5", // White
 )
+
+/** White on dark colours, near-black on light ones (Graphite, White), so initials stay readable. */
+fun initialsTextColor(background: androidx.compose.ui.graphics.Color): androidx.compose.ui.graphics.Color =
+    if (background.luminance() > 0.6f) androidx.compose.ui.graphics.Color(0xFF111111) else androidx.compose.ui.graphics.Color.White
 
 fun avatarStorageUrl(storagePath: String): String =
     if (storagePath.startsWith("https://") || storagePath.startsWith("http://")) {

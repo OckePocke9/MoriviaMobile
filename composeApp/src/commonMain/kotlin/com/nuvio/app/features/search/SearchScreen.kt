@@ -18,6 +18,14 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.draw.clip
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -86,6 +94,7 @@ import nuvio.composeapp.generated.resources.compose_search_empty_no_search_catal
 import nuvio.composeapp.generated.resources.compose_search_placeholder
 import nuvio.composeapp.generated.resources.compose_search_recent_searches
 import nuvio.composeapp.generated.resources.compose_search_remove_recent_search
+import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -161,6 +170,28 @@ internal fun SearchScreenWithCatalogs(
     val watchedUiState by WatchedRepository.uiState.collectAsStateWithLifecycle()
     val fullyWatchedSeriesKeys by WatchedRepository.fullyWatchedSeriesKeys.collectAsStateWithLifecycle()
     val networkStatusUiState by NetworkStatusRepository.uiState.collectAsStateWithLifecycle()
+    val moriviaLayout by remember {
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.ensureLoaded()
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.settings
+    }.collectAsStateWithLifecycle()
+    val homeUiState by com.nuvio.app.features.home.HomeRepository.uiState.collectAsStateWithLifecycle()
+    // Trending: the "Popular" catalogs of Home (or its first rows), movies and shows taking turns.
+    val trendingSections = remember(homeUiState.sections) {
+        val popular = homeUiState.sections.filter { it.title.contains("popular", ignoreCase = true) }
+        (popular.ifEmpty { homeUiState.sections.take(2) }).filter { it.items.isNotEmpty() }
+    }
+    val trendingItems = remember(trendingSections) {
+        val lists = trendingSections.map { it.items }
+        val mixed = mutableListOf<com.nuvio.app.features.home.MetaPreview>()
+        var index = 0
+        while (mixed.size < 20 && lists.any { index < it.size }) {
+            lists.forEach { list -> if (index < list.size) mixed += list[index] }
+            index++
+        }
+        mixed.distinctBy { it.id }.take(20)
+    }
+    val trendingTarget = trendingSections.firstOrNull()?.target
+    val browseScope = rememberCoroutineScope()
     var query by rememberSaveable { mutableStateOf("") }
     var lastRequestedQuery by rememberSaveable { mutableStateOf<String?>(null) }
     var observedOfflineState by remember { mutableStateOf(false) }
@@ -292,18 +323,29 @@ internal fun SearchScreenWithCatalogs(
                 androidx.compose.foundation.layout.Column(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    NuvioScreenHeader(
-                        title = headerTitle,
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                    // The earlier Morivia app's Search page: the Search pill, then "Movies and Shows".
+                    val statusBarTop = androidx.compose.foundation.layout.WindowInsets.statusBars
+                        .asPaddingValues().calculateTopPadding()
+                    com.nuvio.app.core.ui.MoriviaPagePill(
+                        label = headerTitle,
+                        icon = Icons.Rounded.Search,
+                        modifier = Modifier.padding(start = 16.dp, top = statusBarTop + 12.dp),
                     )
-                    androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(6.dp))
+                    androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(18.dp))
                     androidx.compose.foundation.layout.Box(modifier = Modifier.padding(horizontal = 16.dp)) {
                         NuvioInputField(
                             value = query,
                             onValueChange = { query = it },
-                            placeholder = stringResource(Res.string.compose_search_placeholder),
+                            placeholder = stringResource(Res.string.morivia_search_placeholder),
                             textStyle = MaterialTheme.typography.bodyLarge.copy(textDirection = TextDirection.Content),
                             shape = RoundedCornerShape(NuvioTokens.Radius.xl),
+                            leadingContent = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Search,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            },
                             modifier = Modifier
                                 .focusRequester(focusRequester)
                                 .onFocusChanged { isSearchFocused = it.isFocused },
@@ -328,12 +370,53 @@ internal fun SearchScreenWithCatalogs(
         }
 
         if (query.isBlank()) {
-            if (isSearchFocused && recentSearches.isNotEmpty()) {
+            var itemsBeforeDiscover = 1
+            if (moriviaLayout.searchHistory && isSearchFocused && recentSearches.isNotEmpty()) {
+                itemsBeforeDiscover++
                 item(key = "recent_searches") {
                     SearchRecentSection(
                         recentSearches = recentSearches,
                         onSearchPress = { recentQuery -> query = recentQuery },
                         onRemoveSearch = SearchHistoryRepository::removeSearch,
+                    )
+                }
+            }
+            // The earlier Morivia app's Trending row: the popular titles of Home's catalogs.
+            if (moriviaLayout.searchTrending && trendingItems.isNotEmpty()) {
+                itemsBeforeDiscover++
+                item(key = "morivia_trending") {
+                    HomeCatalogRowSection(
+                        section = com.nuvio.app.features.home.HomeCatalogSection(
+                            key = "morivia_trending",
+                            title = stringResource(Res.string.morivia_search_trending),
+                            subtitle = "",
+                            addonName = "",
+                            target = trendingTarget!!,
+                            items = trendingItems,
+                        ),
+                        entries = trendingItems,
+                        modifier = Modifier.padding(bottom = 12.dp),
+                        sectionPadding = homeSectionPadding,
+                        watchedKeys = watchedUiState.watchedKeys,
+                        fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                        onPosterClick = onPosterClick,
+                        onPosterLongClick = onPosterLongClick,
+                    )
+                }
+            }
+            // Browse: coloured genre tiles; a tile shows that genre in the grid below.
+            if (moriviaLayout.searchBrowse && discoverUiState.genreOptions.isNotEmpty()) {
+                itemsBeforeDiscover++
+                val discoverIndex = itemsBeforeDiscover
+                item(key = "morivia_browse") {
+                    MoriviaBrowseTiles(
+                        genres = discoverUiState.genreOptions,
+                        selectedGenre = discoverUiState.selectedGenre,
+                        horizontalPadding = homeSectionPadding,
+                        onGenreClick = { genre ->
+                            SearchRepository.selectDiscoverGenre(genre)
+                            browseScope.launch { listState.animateScrollToItem(discoverIndex) }
+                        },
                     )
                 }
             }
@@ -557,6 +640,70 @@ internal fun SearchRecentRow(
                 contentDescription = stringResource(Res.string.compose_search_remove_recent_search),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+    }
+}
+
+/** The earlier Morivia app's Browse row: wide genre tiles in soft two-colour gradients. */
+@Composable
+private fun MoriviaBrowseTiles(
+    genres: List<String>,
+    selectedGenre: String?,
+    horizontalPadding: androidx.compose.ui.unit.Dp,
+    onGenreClick: (String) -> Unit,
+) {
+    val gradients = remember {
+        listOf(
+            listOf(androidx.compose.ui.graphics.Color(0xFF7B2FF7), androidx.compose.ui.graphics.Color(0xFFE0558F)),
+            listOf(androidx.compose.ui.graphics.Color(0xFF1C8C8C), androidx.compose.ui.graphics.Color(0xFF4FC3A1)),
+            listOf(androidx.compose.ui.graphics.Color(0xFFE0558F), androidx.compose.ui.graphics.Color(0xFFF5A35C)),
+            listOf(androidx.compose.ui.graphics.Color(0xFF3949AB), androidx.compose.ui.graphics.Color(0xFF29B6F6)),
+            listOf(androidx.compose.ui.graphics.Color(0xFF8E24AA), androidx.compose.ui.graphics.Color(0xFF5E35B1)),
+            listOf(androidx.compose.ui.graphics.Color(0xFF00897B), androidx.compose.ui.graphics.Color(0xFF7CB342)),
+        )
+    }
+    androidx.compose.foundation.layout.Column(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp),
+    ) {
+        Text(
+            text = stringResource(Res.string.morivia_search_browse),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(horizontal = horizontalPadding),
+        )
+        androidx.compose.foundation.lazy.LazyRow(
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = horizontalPadding),
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp),
+        ) {
+            items(genres.size) { index ->
+                val genre = genres[index]
+                val selected = genre.equals(selectedGenre, ignoreCase = true)
+                Box(
+                    modifier = Modifier
+                        .size(width = 150.dp, height = 82.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(androidx.compose.ui.graphics.Brush.linearGradient(gradients[index % gradients.size]))
+                        .then(
+                            if (selected) {
+                                Modifier.border(2.dp, androidx.compose.ui.graphics.Color.White, RoundedCornerShape(14.dp))
+                            } else {
+                                Modifier
+                            },
+                        )
+                        .clickable { onGenreClick(genre) }
+                        .padding(12.dp),
+                    contentAlignment = androidx.compose.ui.Alignment.BottomStart,
+                ) {
+                    Text(
+                        text = genre,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = androidx.compose.ui.graphics.Color.White,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                        maxLines = 1,
+                    )
+                }
+            }
         }
     }
 }

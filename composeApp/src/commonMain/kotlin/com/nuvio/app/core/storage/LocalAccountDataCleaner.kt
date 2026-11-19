@@ -73,6 +73,7 @@ internal object LocalAccountDataCleaner {
         CollectionRepository.clearLocalState()
         ThemeSettingsRepository.clearLocalState()
         PosterCardStyleRepository.clearLocalState()
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.clearLocalState()
         CardDepthStyleRepository.clearLocalState()
         TrackingProviderRegistry.clearLocalState()
         TrackingSettingsRepository.clearLocalState()

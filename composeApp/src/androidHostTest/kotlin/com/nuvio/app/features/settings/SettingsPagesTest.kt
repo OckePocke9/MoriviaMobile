@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -143,6 +145,7 @@ class SettingsPagesTest {
                         onCollectionsClick = { opened = "collections" },
                         onContinueWatchingClick = { opened = "continue" },
                         onPosterCustomizationClick = { opened = "posters" },
+                        onMoriviaPageClick = { opened = it.name },
                     )
                 }
             }
@@ -153,12 +156,17 @@ class SettingsPagesTest {
             "Continue Watching" to "continue",
             "Poster Card Style" to "posters",
             "Streams" to "streams",
+            "Home & Layout" to "MoriviaHomeLayout",
+            "Search" to "MoriviaSearch",
+            "Library" to "MoriviaLibrary",
             "Detail Page" to "details",
         ).forEach { (label, destination) ->
-            compose.onNode(hasText(label) and hasClickAction()).performScrollTo().performClick()
+            compose.onNode(hasScrollAction()).performScrollToNode(hasText(label, substring = false) and hasClickAction())
+            compose.onNode(hasText(label, substring = false) and hasClickAction()).performClick()
             assertEquals(destination, opened)
         }
-        compose.onNode(hasText("Navigation Bar") and hasClickAction()).performScrollTo().performClick()
+        compose.onNode(hasScrollAction()).performScrollToNode(hasText("Navigation Bar") and hasClickAction())
+        compose.onNode(hasText("Navigation Bar") and hasClickAction()).performClick()
         compose.onNodeWithText("Classic").performScrollTo().performClick()
         assertEquals(NavBarStyle.CLASSIC, ThemeSettingsRepository.navBarStyle.value)
         compose.runOnIdle { ThemeSettingsRepository.onProfileChanged() }

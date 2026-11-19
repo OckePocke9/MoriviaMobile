@@ -51,6 +51,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.findRootCoordinates
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -97,6 +102,24 @@ fun NuvioScreen(
         ).withVerticalBar(),
         verticalArrangement = Arrangement.spacedBy(tokens.spacing.listGap),
         content = content,
+    )
+}
+
+/**
+ * When set, sticky screen headers draw this behind themselves instead of the plain background
+ * colour; it is drawn at the size of the whole screen, moved to the header's place.
+ */
+val LocalHeaderBackdrop = androidx.compose.runtime.staticCompositionLocalOf<
+    (androidx.compose.ui.graphics.drawscope.DrawScope.(androidx.compose.ui.geometry.Size) -> Unit)?,
+    > { null }
+
+private fun Modifier.onScreenPositioned(
+    onPositioned: (androidx.compose.ui.geometry.Offset, androidx.compose.ui.geometry.Size) -> Unit,
+): Modifier = this.onGloballyPositioned { coordinates ->
+    val root = coordinates.findRootCoordinates()
+    onPositioned(
+        root.localPositionOf(coordinates, androidx.compose.ui.geometry.Offset.Zero),
+        androidx.compose.ui.geometry.Size(root.size.width.toFloat(), root.size.height.toFloat()),
     )
 }
 
@@ -158,13 +181,33 @@ fun NuvioScreenHeader(
         return
     }
     val resolvedTopPadding = topPadding ?: if (includeStatusBarPadding) statusBarTop else NuvioTokens.Space.none
+    val headerBackdrop = LocalHeaderBackdrop.current
+    var backdropOrigin by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(androidx.compose.ui.geometry.Offset.Zero) }
+    var backdropScreen by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(androidx.compose.ui.geometry.Size.Zero) }
     Box(
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier
                 .matchParentSize()
-                .background(tokens.colors.background)
+                .then(
+                    if (headerBackdrop == null) {
+                        Modifier.background(tokens.colors.background)
+                    } else {
+                        // The screen's own background, as it is at this place on the screen.
+                        Modifier
+                            .onScreenPositioned { origin, screen ->
+                                backdropOrigin = origin
+                                backdropScreen = screen
+                            }
+                            .clipToBounds()
+                            .drawBehind {
+                                if (backdropScreen.width > 0f) {
+                                    translate(-backdropOrigin.x, -backdropOrigin.y) { headerBackdrop(backdropScreen) }
+                                }
+                            }
+                    },
+                )
                 .nuvioConsumePointerEvents(),
         ) {}
         Row(
@@ -346,9 +389,11 @@ fun NuvioInputField(
     shape: Shape = MaterialTheme.nuvio.shapes.compactCard,
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     trailingContent: (@Composable (() -> Unit))? = null,
+    leadingContent: (@Composable (() -> Unit))? = null,
 ) {
     val tokens = MaterialTheme.nuvio
     OutlinedTextField(
+        leadingIcon = leadingContent,
         value = value,
         onValueChange = onValueChange,
         modifier = modifier.fillMaxWidth(),

@@ -196,6 +196,21 @@ internal enum class SettingsPage(
         category = SettingsCategory.Look,
         parentPage = Layout,
     ),
+    MoriviaHomeLayout(
+        titleRes = Res.string.morivia_hl_title,
+        category = SettingsCategory.Look,
+        parentPage = Layout,
+    ),
+    MoriviaSearch(
+        titleRes = Res.string.morivia_search_settings_title,
+        category = SettingsCategory.Look,
+        parentPage = Layout,
+    ),
+    MoriviaLibrary(
+        titleRes = Res.string.morivia_library_settings_title,
+        category = SettingsCategory.Look,
+        parentPage = Layout,
+    ),
     MetaScreen(
         titleRes = Res.string.compose_settings_page_meta_screen,
         category = SettingsCategory.Look,
@@ -261,6 +276,9 @@ internal val SettingsPage.icon: ImageVector
         SettingsPage.MediaServers -> Icons.Default.Dns
         SettingsPage.MediaServer -> Icons.Default.Dns
         SettingsPage.Homescreen -> Icons.Default.Dashboard
+        SettingsPage.MoriviaHomeLayout -> Icons.Default.Dashboard
+        SettingsPage.MoriviaSearch -> Icons.Default.Explore
+        SettingsPage.MoriviaLibrary -> Icons.Default.History
         SettingsPage.MetaScreen -> Icons.Default.Description
         SettingsPage.Integrations -> Icons.Default.Link
         SettingsPage.TmdbEnrichment -> Icons.Default.Link

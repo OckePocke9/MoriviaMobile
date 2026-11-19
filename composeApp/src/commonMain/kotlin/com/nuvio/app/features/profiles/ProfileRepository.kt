@@ -168,6 +168,7 @@ object ProfileRepository {
         }
         ThemeSettingsRepository.onProfileChanged()
         PosterCardStyleRepository.onProfileChanged()
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.onProfileChanged()
         CardDepthStyleRepository.onProfileChanged()
         PlayerSettingsRepository.onProfileChanged()
         StreamBadgeSettingsRepository.onProfileChanged()

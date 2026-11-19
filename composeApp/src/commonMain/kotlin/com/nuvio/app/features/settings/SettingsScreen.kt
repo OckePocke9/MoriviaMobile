@@ -706,6 +706,7 @@ private fun MobileSettingsScreen(
                     onCollectionsClick = onCollectionsClick,
                     onContinueWatchingClick = onContinueWatchingClick,
                     onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
+                    onMoriviaPageClick = { onPageChange(it) },
                 )
                 SettingsPage.About -> aboutSettingsContent(
                     isTablet = false,
@@ -756,6 +757,14 @@ private fun MobileSettingsScreen(
                     onBack = onNavigateBack,
                 )
                 SettingsPage.Plugins -> if (AppFeaturePolicy.pluginsEnabled) pluginsSettingsContent() else addonsSettingsContent()
+                SettingsPage.MoriviaHomeLayout -> moriviaHomeLayoutContent(
+                    isTablet = false,
+                    onHeroSourceClick = { onHomescreenClick() },
+                    onHomeRowsClick = { onHomescreenClick() },
+                    onCollectionsClick = onCollectionsClick,
+                )
+                SettingsPage.MoriviaSearch -> moriviaSearchSettingsContent(isTablet = false)
+                SettingsPage.MoriviaLibrary -> moriviaLibrarySettingsContent(isTablet = false)
                 SettingsPage.Homescreen -> homescreenSettingsContent(
                     isTablet = false,
                     heroEnabled = homescreenHeroEnabled,
@@ -1109,6 +1118,7 @@ private fun TabletSettingsScreen(
                         onCollectionsClick = onCollectionsClick,
                         onContinueWatchingClick = { openInlinePage(SettingsPage.ContinueWatching) },
                         onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
+                        onMoriviaPageClick = { openInlinePage(it) },
                     )
                     SettingsPage.About -> aboutSettingsContent(
                         isTablet = true,
@@ -1159,6 +1169,14 @@ private fun TabletSettingsScreen(
                         onBack = onNavigateBack,
                     )
                     SettingsPage.Plugins -> if (AppFeaturePolicy.pluginsEnabled) pluginsSettingsContent() else addonsSettingsContent()
+                    SettingsPage.MoriviaHomeLayout -> moriviaHomeLayoutContent(
+                        isTablet = true,
+                        onHeroSourceClick = { openInlinePage(SettingsPage.Homescreen) },
+                        onHomeRowsClick = { openInlinePage(SettingsPage.Homescreen) },
+                        onCollectionsClick = onCollectionsClick,
+                    )
+                    SettingsPage.MoriviaSearch -> moriviaSearchSettingsContent(isTablet = true)
+                    SettingsPage.MoriviaLibrary -> moriviaLibrarySettingsContent(isTablet = true)
                     SettingsPage.Homescreen -> homescreenSettingsContent(
                         isTablet = true,
                         heroEnabled = homescreenHeroEnabled,

@@ -5,8 +5,16 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 
+/**
+ * Android shows the app icon of the launcher entry (activity alias) that is turned on. Turning off
+ * the entry the app was opened from ends the app, even with DONT_KILL_APP, so a new icon is only
+ * switched when the app goes to the background: the app never closes while it is in use.
+ */
 internal actual object AppIconPlatform {
-    actual val requiresCloseConfirmation: Boolean = true
+    actual val requiresCloseConfirmation: Boolean = false
+
+    private var pendingClass: String? = null
+    private var observing = false
 
     private const val launcherPackage = "com.nuvio.app.launcher"
     private val launcherComponents = AppIconOption.entries.map { option ->
@@ -30,6 +38,59 @@ internal actual object AppIconPlatform {
         val appContext = context.applicationContext
         this.context = appContext
         restoreDefaultIfNeeded(appContext)
+        if (!observing) {
+            observing = true
+            androidx.lifecycle.ProcessLifecycleOwner.get().lifecycle.addObserver(
+                androidx.lifecycle.LifecycleEventObserver { _, event ->
+                    if (event == androidx.lifecycle.Lifecycle.Event.ON_STOP) applyPendingIcon()
+                },
+            )
+        }
+    }
+
+    /** Switches to the chosen icon now that the app is in the background. */
+    private fun applyPendingIcon() {
+        val selectedClass = pendingClass ?: return
+        val appContext = context ?: return
+        pendingClass = null
+        applyIcon(appContext, selectedClass)
+    }
+
+    private fun applyIcon(appContext: Context, selectedClass: String): Boolean {
+        val packageManager = appContext.packageManager
+        return runCatching {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.setComponentEnabledSettings(
+                    launcherComponents.map { (_, className) ->
+                        PackageManager.ComponentEnabledSetting(
+                            component(appContext, className),
+                            if (className == selectedClass) {
+                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                            } else {
+                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                            },
+                            PackageManager.DONT_KILL_APP,
+                        )
+                    },
+                )
+            } else {
+                // Turn the new entry on first, so there is always one launcher entry.
+                packageManager.setComponentEnabledSetting(
+                    component(appContext, selectedClass),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP,
+                )
+                launcherComponents.forEach { (_, className) ->
+                    if (className != selectedClass) {
+                        packageManager.setComponentEnabledSetting(
+                            component(appContext, className),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP,
+                        )
+                    }
+                }
+            }
+        }.isSuccess
     }
 
     actual fun currentIconName(): String? {
@@ -90,37 +151,21 @@ internal actual object AppIconPlatform {
     actual suspend fun activateIcon(name: String?): Boolean {
         val appContext = context ?: return false
         val selectedClass = launcherComponents.firstOrNull { it.first == name }?.second ?: return false
-        val packageManager = appContext.packageManager
-
-        return runCatching {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                packageManager.setComponentEnabledSettings(
-                    launcherComponents.map { (_, className) ->
-                        PackageManager.ComponentEnabledSetting(
-                            component(appContext, className),
-                            if (className == selectedClass) {
-                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                            } else {
-                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                            },
-                            PackageManager.DONT_KILL_APP,
-                        )
-                    },
-                )
-            } else {
-                launcherComponents.forEach { (_, className) ->
-                    packageManager.setComponentEnabledSetting(
-                        component(appContext, className),
-                        if (className == selectedClass) {
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                        } else {
-                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                        },
-                        PackageManager.DONT_KILL_APP,
-                    )
-                }
-            }
-        }.isSuccess
+        if (appContext.packageManager.getComponentEnabledSetting(component(appContext, selectedClass)) ==
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        ) {
+            pendingClass = null
+            return true
+        }
+        val inUse = androidx.lifecycle.ProcessLifecycleOwner.get().lifecycle.currentState
+            .isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)
+        if (!inUse) {
+            pendingClass = null
+            return applyIcon(appContext, selectedClass)
+        }
+        // Switched when the app goes to the background, so the app stays open.
+        pendingClass = selectedClass
+        return true
     }
 
     private fun component(context: Context, className: String): ComponentName =

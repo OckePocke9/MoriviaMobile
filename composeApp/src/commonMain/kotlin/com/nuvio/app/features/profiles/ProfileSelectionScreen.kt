@@ -154,8 +154,8 @@ fun ProfileSelectionScreen(
             exit = fadeOut(tween(180)),
             modifier = Modifier.fillMaxSize(),
         ) {
-            // The content sits in the middle of the screen (it scrolls when there are many profiles).
-            val viewportHeight = this@BoxWithConstraints.maxHeight - statusBarTop
+            // Nuvio's layout on a phone: the content starts at the top (60 dp below the status bar) and
+            // every part sits at the same height as in Nuvio's picker; it scrolls with many profiles.
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -164,21 +164,20 @@ fun ProfileSelectionScreen(
                         if (isTabletLayout) {
                             Modifier
                         } else {
-                            Modifier
-                                .verticalScroll(rememberScrollState())
-                                .heightIn(min = viewportHeight)
+                            Modifier.verticalScroll(rememberScrollState())
                         },
                     )
                     .padding(horizontal = 24.dp),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = if (isTabletLayout) Arrangement.Center else Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 0.dp else 24.dp))
+                Spacer(modifier = Modifier.height(if (isTabletLayout) 0.dp else 60.dp))
 
-                // The logo and name from the earlier Morivia app (1.4.130), at its exact size: a 34 x 28
-                // symbol, 8 dp gap, "Morivia" at 25 sp, then "Who's watching?" 20 dp below at 30 sp.
+                // The logo and name from the earlier Morivia app (a 34 x 28 symbol, 8 dp gap, "Morivia"
+                // at 25 sp) in the 40 dp row where Nuvio shows its wordmark, then "Who's watching?"
+                // 18 dp below, as in Nuvio.
                 Row(
-                    modifier = Modifier.height(34.dp).graphicsLayer {
+                    modifier = Modifier.height(40.dp).graphicsLayer {
                         alpha = titleAlpha.value
                         translationY = titleOffset.value
                     },
@@ -198,7 +197,7 @@ fun ProfileSelectionScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 18.dp))
 
                 Text(
                     text = stringResource(Res.string.profile_who_is_watching),
@@ -486,7 +485,7 @@ private fun ProfileAvatarCard(
                     Text(
                         text = profile.name.take(1).uppercase(),
                         style = MaterialTheme.typography.headlineLarge.copy(fontSize = 40.sp, fontFamily = earlierMoriviaFont(700)),
-                        color = Color.White,
+                        color = initialsTextColor(avatarColor),
                         fontWeight = FontWeight(700),
                     )
                 } else {

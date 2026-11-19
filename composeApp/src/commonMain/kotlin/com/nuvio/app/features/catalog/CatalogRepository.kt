@@ -46,6 +46,11 @@ object CatalogRepository {
             observeInternalLibrary(request)
             return
         }
+        if (target is CatalogTarget.Fixed) {
+            activeJob?.cancel()
+            _uiState.value = CatalogUiState(items = FixedCatalogStore.get(target.key), isLoading = false)
+            return
+        }
         fetchPage(
             request = request,
             reset = true,
@@ -158,7 +163,7 @@ object CatalogRepository {
 
                     is CatalogTarget.Server -> ServerCatalog.page(target, skip = requestedSkip)
 
-                    is CatalogTarget.Library -> error(getString(Res.string.catalog_load_failed))
+                    is CatalogTarget.Library, is CatalogTarget.Fixed -> error(getString(Res.string.catalog_load_failed))
                 }.withUnreleasedFilter(request.hideUnreleasedContent)
             }.fold(
                 onSuccess = { page ->

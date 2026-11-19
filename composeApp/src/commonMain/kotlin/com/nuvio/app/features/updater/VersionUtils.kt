@@ -45,7 +45,7 @@ internal data class SemanticVersion(
 
 internal object VersionUtils {
     private val versionPattern = Regex(
-        "^(\\d+)\\.(\\d+)\\.(\\d+)" +
+        "^(\\d+)\\.(\\d+)(?:\\.(\\d+))?" +
             "(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?" +
             "(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
     )
@@ -60,7 +60,8 @@ internal object VersionUtils {
         return SemanticVersion(
             major = match.groupValues[1].toLongOrNull() ?: return null,
             minor = match.groupValues[2].toLongOrNull() ?: return null,
-            patch = match.groupValues[3].toLongOrNull() ?: return null,
+            // Morivia versions have two parts (1.6); a missing third part counts as 0.
+            patch = match.groupValues[3].ifEmpty { "0" }.toLongOrNull() ?: return null,
             prerelease = match.groupValues[4]
                 .takeIf(String::isNotEmpty)
                 ?.split('.')

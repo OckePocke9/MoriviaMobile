@@ -43,6 +43,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.home_view_all
+import nuvio.composeapp.generated.resources.morivia_show_all
+import nuvio.composeapp.generated.resources.morivia_poster_new
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
 import nuvio.composeapp.generated.resources.poster_logo_content_description
 import org.jetbrains.compose.resources.stringResource
 
@@ -135,10 +139,14 @@ fun NuvioPosterCard(
     isWatched: Boolean = false,
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
+    /** Shows the earlier Morivia app's "New" banner in the top left corner. */
+    showNewBanner: Boolean = false,
+    /** A fixed card width (Home's larger posters); null uses Poster Card Style. */
+    widthOverride: Dp? = null,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
     val tokens = MaterialTheme.nuvio
-    val cardWidth = shape.cardWidth(basePosterWidthDp = posterCardStyle.widthDp)
+    val cardWidth = widthOverride ?: shape.cardWidth(basePosterWidthDp = posterCardStyle.widthDp)
     val cardShape = RoundedCornerShape(posterCardStyle.cornerRadiusDp.dp)
     val catalogLogoOverlaySize = catalogLogoOverlaySize(
         basePosterWidthDp = posterCardStyle.widthDp,
@@ -245,6 +253,20 @@ fun NuvioPosterCard(
                 }
             }
 
+            if (showNewBanner) {
+                Text(
+                    text = stringResource(Res.string.morivia_poster_new),
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(6.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(MaterialTheme.colorScheme.primary)
+                        .padding(horizontal = 6.dp, vertical = 2.dp),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    maxLines = 1,
+                )
+            }
             NuvioPosterWatchedOverlay(isWatched = isWatched)
         }
         if (shouldShowTitleBelow) {
@@ -319,27 +341,44 @@ private fun NuvioViewAllPill(
     size: NuvioViewAllPillSize,
     modifier: Modifier = Modifier,
 ) {
+    // The earlier Morivia app's "Show all" button: an outlined pill with the text and a small
+    // circle in the theme colour holding the arrow.
     val tokens = MaterialTheme.nuvio
-    val actionSize = if (size == NuvioViewAllPillSize.Compact) NuvioTokens.Space.s32 else NuvioTokens.Space.s40
-    val iconSize = if (size == NuvioViewAllPillSize.Compact) NuvioTokens.Icon.sm else tokens.icons.md
-    val viewAllText = stringResource(Res.string.home_view_all)
+    val compact = size == NuvioViewAllPillSize.Compact
+    val showAllText = stringResource(Res.string.morivia_show_all)
+    val pillShape = RoundedCornerShape(50)
 
-    Box(
+    Row(
         modifier = modifier
-            .size(actionSize)
-            .background(
-                color = tokens.colors.surface,
-                shape = RoundedCornerShape(NuvioTokens.Radius.xl),
-            )
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
-        contentAlignment = Alignment.Center,
+            .height(if (compact) 34.dp else 38.dp)
+            .clip(pillShape)
+            .background(Color.Black.copy(alpha = 0.35f), pillShape)
+            .border(1.dp, Color.White.copy(alpha = 0.16f), pillShape)
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .padding(start = 14.dp, end = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Icon(
-            imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-            contentDescription = viewAllText,
-            tint = tokens.colors.textMuted,
-            modifier = Modifier.size(iconSize),
+        Text(
+            text = showAllText,
+            style = MaterialTheme.typography.labelLarge,
+            color = tokens.colors.textPrimary,
+            maxLines = 1,
         )
+        Box(
+            modifier = Modifier
+                .size(if (compact) 24.dp else 28.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.size(if (compact) 18.dp else 20.dp),
+            )
+        }
     }
 }
 

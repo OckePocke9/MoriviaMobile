@@ -29,6 +29,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -68,6 +77,9 @@ import com.nuvio.app.features.home.MetaPreview
 import com.nuvio.app.features.home.stableKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import androidx.compose.runtime.snapshotFlow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nuvio.app.features.details.youtubePlaybackUrl
 import kotlinx.coroutines.launch
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -83,6 +95,14 @@ private const val HERO_SCROLL_MAX_SCALE = 1.3f
 private const val HERO_SWIPE_THRESHOLD_FRACTION = 0.16f
 private const val HERO_SWIPE_VELOCITY_THRESHOLD = 300f
 private const val HERO_AUTO_SCROLL_INTERVAL_MS = 8_000L
+private const val HERO_TRAILER_SCROLL_INTERVAL_MS = 45_000L
+
+/**
+ * The gap from View Details to the dots. The hero ends [HERO_BOTTOM_PADDING] below the dots and
+ * Home's list adds 12 dp before Continue Watching, so the dots are the same distance from both.
+ */
+private val HERO_DOTS_GAP = 20.dp
+private val HERO_BOTTOM_PADDING = 8.dp
 private const val MOBILE_HERO_VIEWPORT_RATIO = 0.82f
 private const val MOBILE_HERO_MIN_HEIGHT_DP = 360f
 private const val MOBILE_HERO_MAX_HEIGHT_DP = 760f
@@ -136,15 +156,38 @@ fun HomeHeroSection(
         }
     }
 
-    ScreenActivityEffect(autoScrollPage, items.size) { active ->
-        if (!active || items.size <= 1) return@ScreenActivityEffect
-        delay(HERO_AUTO_SCROLL_INTERVAL_MS)
+    val moriviaLayout by com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.settings
+        .collectAsStateWithLifecycle()
+    // Hybrid stops rolling after the first swipe; a swipe is a scroll the hero did not start itself.
+    var autoScrolling by remember { mutableStateOf(false) }
+    var userSwiped by remember { mutableStateOf(false) }
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.isScrollInProgress }.collect { scrolling ->
+            if (scrolling && !autoScrolling) userSwiped = true
+        }
+    }
+    var trailerPlaying by remember { mutableStateOf(false) }
+    val rolls = when (moriviaLayout.heroLayout) {
+        com.nuvio.app.features.settings.MoriviaHeroLayout.ROLLING -> true
+        com.nuvio.app.features.settings.MoriviaHeroLayout.PINNED -> false
+        com.nuvio.app.features.settings.MoriviaHeroLayout.HYBRID -> !userSwiped
+    }
+
+    ScreenActivityEffect(autoScrollPage, items.size, rolls, trailerPlaying) { active ->
+        if (!active || items.size <= 1 || !rolls) return@ScreenActivityEffect
+        // As in the earlier Morivia app: 8 seconds per title, 45 while a trailer plays.
+        delay(if (trailerPlaying) HERO_TRAILER_SCROLL_INTERVAL_MS else HERO_AUTO_SCROLL_INTERVAL_MS)
         while (pagerState.isScrollInProgress) {
             delay(100L)
         }
 
         val nextPage = pagerState.currentPage + 1
-        pagerState.animateScrollToPage(nextPage)
+        autoScrolling = true
+        try {
+            pagerState.animateScrollToPage(nextPage)
+        } finally {
+            autoScrolling = false
+        }
     }
 
     BoxWithConstraints(
@@ -250,6 +293,16 @@ fun HomeHeroSection(
                             )
                         }
                     }
+                    // Hero video (Home & Layout): the title's trailer plays behind the hero.
+                    if (moriviaLayout.heroVideo) {
+                        HomeHeroTrailer(
+                            item = items[pagerState.settledPage % items.size],
+                            muted = !moriviaLayout.trailerSound,
+                            onPlayingChange = { trailerPlaying = it },
+                        )
+                    } else {
+                        LaunchedEffect(Unit) { trailerPlaying = false }
+                    }
                 }
 
                 Box(
@@ -286,15 +339,10 @@ fun HomeHeroSection(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .padding(
-                            if (layout.isTablet) {
-                                PaddingValues(horizontal = layout.contentHorizontalPadding).withVerticalBar()
-                            } else {
-                                centeredVerticalBarPadding(layout.contentHorizontalPadding)
-                            },
-                        )
+                        // Morivia: everything left-aligned on one edge, as in the earlier Morivia app.
+                        .padding(PaddingValues(horizontal = layout.contentHorizontalPadding).withVerticalBar())
                         .padding(vertical = layout.contentVerticalPadding),
-                    horizontalAlignment = if (layout.isTablet) Alignment.Start else Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Box(
                         modifier = Modifier
@@ -324,29 +372,69 @@ fun HomeHeroSection(
                     }
 
                     if (!layout.isTablet) {
-                        Spacer(modifier = Modifier.height(14.dp))
-                        Surface(
-                            modifier = Modifier
-                                .clickable(enabled = onItemClick != null) {
-                                    onItemClick?.invoke(currentItem)
-                                },
-                            color = MaterialTheme.colorScheme.onBackground,
-                            contentColor = MaterialTheme.colorScheme.background,
-                            shape = RoundedCornerShape(40.dp),
+                        // The earlier Morivia app's buttons: View Details in the theme colour, an
+                        // information button and a plain arrow to the next title.
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
-                            Text(
-                                text = stringResource(Res.string.home_view_details),
-                                modifier = Modifier.padding(horizontal = 28.dp, vertical = 12.dp),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                            )
+                            Surface(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(40.dp))
+                                    .clickable(enabled = onItemClick != null) {
+                                        onItemClick?.invoke(currentItem)
+                                    },
+                                color = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary,
+                                shape = RoundedCornerShape(40.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(Res.string.home_view_details),
+                                    modifier = Modifier.padding(horizontal = 40.dp, vertical = 13.dp),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.White.copy(alpha = 0.22f))
+                                    .clickable(enabled = onItemClick != null) { onItemClick?.invoke(currentItem) },
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Info,
+                                    contentDescription = stringResource(Res.string.home_view_details),
+                                    tint = Color.White,
+                                    modifier = Modifier.size(26.dp),
+                                )
+                            }
+                            if (items.size > 1) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .clickable {
+                                            coroutineScope.launch {
+                                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                            }
+                                        },
+                                )
+                            }
                         }
                     }
 
                     if (items.size > 1) {
-                        Spacer(modifier = Modifier.height(if (layout.isTablet) 14.dp else 12.dp))
+                        // The same gap above the dots as from the dots to Continue Watching.
+                        Spacer(modifier = Modifier.height(if (layout.isTablet) 14.dp else HERO_DOTS_GAP))
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = if (layout.isTablet) Modifier else Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             items.forEachIndexed { index, _ ->
@@ -374,9 +462,95 @@ fun HomeHeroSection(
                         }
                     }
                 }
+
+                // The earlier Morivia app's Home pill, below the clock and on the same edge as
+                // the hero text.
+                if (!layout.isTablet) {
+                    val statusBarTop = androidx.compose.foundation.layout.WindowInsets.statusBars
+                        .asPaddingValues().calculateTopPadding()
+                    com.nuvio.app.core.ui.MoriviaPagePill(
+                        label = stringResource(Res.string.compose_nav_home),
+                        icon = Icons.Rounded.Home,
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(PaddingValues(start = layout.contentHorizontalPadding).withVerticalBar())
+                            .padding(top = statusBarTop + 12.dp),
+                    )
+                }
             }
         }
     }
+}
+
+/**
+ * The trailer of [item] behind the hero, as in the earlier Morivia app: it stays invisible until
+ * it plays, so the artwork shows while it loads or when a title has no trailer.
+ */
+@Composable
+private fun HomeHeroTrailer(
+    item: MetaPreview,
+    muted: Boolean,
+    onPlayingChange: (Boolean) -> Unit,
+) {
+    if (!com.nuvio.app.core.build.AppFeaturePolicy.heroTrailerPlaybackSupported ||
+        com.nuvio.app.core.build.AppFeaturePolicy.trailerPlaybackMode != com.nuvio.app.core.build.TrailerPlaybackMode.IN_APP
+    ) {
+        return
+    }
+    var source by remember(item.id) { mutableStateOf<com.nuvio.app.features.trailer.TrailerPlaybackSource?>(null) }
+    var ready by remember(item.id) { mutableStateOf(false) }
+    var finished by remember(item.id) { mutableStateOf(false) }
+    LaunchedEffect(item.id, item.type) {
+        onPlayingChange(false)
+        // Wait a moment so quick swipes do not start trailers.
+        delay(1_200L)
+        val meta = com.nuvio.app.features.details.MetaDetailsRepository.peek(item.type, item.id)
+            ?: runCatching { com.nuvio.app.features.details.MetaDetailsRepository.fetch(item.type, item.id) }.getOrNull()
+        val trailer = meta?.let { com.nuvio.app.features.details.selectHeroTrailer(it.trailers) }
+        if (trailer == null) {
+            finished = true
+            return@LaunchedEffect
+        }
+        source = runCatching {
+            com.nuvio.app.features.trailer.TrailerPlaybackResolver.resolveFromYouTubeUrl(trailer.youtubePlaybackUrl())
+        }.getOrNull()
+        if (source == null) finished = true
+    }
+    androidx.compose.runtime.DisposableEffect(item.id) {
+        onDispose { onPlayingChange(false) }
+    }
+    val playing = source
+    if (playing == null || finished) return
+    val alpha by androidx.compose.animation.core.animateFloatAsState(
+        targetValue = if (ready) 1f else 0f,
+        animationSpec = androidx.compose.animation.core.tween(600),
+        label = "HomeHeroTrailerAlpha",
+    )
+    com.nuvio.app.features.details.components.HeroTrailerPlayerSurface(
+        sourceUrl = playing.videoUrl,
+        sourceAudioUrl = playing.audioUrl,
+        playWhenReady = true,
+        muted = muted,
+        modifier = Modifier
+            .fillMaxSize()
+            .graphicsLayer {
+                this.alpha = alpha
+                scaleX = 1.08f
+                scaleY = 1.08f
+            },
+        onReady = {
+            ready = true
+            onPlayingChange(true)
+        },
+        onEnded = {
+            finished = true
+            onPlayingChange(false)
+        },
+        onError = {
+            finished = true
+            onPlayingChange(false)
+        },
+    )
 }
 
 private data class HeroPageLayer(
@@ -436,11 +610,12 @@ private fun HeroContentBlock(
     }
     val logoUrl = item.logo?.takeIf { it.isNotBlank() }
 
+    // Morivia: left-aligned like the earlier Morivia app, without ratings in the hero.
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(),
-        horizontalAlignment = if (layout.isTablet) Alignment.Start else Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
     ) {
         if (logoUrl != null && !logoLoadError) {
             AsyncImage(
@@ -452,7 +627,7 @@ private fun HeroContentBlock(
                     .clickable(enabled = onItemClick != null) {
                         onItemClick?.invoke(item)
                     },
-                alignment = if (layout.isTablet) Alignment.CenterStart else Alignment.Center,
+                alignment = Alignment.CenterStart,
                 contentScale = ContentScale.Fit,
                 onError = { logoLoadError = true },
             )
@@ -464,26 +639,59 @@ private fun HeroContentBlock(
                     .clickable(enabled = onItemClick != null) {
                         onItemClick?.invoke(item)
                     },
-                style = if (layout.isTablet) {
-                    MaterialTheme.typography.displaySmall
-                } else {
-                    MaterialTheme.typography.displaySmall
-                },
+                style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Black,
-                textAlign = if (layout.isTablet) TextAlign.Start else TextAlign.Center,
+                textAlign = TextAlign.Start,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
-        HomeHeroMetaRows(
-            item = item,
-            isTablet = layout.isTablet,
-            showImdbRating = showImdbRating,
-            showMdbListRatings = showMdbListRatings,
+        Spacer(modifier = Modifier.height(16.dp))
+        // The badge: the first genre, or "Featured".
+        Text(
+            text = item.genres.firstOrNull { it.isNotBlank() } ?: stringResource(Res.string.morivia_hero_featured),
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.White.copy(alpha = 0.16f))
+                .padding(horizontal = 10.dp, vertical = 5.dp),
+            style = MaterialTheme.typography.labelLarge,
+            color = Color.White,
+            fontWeight = FontWeight.SemiBold,
         )
+        val metaLine = listOfNotNull(
+            stringResource(
+                if (item.type.lowercase().let { it == "series" || it == "tv" || it == "anime" }) {
+                    Res.string.morivia_hero_show
+                } else {
+                    Res.string.morivia_hero_movie
+                },
+            ),
+            item.genres.firstOrNull { it.isNotBlank() },
+            item.releaseInfo?.let { Regex("\\d{4}").find(it)?.value },
+        ).joinToString(" · ")
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = metaLine,
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.White,
+            fontWeight = FontWeight.Medium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+        val description = item.description?.trim().orEmpty()
+        if (description.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White.copy(alpha = 0.92f),
+                textAlign = TextAlign.Start,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
 
@@ -532,8 +740,9 @@ internal fun homeHeroLayout(
             ),
             contentMaxWidth = 480.dp,
             contentWidthFraction = 1f,
-            contentHorizontalPadding = 24.dp,
-            contentVerticalPadding = 16.dp,
+            // Morivia: the content starts 16 dp from the edge, like the Home pill and the rows.
+            contentHorizontalPadding = 16.dp,
+            contentVerticalPadding = HERO_BOTTOM_PADDING,
             bottomFadeHeight = 220.dp,
             logoWidthFraction = 0.62f,
         )

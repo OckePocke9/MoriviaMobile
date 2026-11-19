@@ -52,6 +52,8 @@ import com.nuvio.app.features.details.MetaVideo
 import com.nuvio.app.features.details.SeriesPrimaryAction
 import com.nuvio.app.features.details.seriesPrimaryAction
 import com.nuvio.app.features.home.components.HomeCatalogRowSection
+import com.nuvio.app.features.home.components.homePosterWidth
+import com.nuvio.app.features.home.components.homeFeaturedCardWidth
 import com.nuvio.app.features.home.components.HomeContinueWatchingSection
 import com.nuvio.app.features.home.components.HomeEmptyStateCard
 import com.nuvio.app.features.home.components.HomeHeroReservedSpace
@@ -947,12 +949,112 @@ private fun HomeScreenWithCatalogs(
     val sectionsMap = remember(homeUiState.sections) {
         homeUiState.sections.associateBy(HomeCatalogSection::key)
     }
+
     val enabledHomeItems = remember(homeSettingsUiState.items) {
         homeSettingsUiState.items.filter { it.enabled }
     }
     val keyedEnabledHomeItems = remember(enabledHomeItems) {
         enabledHomeItems.withDuplicateSafeLazyKeys(HomeCatalogSettingsItem::key)
     }
+    // Morivia's Home & Layout settings (from the earlier Morivia app).
+    val moriviaLayout by remember {
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.ensureLoaded()
+        com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.settings
+    }.collectAsStateWithLifecycle()
+
+    // "Movies/Series Based on Your Genres": the latest watched movie and the latest watched
+    // series, from watched marks and watch progress.
+    val watchHistory = remember(watchedUiState.items, watchProgressUiState.entries) {
+        watchedUiState.items.map { item ->
+            WatchedTitle(id = item.id, type = item.type, name = item.name, watchedAtEpochMs = item.markedAtEpochMs)
+        } + watchProgressUiState.entries.map { entry ->
+            WatchedTitle(
+                id = entry.parentMetaId,
+                type = entry.parentMetaType,
+                name = entry.title,
+                watchedAtEpochMs = entry.lastUpdatedEpochMs,
+            )
+        }
+    }
+    val latestMovie = remember(watchHistory) { latestWatched(watchHistory, isSeries = false) }
+    val latestSeries = remember(watchHistory) { latestWatched(watchHistory, isSeries = true) }
+    val genresById = remember { androidx.compose.runtime.mutableStateMapOf<String, List<String>>() }
+    LaunchedEffect(latestMovie?.id, latestSeries?.id, homeUiState.sections) {
+        for (title in listOfNotNull(latestMovie, latestSeries)) {
+            if (genresById[title.id]?.isNotEmpty() == true) continue
+            val genres = homeUiState.sections.asSequence().flatMap { it.items.asSequence() }
+                .firstOrNull { it.id == title.id && it.genres.isNotEmpty() }?.genres
+                ?: com.nuvio.app.features.details.MetaDetailsRepository.peek(title.type, title.id)?.genres
+                ?: runCatching {
+                    com.nuvio.app.features.details.MetaDetailsRepository.fetch(title.type, title.id)?.genres
+                }.getOrNull()
+            if (!genres.isNullOrEmpty()) genresById[title.id] = genres
+        }
+    }
+    val genreSnapshot = genresById.toMap()
+    val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.moviesByGenres) {
+        if (moriviaLayout.moviesByGenres) {
+            buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+        } else {
+            null
+        }
+    }
+    val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.seriesByGenres) {
+        if (moriviaLayout.seriesByGenres) {
+            buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+        } else {
+            null
+        }
+    }
+    androidx.compose.runtime.SideEffect {
+        listOfNotNull(movieRecommendation, seriesRecommendation).forEach {
+            com.nuvio.app.features.catalog.FixedCatalogStore.put(it.key, it.items)
+        }
+    }
+
+    // The fixed order of the earlier Morivia app: Popular – Movies, Popular – Series,
+    // Featured – Movies and Featured – Series first, then the other rows in Home rows order.
+    fun findSection(word: String, series: Boolean): HomeCatalogSection? =
+        enabledHomeItems.asSequence()
+            .filter { !it.isCollection }
+            .mapNotNull { sectionsMap[it.key] }
+            .firstOrNull { section ->
+                section.items.isNotEmpty() &&
+                    section.title.contains(word, ignoreCase = true) &&
+                    section.target.contentType.isSeriesLikeType() == series
+            }
+    val popularMovies = findSection("popular", series = false)
+    val popularSeries = findSection("popular", series = true)
+    val featuredMovies = findSection("featured", series = false)
+    val featuredSeries = findSection("featured", series = true)
+    val pinnedSectionKeys = listOfNotNull(popularMovies, popularSeries, featuredMovies, featuredSeries).map { it.key }.toSet()
+    // The main Featured row: five large cards, movies and series taking turns, no repeats.
+    val mainFeaturedItems = remember(featuredMovies, featuredSeries, popularMovies, popularSeries) {
+        val sources = listOfNotNull(featuredMovies, featuredSeries).ifEmpty { listOfNotNull(popularMovies, popularSeries) }
+        val picked = mutableListOf<MetaPreview>()
+        var index = 0
+        while (picked.size < MAIN_FEATURED_LIMIT && sources.any { index < it.items.size }) {
+            sources.forEach { source ->
+                val item = source.items.getOrNull(index)
+                if (item != null && picked.size < MAIN_FEATURED_LIMIT && picked.none { it.id == item.id }) picked += item
+            }
+            index++
+        }
+        picked
+    }
+
+
+    // Auto-refresh Home: reloads the rows on the chosen schedule.
+    LaunchedEffect(moriviaLayout.autoRefreshMinutes) {
+        val minutes = moriviaLayout.autoRefreshMinutes
+        if (minutes <= 0) return@LaunchedEffect
+        while (true) {
+            kotlinx.coroutines.delay(minutes * 60_000L)
+            HomeRepository.refresh(AddonRepository.uiState.value.addons.enabledAddons(), force = true)
+        }
+    }
+    val animateCollectionGifsSetting = animateCollectionGifs &&
+        moriviaLayout.collectionGifs == com.nuvio.app.features.settings.MoriviaCollectionGifs.ANIMATED
     val resolvedBadgeInputs = remember(activeProfileId, effectiveWatchProgressSource) {
         mutableStateOf<Triple<WatchedUiState, List<WatchProgressEntry>, String>?>(null)
     }
@@ -1218,6 +1320,87 @@ private fun HomeScreenWithCatalogs(
                         disintegrationRequest = continueWatchingDisintegrationRequest,
                     )
 
+                    // Morivia's order: the genre rows, the main Featured row, Popular – Movies,
+                    // Popular – Series, Featured – Movies, Featured – Series, then every other row.
+                    val homePosterSize = homePosterWidth(maxWidth, homeSectionPadding)
+                    listOfNotNull(movieRecommendation, seriesRecommendation).forEach { recommendation ->
+                        item(key = recommendation.key, contentType = "catalog") {
+                            val section = HomeCatalogSection(
+                                key = recommendation.key,
+                                title = stringResource(
+                                    if (recommendation.isSeries) Res.string.morivia_series_by_genres else Res.string.morivia_movies_by_genres,
+                                ),
+                                subtitle = recommendation.source.name,
+                                addonName = "",
+                                target = com.nuvio.app.features.catalog.CatalogTarget.Fixed(
+                                    key = recommendation.key,
+                                    contentType = if (recommendation.isSeries) "series" else "movie",
+                                ),
+                                items = recommendation.items,
+                            )
+                            HomeCatalogRowSection(
+                                section = section,
+                                entries = recommendation.items.take(GENRE_ROW_HOME_LIMIT),
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                sectionPadding = homeSectionPadding,
+                                onViewAllClick = onCatalogClick?.let { { it(section) } },
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = homePosterSize,
+                            )
+                        }
+                    }
+
+                    if (mainFeaturedItems.isNotEmpty()) {
+                        item(key = "morivia_main_featured", contentType = "featured") {
+                            HomeCatalogRowSection(
+                                section = HomeCatalogSection(
+                                    key = "morivia_main_featured",
+                                    title = stringResource(Res.string.morivia_hero_featured),
+                                    subtitle = "",
+                                    addonName = "",
+                                    target = (featuredMovies ?: featuredSeries ?: popularMovies ?: popularSeries)!!.target,
+                                    items = mainFeaturedItems,
+                                ),
+                                entries = mainFeaturedItems,
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                sectionPadding = homeSectionPadding,
+                                // No Show all on the main Featured row.
+                                onViewAllClick = null,
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = homeFeaturedCardWidth(maxWidth, homeSectionPadding),
+                                landscape = true,
+                            )
+                        }
+                    }
+
+                    listOfNotNull(popularMovies, popularSeries, featuredMovies, featuredSeries).forEach { section ->
+                        val limit = if (section == featuredMovies || section == featuredSeries) FEATURED_ROW_LIMIT else HOME_CATALOG_PREVIEW_LIMIT
+                        item(key = "morivia_pinned_${section.key}", contentType = "catalog") {
+                            HomeCatalogRowSection(
+                                section = section,
+                                entries = section.items.take(limit),
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                sectionPadding = homeSectionPadding,
+                                onViewAllClick = if (section.canOpenCatalog(limit)) {
+                                    onCatalogClick?.let { { it(section) } }
+                                } else {
+                                    null
+                                },
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = homePosterSize,
+                            )
+                        }
+                    }
+
                     keyedEnabledHomeItems.forEach { keyedSettingsItem ->
                         val settingsItem = keyedSettingsItem.value
                         if (settingsItem.isCollection) {
@@ -1228,14 +1411,14 @@ private fun HomeScreenWithCatalogs(
                                         collection = collection,
                                         modifier = Modifier.padding(bottom = 12.dp),
                                         sectionPadding = homeSectionPadding,
-                                        animateGifs = animateCollectionGifs,
+                                        animateGifs = animateCollectionGifsSetting,
                                         onFolderClick = onFolderClick,
                                     )
                                 }
                             }
                         } else {
                             val section = sectionsMap[settingsItem.key]
-                            if (section != null && section.items.isNotEmpty()) {
+                            if (section != null && section.items.isNotEmpty() && section.key !in pinnedSectionKeys) {
                                 item(key = keyedSettingsItem.lazyKey, contentType = "catalog") {
                                     HomeCatalogRowSection(
                                         section = section,
@@ -1251,6 +1434,7 @@ private fun HomeScreenWithCatalogs(
                                         fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                         onPosterClick = onPosterClick,
                                         onPosterLongClick = onPosterLongClick,
+                                        posterWidth = homePosterSize,
                                     )
                                 }
                             }
@@ -1317,7 +1501,9 @@ private fun LazyListScope.homeContinueWatchingSections(
     }
 }
 
-private const val HOME_CATALOG_PREVIEW_LIMIT = 18
+private const val HOME_CATALOG_PREVIEW_LIMIT = 30
+private const val FEATURED_ROW_LIMIT = 5
+private const val MAIN_FEATURED_LIMIT = 5
 private const val HOME_CONTINUE_WATCHING_SECTION_KEY = "home_continue_watching"
 private const val HOME_UPCOMING_SECTION_KEY = "home_upcoming"
 internal const val HomeContinueWatchingMaxRecentProgressItems = 300

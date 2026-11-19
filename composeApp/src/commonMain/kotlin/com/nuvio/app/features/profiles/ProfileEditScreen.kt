@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -53,6 +54,12 @@ import com.nuvio.app.core.ui.NuvioTheme
 import com.nuvio.app.features.settings.ThemeSettingsRepository
 import com.nuvio.app.core.ui.themePalette
 import com.nuvio.app.core.ui.nuvio
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import com.nuvio.app.features.membership.CosmeticEntitlement
 import com.nuvio.app.features.membership.MemberAccessRepository
 import com.nuvio.app.features.membership.ProfileBackgroundRepository
@@ -81,7 +88,9 @@ fun ProfileEditScreen(
             androidx.compose.runtime.CompositionLocalProvider(
                 com.nuvio.app.core.ui.LocalNuvioThemeTokens provides tokens.copy(colors = tokens.colors.copy(background = Color.Transparent)),
             ) {
-                ProfileEditContent(profile = profile, onBack = onBack, onSaved = onSaved, modifier = modifier)
+                ProvideMoriviaHeaderBackdrop {
+                    ProfileEditContent(profile = profile, onBack = onBack, onSaved = onSaved, modifier = modifier)
+                }
             }
         }
     }
@@ -672,7 +681,7 @@ private fun InitialCircle(initial: String, colour: Color, size: androidx.compose
         Text(
             text = initial,
             style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
+            color = initialsTextColor(colour),
             fontWeight = FontWeight.SemiBold,
         )
     }
@@ -685,43 +694,43 @@ private fun FallbackColourPicker(
     selectedHex: String,
     onSelected: (String) -> Unit,
 ) {
-    // nuvio.tv's colours, plus the chosen colour when it is another one (any colour is allowed there).
+    // Morivia's theme colours, plus the profile's own colour when it is another one (for example
+    // one chosen on nuvio.tv, which allows any colour).
     val swatches = if (PROFILE_COLORS.any { it.equals(selectedHex, ignoreCase = true) }) {
         PROFILE_COLORS
     } else {
         PROFILE_COLORS + selectedHex.uppercase()
     }
-    var hexText by remember(selectedHex) { mutableStateOf(selectedHex.uppercase()) }
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
     androidx.compose.foundation.layout.FlowRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         swatches.forEach { hex ->
             val selected = hex.equals(selectedHex, ignoreCase = true)
+            val colour = parseHexColor(hex)
             Box(
                 modifier = Modifier
-                    .size(34.dp)
+                    .size(36.dp)
                     .clip(CircleShape)
-                    .background(parseHexColor(hex))
+                    .background(colour)
                     .border(
-                        width = if (selected) 3.dp else 0.dp,
-                        color = if (selected) MaterialTheme.colorScheme.onSurface else Color.Transparent,
+                        width = if (selected) 3.dp else 1.dp,
+                        color = if (selected) MaterialTheme.colorScheme.onSurface else Color.White.copy(alpha = 0.18f),
                         shape = CircleShape,
                     )
                     .clickable { onSelected(hex) },
-            )
+                contentAlignment = Alignment.Center,
+            ) {
+                if (selected) {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Rounded.Check,
+                        contentDescription = null,
+                        tint = initialsTextColor(colour),
+                        modifier = Modifier.size(18.dp),
+                    )
+                }
+            }
         }
-    }
-    NuvioInputField(
-        value = hexText,
-        onValueChange = { value ->
-            val cleaned = value.trim().uppercase().let { if (it.startsWith("#")) it else "#$it" }.take(7)
-            hexText = cleaned
-            if (Regex("^#[0-9A-F]{6}$").matches(cleaned)) onSelected(cleaned)
-        },
-        placeholder = stringResource(Res.string.profile_custom_colour_hex),
-    )
     }
 }
 

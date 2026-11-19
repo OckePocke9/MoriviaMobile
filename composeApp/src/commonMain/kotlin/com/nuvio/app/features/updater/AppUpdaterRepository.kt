@@ -33,10 +33,8 @@ internal class NoChannelReleaseException : IllegalStateException()
 internal class UpdateRepositoryUnavailableException : IllegalStateException()
 
 internal object AppUpdaterRepository {
-    // MoriviaMobile is private, so GitHub hides its releases from the app. Every release is also
-    // published to the public MoriviaUpdates repository (APK and notes only) by
-    // scripts/publish-update-mirror.ps1, and the updater reads that one.
-    const val UPDATE_REPOSITORY = "OckePocke9/MoriviaUpdates"
+    // Morivia's official, public repository; the updater reads its releases.
+    const val UPDATE_REPOSITORY = "OckePocke9/MoriviaMobile"
     const val RELEASES_URL = "https://github.com/$UPDATE_REPOSITORY/releases"
     internal fun browserReleaseUrl(channel: UpdateChannel): String =
         if (channel == UpdateChannel.STABLE) "$RELEASES_URL/latest" else RELEASES_URL

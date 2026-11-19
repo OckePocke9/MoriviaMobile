@@ -1,6 +1,7 @@
 package com.nuvio.app.features.watchprogress
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import com.nuvio.app.core.format.formatReleaseDateWithoutYear
 import com.nuvio.app.core.time.daysUntilEpisodeRelease
 import com.nuvio.app.core.time.parseEpisodeReleaseEpochMs
@@ -13,7 +14,12 @@ fun computeAirDateBadgeText(
     releasedIso: String?,
     todayIsoDate: String,
 ): String? {
+    val moriviaLayout = com.nuvio.app.features.settings.MoriviaLayoutSettingsRepository.settings.collectAsState().value
     if (releasedIso.isNullOrBlank() || todayIsoDate.isBlank()) {
+        return null
+    }
+    // Upcoming episode countdown (Home & Layout) can hide "Airs in …".
+    if (!moriviaLayout.upcomingCountdown) {
         return null
     }
 
