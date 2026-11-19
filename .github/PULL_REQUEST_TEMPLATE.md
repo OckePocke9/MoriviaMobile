@@ -35,7 +35,7 @@
 ## Policy check
 
 <!-- ALL boxes must be checked or the PR will be closed without review. -->
-- [ ] I have read and understood `CONTRIBUTING.md`.
+- [ ] I have read and understood `AGENTS.md`.
 - [ ] This PR is small, focused, and limited to one problem.
 - [ ] This PR is not cosmetic-only.
 - [ ] Any UI change fixes a linked glitch/bug and includes visual proof, or this PR has no UI change.
