@@ -18,4 +18,35 @@
     <style name="Theme.Nuvio.Splash.Amber" parent="@style/Theme.Nuvio.Splash"/>
     <style name="Theme.Nuvio.Splash.Rose" parent="@style/Theme.Nuvio.Splash"/>
     <style name="Theme.Nuvio.Splash.White" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Amethyst" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Apricot" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Aubergine" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Azure" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Basil" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Berry" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Blush" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Cerulean" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Cherry" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Cobalt" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Coral" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Denim" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Fern" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Glacier" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Grape" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Heather" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Indigo" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Lagoon" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Lavender" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Lemon" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Lilac" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Lime" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Mango" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Mint" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Moss" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Orchid" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Peach" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Periwinkle" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Pine" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Saffron" parent="@style/Theme.Nuvio.Splash"/>
+    <style name="Theme.Nuvio.Splash.Teal" parent="@style/Theme.Nuvio.Splash"/>
 </resources>

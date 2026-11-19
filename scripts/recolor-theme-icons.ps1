@@ -16,6 +16,8 @@
 .EXAMPLE
   .\scripts\recolor-theme-icons.ps1
 #>
+param([string[]]$Only)
+
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 Add-Type -ReferencedAssemblies System.Drawing -TypeDefinition @'
@@ -111,6 +113,37 @@ $themes = [ordered]@{
     arctic_blue = 'ArcticBlue'; emerald = 'Emerald'; rose_gold = 'RoseGold'; copper = $null; graphite = 'Graphite'
     gold = 'Gold'; jade = 'Jade'; crimson = 'Crimson'; ocean = 'Ocean'; violet = 'Violet'; amber = 'Amber'; rose = 'Rose'; white = 'White'
 }
+$themes['amethyst'] = 'Amethyst'
+$themes['apricot'] = 'Apricot'
+$themes['aubergine'] = 'Aubergine'
+$themes['azure'] = 'Azure'
+$themes['basil'] = 'Basil'
+$themes['berry'] = 'Berry'
+$themes['blush'] = 'Blush'
+$themes['cerulean'] = 'Cerulean'
+$themes['cherry'] = 'Cherry'
+$themes['cobalt'] = 'Cobalt'
+$themes['coral'] = 'Coral'
+$themes['denim'] = 'Denim'
+$themes['fern'] = 'Fern'
+$themes['glacier'] = 'Glacier'
+$themes['grape'] = 'Grape'
+$themes['heather'] = 'Heather'
+$themes['indigo'] = 'Indigo'
+$themes['lagoon'] = 'Lagoon'
+$themes['lavender'] = 'Lavender'
+$themes['lemon'] = 'Lemon'
+$themes['lilac'] = 'Lilac'
+$themes['lime'] = 'Lime'
+$themes['mango'] = 'Mango'
+$themes['mint'] = 'Mint'
+$themes['moss'] = 'Moss'
+$themes['orchid'] = 'Orchid'
+$themes['peach'] = 'Peach'
+$themes['periwinkle'] = 'Periwinkle'
+$themes['pine'] = 'Pine'
+$themes['saffron'] = 'Saffron'
+$themes['teal'] = 'Teal'
 function Get-Stops([string]$name) {
     if (-not $name) { return @(0xFFD6A4, 0xC7793A, 0x80421D) }
     $block = ($themeSource -split "val $name = ThemeColorPalette\(")[1] -split "`n    val " | Select-Object -First 1
@@ -146,6 +179,7 @@ function Save-OnBlack($symbol, [string]$to, [int]$size) {
 }
 
 foreach ($key in $themes.Keys) {
+    if ($Only -and $key -notin $Only) { continue }
     $stops = Get-Stops $themes[$key]
     $symbol = Save-Recolored (Join-Path $drawable 'morivia_symbol_original.png') (Join-Path $drawable "morivia_symbol_$key.png") $stops
     Save-OnBlack $symbol (Join-Path $drawable "app_icon_$key.png") 512

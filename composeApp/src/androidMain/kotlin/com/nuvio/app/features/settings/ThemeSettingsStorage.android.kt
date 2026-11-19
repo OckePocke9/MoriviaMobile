@@ -82,6 +82,13 @@ actual object ThemeSettingsStorage {
         preferences?.edit()?.putBoolean(ProfileScopedKey.of("match_app_icon_to_theme"), enabled)?.apply()
     }
 
+    actual fun loadMatchThemeToAppIcon(): Boolean =
+        preferences?.getBoolean(ProfileScopedKey.of("match_theme_to_app_icon"), false) ?: false
+
+    actual fun saveMatchThemeToAppIcon(enabled: Boolean) {
+        preferences?.edit()?.putBoolean(ProfileScopedKey.of("match_theme_to_app_icon"), enabled)?.apply()
+    }
+
     actual fun loadNavBarGlowEnabled(): Boolean? =
         preferences?.let { prefs ->
             val key = ProfileScopedKey.of(navBarGlowEnabledKey)

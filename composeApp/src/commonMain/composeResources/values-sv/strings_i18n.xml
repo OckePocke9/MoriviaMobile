@@ -1426,7 +1426,7 @@
     <string name="party_switch">Byt tittarfestens titel till %1$s</string>
     <string name="party_switch_title">Byta titel för tittarfesten?</string>
     <string name="party_switch_message">Alla börjar titta på %1$s med dig.</string>
-    <string name="party_watch_with_party">Titta med tittarfesten</string>
+    <string name="party_watch_with_party">Fortsätt titta med gruppen</string>
     <string name="party_waiting_for">Väntar på %1$s</string>
     <string name="party_waiting">Väntar på alla</string>
     <string name="party_reconnecting">Ansluter igen</string>
@@ -1454,7 +1454,7 @@
     <string name="party_paused_for_you">Pausad för dig</string>
     <string name="party_behind">%1$s efter</string>
     <string name="party_behind_title">Du ligger %1$s efter tittarfesten</string>
-    <string name="party_catch_up">Kom ikapp</string>
+    <string name="party_catch_up">Tillbaka i synk</string>
     <string name="party_caught_up">I synk med tittarfesten igen</string>
     <string name="party_action_paused">%1$s pausade</string>
     <string name="party_action_resumed">%1$s fortsatte</string>

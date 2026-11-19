@@ -29,7 +29,6 @@ import com.nuvio.app.core.ui.NuvioBottomSheetActionRow
 import com.nuvio.app.core.ui.NuvioModalBottomSheet
 import com.nuvio.app.core.ui.NuvioStatusModal
 import com.nuvio.app.core.ui.dismissNuvioBottomSheet
-import com.nuvio.app.core.ui.labelRes
 import com.nuvio.app.isIos
 import kotlinx.coroutines.launch
 import nuvio.composeapp.generated.resources.Res
@@ -43,7 +42,8 @@ import nuvio.composeapp.generated.resources.settings_appearance_app_language_res
 import nuvio.composeapp.generated.resources.settings_appearance_app_language_sheet_title
 import nuvio.composeapp.generated.resources.settings_appearance_section_display
 import nuvio.composeapp.generated.resources.settings_appearance_section_theme
-import nuvio.composeapp.generated.resources.morivia_appearance_current_theme
+import nuvio.composeapp.generated.resources.morivia_appearance_match_theme
+import nuvio.composeapp.generated.resources.morivia_appearance_match_theme_description
 import nuvio.composeapp.generated.resources.morivia_appearance_match_icon
 import nuvio.composeapp.generated.resources.morivia_appearance_match_icon_description
 import nuvio.composeapp.generated.resources.morivia_appearance_preview_button
@@ -69,23 +69,6 @@ internal fun LazyListScope.appearanceSettingsContent(
     selectedAppLanguage: AppLanguage,
     onAppLanguageSelected: (AppLanguage) -> Unit,
 ) {
-    item {
-        // "Current theme Original", as at the top of the earlier Morivia app's Appearance page.
-        val tokens = MaterialTheme.nuvio
-        val themeName = stringResource(selectedTheme.labelRes)
-        val label = stringResource(Res.string.morivia_appearance_current_theme)
-        Text(
-            text = androidx.compose.ui.text.buildAnnotatedString {
-                append("$label ")
-                pushStyle(androidx.compose.ui.text.SpanStyle(color = tokens.colors.textPrimary, fontWeight = FontWeight.Bold))
-                append(themeName)
-                pop()
-            },
-            style = MaterialTheme.typography.bodyMedium,
-            color = tokens.colors.textSecondary,
-            modifier = Modifier.padding(horizontal = if (isTablet) 20.dp else 16.dp, vertical = 4.dp),
-        )
-    }
     item {
         SettingsSection(
             title = stringResource(Res.string.settings_appearance_section_theme),
@@ -134,6 +117,15 @@ internal fun LazyListScope.appearanceSettingsContent(
                     checked = matchAppIcon,
                     isTablet = isTablet,
                     onCheckedChange = ThemeSettingsRepository::setMatchAppIconToTheme,
+                )
+                SettingsGroupDivider(isTablet = isTablet)
+                val matchTheme by ThemeSettingsRepository.matchThemeToAppIcon.collectAsStateWithLifecycle()
+                SettingsSwitchRow(
+                    title = stringResource(Res.string.morivia_appearance_match_theme),
+                    description = stringResource(Res.string.morivia_appearance_match_theme_description),
+                    checked = matchTheme,
+                    isTablet = isTablet,
+                    onCheckedChange = ThemeSettingsRepository::setMatchThemeToAppIcon,
                 )
                 SettingsGroupDivider(isTablet = isTablet)
                 SettingsSwitchRow(

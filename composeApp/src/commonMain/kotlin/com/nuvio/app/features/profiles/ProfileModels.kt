@@ -90,25 +90,7 @@ fun parseHexColor(hex: String): Color {
     }.getOrDefault(Color(0xFF1E88E5))
 }
 
-/**
- * Copper exists only as an app icon, so its palette is sampled from that icon
- * (app_icon_copper.png), built like the Gold theme.
- */
-internal val CopperInitialsPalette = ThemeColorPalette(
-    secondary = Color(0xFFC9804A),
-    secondaryVariant = Color(0xFF914407),
-    accentGradient = listOf(
-        Color(0xFF914407),
-        Color(0xFFC9804A),
-        Color(0xFFE6B37E),
-        Color(0xFFDB9C62),
-        Color(0xFF965529),
-    ),
-    nativeAccentHex = "#C9804A",
-    onSecondary = Color(0xFF111111),
-    focusRing = Color(0xFFE6B37E),
-    focusBackground = Color(0xFF3D261A),
-)
+internal val CopperInitialsPalette = ThemeColors.Copper
 
 /** One initials colour: the same name, gradient and text colour as its theme and app icon. */
 internal data class InitialsColorOption(

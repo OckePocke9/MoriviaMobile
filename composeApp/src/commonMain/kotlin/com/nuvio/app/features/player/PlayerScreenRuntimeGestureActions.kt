@@ -209,12 +209,12 @@ internal fun PlayerScreenRuntime.seekBy(offsetMs: Long) {
         ?: currentPlaybackPositionMs()
     val requestedMs = (fromMs + offsetMs).coerceAtLeast(0L)
         .let { if (playbackSnapshot.durationMs > 0L) it.coerceAtMost(playbackSnapshot.durationMs) else it }
-    val targetMs = if (isPartyControlLocked) ownSeekTarget(requestedMs) ?: return else requestedMs
+    val targetMs = privatePartySeek(requestedMs)
     lastManualSkipSeekPositions = fromMs to targetMs
     pendingSeekTarget = targetMs to TimeSource.Monotonic.markNow()
     if (isPartySynced) playerController?.seekTo(targetMs) else playerController?.seekBy(offsetMs)
     scheduleProgressSyncAfterSeek()
-    publishPartyPlayback(positionMs = targetMs)
+
     controlsVisible = true
     when {
         offsetMs > 0L -> showSeekFeedback(PlayerSeekDirection.Forward, offsetMs)
@@ -244,12 +244,12 @@ internal fun PlayerScreenRuntime.handleDoubleTapSeek(direction: PlayerSeekDirect
             maxDurationMs?.let { unclamped.coerceAtMost(it) } ?: unclamped
         }
     }
-    val targetPositionMs = if (isPartyControlLocked) ownSeekTarget(requestedPositionMs) ?: return else requestedPositionMs
+    val targetPositionMs = privatePartySeek(requestedPositionMs)
     accumulatedSeekState = nextState
     lastManualSkipSeekPositions = currentPositionMs to targetPositionMs
     playerController?.seekTo(targetPositionMs)
     scheduleProgressSyncAfterSeek()
-    publishPartyPlayback(positionMs = targetPositionMs)
+
     showSeekFeedback(direction, nextState.amountMs)
 
     accumulatedSeekResetJob?.cancel()
@@ -364,15 +364,11 @@ internal fun PlayerScreenRuntime.rememberSurfaceGestureCallbacks(): PlayerSurfac
         currentPositionMs = rememberUpdatedState(playbackSnapshot.positionMs.coerceAtLeast(0L)),
         currentDurationMs = rememberUpdatedState(playbackSnapshot.durationMs),
         commitHorizontalSeek = rememberUpdatedState { requestedPositionMs: Long ->
-            val targetPositionMs = if (isPartyControlLocked) {
-                ownSeekTarget(requestedPositionMs) ?: return@rememberUpdatedState
-            } else {
-                requestedPositionMs
-            }
+            val targetPositionMs = privatePartySeek(requestedPositionMs)
             lastManualSkipSeekPositions = playbackSnapshot.positionMs to targetPositionMs
             playerController?.seekTo(targetPositionMs)
             scheduleProgressSyncAfterSeek()
-            publishPartyPlayback(positionMs = targetPositionMs)
+
         },
     )
 }

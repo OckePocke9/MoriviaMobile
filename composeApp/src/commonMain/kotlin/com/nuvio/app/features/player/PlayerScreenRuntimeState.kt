@@ -245,6 +245,8 @@ internal class PlayerScreenRuntime(
     val isPanelOpen: Boolean
         get() = showAudioModal || showSubtitleModal || showVideoSettingsModal || showStreamInfo ||
             showPartyPanel || showSourcesPanel || showEpisodesPanel || showSubmitIntroModal
+    var partyStartReady by mutableStateOf(false)
+    var partyPrivatePosition by mutableStateOf(false)
     var partyBehind by mutableStateOf(false)
     var partyBehindMs by mutableStateOf<Long?>(null)
     var partyRateNudge: Float? = null

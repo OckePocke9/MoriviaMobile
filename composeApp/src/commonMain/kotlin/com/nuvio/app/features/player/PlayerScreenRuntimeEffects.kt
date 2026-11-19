@@ -751,9 +751,9 @@ private fun PlayerScreenRuntime.BindPlayerMetadataAndSkipEffects() {
             val seekPositionMs = if (durationMs > 0L) rawMs.coerceAtMost(durationMs - 1) else rawMs
             val notification = current.autoSkipNotificationMessage(seekPositionMs)
             autoSkippedIntervals.add(current)
-            controller.seekTo(seekPositionMs)
+            controller.seekTo(privatePartySeek(seekPositionMs))
             scheduleProgressSyncAfterSeek()
-            publishPartyPlayback(positionMs = seekPositionMs)
+
             skipIntervalDismissed = true
             notification?.let { NuvioToastController.show(it, AUTO_SKIP_NOTIFICATION_DURATION_MS) }
         }

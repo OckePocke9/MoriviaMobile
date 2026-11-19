@@ -1,4 +1,6 @@
-﻿<#
+﻿param([string[]]$Only)
+
+<#
 .SYNOPSIS
   Draws the Morivia wordmarks (app icon + "morivia" lettering) for every icon colour.
 
@@ -107,7 +109,10 @@ function Write-Wordmark([string]$symbolName, [string]$outName) {
     Write-Host "$outName.png ($width x $height)"
 }
 
-Write-Wordmark 'morivia_symbol_original' 'app_logo_wordmark'
-foreach ($c in 'original', 'arctic_blue', 'copper', 'emerald', 'gold', 'graphite', 'rose_gold', 'jade', 'crimson', 'ocean', 'violet', 'amber', 'rose', 'white') {
+if (-not $Only) {
+    Write-Wordmark 'morivia_symbol_original' 'app_logo_wordmark'
+    $Only = @(Get-ChildItem $drawable -Filter 'morivia_symbol_*.png' | ForEach-Object { $_.BaseName.Substring(15) })
+}
+foreach ($c in $Only) {
     Write-Wordmark "morivia_symbol_$c" "app_logo_wordmark_$c"
 }

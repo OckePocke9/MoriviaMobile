@@ -7,6 +7,24 @@ Bring your own sources: Morivia turns your addons into a library with artwork, p
 
 ## What's new in 1.6
 
+- **Local test build 40:** The 31 colour previews and their Morivia icons use brighter gradients. Dark backgrounds and saved profile colours are retained.
+
+- **Local test build 39:** Profile initials appear as soon as you type the first letter of the name.
+
+- **Local test build 38:** Theme, App Icon and Initials share the same 31 presets, displayed as colour swatches, launcher icons and profile initials respectively.
+
+- **Local test build 37:** Profile colour previews show the name’s first letter. Theme, App Icon and Initials stay alphabetized when collapsed, and Custom Theme has a centered label.
+
+- **Local test build 36:** Appearance adds 31 matching themes and launcher icons, also available for profile initials. Expand the pickers to browse alphabetically, reset to Original or open the custom colour editor. Choose whether the theme follows the icon or the icon follows the theme.
+
+- **Local test build 35:** Return to the host’s position with Back in sync, continue with the group after reopening Morivia, and see the standard loading screen while joining.
+
+- **Local test build 34:** Watch Party uses a black transition into synced playback, limits Morivia rooms to six viewers including the host, and closes connected players when the host chooses End for Everyone.
+
+- **Local test build 33:** Watch Party remembers the last guest room and rejoins it if it is still open. If the room ends, current playback stays open and releases the wait for other members. Joining opens a shared or matching stream at the host’s position with their initial audio and subtitles where available. Seeking stays local to each device.
+
+- **Local test build 32:** Watch Party accepts 0 and 1 in room codes and invite links.
+
 - Local builds 29–31: AMOLED black makes every card black and Home, Search and Library pure black; the app icon picker looks like the theme picker; and all 31 app languages now cover the whole app (not addon content or integrations).
 
 - Local build 28 matches initials colours exactly to the Appearance themes and app icons, everywhere in the app, and fixes profile sync with Nuvio.

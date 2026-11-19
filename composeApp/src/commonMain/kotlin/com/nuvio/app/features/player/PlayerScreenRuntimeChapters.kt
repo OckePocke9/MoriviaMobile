@@ -28,7 +28,7 @@ internal fun PlayerScreenRuntime.selectChapter(index: Int) {
     val chapter = chapters.getOrNull(index) ?: return
     showChaptersPanel = false
     lastManualSkipSeekPositions = playbackSnapshot.positionMs to chapter.startMs
-    playerController?.seekTo(chapter.startMs)
+    playerController?.seekTo(privatePartySeek(chapter.startMs))
     scheduleProgressSyncAfterSeek()
     controlsVisible = true
 }

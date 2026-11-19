@@ -82,6 +82,17 @@ internal fun partyMediaKey(metaType: String, metaId: String, season: Int?, episo
         .joinToString("|")
 
 @Serializable
+internal data class PartyJoinPlayback(
+    val playback: PartyPlayback,
+    val audioLanguage: String? = null,
+    val audioLabel: String? = null,
+    val subtitleLanguage: String? = null,
+    val subtitleLabel: String? = null,
+    val subtitlesOff: Boolean = false,
+    val privatePosition: Boolean = false,
+)
+
+@Serializable
 data class PartyPlayback(
     val seq: Long,
     @SerialName("member_id") val memberId: String? = null,
@@ -223,6 +234,7 @@ data class ActiveParty(
 data class PartyUiState(
     val party: ActiveParty? = null,
     val busy: Boolean = false,
+    val restored: Boolean = false,
 )
 
 sealed interface PartyEvent {
@@ -230,6 +242,7 @@ sealed interface PartyEvent {
     data class MemberLeft(val name: String) : PartyEvent
     data object Removed : PartyEvent
     data object Ended : PartyEvent
+    data class EndPlayback(val mediaKey: String) : PartyEvent
     data class MediaChanged(val media: PartyMedia) : PartyEvent
     data class ControlChanged(val hostOnly: Boolean) : PartyEvent
 }

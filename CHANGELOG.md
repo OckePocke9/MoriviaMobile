@@ -1,5 +1,49 @@
 # Changelog
 
+## Local test build 40 (1.6, unpublished)
+
+- Brighten the 31 preset gradients and matching Morivia icons while retaining dark surfaces and saved colour identifiers.
+
+## Local test build 39 (1.6, unpublished)
+
+- Show the profile’s first letter as it is typed. Initial previews stay empty before a letter is entered.
+
+## Local test build 38 (1.6, unpublished)
+
+- Use the same 31 alphabetized presets across Theme, App Icon and Initials, with a distinct preview for each picker.
+
+## Local test build 37 (1.6, unpublished)
+
+- Show the profile’s first initial on the colour previews. Center Custom Theme and alphabetize all three pickers in both views.
+
+## Local test build 36 (1.6, unpublished)
+
+- Add 31 coordinated theme palettes and Android launcher icons, also available for profile initials. Copper now has a matching theme.
+- Use icon previews and alphabetical expanded lists with a return to the expansion arrow. Add reset and custom controls across Theme, App Icon and Initials.
+- Add Match theme to app icon, with independent manual selection. Remove Current theme from Appearance.
+
+## Local test build 35 (1.6, unpublished)
+
+- Add Back in sync after a personal seek, using a fresh playback position from the host.
+- Offer to continue watching with the group when Morivia restores a saved guest room.
+- Show the standard playback loading screen while joining and buffering.
+
+## Local test build 34 (1.6, unpublished)
+
+- Keep the guest’s transition black while joining and loading a matching stream, align playback before displaying it, and coordinate waiting-room starts.
+- End for Everyone closes the player on connected devices. Leave keeps the remaining viewers in the movie or episode.
+- Cap rooms at six viewers in the app, including the host.
+
+## Local test build 33 (1.6, unpublished)
+
+- Restore an available guest room when the app reopens, scoped to the signed-in account and server. Leaving manually forgets the room.
+- Retry after temporary connection errors and let playback continue independently if the room ends.
+- Open a shared or matching stream after joining, use the host’s position, audio and subtitles as starting choices, and keep seeks local to each player.
+
+## Local test build 32 (1.6, unpublished)
+
+- Accept 0 and 1 in Watch Party room codes, including pasted codes and invite links.
+
 ## Local test builds 29–31 (1.6, unpublished)
 
 - AMOLED black: every card is pure black, Home, Search and Library get a pure black background, and Profile and Settings keep the theme-tinted AMOLED background. Nuvio sign-in and the profile chooser are unchanged.

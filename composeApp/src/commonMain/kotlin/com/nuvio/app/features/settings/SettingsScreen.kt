@@ -176,11 +176,7 @@ fun SettingsScreen(
         val appIconScope = rememberCoroutineScope()
         val onAppIconSelected: (AppIconOption) -> Unit = { icon ->
             appIconScope.launch {
-                // With "Match app icon to theme" on, the icon and the theme change together.
-                if (ThemeSettingsRepository.matchAppIconToTheme.value) {
-                    icon.theme?.let(ThemeSettingsRepository::setTheme)
-                }
-                AppIconRepository.select(icon)
+                ThemeSettingsRepository.selectAppIcon(icon)
             }
         }
         val tmdbSettings by remember {

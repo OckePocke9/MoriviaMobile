@@ -62,7 +62,10 @@ import com.nuvio.app.core.ui.nuvio
 import com.nuvio.app.core.ui.nuvioPlatformExtraTopPadding
 import com.nuvio.app.core.ui.nuvioSafeBottomPadding
 import kotlinx.coroutines.Job
+import com.nuvio.app.features.player.OpeningOverlay
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.launch
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.party_host_hint
@@ -74,6 +77,7 @@ import nuvio.composeapp.generated.resources.party_joined_title
 import nuvio.composeapp.generated.resources.party_seats
 import nuvio.composeapp.generated.resources.party_title
 import nuvio.composeapp.generated.resources.party_watch_with_party
+import nuvio.composeapp.generated.resources.player_loading_preparing
 import org.jetbrains.compose.resources.stringResource
 
 private enum class PartyScreenMode {
@@ -118,72 +122,89 @@ private fun PartyHome(
 ) {
     val state by PartyRepository.state.collectAsStateWithLifecycle()
     val party = state.party
+    var joiningCode by remember { mutableStateOf(false) }
     var joined by remember { mutableStateOf<ActiveParty?>(null) }
     var pendingCode by remember {
         mutableStateOf(initialCode.takeIf { isValidPartyCode(it) && normalizePartyCode(it) != party?.code }.orEmpty())
     }
-    var joining by remember { mutableStateOf(party == null || pendingCode.isNotEmpty()) }
     val mode = when {
         joined != null -> PartyScreenMode.Joined
-        party != null && !joining -> PartyScreenMode.Party
+        party != null && pendingCode.isEmpty() -> PartyScreenMode.Party
         else -> PartyScreenMode.Join
     }
     LaunchedEffect(joined) {
         val current = joined ?: return@LaunchedEffect
-        delay(1600)
-        onWatch(current.media)
+        PartyRepository.setLocalStatus(PartyMemberStatus.Loading, current.media.key)
+        if (!current.isHost) withTimeoutOrNull(1_500) {
+            PartyRepository.joinPlayback.first { it?.playback?.mediaKey == current.media.key }
+        }
+        PartyRepository.state.value.party?.takeIf { it.id == current.id }?.let { onWatch(it.media) }
+        delay(350)
         joined = null
     }
 
-    AnimatedContent(
-        targetState = mode == PartyScreenMode.Party,
-        transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(150)) },
-        modifier = Modifier.fillMaxSize(),
-    ) { inParty ->
-        if (inParty) {
-            PartyRoom(onBack = onBack, onWatch = onWatch)
-            return@AnimatedContent
-        }
-        NuvioScreen(modifier = Modifier.fillMaxSize()) {
-            stickyHeader {
-                NuvioScreenHeader(
-                    title = stringResource(Res.string.party_title),
-                    onBack = onBack,
-                )
+    Box(Modifier.fillMaxSize()) {
+        AnimatedContent(
+            targetState = mode == PartyScreenMode.Party,
+            transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(150)) },
+            modifier = Modifier.fillMaxSize(),
+        ) { inParty ->
+            if (inParty) {
+                PartyRoom(onBack = onBack, onWatch = onWatch)
+                return@AnimatedContent
             }
-            item {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.TopCenter,
-                ) {
-                    AnimatedContent(
-                        targetState = mode,
-                        transitionSpec = {
-                            (fadeIn(tween(260, delayMillis = 60)) + scaleIn(tween(320), initialScale = 0.96f)) togetherWith fadeOut(tween(140))
-                        },
-                        modifier = Modifier
-                            .widthIn(max = 520.dp)
-                            .fillMaxWidth(),
-                    ) { target ->
-                        when (target) {
-                            PartyScreenMode.Join -> com.nuvio.app.features.settings.SettingsGroup(isTablet = false) {
-                                Box(Modifier.padding(20.dp)) {
-                                    JoinContent(
-                                        initialCode = pendingCode,
-                                        onJoined = { newParty ->
-                                            pendingCode = ""
-                                            joining = false
-                                            joined = newParty
-                                        },
-                                    )
+            NuvioScreen(modifier = Modifier.fillMaxSize()) {
+                stickyHeader {
+                    NuvioScreenHeader(
+                        title = stringResource(Res.string.party_title),
+                        onBack = onBack,
+                    )
+                }
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.TopCenter,
+                    ) {
+                        AnimatedContent(
+                            targetState = mode,
+                            transitionSpec = {
+                                (fadeIn(tween(260, delayMillis = 60)) + scaleIn(tween(320), initialScale = 0.96f)) togetherWith fadeOut(tween(140))
+                            },
+                            modifier = Modifier
+                                .widthIn(max = 520.dp)
+                                .fillMaxWidth(),
+                        ) { target ->
+                            when (target) {
+                                PartyScreenMode.Join -> com.nuvio.app.features.settings.SettingsGroup(isTablet = false) {
+                                    Box(Modifier.padding(20.dp)) {
+                                        JoinContent(
+                                            initialCode = pendingCode,
+                                            onJoining = { joiningCode = it },
+                                            onJoined = { newParty ->
+                                                pendingCode = ""
+                                                joined = newParty
+                                            },
+                                        )
+                                    }
                                 }
+                                PartyScreenMode.Joined -> Unit
+                                PartyScreenMode.Party -> Unit
                             }
-                            PartyScreenMode.Joined -> (joined ?: party)?.let { JoinedContent(it) }
-                            PartyScreenMode.Party -> Unit
                         }
                     }
                 }
             }
+        }
+        if (joiningCode || joined != null) {
+            val media = joined?.media
+            OpeningOverlay(
+                artwork = media?.background ?: media?.poster,
+                logo = media?.logo,
+                title = media?.title ?: stringResource(Res.string.party_title),
+                onBack = onBack,
+                horizontalSafePadding = 0.dp,
+                message = stringResource(Res.string.player_loading_preparing),
+            )
         }
     }
 }
@@ -263,6 +284,7 @@ internal fun PartyPage(
 @Composable
 private fun JoinContent(
     initialCode: String,
+    onJoining: (Boolean) -> Unit,
     onJoined: (ActiveParty) -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
@@ -303,11 +325,17 @@ private fun JoinContent(
         )
     }
 
+    var submitJob by remember { mutableStateOf<Job?>(null) }
     fun submit() {
-        if (!isValidPartyCode(code) || state.busy || blockedError != null) return
-        scope.launch {
+        if (!isValidPartyCode(code) || state.busy || submitJob?.isActive == true || blockedError != null) return
+        submitJob = scope.launch {
             error = null
-            val result = PartyRepository.join(code)
+            onJoining(true)
+            val result = try {
+                PartyRepository.join(code)
+            } finally {
+                onJoining(false)
+            }
             val party = PartyRepository.state.value.party
             if (result == null && party != null) {
                 haptic.performHapticFeedback(HapticFeedbackType.Confirm)
@@ -399,14 +427,14 @@ private fun JoinContent(
         CodeField(
             code = code,
             onCodeChange = { value ->
-                if (state.busy) return@CodeField
+                if (state.busy || submitJob?.isActive == true) return@CodeField
                 if (value.length > code.length) haptic.performHapticFeedback(HapticFeedbackType.SegmentTick)
                 code = value
                 error = null
                 preview = null
                 previewJob?.cancel()
                 previewing = false
-                if (isValidPartyCode(value)) lookUp(value)
+                if (isValidPartyCode(value)) submit()
             },
             onDone = ::submit,
             focusRequester = focusRequester,

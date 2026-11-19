@@ -234,7 +234,8 @@ internal fun PlayerScreenRuntime.RenderPlayerRuntimeUi(
                     externalSubtitles = externalSubtitles,
                     streamType = activeStreamType,
                     modifier = videoModifier,
-                    playWhenReady = shouldPlay,
+                    playWhenReady = shouldPlay && (partyStartReady ||
+                        PartyRepository.state.value.party?.let { !it.isHost && it.media.key == partyKey } != true),
                     initialPositionMs = activeInitialPositionMs.takeIf { it > 0L },
                     initialPositionRequestKey = initialPositionRequestKey,
                     resizeMode = if (partyPanelInset > 0.dp) PlayerResizeMode.Fit else resizeMode,
@@ -331,6 +332,17 @@ internal fun PlayerScreenRuntime.RenderPlayerRuntimeUi(
             panelVisible = showPartyPanel && !isInPip,
         )
         RenderPlayerModals(displayedPositionMs = displayedPositionMs)
+        val party = PartyRepository.state.collectAsStateWithLifecycle().value.party
+        if (party?.isHost == false && party.media.key == partyKey && !partyStartReady && errorMessage == null) {
+            OpeningOverlay(
+                artwork = args.background ?: args.poster,
+                logo = args.logo,
+                title = title,
+                onBack = args.onBack,
+                horizontalSafePadding = horizontalSafePadding,
+                message = stringResource(Res.string.player_loading_preparing),
+            )
+        }
     }
 }
 
@@ -500,16 +512,10 @@ private fun PlayerScreenRuntime.RenderPlayerControls(
                 scrubbingPositionMs = positionMs
             },
             onScrubFinished = { positionMs ->
-                val targetMs = if (isPartyControlLocked) ownSeekTarget(positionMs) else positionMs
-                if (targetMs == null) {
-                    isScrubbingTimeline = false
-                    scrubbingPositionMs = null
-                } else {
-                    finishTimelineScrub(targetMs)
-                    playerController?.seekTo(targetMs)
-                    scheduleProgressSyncAfterSeek()
-                    publishPartyPlayback(positionMs = targetMs)
-                }
+                val targetMs = privatePartySeek(positionMs)
+                finishTimelineScrub(targetMs)
+                playerController?.seekTo(targetMs)
+                scheduleProgressSyncAfterSeek()
             },
             horizontalSafePadding = horizontalSafePadding,
             modifier = modifier,
@@ -587,13 +593,10 @@ private fun BoxScope.RenderPlaybackOverlays(
             interval.internalSkipAction(skipIntervals, playbackSnapshot.durationMs)?.let { action ->
                 val durationMs = playbackSnapshot.durationMs
                 val requestedMs = if (durationMs > 0L) action.targetMs.coerceAtMost(durationMs - 1) else action.targetMs
-                val seekMs = if (isPartyControlLocked) ownSeekTarget(requestedMs) else requestedMs
-                if (seekMs != null) {
-                    playerController?.seekTo(seekMs)
-                    scheduleProgressSyncAfterSeek()
-                    publishPartyPlayback(positionMs = seekMs)
-                    skipIntervalDismissed = true
-                }
+                val seekMs = privatePartySeek(requestedMs)
+                playerController?.seekTo(seekMs)
+                scheduleProgressSyncAfterSeek()
+                skipIntervalDismissed = true
             }
         },
         onDismissSkipInterval = { skipIntervalDismissed = true },

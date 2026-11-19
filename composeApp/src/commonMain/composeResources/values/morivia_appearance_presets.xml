@@ -1,0 +1,35 @@
+<resources>
+    <string name="theme_amethyst" translatable="false">Amethyst</string>
+    <string name="theme_apricot" translatable="false">Apricot</string>
+    <string name="theme_aubergine" translatable="false">Aubergine</string>
+    <string name="theme_azure" translatable="false">Azure</string>
+    <string name="theme_basil" translatable="false">Basil</string>
+    <string name="theme_berry" translatable="false">Berry</string>
+    <string name="theme_blush" translatable="false">Blush</string>
+    <string name="theme_cerulean" translatable="false">Cerulean</string>
+    <string name="theme_cherry" translatable="false">Cherry</string>
+    <string name="theme_cobalt" translatable="false">Cobalt</string>
+    <string name="theme_coral" translatable="false">Coral</string>
+    <string name="theme_denim" translatable="false">Denim</string>
+    <string name="theme_fern" translatable="false">Fern</string>
+    <string name="theme_glacier" translatable="false">Glacier</string>
+    <string name="theme_grape" translatable="false">Grape</string>
+    <string name="theme_heather" translatable="false">Heather</string>
+    <string name="theme_indigo" translatable="false">Indigo</string>
+    <string name="theme_lagoon" translatable="false">Lagoon</string>
+    <string name="theme_lavender" translatable="false">Lavender</string>
+    <string name="theme_lemon" translatable="false">Lemon</string>
+    <string name="theme_lilac" translatable="false">Lilac</string>
+    <string name="theme_lime" translatable="false">Lime</string>
+    <string name="theme_mango" translatable="false">Mango</string>
+    <string name="theme_mint" translatable="false">Mint</string>
+    <string name="theme_moss" translatable="false">Moss</string>
+    <string name="theme_orchid" translatable="false">Orchid</string>
+    <string name="theme_peach" translatable="false">Peach</string>
+    <string name="theme_periwinkle" translatable="false">Periwinkle</string>
+    <string name="theme_pine" translatable="false">Pine</string>
+    <string name="theme_saffron" translatable="false">Saffron</string>
+    <string name="theme_teal" translatable="false">Teal</string>
+    <string name="morivia_appearance_match_theme">Match theme to app icon</string>
+    <string name="morivia_appearance_match_theme_description">Use the theme that matches the selected app icon.</string>
+</resources>

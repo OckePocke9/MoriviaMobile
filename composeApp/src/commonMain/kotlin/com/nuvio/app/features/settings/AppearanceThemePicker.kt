@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nuvio.app.core.ui.APPEARANCE_PRESETS
 import com.nuvio.app.core.ui.AppTheme
 import com.nuvio.app.core.ui.CustomThemeColors
 import com.nuvio.app.core.ui.NuvioTokens
@@ -76,15 +78,9 @@ internal fun AppearanceThemePicker(
     val customAvailable = AppTheme.CUSTOM in allThemes
     // Like the earlier Morivia app: nine themes first, the rest behind the arrow; Custom has its own button.
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val gridThemes = allThemes.filter { it != AppTheme.CUSTOM }
-    val themes = if (expanded || gridThemes.size <= COLLAPSED_THEME_COUNT) {
-        gridThemes
-    } else {
-        gridThemes.take(COLLAPSED_THEME_COUNT).let { first ->
-            // Keep the selected theme visible when it is one of the hidden ones.
-            if (selectedTheme in gridThemes && selectedTheme !in first) first.dropLast(1) + selectedTheme else first
-        }
-    }
+    val gridThemes = APPEARANCE_PRESETS
+    val alphabetic = gridThemes.map { it to stringResource(it.labelRes).lowercase() }.sortedBy { it.second }.map { it.first }
+    val themes = if (expanded) alphabetic else alphabetic.collapsedPresets(selectedTheme, COLLAPSED_THEME_COUNT)
     val themeSpacing = if (isTablet) NuvioTokens.Space.s16 else NuvioTokens.Space.s12
     BoxWithConstraints(
         modifier = Modifier
@@ -126,22 +122,7 @@ internal fun AppearanceThemePicker(
                 onCustom = { showEditor = true },
             )
             if (gridThemes.size > COLLAPSED_THEME_COUNT) {
-                val label = stringResource(if (expanded) Res.string.morivia_theme_show_fewer else Res.string.morivia_theme_show_more)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(MaterialTheme.nuvio.shapes.compactCard)
-                        .clickable(onClickLabel = label) { expanded = !expanded }
-                        .padding(vertical = NuvioTokens.Space.s4),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = label,
-                        tint = MaterialTheme.nuvio.colors.textSecondary,
-                        modifier = Modifier.size(28.dp),
-                    )
-                }
+                PresetExpansionArrow(expanded) { expanded = it }
             }
         }
     }
@@ -159,71 +140,63 @@ private const val COLLAPSED_THEME_COUNT = 9
 
 /** "Reset to Original" and "Custom theme", as in the earlier Morivia app. */
 @Composable
-private fun ThemeActions(
+internal fun ThemeActions(
     customAvailable: Boolean,
     customColors: CustomThemeColors,
     customSelected: Boolean,
     onReset: () -> Unit,
     onCustom: () -> Unit,
 ) {
-    val tokens = MaterialTheme.nuvio
-    val shape = androidx.compose.foundation.shape.RoundedCornerShape(50)
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(NuvioTokens.Space.s12),
     ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(44.dp)
-                .clip(shape)
-                .border(1.dp, tokens.colors.textSecondary.copy(alpha = 0.35f), shape)
-                .clickable(onClick = onReset),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = stringResource(Res.string.morivia_theme_reset_original),
-                style = MaterialTheme.typography.labelLarge,
-                color = tokens.colors.textPrimary,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        ThemeActionButton(
+            label = stringResource(Res.string.morivia_theme_reset_original),
+            onClick = onReset,
+            modifier = Modifier.weight(1f),
+        )
         if (customAvailable) {
             val customPalette = remember(customColors) { ThemeColors.getColorPalette(AppTheme.CUSTOM, customColors) }
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(44.dp)
-                    .clip(shape)
-                    .border(
-                        if (customSelected) 2.dp else 1.dp,
-                        if (customSelected) customPalette.focusRing else tokens.colors.textSecondary.copy(alpha = 0.35f),
-                        shape,
-                    )
-                    .clickable(onClick = onCustom)
-                    .padding(horizontal = NuvioTokens.Space.s12),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clip(CircleShape)
-                        .background(customPalette.accentBrush()),
-                )
-                Spacer(Modifier.size(NuvioTokens.Space.s8))
-                Text(
-                    text = stringResource(Res.string.morivia_theme_custom),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = tokens.colors.textPrimary,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
+            ThemeActionButton(
+                label = stringResource(Res.string.morivia_theme_custom),
+                onClick = onCustom,
+                modifier = Modifier.weight(1f),
+                selectedBorder = customPalette.focusRing.takeIf { customSelected },
+            )
         }
+    }
+}
+
+@Composable
+private fun ThemeActionButton(
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    selectedBorder: androidx.compose.ui.graphics.Color? = null,
+) {
+    val tokens = MaterialTheme.nuvio
+    val shape = androidx.compose.foundation.shape.RoundedCornerShape(50)
+    Box(
+        modifier = modifier
+            .heightIn(min = 44.dp)
+            .clip(shape)
+            .border(
+                if (selectedBorder != null) 2.dp else 1.dp,
+                selectedBorder ?: tokens.colors.textSecondary.copy(alpha = 0.35f),
+                shape,
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 8.dp, vertical = 6.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = tokens.colors.textPrimary,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -258,7 +231,7 @@ private fun ThemeChip(
                     .background(palette.accentBrush()),
                 contentAlignment = Alignment.Center,
             ) {
-                if (isSelected || theme == AppTheme.CUSTOM) {
+                if (isSelected) {
                     Icon(
                         imageVector = if (isSelected) Icons.Default.Check else Icons.Default.Edit,
                         contentDescription = stringResource(

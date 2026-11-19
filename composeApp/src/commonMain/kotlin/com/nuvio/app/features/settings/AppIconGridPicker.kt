@@ -45,10 +45,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nuvio.app.core.ui.NuvioLoadingIndicator
 import com.nuvio.app.core.ui.NuvioTokens
+import com.nuvio.app.core.ui.APPEARANCE_PRESETS
 import com.nuvio.app.core.ui.ThemeColors
 import com.nuvio.app.core.ui.nuvio
-import com.nuvio.app.features.membership.MemberAccessRepository
-import com.nuvio.app.features.membership.availableAppThemes
 import com.nuvio.app.features.profiles.CopperInitialsPalette
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.cd_selected
@@ -69,27 +68,12 @@ internal fun AppIconGridPicker(
     state: AppIconSettingsState,
     onSelected: (AppIconOption) -> Unit,
 ) {
-    val memberAccess by remember {
-        MemberAccessRepository.ensureStarted()
-        MemberAccessRepository.access
-    }.collectAsStateWithLifecycle()
-    // The themes' order from the theme picker, then the icons without a theme there (Copper and
-    // supporter colours the account does not have as themes).
-    val icons = remember(memberAccess.entitlements) {
-        val themed = availableAppThemes(memberAccess.entitlements).mapNotNull { theme ->
-            AppIconOption.entries.firstOrNull { it.theme == theme }
-        }
-        themed + AppIconOption.entries.filterNot { it in themed }
-    }
+    val icons = remember { APPEARANCE_PRESETS.map { AppIconOption.valueOf(it.name) } }
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val visible = if (expanded || icons.size <= COLLAPSED_ICON_COUNT) {
-        icons
-    } else {
-        icons.take(COLLAPSED_ICON_COUNT).let { first ->
-            // Keep the selected icon visible when it is one of the hidden ones.
-            if (state.selected !in first) first.dropLast(1) + state.selected else first
-        }
-    }
+    var showCustom by rememberSaveable { mutableStateOf(false) }
+    val customColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
+    val alphabetic = icons.map { it to stringResource(it.labelResource).lowercase() }.sortedBy { it.second }.map { it.first }
+    val visible = if (expanded) alphabetic else alphabetic.collapsedPresets(state.selected, COLLAPSED_ICON_COUNT)
     val spacing = if (isTablet) NuvioTokens.Space.s16 else NuvioTokens.Space.s12
     BoxWithConstraints(
         modifier = Modifier
@@ -128,32 +112,32 @@ internal fun AppIconGridPicker(
                             isSelected = icon == state.selected,
                             isPending = icon == state.pending,
                             enabled = state.pending == null,
-                            onClick = { if (icon != state.selected) onSelected(icon) },
+                            onClick = { onSelected(icon) },
                             modifier = Modifier.weight(1f),
                         )
                     }
                     repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                 }
             }
+            ThemeActions(
+                customAvailable = true,
+                customColors = customColors,
+                customSelected = false,
+                onReset = { if (state.pending == null) onSelected(AppIconOption.ORIGINAL) },
+                onCustom = { if (state.pending == null) showCustom = true },
+            )
             if (icons.size > COLLAPSED_ICON_COUNT) {
-                val label = stringResource(if (expanded) Res.string.morivia_theme_show_fewer else Res.string.morivia_theme_show_more)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(MaterialTheme.nuvio.shapes.compactCard)
-                        .clickable(onClickLabel = label) { expanded = !expanded }
-                        .padding(vertical = NuvioTokens.Space.s4),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = label,
-                        tint = MaterialTheme.nuvio.colors.textSecondary,
-                        modifier = Modifier.size(28.dp),
-                    )
-                }
+                PresetExpansionArrow(expanded) { expanded = it }
             }
         }
+    }
+    if (showCustom) {
+        CustomThemeEditor(
+            initialColors = customColors,
+            allowGradient = false,
+            onSave = { onSelected(iconForTheme(com.nuvio.app.core.ui.AppTheme.CUSTOM, it)) },
+            onDismiss = { showCustom = false },
+        )
     }
 }
 

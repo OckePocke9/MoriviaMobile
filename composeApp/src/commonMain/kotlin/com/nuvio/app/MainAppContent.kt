@@ -687,6 +687,12 @@ internal fun MainAppContent(
         }
     }
     var resumePromptItem by remember { mutableStateOf<ContinueWatchingItem?>(null) }
+    val watchPartyState by PartyRepository.state.collectAsStateWithLifecycle()
+    var dismissedPartyResumeId by remember { mutableStateOf<String?>(null) }
+    val partyToResume = watchPartyState.party?.takeIf {
+        watchPartyState.restored && it.id != dismissedPartyResumeId && currentRoute is TabsRoute &&
+            initialHomeReady && !profileSwitchLoading
+    }
     var lastExternalPlayerLaunch by remember { mutableStateOf<PlayerLaunch?>(null) }
     val activePlaybackProfileId = activeProfileIndex ?: ProfileRepository.activeProfileId
     val launchExternalPlayer = rememberExternalPlayerLauncher { result ->
@@ -965,6 +971,7 @@ internal fun MainAppContent(
             resumeProgressFraction: Float?,
             manualSelection: Boolean,
             startFromBeginning: Boolean,
+            autoJoinParty: Boolean = false,
         ) {
             val targetResumePositionMs = if (startFromBeginning) 0L else (resumePositionMs ?: 0L)
             val targetResumeProgressFraction = if (startFromBeginning) null else resumeProgressFraction
@@ -1038,6 +1045,7 @@ internal fun MainAppContent(
                     resumePositionMs = if (startFromBeginning) 0L else resumePositionMs,
                     resumeProgressFraction = targetResumeProgressFraction,
                     manualSelection = manualSelection,
+                    autoJoinParty = autoJoinParty,
                     startFromBeginning = startFromBeginning,
                 ),
             )
@@ -1048,7 +1056,7 @@ internal fun MainAppContent(
 
         fun openPartyMedia(media: PartyMedia) {
             if (navController.currentRoute is PlayerRoute) navController.popBackStack()
-            val resumePositionMs = PartyRepository.playback.value
+            val resumePositionMs = (PartyRepository.joinPlayback.value?.playback ?: PartyRepository.playback.value)
                 ?.takeIf { it.mediaKey == null || it.mediaKey == media.key }
                 ?.let { PartySync.expectedPositionMs(it, PartyRepository.nowMs()) }
             launchPlaybackWithDownloadPreference(
@@ -1069,6 +1077,7 @@ internal fun MainAppContent(
                 resumeProgressFraction = null,
                 manualSelection = true,
                 startFromBeginning = resumePositionMs == null,
+                autoJoinParty = true,
             )
         }
 
@@ -1125,7 +1134,7 @@ internal fun MainAppContent(
                     is PartyEvent.MemberJoined -> getString(Res.string.party_member_joined, event.name)
                     is PartyEvent.MemberLeft -> getString(Res.string.party_member_left, event.name)
                     PartyEvent.Removed -> getString(Res.string.party_removed)
-                    PartyEvent.Ended -> getString(Res.string.party_ended)
+                    PartyEvent.Ended, is PartyEvent.EndPlayback -> getString(Res.string.party_ended)
                     is PartyEvent.MediaChanged -> getString(Res.string.party_media_changed, event.media.title)
                     is PartyEvent.ControlChanged -> getString(
                         if (event.hostOnly) Res.string.party_control_host_only else Res.string.party_control_everyone,
@@ -2127,7 +2136,29 @@ internal fun MainAppContent(
             }
 
             NuvioFloatingPrompt(
-                visible = resumePromptItem != null,
+                visible = partyToResume != null,
+                imageUrl = partyToResume?.media?.poster,
+                title = partyToResume?.media?.title.orEmpty(),
+                subtitle = stringResource(Res.string.party_title),
+                progressFraction = 0f,
+                actionLabel = stringResource(Res.string.party_watch_with_party),
+                onAction = {
+                    val room = partyToResume ?: return@NuvioFloatingPrompt
+                    dismissedPartyResumeId = room.id
+                    coroutineScope.launch {
+                        PartyRepository.currentHostPlayback(refreshJoin = true)
+                        val current = PartyRepository.state.value.party
+                        if (current?.id == room.id && navController.currentRoute is TabsRoute) {
+                            openPartyMedia(current.media)
+                        }
+                    }
+                },
+                onDismiss = { dismissedPartyResumeId = partyToResume?.id },
+                modifier = Modifier.align(Alignment.BottomCenter).zIndex(15f),
+            )
+
+            NuvioFloatingPrompt(
+                visible = resumePromptItem != null && partyToResume == null,
                 imageUrl = resumePromptItem?.poster ?: resumePromptItem?.imageUrl,
                 title = resumePromptItem?.title.orEmpty(),
                 subtitle = resumePromptItem?.let { localizedContinueWatchingSubtitle(it) }.orEmpty(),

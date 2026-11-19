@@ -100,6 +100,7 @@ internal fun PartyPanel(
     canShareStream: Boolean,
     onSharingChange: (Boolean) -> Unit,
     behindMs: Long?,
+    canReturnToSync: Boolean,
     onCatchUp: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -176,6 +177,7 @@ internal fun PartyPanel(
                             party = current,
                             playerMedia = playerMedia,
                             behindMs = behindMs,
+                            canReturnToSync = canReturnToSync,
                             onCatchUp = onCatchUp,
                             onSwitchParty = onSwitchParty,
                             onWatchWithParty = onWatchWithParty,
@@ -246,6 +248,7 @@ private fun PartyContent(
     party: ActiveParty,
     playerMedia: PartyMedia,
     behindMs: Long?,
+    canReturnToSync: Boolean,
     onCatchUp: () -> Unit,
     onSwitchParty: () -> Unit,
     onWatchWithParty: () -> Unit,
@@ -268,12 +271,12 @@ private fun PartyContent(
         var lastBehindMs by remember { mutableStateOf(0L) }
         if (behindMs != null) lastBehindMs = behindMs
         AnimatedVisibility(
-            visible = behindMs != null,
+            visible = behindMs != null || canReturnToSync,
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + shrinkVertically(),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
+                if (behindMs != null) Text(
                     text = stringResource(Res.string.party_behind_title, formatPlaybackTime(lastBehindMs)),
                     style = MaterialTheme.typography.bodyLarge,
                     color = tokens.colors.textPrimary,

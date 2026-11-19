@@ -1,5 +1,6 @@
 package com.nuvio.app.features.settings
 
+import androidx.compose.ui.graphics.toArgb
 import com.nuvio.app.core.ui.AppTheme
 import com.nuvio.app.core.ui.CustomThemeColors
 import com.nuvio.app.core.ui.NativeTabBridge
@@ -48,6 +49,9 @@ object ThemeSettingsRepository {
     private val _matchAppIconToTheme = MutableStateFlow(true)
     val matchAppIconToTheme: StateFlow<Boolean> = _matchAppIconToTheme.asStateFlow()
 
+    private val _matchThemeToAppIcon = MutableStateFlow(false)
+    val matchThemeToAppIcon: StateFlow<Boolean> = _matchThemeToAppIcon.asStateFlow()
+
     private var hasLoaded = false
     private var observesMembership = false
 
@@ -75,6 +79,7 @@ object ThemeSettingsRepository {
         _navBarGlowEnabled.value = true
         _navBarStyle.value = NavBarStyle.ADAPTIVE
         _matchAppIconToTheme.value = true
+        _matchThemeToAppIcon.value = false
         // Without an account (signed out) the app shows the Original theme and app icon.
         scope.launch(Dispatchers.Main) { AppIconRepository.select(AppIconOption.ORIGINAL) }
     }
@@ -93,8 +98,13 @@ object ThemeSettingsRepository {
         }
         _selectedThemePreference.value = theme
         _customThemePreference.value = CustomThemeColors.decode(ThemeSettingsStorage.loadCustomThemeColors())
-        _matchAppIconToTheme.value = ThemeSettingsStorage.loadMatchAppIconToTheme() ?: true
-        applyEffectiveTheme()
+        _matchThemeToAppIcon.value = ThemeSettingsStorage.loadMatchThemeToAppIcon()
+        _matchAppIconToTheme.value = !_matchThemeToAppIcon.value &&
+            (ThemeSettingsStorage.loadMatchAppIconToTheme() ?: true)
+        if (_matchThemeToAppIcon.value) {
+            AppIconRepository.ensureLoaded()
+            applyIconTheme(AppIconRepository.state.value.selected)
+        } else applyEffectiveTheme()
         _amoledEnabled.value = ThemeSettingsStorage.loadAmoledEnabled() ?: true
         val liquidGlassEnabled = ThemeSettingsStorage.loadLiquidGlassNativeTabBarEnabled() ?: false
         _liquidGlassNativeTabBarEnabled.value = liquidGlassEnabled
@@ -110,14 +120,27 @@ object ThemeSettingsRepository {
         ensureLoaded()
         val access = MemberAccessRepository.access.value
         if (theme !in availableAppThemes(access.entitlements)) return
-        if (_selectedThemePreference.value == theme) return
-        _selectedThemePreference.value = theme
-        ThemeSettingsStorage.saveSelectedTheme(theme.name)
+        setMatchAppIconToTheme(false)
+        setMatchThemeToAppIcon(false)
+        saveTheme(theme)
+    }
+
+    private fun saveTheme(theme: AppTheme) {
+        if (_selectedThemePreference.value != theme) {
+            _selectedThemePreference.value = theme
+            ThemeSettingsStorage.saveSelectedTheme(theme.name)
+        }
         applyEffectiveTheme()
     }
 
     fun setCustomTheme(colors: CustomThemeColors) {
         ensureLoaded()
+        setMatchAppIconToTheme(false)
+        setMatchThemeToAppIcon(false)
+        saveCustomTheme(colors)
+    }
+
+    private fun saveCustomTheme(colors: CustomThemeColors) {
         val access = MemberAccessRepository.access.value
         val selectedColors = resolveCustomThemeColors(colors, access.tier)
         ThemeSettingsStorage.saveCustomThemeColors(selectedColors.encode())
@@ -133,8 +156,38 @@ object ThemeSettingsRepository {
         _matchAppIconToTheme.value = enabled
         ThemeSettingsStorage.saveMatchAppIconToTheme(enabled)
         if (enabled) {
+            setMatchThemeToAppIcon(false)
             val icon = iconForTheme(_selectedTheme.value, _customThemeColors.value)
             scope.launch(Dispatchers.Main) { AppIconRepository.select(icon) }
+        }
+    }
+
+    fun setMatchThemeToAppIcon(enabled: Boolean) {
+        ensureLoaded()
+        if (_matchThemeToAppIcon.value == enabled) return
+        _matchThemeToAppIcon.value = enabled
+        ThemeSettingsStorage.saveMatchThemeToAppIcon(enabled)
+        if (enabled) {
+            setMatchAppIconToTheme(false)
+            AppIconRepository.ensureLoaded()
+            applyIconTheme(AppIconRepository.state.value.selected)
+        }
+    }
+
+    internal suspend fun selectAppIcon(icon: AppIconOption) {
+        ensureLoaded()
+        setMatchAppIconToTheme(false)
+        AppIconRepository.select(icon)
+        if (_matchThemeToAppIcon.value && AppIconRepository.state.value.selected == icon) applyIconTheme(icon)
+    }
+
+    private fun applyIconTheme(icon: AppIconOption) {
+        val theme = icon.theme ?: return
+        if (theme in availableAppThemes(MemberAccessRepository.access.value.entitlements)) {
+            saveTheme(theme)
+        } else {
+            val accent = ThemeColors.getColorPalette(theme).secondary
+            saveCustomTheme(CustomThemeColors.solid(accent.toArgb() and 0xFFFFFF))
         }
     }
 

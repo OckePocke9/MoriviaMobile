@@ -52,6 +52,8 @@ import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.getString
 import androidx.compose.runtime.CompositionLocalProvider
+import com.nuvio.app.features.party.PartyEvent
+import com.nuvio.app.features.party.PartyMemberStatus
 import com.nuvio.app.features.party.PartyRepository
 import com.nuvio.app.features.party.matches
 import com.nuvio.app.features.party.partyMediaKey
@@ -809,6 +811,34 @@ internal fun StreamDestination(
             ?.let { SharedStream(label = sharedLabel, stream = it.toStreamItem()) }
     }
 
+    val partyCandidate = sharedStream?.stream ?: streamsUiState
+        .takeIf { it.requestToken == expectedStreamsRequestToken }
+        ?.allStreams?.firstOrNull { partySource?.matches(it) == true }
+    var partyAutoOpened by rememberSaveable(route.launchId) { mutableStateOf(false) }
+    LaunchedEffect(launch.autoJoinParty, partyCandidate) {
+        if (!launch.autoJoinParty || partyAutoOpened || partyCandidate == null) return@LaunchedEffect
+        partyAutoOpened = true
+        openSelectedStream(partyCandidate, launch.resumePositionMs, null, forceExternal = false,
+            forceInternal = true, saveForReuse = partyCandidate != sharedStream?.stream)
+    }
+
+    LaunchedEffect(launch.autoJoinParty, contentKey) {
+        if (launch.autoJoinParty) PartyRepository.events.collect { event ->
+            if (event is PartyEvent.EndPlayback && event.mediaKey == contentKey) onBack()
+        }
+    }
+    val findingPartyStream = launch.autoJoinParty &&
+        (streamsUiState.requestToken != expectedStreamsRequestToken || streamsUiState.isAnyLoading)
+    val hidePartyTransition = launch.autoJoinParty &&
+        (findingPartyStream || (!partyAutoOpened && partyCandidate != null) ||
+            resolvingDebridStream || resolvingYouTubeStream || preparingServerStream || autoPlayNavigationStarted)
+    LaunchedEffect(launch.autoJoinParty, hidePartyTransition) {
+        if (launch.autoJoinParty) {
+            val status = if (hidePartyTransition) PartyMemberStatus.Loading else PartyMemberStatus.Browsing
+            PartyRepository.setLocalStatus(status, contentKey)
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         CompositionLocalProvider(
             LocalStreamHighlight provides streamHighlight,
@@ -876,7 +906,7 @@ internal fun StreamDestination(
                 },
             )
         }
-        if (showLoadingScreen) {
+        if (showLoadingScreen || (hidePartyTransition && pendingP2pStreamOpen == null)) {
             StreamLoadingScreen(
                 launch = launch,
                 state = streamsUiState.takeIf { it.requestToken == expectedStreamsRequestToken } ?: StreamsUiState(),

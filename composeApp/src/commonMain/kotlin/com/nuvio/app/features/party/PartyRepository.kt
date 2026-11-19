@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -34,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -68,6 +70,29 @@ object PartyRepository {
     private val _notices = MutableSharedFlow<PartyNotice>(extraBufferCapacity = 8)
     val notices: SharedFlow<PartyNotice> = _notices.asSharedFlow()
 
+    private val _joinPlayback = MutableStateFlow<PartyJoinPlayback?>(null)
+    internal val joinPlayback = _joinPlayback.asStateFlow()
+    private val requestedJoinPlayback = MutableStateFlow<Pair<String, PartyJoinPlayback>?>(null)
+    private var nextSampleRequest = 0L
+
+    internal suspend fun currentHostPlayback(refreshJoin: Boolean = false): PartyJoinPlayback? = withContext(dispatcher) {
+        val party = _state.value.party ?: return@withContext null
+        if (party.isHost || !party.connected) return@withContext null
+        val requestId = "${party.memberId}:${++nextSampleRequest}"
+        requestState(party, requestId)
+        val response = withTimeoutOrNull(2_000) {
+            requestedJoinPlayback.first { it?.first == requestId }?.second
+        }
+        if (_state.value.party?.id != party.id) return@withContext null
+        if (refreshJoin && response != null) _joinPlayback.value = response
+        response
+    }
+    private var hostPlaybackForJoin: (() -> PartyJoinPlayback?)? = null
+
+    internal fun setHostPlaybackForJoin(provider: (() -> PartyJoinPlayback?)?) {
+        hostPlaybackForJoin = provider
+    }
+
     private val _sharedStream = MutableStateFlow<PartyStream?>(null)
     val sharedStream: StateFlow<PartyStream?> = _sharedStream.asStateFlow()
 
@@ -86,14 +111,17 @@ object PartyRepository {
     private var resumedAt: TimeMark? = null
     private val ignoredWaiting = mutableSetOf<String>()
     private var rejoining = false
+    private var sessionAccount: String? = null
 
     init {
         scope.launch {
             AuthRepository.state.collect { auth ->
-                val signedIn = auth is AuthState.Authenticated && !auth.isAnonymous
-                if (!signedIn && _state.value.party != null) {
-                    mutex.withLock { stopSession() }
+                if (auth == AuthState.Loading) return@collect
+                val account = resumeAccount(auth)
+                mutex.withLock {
+                    if (sessionAccount != null && sessionAccount != account) stopSession()
                 }
+                restoreGuestRoom()
             }
         }
         scope.launch {
@@ -101,7 +129,11 @@ object PartyRepository {
             AppForegroundMonitor.events()
                 .flowOn(Dispatchers.Main)
                 .filter { it == AppVisibility.Foreground }
-                .collect { refreshEnabled() }
+                .collect {
+                    refreshEnabled()
+                    if (_state.value.party == null) restoreGuestRoom()
+                    else refreshMembers(announceMemberId = null)
+                }
         }
     }
 
@@ -117,12 +149,23 @@ object PartyRepository {
         start { identity -> PartyApi.create(identity, media, null) }
 
     suspend fun join(code: String): PartyError? =
-        start { identity -> PartyApi.join(normalizePartyCode(code), identity) }
+        start { identity -> joinRoom(normalizePartyCode(code), identity) }
+
+    private suspend fun joinRoom(code: String, identity: PartyIdentity): PartySnapshot {
+        val snapshot = PartyApi.join(code, identity)
+        val room = snapshot.party ?: return snapshot
+        if (snapshot.error != null || snapshot.members.size <= room.maxMembers.coerceAtMost(MAX_PARTY_VIEWERS)) {
+            return snapshot
+        }
+        runRemote { PartyApi.leave(room.id, identity.deviceId) }
+        return PartySnapshot(error = "party_full")
+    }
 
     suspend fun preview(code: String): PartyPreview =
         withContext(dispatcher) {
             try {
-                PartyApi.preview(normalizePartyCode(code))
+                val preview = PartyApi.preview(normalizePartyCode(code))
+                preview.copy(maxMembers = preview.maxMembers.coerceAtMost(MAX_PARTY_VIEWERS))
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Throwable) {
@@ -135,6 +178,7 @@ object PartyRepository {
         scope.launch {
             mutex.withLock {
                 val party = _state.value.party ?: return@withLock
+                forgetRoom()
                 stopSession()
                 runRemote { PartyApi.leave(party.id, deviceId()) }
             }
@@ -145,8 +189,17 @@ object PartyRepository {
         scope.launch {
             mutex.withLock {
                 val party = _state.value.party ?: return@withLock
+                if (!party.isHost) return@withLock
+                // The explicit command distinguishes this from host transfer, expiry and disconnects.
+                runRemote {
+                    channel?.send("end_playback", buildJsonObject { put("member_id", party.memberId) })
+                }
                 val result = runRemote { PartyApi.end(party.id, deviceId()) } ?: return@withLock
-                if (result.error == null) stopSession()
+                if (result.error == null) {
+                    forgetRoom()
+                    stopSession()
+                    _events.tryEmit(PartyEvent.EndPlayback(party.media.key))
+                }
             }
         }
     }
@@ -258,7 +311,40 @@ object PartyRepository {
         }
     }
 
-    private fun startSession(party: ActiveParty, playback: PartyPlayback?) {
+    private fun resumeAccount(auth: AuthState = AuthRepository.state.value): String? {
+        val user = (auth as? AuthState.Authenticated)?.takeUnless { it.isAnonymous } ?: return null
+        return "${ServerConfigurationRepository.active.value.backendUrl}|${user.userId}"
+    }
+
+    private fun forgetRoom() {
+        sessionAccount?.let { PartyResumeStorage.save(it, null) }
+    }
+
+    private suspend fun restoreGuestRoom() {
+        mutex.withLock {
+            if (!canUse || _state.value.party != null) return@withLock
+            val account = resumeAccount() ?: return@withLock
+            val code = PartyResumeStorage.load(account) ?: return@withLock
+            val sentAt = clock.mark()
+            val snapshot = runRemote { joinRoom(code, identity()) } ?: return@withLock
+            if (resumeAccount() != account) return@withLock
+            when (partyErrorOf(snapshot.error)) {
+                PartyError.Removed, PartyError.Ended, PartyError.NotFound -> {
+                    PartyResumeStorage.save(account, null)
+                    return@withLock
+                }
+                null -> Unit
+                else -> return@withLock
+            }
+            val party = snapshot.toActiveParty() ?: return@withLock
+            PartyCompanion.stop()
+            clock.reset()
+            snapshot.serverTimeMs?.let { clock.addSample(it, sentAt) }
+            startSession(party, snapshot.party?.playback, restored = true)
+        }
+    }
+
+    private fun startSession(party: ActiveParty, playback: PartyPlayback?, restored: Boolean = false) {
         val job = SupervisorJob(scope.coroutineContext[Job])
         val session = CoroutineScope(dispatcher + job)
         val partyChannel = PartyChannel(party.id, party.memberId)
@@ -270,7 +356,9 @@ object PartyRepository {
         waitStartedAt = null
         resumedAt = null
         _playback.value = playback?.takeIf { it.mediaKey == null || it.mediaKey == party.media.key }
-        _state.value = PartyUiState(party = party)
+        sessionAccount = resumeAccount()
+        sessionAccount?.let { PartyResumeStorage.save(it, party.code.takeUnless { party.isHost }) }
+        _state.value = PartyUiState(party = party, restored = restored)
         session.launch {
             runCatching {
                 partyChannel.open(
@@ -299,7 +387,10 @@ object PartyRepository {
         localPresence = null
         _playback.value = null
         _sharedStream.value = null
+        _joinPlayback.value = null
+        requestedJoinPlayback.value = null
         _state.value = PartyUiState()
+        sessionAccount = null
         PartyChat.stop()
     }
 
@@ -308,6 +399,7 @@ object PartyRepository {
         scope.launch {
             mutex.withLock {
                 if (_state.value.party?.id != partyId) return@withLock
+                if (event == PartyEvent.Removed || event == PartyEvent.Ended || event is PartyEvent.EndPlayback) forgetRoom()
                 stopSession()
                 _events.tryEmit(event)
             }
@@ -333,9 +425,36 @@ object PartyRepository {
     private suspend fun onMessage(event: String, payload: JsonObject) {
         val party = _state.value.party ?: return
         when (event) {
-            "state" -> decode(payload, PartyPlayback.serializer())?.let(::accept)
+            "state" -> {
+                val target = payload.string("join_target")
+                if (target == null) {
+                    decode(payload, PartyPlayback.serializer())?.let(::accept)
+                } else if (target == party.memberId && !party.isHost && payload.string("member_id") == party.hostMemberId) {
+                    val sample = payload["join_playback"]
+                        ?.let { decode(it, PartyJoinPlayback.serializer()) }
+                        ?.takeIf { it.playback.mediaKey == party.media.key }
+                        ?: return
+                    val sampleRequest = payload.string("sample_request")
+                    if (sampleRequest == null) _joinPlayback.value = sample
+                    else requestedJoinPlayback.value = sampleRequest to sample
+                }
+            }
             "state_request" -> {
-                if (payload.string("member_id") == party.memberId) return
+                val target = payload.string("member_id") ?: return
+                if (target == party.memberId) return
+                if (party.isHost) {
+                    val sample = withContext(Dispatchers.Main) { hostPlaybackForJoin?.invoke() }
+                    if (sample != null && sample.playback.mediaKey == party.media.key) {
+                        runCatching {
+                            channel?.send("state", buildJsonObject {
+                                put("join_target", target)
+                                payload.string("sample_request")?.let { put("sample_request", it) }
+                                put("member_id", party.memberId)
+                                put("join_playback", PartyApi.json.encodeToJsonElement(PartyJoinPlayback.serializer(), sample))
+                            })
+                        }
+                    }
+                }
                 runCatching { channel?.send("status", encodePresence(ownPresence(party))) }
                 if (party.isHost && party.sharing) _sharedStream.value?.let { sendStream(it) }
                 val current = _playback.value ?: return
@@ -354,6 +473,11 @@ object PartyRepository {
                 reason = payload.string("reason"),
                 hostMemberId = payload.string("host_member_id"),
             )
+            "end_playback" -> {
+                if (!party.isHost && payload.string("member_id") == party.hostMemberId) {
+                    finish(PartyEvent.EndPlayback(party.media.key))
+                }
+            }
             "ended" -> {
                 if (payload.string("reason") == "disabled") _enabled.value = false
                 finish(PartyEvent.Ended)
@@ -389,8 +513,13 @@ object PartyRepository {
         if (left.isNotEmpty()) sessionScope?.launch { requestState(party) }
     }
 
-    private suspend fun requestState(party: ActiveParty) {
-        runCatching { channel?.send("state_request", buildJsonObject { put("member_id", party.memberId) }) }
+    private suspend fun requestState(party: ActiveParty, sampleRequest: String? = null) {
+        runCatching {
+            channel?.send("state_request", buildJsonObject {
+                put("member_id", party.memberId)
+                sampleRequest?.let { put("sample_request", it) }
+            })
+        }
     }
 
     private fun applyStatus(status: PartyPresence) {
@@ -426,6 +555,8 @@ object PartyRepository {
     private suspend fun refreshMembers(announceMemberId: String?) {
         val party = _state.value.party ?: return
         val snapshot = runRemote { PartyApi.heartbeat(party.id, deviceId()) } ?: return
+        val current = _state.value.party
+        if (current?.id != party.id || current.memberId != party.memberId) return
         applySnapshot(snapshot)
         val name = _state.value.party?.member(announceMemberId)?.displayName
         if (announceMemberId != null && announceMemberId != party.memberId && name != null) {
@@ -451,7 +582,7 @@ object PartyRepository {
             current.copy(
                 members = snapshot.members,
                 hostMemberId = info.hostMemberId,
-                maxMembers = info.maxMembers,
+                maxMembers = info.maxMembers.coerceAtMost(MAX_PARTY_VIEWERS),
                 hostOnly = info.hostOnly,
                 presence = current.presence.filterKeys { key -> snapshot.members.any { it.id == key } },
             )
@@ -467,6 +598,7 @@ object PartyRepository {
         if (changed) {
             _playback.value = playback?.takeIf { it.mediaKey == null || it.mediaKey == media.key }
             if (_sharedStream.value?.mediaKey != media.key) _sharedStream.value = null
+            if (_joinPlayback.value?.playback?.mediaKey != media.key) _joinPlayback.value = null
             ignoredWaiting.clear()
             waitStartedAt = null
             _events.tryEmit(PartyEvent.MediaChanged(media))
@@ -589,7 +721,10 @@ object PartyRepository {
                 val started = waitStartedAt ?: clock.mark().also { waitStartedAt = it }
                 if (waiting.isEmpty() || started.elapsedNow() > WAIT_LIMIT) {
                     ignoredWaiting += waiting
-                    publish(paused = false, positionMs = playback.positionMs, rate = playback.rate, waiting = false)
+                    publish(
+                        paused = false, positionMs = playback.positionMs, rate = playback.rate,
+                        waiting = false, at = clock.nowMs() + START_LEAD_MS,
+                    )
                 }
             }
         }
@@ -603,13 +738,15 @@ object PartyRepository {
             try {
                 mutex.withLock {
                     if (_state.value.party?.id != party.id) return@withLock
-                    val snapshot = runRemote { PartyApi.join(party.code, identity()) }
-                    val rejoined = snapshot?.takeIf { it.error == null }?.toActiveParty()
-                    if (rejoined == null) {
+                    val snapshot = runRemote { joinRoom(party.code, identity()) } ?: return@withLock
+                    val error = partyErrorOf(snapshot.error)
+                    if (error == PartyError.Removed || error == PartyError.Ended || error == PartyError.NotFound) {
+                        forgetRoom()
                         stopSession()
-                        _events.tryEmit(if (snapshot?.error == "removed") PartyEvent.Removed else PartyEvent.Ended)
+                        _events.tryEmit(if (error == PartyError.Removed) PartyEvent.Removed else PartyEvent.Ended)
                         return@withLock
                     }
+                    val rejoined = snapshot.takeIf { error == null }?.toActiveParty() ?: return@withLock
                     if (rejoined.memberId == party.memberId) {
                         updateParty { it.copy(members = rejoined.members, hostMemberId = rejoined.hostMemberId) }
                         return@withLock
@@ -686,12 +823,14 @@ object PartyRepository {
             members = members,
             presence = emptyMap(),
             media = info.media,
-            maxMembers = info.maxMembers,
+            maxMembers = info.maxMembers.coerceAtMost(MAX_PARTY_VIEWERS),
             connected = false,
             hostOnly = info.hostOnly,
         )
     }
 
+    private const val MAX_PARTY_VIEWERS = 6
+    private const val START_LEAD_MS = 900L
     private const val DEFAULT_NAME = "Morivia"
     private val COLOR_PATTERN = Regex("^#[0-9A-Fa-f]{6}$")
     private val HEARTBEAT_INTERVAL = 2.minutes
@@ -715,4 +854,4 @@ fun partyInviteLink(code: String): String =
     if (ServerConfigurationRepository.active.value.isCustom) "nuvio://party/$code" else "https://nuvio.tv/party/$code"
 
 const val PARTY_CODE_LENGTH = 6
-private const val PARTY_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+private const val PARTY_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789"

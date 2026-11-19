@@ -20,6 +20,8 @@ internal expect object ThemeSettingsStorage {
     fun saveNavBarGlowEnabled(enabled: Boolean)
     fun loadMatchAppIconToTheme(): Boolean?
     fun saveMatchAppIconToTheme(enabled: Boolean)
+    fun loadMatchThemeToAppIcon(): Boolean
+    fun saveMatchThemeToAppIcon(enabled: Boolean)
     fun exportToSyncPayload(): JsonObject
     fun replaceFromSyncPayload(payload: JsonObject)
 }

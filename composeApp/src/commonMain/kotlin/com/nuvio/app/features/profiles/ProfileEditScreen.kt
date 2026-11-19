@@ -1,5 +1,14 @@
 package com.nuvio.app.features.profiles
 
+import com.nuvio.app.features.settings.collapsedPresets
+import com.nuvio.app.features.settings.CustomThemeEditor
+import com.nuvio.app.features.settings.PresetExpansionArrow
+import com.nuvio.app.features.settings.ThemeActions
+import com.nuvio.app.core.ui.APPEARANCE_PRESETS
+import com.nuvio.app.core.ui.labelRes
+import com.nuvio.app.core.ui.ThemeColors
+import com.nuvio.app.core.ui.CustomThemeColors
+import com.nuvio.app.core.ui.formatHexColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -284,6 +293,7 @@ private fun ProfileEditContent(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     FallbackColourPicker(
+                        initial = profileInitial(name),
                         selectedHex = fallbackColorHex,
                         onSelected = { fallbackColorHex = it },
                     )
@@ -675,9 +685,9 @@ private fun SelectedAvatarSummary(
     }
 }
 
-/** The first letter of the profile name, or "?" while the name is empty. */
+/** Show the initial as soon as the profile name contains a letter. */
 private fun profileInitial(name: String): String =
-    name.trim().firstOrNull()?.uppercase() ?: "?"
+    name.firstOrNull { it.isLetter() }?.uppercase().orEmpty()
 
 @Composable
 private fun InitialCircle(initial: String, colour: Color, size: androidx.compose.ui.unit.Dp) {
@@ -699,28 +709,30 @@ private fun InitialCircle(initial: String, colour: Color, size: androidx.compose
 
 /**
  * The colour behind the initials (nuvio.tv calls it the fallback colour). The same chips as the
- * Appearance theme picker: the app icon colours with their theme names and gradients, nine first
+ * Appearance theme picker: the theme names and gradients, with the profile initial, nine first
  * and the rest behind the arrow.
  */
 @Composable
 private fun FallbackColourPicker(
+    initial: String,
     selectedHex: String,
     onSelected: (String) -> Unit,
 ) {
     val known = INITIALS_COLOR_OPTIONS.firstOrNull { it.hex.equals(selectedHex, ignoreCase = true) }
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val visible: List<InitialsColorOption?> = if (expanded) {
-        INITIALS_COLOR_OPTIONS
-    } else {
-        INITIALS_COLOR_OPTIONS.take(INITIALS_COLLAPSED_COUNT).let { first ->
-            // Keep the selected colour visible when it is one of the hidden ones.
-            if (known != null && known !in first) first.dropLast(1) + known else first
-        }
-    } + (
-        // The profile's own colour when it is another one (for example one chosen on nuvio.tv,
-        // which allows any colour); null stands for it.
-        if (known == null) listOf(null) else emptyList()
-    )
+    var showCustom by rememberSaveable { mutableStateOf(false) }
+    val alphabetic = APPEARANCE_PRESETS.map { theme ->
+        val palette = ThemeColors.getColorPalette(theme)
+        InitialsColorOption(palette.nativeAccentHex, theme.labelRes, palette)
+    }.map { option ->
+        option to stringResource(option.label).lowercase()
+    }.sortedBy { it.second }.map { it.first }
+    val selectedPreset = alphabetic.firstOrNull { it.hex.equals(selectedHex, ignoreCase = true) }
+    val visible = when {
+        expanded -> alphabetic
+        selectedPreset == null -> alphabetic.take(INITIALS_COLLAPSED_COUNT)
+        else -> alphabetic.collapsedPresets(selectedPreset, INITIALS_COLLAPSED_COUNT)
+    }
     val spacing = 12.dp
     androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
         val columns = ((maxWidth + spacing) / (78.dp + spacing)).toInt()
@@ -732,11 +744,11 @@ private fun FallbackColourPicker(
                     horizontalArrangement = Arrangement.spacedBy(spacing),
                 ) {
                     row.forEach { option ->
-                        val hex = option?.hex ?: selectedHex.uppercase()
+                        val hex = option.hex
                         InitialsColourChip(
                             colour = parseHexColor(hex),
-                            label = option?.label?.let { stringResource(it) }
-                                ?: stringResource(Res.string.theme_custom),
+                            initial = initial,
+                            label = stringResource(option.label),
                             selected = hex.equals(selectedHex, ignoreCase = true),
                             onClick = { onSelected(hex) },
                             modifier = Modifier.weight(1f),
@@ -745,29 +757,26 @@ private fun FallbackColourPicker(
                     repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                 }
             }
-            if (INITIALS_COLOR_OPTIONS.size > INITIALS_COLLAPSED_COUNT) {
-                val label = stringResource(if (expanded) Res.string.morivia_theme_show_fewer else Res.string.morivia_theme_show_more)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(MaterialTheme.nuvio.shapes.compactCard)
-                        .clickable(onClickLabel = label) { expanded = !expanded }
-                        .padding(vertical = 4.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = if (expanded) {
-                            androidx.compose.material.icons.Icons.Default.KeyboardArrowUp
-                        } else {
-                            androidx.compose.material.icons.Icons.Default.KeyboardArrowDown
-                        },
-                        contentDescription = label,
-                        tint = MaterialTheme.nuvio.colors.textSecondary,
-                        modifier = Modifier.size(28.dp),
-                    )
-                }
+            val custom = CustomThemeColors.solid(com.nuvio.app.core.ui.parseHexColor(selectedHex) ?: CustomThemeColors.Default.second)
+            ThemeActions(
+                customAvailable = true,
+                customColors = custom,
+                customSelected = known == null,
+                onReset = { onSelected(PROFILE_COLORS.first()) },
+                onCustom = { showCustom = true },
+            )
+            if (alphabetic.size > INITIALS_COLLAPSED_COUNT) {
+                PresetExpansionArrow(expanded) { expanded = it }
             }
         }
+    }
+    if (showCustom) {
+        CustomThemeEditor(
+            initialColors = CustomThemeColors.solid(com.nuvio.app.core.ui.parseHexColor(selectedHex) ?: CustomThemeColors.Default.second),
+            allowGradient = false,
+            onSave = { onSelected(formatHexColor(it.second)) },
+            onDismiss = { showCustom = false },
+        )
     }
 }
 
@@ -777,6 +786,7 @@ private const val INITIALS_COLLAPSED_COUNT = 9
 @Composable
 private fun InitialsColourChip(
     colour: Color,
+    initial: String,
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
@@ -797,22 +807,7 @@ private fun InitialsColourChip(
             ),
             contentAlignment = Alignment.Center,
         ) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(initialsBrush(colour)),
-                contentAlignment = Alignment.Center,
-            ) {
-                if (selected) {
-                    Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Default.Check,
-                        contentDescription = stringResource(Res.string.cd_selected),
-                        tint = initialsTextColor(colour),
-                        modifier = Modifier.size(22.dp),
-                    )
-                }
-            }
+            InitialCircle(initial = initial, colour = colour, size = 44.dp)
         }
         Spacer(Modifier.height(6.dp))
         Text(
