@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +21,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -362,7 +367,7 @@ private fun ProfileEditContent(
                     scope.launch {
                         val avatarColorHex = visibleAvatarItem?.bgColor ?: fallbackColorHex
                         val chosenAvatarId = if (customAvatarUrl == null && !useInitials) selectedAvatarId else null
-                        if (isNew) {
+                        val saved = if (isNew) {
                             val newProfileIndex = ProfileRepository.createProfile(
                                 name = name,
                                 avatarColorHex = avatarColorHex,
@@ -380,6 +385,7 @@ private fun ProfileEditContent(
                                     )
                                 }
                             }
+                            newProfileIndex != null
                         } else {
                             ProfileRepository.updateProfile(
                                 profileIndex = currentProfile!!.profileIndex,
@@ -393,7 +399,14 @@ private fun ProfileEditContent(
                             )
                         }
                         isSaving = false
-                        onSaved()
+                        if (saved) {
+                            onSaved()
+                        } else {
+                            // Stay here so nothing is lost; the profile was not saved on Nuvio.
+                            com.nuvio.app.core.ui.NuvioToastController.show(
+                                org.jetbrains.compose.resources.getString(Res.string.profile_save_failed),
+                            )
+                        }
                     }
                 },
             )
@@ -504,11 +517,8 @@ private fun ProfileIdentityCard(
                         .size(88.dp)
                         .clip(CircleShape)
                         .background(
-                            if (selectedAvatar != null || customAvatarUrl != null) {
-                                accentColor
-                            } else {
-                                accentColor.copy(alpha = 0.18f)
-                            },
+                            if (selectedAvatar != null || customAvatarUrl != null) androidx.compose.ui.graphics.SolidColor(accentColor)
+                            else initialsBrush(accentColor),
                         )
                         .border(
                             width = 2.dp,
@@ -539,7 +549,7 @@ private fun ProfileIdentityCard(
                         Text(
                             text = name.take(1).uppercase(),
                             style = MaterialTheme.typography.displayLarge,
-                            color = accentColor,
+                            color = initialsTextColor(accentColor),
                             fontWeight = FontWeight.Bold,
                         )
                     } else {
@@ -675,7 +685,7 @@ private fun InitialCircle(initial: String, colour: Color, size: androidx.compose
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
-            .background(colour),
+            .background(initialsBrush(colour)),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -687,50 +697,134 @@ private fun InitialCircle(initial: String, colour: Color, size: androidx.compose
     }
 }
 
-/** The colour behind the initials (nuvio.tv calls it the fallback colour). */
-@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+/**
+ * The colour behind the initials (nuvio.tv calls it the fallback colour). The same chips as the
+ * Appearance theme picker: the app icon colours with their theme names and gradients, nine first
+ * and the rest behind the arrow.
+ */
 @Composable
 private fun FallbackColourPicker(
     selectedHex: String,
     onSelected: (String) -> Unit,
 ) {
-    // Morivia's theme colours, plus the profile's own colour when it is another one (for example
-    // one chosen on nuvio.tv, which allows any colour).
-    val swatches = if (PROFILE_COLORS.any { it.equals(selectedHex, ignoreCase = true) }) {
-        PROFILE_COLORS
+    val known = INITIALS_COLOR_OPTIONS.firstOrNull { it.hex.equals(selectedHex, ignoreCase = true) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val visible: List<InitialsColorOption?> = if (expanded) {
+        INITIALS_COLOR_OPTIONS
     } else {
-        PROFILE_COLORS + selectedHex.uppercase()
-    }
-    androidx.compose.foundation.layout.FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        swatches.forEach { hex ->
-            val selected = hex.equals(selectedHex, ignoreCase = true)
-            val colour = parseHexColor(hex)
-            Box(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(colour)
-                    .border(
-                        width = if (selected) 3.dp else 1.dp,
-                        color = if (selected) MaterialTheme.colorScheme.onSurface else Color.White.copy(alpha = 0.18f),
-                        shape = CircleShape,
-                    )
-                    .clickable { onSelected(hex) },
-                contentAlignment = Alignment.Center,
-            ) {
-                if (selected) {
+        INITIALS_COLOR_OPTIONS.take(INITIALS_COLLAPSED_COUNT).let { first ->
+            // Keep the selected colour visible when it is one of the hidden ones.
+            if (known != null && known !in first) first.dropLast(1) + known else first
+        }
+    } + (
+        // The profile's own colour when it is another one (for example one chosen on nuvio.tv,
+        // which allows any colour); null stands for it.
+        if (known == null) listOf(null) else emptyList()
+    )
+    val spacing = 12.dp
+    androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val columns = ((maxWidth + spacing) / (78.dp + spacing)).toInt()
+            .coerceIn(1, if (maxWidth >= 560.dp) 4 else 3)
+        Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
+            visible.chunked(columns).forEach { row ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(spacing),
+                ) {
+                    row.forEach { option ->
+                        val hex = option?.hex ?: selectedHex.uppercase()
+                        InitialsColourChip(
+                            colour = parseHexColor(hex),
+                            label = option?.label?.let { stringResource(it) }
+                                ?: stringResource(Res.string.theme_custom),
+                            selected = hex.equals(selectedHex, ignoreCase = true),
+                            onClick = { onSelected(hex) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
+                }
+            }
+            if (INITIALS_COLOR_OPTIONS.size > INITIALS_COLLAPSED_COUNT) {
+                val label = stringResource(if (expanded) Res.string.morivia_theme_show_fewer else Res.string.morivia_theme_show_more)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(MaterialTheme.nuvio.shapes.compactCard)
+                        .clickable(onClickLabel = label) { expanded = !expanded }
+                        .padding(vertical = 4.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
                     Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Rounded.Check,
-                        contentDescription = null,
-                        tint = initialsTextColor(colour),
-                        modifier = Modifier.size(18.dp),
+                        imageVector = if (expanded) {
+                            androidx.compose.material.icons.Icons.Default.KeyboardArrowUp
+                        } else {
+                            androidx.compose.material.icons.Icons.Default.KeyboardArrowDown
+                        },
+                        contentDescription = label,
+                        tint = MaterialTheme.nuvio.colors.textSecondary,
+                        modifier = Modifier.size(28.dp),
                     )
                 }
             }
         }
+    }
+}
+
+private const val INITIALS_COLLAPSED_COUNT = 9
+
+/** One colour, drawn like a theme chip in Appearance. */
+@Composable
+private fun InitialsColourChip(
+    colour: Color,
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val tokens = MaterialTheme.nuvio
+    val ring = initialsPalette(colour)?.focusRing ?: colour
+    Column(
+        modifier = modifier
+            .clip(tokens.shapes.compactCard)
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .padding(horizontal = 4.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier.size(56.dp).then(
+                if (selected) Modifier.border(tokens.borders.medium, ring, CircleShape) else Modifier,
+            ),
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .background(initialsBrush(colour)),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (selected) {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Default.Check,
+                        contentDescription = stringResource(Res.string.cd_selected),
+                        tint = initialsTextColor(colour),
+                        modifier = Modifier.size(22.dp),
+                    )
+                }
+            }
+        }
+        Spacer(Modifier.height(6.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = if (selected) tokens.colors.textPrimary else tokens.colors.textSecondary,
+            fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            maxLines = 2,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
@@ -864,30 +958,27 @@ private fun NewPinWithConfirmDialog(
     var attempt by remember { mutableStateOf(0) }
     val mismatch = stringResource(Res.string.profile_pin_mismatch)
     val pin = firstPin
-    androidx.compose.runtime.key(attempt, pin == null) {
-        if (pin == null) {
-            PinEntryDialog(
-                // After a mismatch the first step says so.
-                profileName = if (attempt > 0) mismatch else stringResource(Res.string.profile_enter_new_pin),
-                onVerify = { PinVerifyResult(unlocked = true) },
-                onVerified = { entered -> firstPin = entered },
-                onDismiss = onDismiss,
-            )
-        } else {
-            PinEntryDialog(
-                profileName = stringResource(Res.string.profile_confirm_pin),
-                onVerify = { entered ->
-                    if (entered == pin) {
-                        onConfirmed(entered)
-                    } else {
-                        firstPin = null
-                        attempt++
-                        PinVerifyResult(unlocked = false, message = mismatch)
-                    }
-                },
-                onVerified = { onDone() },
-                onDismiss = onDismiss,
-            )
-        }
-    }
+    PinEntryDialog(
+        entryStep = attempt to (pin == null),
+        profileName = when {
+            pin != null -> stringResource(Res.string.profile_confirm_pin)
+            attempt > 0 -> mismatch
+            else -> stringResource(Res.string.profile_enter_new_pin)
+        },
+        onVerify = { entered ->
+            when {
+                pin == null -> PinVerifyResult(unlocked = true)
+                entered == pin -> onConfirmed(entered)
+                else -> {
+                    firstPin = null
+                    attempt++
+                    PinVerifyResult(unlocked = false, message = mismatch)
+                }
+            }
+        },
+        onVerified = { entered ->
+            if (pin == null) firstPin = entered else onDone()
+        },
+        onDismiss = onDismiss,
+    )
 }

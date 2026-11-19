@@ -59,18 +59,23 @@ fun PinEntryDialog(
     onDismiss: () -> Unit,
     onVerified: ((String) -> Unit)? = null,
     onForgotPin: (() -> Unit)? = null,
+    entryStep: Pair<Int, Boolean>? = null,
 ) {
-    var pin by remember { mutableStateOf("") }
-    var error by remember { mutableStateOf<String?>(null) }
-    var isVerifying by remember { mutableStateOf(false) }
+    var pin by remember(entryStep) { mutableStateOf("") }
+    var error by remember(entryStep) { mutableStateOf<String?>(null) }
+    var isVerifying by remember(entryStep) { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val haptic = LocalHapticFeedback.current
 
+    val entrance = remember { Animatable(0.92f) }
+    LaunchedEffect(Unit) {
+        entrance.animateTo(1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy))
+    }
     DialogSurface(
         onDismissRequest = onDismiss,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().graphicsLayer { scaleX = entrance.value; scaleY = entrance.value },
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -185,6 +190,8 @@ private fun PinDot(filled: Boolean, hasError: Boolean) {
                     stiffness = Spring.StiffnessHigh,
                 ),
             )
+        } else {
+            dotScale.snapTo(1f)
         }
     }
     Box(

@@ -46,6 +46,8 @@ import com.nuvio.app.core.network.ServerConfigurationRepository
 import com.nuvio.app.core.ui.nuvio
 import com.nuvio.app.features.profiles.AvatarRepository
 import com.nuvio.app.features.profiles.ProfileRepository
+import com.nuvio.app.features.profiles.initialsBrush
+import com.nuvio.app.features.profiles.initialsTextColor
 import com.nuvio.app.features.profiles.parseHexColor
 import com.nuvio.app.features.profiles.profileAvatarImageUrl
 import kotlinx.coroutines.delay
@@ -117,12 +119,15 @@ internal fun PartyAvatar(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(CircleShape)
-                .background(color?.let(::parseHexColor) ?: tokens.colors.surfaceCard),
+                .background(
+                    color?.let { initialsBrush(parseHexColor(it)) }
+                        ?: androidx.compose.ui.graphics.SolidColor(tokens.colors.surfaceCard),
+                ),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = name.trim().take(1).uppercase(),
-                color = Color.White,
+                color = color?.let { initialsTextColor(parseHexColor(it)) } ?: Color.White,
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = (size.value * 0.4f).sp),
                 fontWeight = FontWeight.SemiBold,
             )

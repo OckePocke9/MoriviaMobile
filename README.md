@@ -7,6 +7,13 @@ Bring your own sources: Morivia turns your addons into a library with artwork, p
 
 ## What's new in 1.6
 
+- Local build 28 matches initials colours exactly to the Appearance themes and app icons, everywhere in the app, and fixes profile sync with Nuvio.
+
+- Local build 27 keeps the PIN keypad in place during confirmation and matches Add Profile to the management controls.
+
+- Local build 26 restores the Add Profile circle, groups avatar choices and uses the active theme for the edit pencil.
+
+- **Local test build 25:** The profile chooser follows the supplied Nuvio reference for typography, outlined profile circles and management controls, retaining Morivia's name, logo and background. Nuvio sign-in remains locked to build 24. This build has not been published.
 - **A new Home.** One hero at the top with the Home button, the title, genre, year and description on the left, View Details, info and next. Below it Continue Watching, **Movies Based on Your Genres** and **Series Based on Your Genres** (from the movie and the series you watched last), a large Featured row, Popular and Featured movies and series, and every other catalog with up to 30 titles each, larger posters and Show all, in one page you scroll freely.
 - **Search and Library like the earlier Morivia app.** Search has the Search button, a "Movies and Shows" field, Trending and genre tiles. Library has Recently Added, Movies, TV Shows and Continue Watching, a count of movies and shows, Sort, and a grid of three posters per row.
 - **New settings.** Settings → Layout has Home & Layout (Play Trailers in Hero, Auto-Rotate Hero, the genre rows, posters, Continue Watching and rows), Search and Library.

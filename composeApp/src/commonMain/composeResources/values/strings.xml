@@ -1859,6 +1859,7 @@
     <string name="profile_pin_clear_requires_internet">Connect to the internet to remove the PIN lock.</string>
     <string name="profile_pin_offline_verification_requires_online">This PIN can't be verified offline on this device yet. Connect once and unlock it online first.</string>
     <string name="profile_pin_set_failed">Couldn't set PIN. Try again.</string>
+    <string name="profile_save_failed">Couldn't save the profile. Try again.</string>
     <string name="profile_pin_set_requires_internet">Connect to the internet to set a PIN.</string>
     <string name="profile_primary_addons_required">This profile uses primary addons.</string>
     <string name="streams_failed_to_load_scraper">Failed to load %1$s</string>

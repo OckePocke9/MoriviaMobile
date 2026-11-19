@@ -1,5 +1,16 @@
 package com.nuvio.app.features.profiles
 
+import com.nuvio.app.core.ui.ThemeColorPalette
+import com.nuvio.app.core.ui.ThemeColors
+import com.nuvio.app.core.ui.accentBrush
+import com.nuvio.app.core.ui.labelRes
+import com.nuvio.app.features.settings.AppIconOption
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.SolidColor
+import nuvio.composeapp.generated.resources.Res
+import nuvio.composeapp.generated.resources.settings_appearance_app_icon_copper
+import org.jetbrains.compose.resources.StringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import kotlinx.serialization.SerialName
@@ -80,29 +91,66 @@ fun parseHexColor(hex: String): Color {
 }
 
 /**
- * The profile colours: the main colour of each Morivia theme, in the order of the themes, with
- * Original first as the default. A profile colour is saved on the Nuvio profile as a plain
- * #RRGGBB, which Nuvio accepts for any colour, so these sync with Nuvio.
+ * Copper exists only as an app icon, so its palette is sampled from that icon
+ * (app_icon_copper.png), built like the Gold theme.
  */
-val PROFILE_COLORS = listOf(
-    "#6B4BF5", // Original
-    "#E8A91C", // Gold
-    "#22D37C", // Jade
-    "#EC70A9", // Rose Gold
-    "#3185F5", // Arctic Blue
-    "#AAB2BE", // Graphite
-    "#E53935", // Crimson
-    "#1E88E5", // Ocean
-    "#8E24AA", // Violet
-    "#43A047", // Emerald
-    "#FB8C00", // Amber
-    "#D81B60", // Rose
-    "#F5F5F5", // White
+internal val CopperInitialsPalette = ThemeColorPalette(
+    secondary = Color(0xFFC9804A),
+    secondaryVariant = Color(0xFF914407),
+    accentGradient = listOf(
+        Color(0xFF914407),
+        Color(0xFFC9804A),
+        Color(0xFFE6B37E),
+        Color(0xFFDB9C62),
+        Color(0xFF965529),
+    ),
+    nativeAccentHex = "#C9804A",
+    onSecondary = Color(0xFF111111),
+    focusRing = Color(0xFFE6B37E),
+    focusBackground = Color(0xFF3D261A),
 )
 
-/** White on dark colours, near-black on light ones (Graphite, White), so initials stay readable. */
-fun initialsTextColor(background: androidx.compose.ui.graphics.Color): androidx.compose.ui.graphics.Color =
-    if (background.luminance() > 0.6f) androidx.compose.ui.graphics.Color(0xFF111111) else androidx.compose.ui.graphics.Color.White
+/** One initials colour: the same name, gradient and text colour as its theme and app icon. */
+internal data class InitialsColorOption(
+    val hex: String,
+    val label: StringResource,
+    val palette: ThemeColorPalette,
+)
+
+private fun ThemeColorPalette.hex(): String =
+    "#" + (secondary.toArgb() and 0xFFFFFF).toString(16).uppercase().padStart(6, '0')
+
+/**
+ * The initials colours are exactly the app icons in Appearance (the same list and order), each
+ * drawn with its Appearance theme's palette, so initials, theme and app icon match everywhere.
+ * Original comes first as the default. A colour is saved on the Nuvio profile as a plain
+ * #RRGGBB, which Nuvio accepts for any colour, so these sync with Nuvio.
+ */
+internal val INITIALS_COLOR_OPTIONS: List<InitialsColorOption> = AppIconOption.entries.map { icon ->
+    val theme = icon.theme
+    if (theme == null) {
+        InitialsColorOption(CopperInitialsPalette.hex(), Res.string.settings_appearance_app_icon_copper, CopperInitialsPalette)
+    } else {
+        val palette = ThemeColors.getColorPalette(theme)
+        InitialsColorOption(palette.hex(), theme.labelRes, palette)
+    }
+}
+
+val PROFILE_COLORS: List<String> = INITIALS_COLOR_OPTIONS.map { it.hex }
+
+internal fun initialsPalette(color: Color): ThemeColorPalette? =
+    INITIALS_COLOR_OPTIONS.firstOrNull { it.palette.secondary == color }?.palette
+
+/** The theme gradient behind initials, or the plain colour when it is not a Morivia colour. */
+internal fun initialsBrush(color: Color): Brush = initialsPalette(color)?.accentBrush() ?: SolidColor(color)
+
+/**
+ * The theme's own text colour (as on the Appearance theme chips); for other colours white on
+ * dark and near-black on light ones, so initials stay readable.
+ */
+fun initialsTextColor(background: Color): Color =
+    initialsPalette(background)?.onSecondary
+        ?: if (background.luminance() > 0.6f) Color(0xFF111111) else Color.White
 
 fun avatarStorageUrl(storagePath: String): String =
     if (storagePath.startsWith("https://") || storagePath.startsWith("http://")) {

@@ -15,6 +15,9 @@ Morivia is an Android app for phones and tablets, built with Kotlin Multiplatfor
 
 ## Branding
 
+- Owner's locked reference (2026-11-19): keep Nuvio sign-in exactly as local build 24. Do not redesign it or let Morivia theme, app logo or AMOLED settings affect it. Restore accidental changes to that baseline. A local source backup is in `logs/locked-nuvio-sign-in-build-24/`; AuthScreen.kt SHA-256 is `5E39C3B05B2A67912EF069B3836446E1D2B7E9146AC7BB7F9971CC994113E4AE`.
+- During current local testing, retain version name 1.6 and increment only versionCode (24, 25, 26...). Do not push or publish until the owner explicitly asks. Install directly through ADB over wifi; do not use desktop control or Android Studio UI.
+
 - The app is Morivia everywhere: app name, launcher and home screen icons, in-app logo, README and release names.
 - Nuvio account sign-in keeps Nuvio's own name and logo, because it is Nuvio's service. Texts that refer to Nuvio's services (Nuvio Cloud, the Nuvio web panel, Nuvio supporter membership) keep the Nuvio name.
 - Internal technical names stay unchanged unless there is a reason to change them: the `com.nuvio.app` Kotlin package, the `nuvio://` link scheme, `nuvio.*` Gradle properties, `NUVIO_*` configuration keys and the Nuvio streaming engine. Renaming them would break builds, links or sync with Nuvio's services.

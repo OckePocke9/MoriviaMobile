@@ -175,7 +175,7 @@ fun ProfileSelectionScreen(
 
                 // The logo and name from the earlier Morivia app (a 34 x 28 symbol, 8 dp gap, "Morivia"
                 // at 25 sp) in the 40 dp row where Nuvio shows its wordmark, then "Who's watching?"
-                // 18 dp below, as in Nuvio.
+                // Keep Morivia's branding, with the reference's compact gap before the heading.
                 Row(
                     modifier = Modifier.height(40.dp).graphicsLayer {
                         alpha = titleAlpha.value
@@ -197,7 +197,7 @@ fun ProfileSelectionScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 18.dp))
+                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 12.dp))
 
                 Text(
                     text = stringResource(Res.string.profile_who_is_watching),
@@ -205,10 +205,9 @@ fun ProfileSelectionScreen(
                         fontSize = 30.sp,
                         lineHeight = 38.sp,
                         letterSpacing = (-0.3).sp,
-                        fontFamily = earlierMoriviaFont(800),
                     ),
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.ExtraBold,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.graphicsLayer {
                         alpha = titleAlpha.value
                         translationY = titleOffset.value
@@ -221,10 +220,6 @@ fun ProfileSelectionScreen(
                 // Add Profile shows while Manage Profiles is open, or when there are no profiles yet.
                 val showAddTile = (isEditMode || profiles.isEmpty()) && profiles.size < MAX_PROFILES
                 val items = profiles.size + if (showAddTile) 1 else 0
-                val onProfileLongClick: (NuvioProfile) -> Unit = { profile ->
-                    if (interactionEnabled) openEditor(profile)
-                }
-
                 if (isTabletLayout) {
                     Box(
                         modifier = Modifier.fillMaxWidth(),
@@ -243,7 +238,6 @@ fun ProfileSelectionScreen(
                                         profile = profile,
                                         isEditMode = isEditMode,
                                         isActive = profile.profileIndex == activeProfileIndex,
-                                        onLongClick = { onProfileLongClick(profile) },
                                         animDelay = currentIndex * 80,
                                         enabled = interactionEnabled,
                                         onClick = {
@@ -252,6 +246,7 @@ fun ProfileSelectionScreen(
                                     )
                                 } else {
                                     AddProfileCard(
+                                        isEditMode = isEditMode,
                                         animDelay = currentIndex * 80,
                                         enabled = interactionEnabled,
                                         onClick = onAddProfile,
@@ -281,7 +276,6 @@ fun ProfileSelectionScreen(
                                                 profile = profile,
                                                 isEditMode = isEditMode,
                                                 isActive = profile.profileIndex == activeProfileIndex,
-                                                onLongClick = { onProfileLongClick(profile) },
                                                 animDelay = currentIndex * 80,
                                                 enabled = interactionEnabled,
                                                 onClick = {
@@ -290,6 +284,7 @@ fun ProfileSelectionScreen(
                                             )
                                         } else {
                                             AddProfileCard(
+                                                isEditMode = isEditMode,
                                                 animDelay = currentIndex * 80,
                                                 enabled = interactionEnabled,
                                                 onClick = onAddProfile,
@@ -318,11 +313,11 @@ fun ProfileSelectionScreen(
                         .background(if (isEditMode) Color(0xFF262729) else Color.Transparent)
                         .border(
                             width = 1.dp,
-                            color = if (isEditMode) Color(0xFF4A4B4F) else Color(0xFF34373E),
+                            color = if (isEditMode) Color(0xFF808080) else Color(0xFF303030),
                             shape = RoundedCornerShape(24.dp),
                         )
                         .clickable(enabled = interactionEnabled) { isEditMode = !isEditMode }
-                        .padding(horizontal = 24.dp, vertical = 10.dp),
+                        .padding(horizontal = 24.dp, vertical = 9.dp),
                 ) {
                     Text(
                         text = if (isEditMode) {
@@ -330,8 +325,8 @@ fun ProfileSelectionScreen(
                         } else {
                             stringResource(Res.string.profile_manage_profiles)
                         },
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = if (isEditMode) 16.sp else 15.5.sp, fontFamily = earlierMoriviaFont(600)),
-                        color = if (isEditMode) Color.White else Color(0xFF9FA3AA),
+                        style = profileActionStyle(),
+                        color = profileActionColor(isEditMode),
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
@@ -396,7 +391,6 @@ private fun ProfileAvatarCard(
     animDelay: Int,
     enabled: Boolean,
     onClick: () -> Unit,
-    onLongClick: () -> Unit,
 ) {
     val avatarColor = remember(profile.avatarColorHex) {
         parseHexColor(profile.avatarColorHex)
@@ -439,52 +433,44 @@ private fun ProfileAvatarCard(
                 translationY = animOffset.value
             }
             .clip(RoundedCornerShape(20.dp))
-            .combinedClickable(
+            .then(if (isEditMode) Modifier else Modifier.clickable(
                 enabled = enabled,
                 interactionSource = interactionSource,
                 indication = null,
-                onLongClick = {
-                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                    onLongClick()
-                },
-                onClick = {
-                    if (isEditMode) {
-                        onClick()
-                    } else {
-                        scope.launch {
-                            tapScale.animateTo(1.1f, tween(140, easing = FastOutSlowInEasing))
-                            onClick()
-                            tapScale.animateTo(1f, tween(180, easing = FastOutSlowInEasing))
-                        }
-                    }
-                },
-            )
+            ) {
+                scope.launch {
+                    tapScale.animateTo(1.1f, tween(140, easing = FastOutSlowInEasing))
+                    onClick()
+                    tapScale.animateTo(1f, tween(180, easing = FastOutSlowInEasing))
+                }
+            })
             .padding(8.dp),
     ) {
         Box(
-            modifier = Modifier.size(110.dp),
+            modifier = Modifier.size(104.dp),
             contentAlignment = Alignment.Center,
         ) {
-            // No ring around the profile picture.
+            // Nuvio's tinted initials circle and subtle outline; photo avatars retain their image.
             Box(
                 modifier = Modifier
-                    .size(104.dp)
+                    .size(100.dp)
                     .clip(CircleShape)
-                    .background(avatarItem?.bgColor?.let { parseHexColor(it) } ?: avatarColor),
+                    .background(if (avatarImageUrl == null) initialsBrush(avatarColor) else androidx.compose.ui.graphics.SolidColor(avatarItem?.bgColor?.let(::parseHexColor) ?: avatarColor))
+                    .border(2.dp, avatarColor.copy(alpha = 0.45f), CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 if (avatarImageUrl != null) {
                     AsyncImage(
                         model = avatarImageUrl,
                         contentDescription = avatarItem?.displayName ?: profile.name,
-                        modifier = Modifier.size(104.dp).clip(CircleShape),
+                        modifier = Modifier.size(100.dp).clip(CircleShape),
                         contentScale = ContentScale.Crop,
                     )
                 } else if (profile.name.isNotBlank()) {
                     // Like "Use initials": a white letter on the profile colour.
                     Text(
                         text = profile.name.take(1).uppercase(),
-                        style = MaterialTheme.typography.headlineLarge.copy(fontSize = 40.sp, fontFamily = earlierMoriviaFont(700)),
+                        style = MaterialTheme.typography.headlineLarge.copy(fontSize = 40.sp),
                         color = initialsTextColor(avatarColor),
                         fontWeight = FontWeight(700),
                     )
@@ -505,12 +491,13 @@ private fun ProfileAvatarCard(
                         .size(34.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primary)
+                        .clickable(enabled = enabled, onClick = onClick)
                         .border(2.dp, Color.Black, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Edit,
-                        contentDescription = null,
+                        contentDescription = stringResource(Res.string.profile_manage_profiles) + " " + profile.name,
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(16.dp),
                     )
@@ -538,13 +525,13 @@ private fun ProfileAvatarCard(
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         Text(
             text = profile.name.ifBlank {
                 stringResource(Res.string.profile_label_number, profile.profileIndex)
             },
-            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 17.sp, lineHeight = 22.sp, fontFamily = earlierMoriviaFont(600)),
+            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp, lineHeight = 22.sp),
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
@@ -556,6 +543,7 @@ private fun ProfileAvatarCard(
 
 @Composable
 private fun AddProfileCard(
+    isEditMode: Boolean,
     animDelay: Int,
     enabled: Boolean,
     onClick: () -> Unit,
@@ -571,6 +559,7 @@ private fun AddProfileCard(
         launch { animOffset.animateTo(0f, tween(500, easing = FastOutSlowInEasing)) }
     }
 
+    val labelColor = profileActionColor(isEditMode)
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val pressScale = if (isPressed) 0.95f else 1f
@@ -594,33 +583,21 @@ private fun AddProfileCard(
             )
             .padding(8.dp),
     ) {
-        Box(
-            modifier = Modifier.size(110.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            // The earlier app's near-black add tile, without a ring like the profiles.
+        Box(Modifier.size(104.dp), contentAlignment = Alignment.Center) {
             Box(
-                modifier = Modifier
-                    .size(104.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF171717)),
+                Modifier.size(100.dp).clip(CircleShape)
+                    .background(if (isEditMode) Color(0xFF262729) else Color.Transparent)
+                    .border(2.dp, if (isEditMode) Color(0xFF808080) else Color(0xFF303030), CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                    modifier = Modifier.size(40.dp),
-                )
+                Icon(Icons.Rounded.Add, null, tint = labelColor, modifier = Modifier.size(36.dp))
             }
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
+        Spacer(Modifier.height(14.dp))
         Text(
             text = stringResource(Res.string.compose_profile_add_profile),
-            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 17.sp, lineHeight = 22.sp, fontFamily = earlierMoriviaFont(600)),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = profileActionStyle(),
+            color = labelColor,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
         )
@@ -640,3 +617,9 @@ private fun earlierMoriviaFont(weight: Int): androidx.compose.ui.text.font.FontF
             ),
         ),
     )
+
+
+private fun profileActionColor(editing: Boolean) = if (editing) Color.White else Color(0xFF9FA3AA)
+
+@Composable
+private fun profileActionStyle() = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp, lineHeight = 20.sp)

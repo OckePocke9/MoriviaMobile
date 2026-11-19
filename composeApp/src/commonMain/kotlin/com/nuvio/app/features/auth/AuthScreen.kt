@@ -43,6 +43,8 @@ import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import com.nuvio.app.core.ui.NuvioLoadingIndicator
+import com.nuvio.app.core.ui.AppTheme
+import com.nuvio.app.core.ui.NuvioTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -188,6 +190,16 @@ private fun largeAuthFormMetrics(scale: Float): AuthFormMetrics = LargeAuthFormM
 
 @Composable
 fun AuthScreen(
+    modifier: Modifier = Modifier,
+) {
+    // Nuvio sign-in keeps its own appearance, independent of Morivia profile settings.
+    NuvioTheme(darkTheme = true, appTheme = AppTheme.WHITE, amoled = false) {
+        AuthScreenContent(modifier = modifier)
+    }
+}
+
+@Composable
+private fun AuthScreenContent(
     modifier: Modifier = Modifier,
 ) {
     val authError by AuthRepository.error.collectAsStateWithLifecycle()

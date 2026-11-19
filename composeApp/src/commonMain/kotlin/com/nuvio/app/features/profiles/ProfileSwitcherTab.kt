@@ -644,9 +644,9 @@ private fun PopupProfileBubble(
                     .clip(tokens.shapes.avatar)
                     .background(
                         if (avatarImageUrl != null) {
-                            avatarItem?.bgColor?.let { parseHexColor(it) } ?: avatarColor
+                            androidx.compose.ui.graphics.SolidColor(avatarItem?.bgColor?.let { parseHexColor(it) } ?: avatarColor)
                         } else {
-                            avatarColor.copy(alpha = 0.15f)
+                            initialsBrush(avatarColor)
                         },
                     )
                     .then(
@@ -682,14 +682,14 @@ private fun PopupProfileBubble(
                     Text(
                         text = profile.name.take(1).uppercase(),
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = NuvioTokens.Type.titleSm),
-                        color = avatarColor,
+                        color = initialsTextColor(avatarColor),
                         fontWeight = FontWeight.Bold,
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Rounded.Person,
                         contentDescription = null,
-                        tint = avatarColor,
+                        tint = initialsTextColor(avatarColor),
                         modifier = Modifier.size(tokens.icons.lg),
                     )
                 }
@@ -781,9 +781,9 @@ fun ActiveProfileMiniAvatar(
             .clip(tokens.shapes.avatar)
             .background(
                 if (avatarImageUrl != null) {
-                    avatarItem?.bgColor?.let { parseHexColor(it) } ?: avatarColor
+                    androidx.compose.ui.graphics.SolidColor(avatarItem?.bgColor?.let { parseHexColor(it) } ?: avatarColor)
                 } else {
-                    avatarColor.copy(alpha = 0.15f)
+                    initialsBrush(avatarColor)
                 },
             )
             .border(tokens.borders.thin + NuvioTokens.Space.hairline, borderColor, tokens.shapes.avatar),
@@ -800,14 +800,14 @@ fun ActiveProfileMiniAvatar(
             Text(
                 text = profile.name.take(1).uppercase(),
                 fontSize = (size * 0.45f).sp,
-                color = avatarColor,
+                color = initialsTextColor(avatarColor),
                 fontWeight = FontWeight.Bold,
             )
         } else {
             Icon(
                 imageVector = Icons.Rounded.Person,
                 contentDescription = null,
-                tint = avatarColor,
+                tint = initialsTextColor(avatarColor),
                 modifier = Modifier.size((size * 0.6f).dp),
             )
         }

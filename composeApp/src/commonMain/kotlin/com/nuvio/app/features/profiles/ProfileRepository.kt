@@ -136,6 +136,8 @@ object ProfileRepository {
             if (_state.value.activeProfile != null) {
                 activeProfileIndex = _state.value.activeProfile!!.profileIndex
             }
+            // Drop cached PINs that were changed or removed on another device, as after a local load.
+            syncPinCache(profiles)
             persist()
         } catch (e: Throwable) {
             if (AuthRepository.signOutIfSessionInvalid(e, "Profile pull")) return
@@ -191,12 +193,13 @@ object ProfileRepository {
         ProfileSettingsSync.onProfileChanged()
     }
 
-    suspend fun pushProfiles(profiles: List<ProfilePushPayload>) {
+    /** Saves the profiles on the Nuvio account; false when they could not be saved. */
+    suspend fun pushProfiles(profiles: List<ProfilePushPayload>): Boolean {
         if (AuthRepository.state.value.isAnonymous) {
             applyPayloadsLocally(profiles)
-            return
+            return true
         }
-        try {
+        return try {
             val params = buildJsonObject {
                 put("p_client_max_profiles", MAX_PROFILES)
                 put("p_profiles", json.encodeToJsonElement(profiles))
@@ -204,9 +207,12 @@ object ProfileRepository {
             }
             SupabaseProvider.client.postgrest.rpc("sync_push_profiles", params)
             pullProfiles()
+            true
         } catch (e: Throwable) {
-            if (AuthRepository.signOutIfSessionInvalid(e, "Profile push")) return
-            log.e(e) { "Failed to push profiles" }
+            if (!AuthRepository.signOutIfSessionInvalid(e, "Profile push")) {
+                log.e(e) { "Failed to push profiles" }
+            }
+            false
         }
     }
 
@@ -241,8 +247,8 @@ object ProfileRepository {
             avatarUrl = avatarUrl,
         )
 
-        pushProfiles(allPayloads)
-        return nextIndex
+        // Only a saved profile gets an index; otherwise the caller would set a PIN on a missing profile.
+        return nextIndex.takeIf { pushProfiles(allPayloads) }
     }
 
     suspend fun updateProfile(
@@ -254,7 +260,7 @@ object ProfileRepository {
         profileBackgroundId: String? = null,
         profileBackgroundUrl: String? = null,
         usesPrimaryAddons: Boolean = false,
-    ) {
+    ): Boolean {
         val allPayloads = _state.value.profiles.map { profile ->
             if (profile.profileIndex == profileIndex) {
                 ProfilePushPayload(
@@ -262,6 +268,8 @@ object ProfileRepository {
                     name = name,
                     avatarColorHex = avatarColorHex,
                     usesPrimaryAddons = usesPrimaryAddons,
+                    // Not editable here; keep it, or every edit would turn it off on Nuvio.
+                    usesPrimaryPlugins = profile.usesPrimaryPlugins,
                     avatarId = avatarId,
                     avatarUrl = avatarUrl,
                     profileBackgroundId = profileBackgroundId,
@@ -282,7 +290,7 @@ object ProfileRepository {
             }
         }
 
-        pushProfiles(allPayloads)
+        return pushProfiles(allPayloads)
     }
 
     suspend fun deleteProfile(profileIndex: Int) {

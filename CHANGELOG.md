@@ -1,5 +1,31 @@
 # Changelog
 
+## Local test build 28 (1.6, unpublished)
+
+- Initials colours are now exactly the Appearance app icons with their theme names, gradients and text colours (Copper included), shown as the same chips as the theme picker, nine first and the rest behind the arrow.
+- Initials look the same everywhere: profile chooser, profile editing, the in-app profile switcher and Party avatars.
+- Editing a profile no longer turns off "uses primary plugins" on Nuvio, a failed save keeps you on the screen with a message instead of looking saved, and a new profile only gets its PIN when it was really created.
+- Profile sync also clears cached PINs changed or removed on another device.
+
+## Local test build 27 (1.6, unpublished)
+
+- Keep the PIN dialog open between entry and confirmation, and match Add Profile colours and typography to Manage Profiles and Done.
+
+## Local test build 26 (1.6, unpublished)
+
+- Restore the Add Profile circle, open editing only from the themed pencil, reuse Appearance gradients for initials, group avatar choices on theme-aware cards and animate the PIN prompt opening.
+
+## Local test build 25 (1.6, unpublished)
+
+- Match the profile chooser references with tinted, outlined initials circles, Nuvio typography, white pencil buttons and outlined Manage Profiles / Done controls. Add Profile is a text button without a circle, as requested.
+- Retain Morivia's name, logo, background and existing profile selection, PIN and management behavior.
+- Lock Nuvio sign-in to the build 24 baseline; keep version name 1.6 and increase only build number to 25.
+
+## Local test build 24 (1.6, unpublished)
+
+- Keep Nuvio sign-in independent of Morivia's app theme and AMOLED settings, retaining the fixed Nuvio wordmark and existing layout.
+- Increase only the Android build number from 23 to 24; keep version name 1.6 for local phone testing.
+
 ## 1.6
 
 Home
