@@ -172,7 +172,7 @@ private fun CommentCard(
     modifier: Modifier = Modifier,
 ) {
     val colorScheme = MaterialTheme.colorScheme
-    val isAmoled = colorScheme.background == Color.Black && colorScheme.surface == Color(0xFF050505)
+    val isAmoled = com.nuvio.app.core.ui.LocalAmoled.current
     val bodyText = if (review.hasSpoilerContent) {
         stringResource(Res.string.detail_comments_spoiler_card)
     } else {
@@ -190,8 +190,8 @@ private fun CommentCard(
                 .height(cardHeight)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(16.dp),
-            color = if (isAmoled) Color(0xFF121212) else colorScheme.surfaceVariant.copy(alpha = 0.5f),
-            tonalElevation = 1.dp,
+            color = if (isAmoled) Color.Black else colorScheme.surfaceVariant.copy(alpha = 0.5f),
+            tonalElevation = if (isAmoled) 0.dp else 1.dp,
         ) {
             Column(
                 modifier = Modifier

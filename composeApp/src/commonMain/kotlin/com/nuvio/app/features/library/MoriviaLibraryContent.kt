@@ -234,7 +234,7 @@ private fun MoriviaLibraryChip(
         modifier = Modifier
             .height(44.dp)
             .clip(shape)
-            .background(if (selected) Color.White else Color(0xFF1C1C1E), shape)
+            .background(if (selected) Color.White else com.nuvio.app.core.ui.amoledCardColor(Color(0xFF1C1C1E)), shape)
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -325,7 +325,7 @@ private fun MoriviaLibraryPoster(
                 .fillMaxWidth()
                 .aspectRatio(0.675f)
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color(0xFF1C1C1E)),
+                .background(com.nuvio.app.core.ui.amoledCardColor(Color(0xFF1C1C1E))),
         ) {
             if (!entry.poster.isNullOrBlank()) {
                 AsyncImage(

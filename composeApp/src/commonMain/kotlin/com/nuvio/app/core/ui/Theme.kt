@@ -28,6 +28,38 @@ import org.jetbrains.compose.resources.Font
 val LocalAppTheme = staticCompositionLocalOf { AppTheme.ORIGINAL }
 val LocalThemePalette = staticCompositionLocalOf { ThemeColors.Original }
 
+/** True when AMOLED black is on for the current theme: cards and other surfaces are pure black. */
+val LocalAmoled = staticCompositionLocalOf { false }
+
+/** A card colour: pure black with AMOLED black on, otherwise [default]. */
+@Composable
+@ReadOnlyComposable
+fun amoledCardColor(default: Color): Color = if (LocalAmoled.current) Color.Black else default
+
+/**
+ * Home, Search and Library: with AMOLED black on, the screen background is pure black instead of
+ * the theme-tinted AMOLED background that Profile and Settings keep.
+ */
+@Composable
+fun AmoledBlackBackground(content: @Composable () -> Unit) {
+    if (!LocalAmoled.current) {
+        content()
+        return
+    }
+    val tokens = MaterialTheme.nuvio
+    val colorScheme = MaterialTheme.colorScheme
+    CompositionLocalProvider(
+        LocalNuvioThemeTokens provides tokens.copy(colors = tokens.colors.copy(background = Color.Black)),
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme.copy(background = Color.Black),
+            typography = MaterialTheme.typography,
+            shapes = MaterialTheme.shapes,
+            content = content,
+        )
+    }
+}
+
 val MaterialTheme.themePalette: ThemeColorPalette
     @Composable
     @ReadOnlyComposable
@@ -217,6 +249,7 @@ fun NuvioTheme(
         LocalRippleConfiguration provides NuvioRippleConfiguration,
         LocalAppTheme provides appTheme,
         LocalThemePalette provides palette,
+        LocalAmoled provides amoled,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

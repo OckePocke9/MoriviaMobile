@@ -1,5 +1,11 @@
 # Changelog
 
+## Local test builds 29–31 (1.6, unpublished)
+
+- AMOLED black: every card is pure black, Home, Search and Library get a pure black background, and Profile and Settings keep the theme-tinted AMOLED background. Nuvio sign-in and the profile chooser are unchanged.
+- Appearance: the app icon picker is built like the theme picker, three per row on a phone (four on a tablet), the same chips, names and order as the themes, nine first and the rest behind the arrow.
+- All 31 app languages are completed for the app itself: Swedish and Finnish from about 18 % to complete, and the remaining texts added in every other language. Addon and integration screens (TMDB, MDBList, debrid, Trakt, Simkl, tracking), the locked Nuvio sign-in and the profile chooser keep their texts; content from addons is not translated.
+
 ## Local test build 28 (1.6, unpublished)
 
 - Initials colours are now exactly the Appearance app icons with their theme names, gradients and text colours (Copper included), shown as the same chips as the theme picker, nine first and the rest behind the arrow.

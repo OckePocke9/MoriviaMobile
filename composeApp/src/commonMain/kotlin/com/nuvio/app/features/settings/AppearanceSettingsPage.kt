@@ -101,10 +101,27 @@ internal fun LazyListScope.appearanceSettingsContent(
         }
     }
     item {
+        // The app icons, picked the same way as the themes above.
+        SettingsSection(
+            title = stringResource(Res.string.settings_appearance_app_icon),
+            isTablet = isTablet,
+        ) {
+            SettingsGroup(isTablet = isTablet) {
+                AppIconGridPicker(
+                    isTablet = isTablet,
+                    state = appIconState,
+                    onSelected = { icon ->
+                        onAppIconFailureDismissed()
+                        onAppIconSelected(icon)
+                    },
+                )
+            }
+        }
+    }
+    item {
         var showLanguageSheet by remember { mutableStateOf(false) }
         var showLanguageRestartDialog by remember { mutableStateOf(false) }
         val layoutDirection = LocalLayoutDirection.current
-        var showAppIconPicker by remember { mutableStateOf(false) }
         SettingsSection(
             title = stringResource(Res.string.settings_appearance_section_display),
             isTablet = isTablet,
@@ -125,24 +142,6 @@ internal fun LazyListScope.appearanceSettingsContent(
                     checked = amoledEnabled,
                     isTablet = isTablet,
                     onCheckedChange = onAmoledToggle,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.settings_appearance_app_icon),
-                    description = stringResource(appIconState.selected.labelResource),
-                    enabled = appIconState.pending == null,
-                    isTablet = isTablet,
-                    trailingContent = {
-                        AppIconThumbnail(
-                            icon = appIconState.selected,
-                            modifier = Modifier.size(if (isTablet) 44.dp else 40.dp),
-                            cornerRadius = if (isTablet) 11.dp else 10.dp,
-                        )
-                    },
-                    onClick = {
-                        onAppIconFailureDismissed()
-                        showAppIconPicker = true
-                    },
                 )
                 SettingsGroupDivider(isTablet = isTablet)
                 SettingsNavigationRow(
@@ -173,18 +172,6 @@ internal fun LazyListScope.appearanceSettingsContent(
             isVisible = showLanguageRestartDialog,
             onConfirm = { showLanguageRestartDialog = false },
         )
-
-        if (showAppIconPicker) {
-            AppIconPicker(
-                isTablet = isTablet,
-                state = appIconState,
-                onSelected = onAppIconSelected,
-                onDismiss = {
-                    onAppIconFailureDismissed()
-                    showAppIconPicker = false
-                },
-            )
-        }
     }
     item {
         SettingsSection(

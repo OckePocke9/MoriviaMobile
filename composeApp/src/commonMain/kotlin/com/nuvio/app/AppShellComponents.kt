@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.nuvio.app.core.ui.AmoledBlackBackground
 import com.nuvio.app.core.ui.DisintegrationRequest
 import com.nuvio.app.core.ui.NuvioLoadingIndicator
 import com.nuvio.app.core.ui.NuvioTokens
@@ -132,7 +133,7 @@ internal fun AppTabHost(
         profileId = state.profileId,
     ) { tab ->
         when (tab) {
-            AppScreenTab.Home -> {
+            AppScreenTab.Home -> AmoledBlackBackground {
                 key(state.homeContentGeneration) {
                     HomeScreen(
                         modifier = Modifier.fillMaxSize(),
@@ -151,7 +152,7 @@ internal fun AppTabHost(
                 }
             }
 
-            AppScreenTab.Search -> {
+            AppScreenTab.Search -> AmoledBlackBackground {
                 SearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     listState = state.searchListState,
@@ -163,7 +164,7 @@ internal fun AppTabHost(
                 )
             }
 
-            AppScreenTab.Library -> {
+            AppScreenTab.Library -> AmoledBlackBackground {
                 LibraryScreen(
                     modifier = Modifier.fillMaxSize(),
                     scrollToTopRequests = requests.libraryScrollToTopRequests,

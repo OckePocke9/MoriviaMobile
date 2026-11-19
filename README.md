@@ -7,6 +7,8 @@ Bring your own sources: Morivia turns your addons into a library with artwork, p
 
 ## What's new in 1.6
 
+- Local builds 29–31: AMOLED black makes every card black and Home, Search and Library pure black; the app icon picker looks like the theme picker; and all 31 app languages now cover the whole app (not addon content or integrations).
+
 - Local build 28 matches initials colours exactly to the Appearance themes and app icons, everywhere in the app, and fixes profile sync with Nuvio.
 
 - Local build 27 keeps the PIN keypad in place during confirmation and matches Add Profile to the management controls.
