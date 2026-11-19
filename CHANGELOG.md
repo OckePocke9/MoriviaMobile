@@ -1,6 +1,31 @@
 # Changelog
 
-## 1.5
+## 1.6
+
+Home
+- One hero at the top, left-aligned like the earlier Morivia app: the Home pill below the clock, logo or title, a genre or Featured badge, "Movie · Action · 2022", the description, a View Details button in the theme colour, an information button, a next arrow and the dots. No ratings in the hero. The dots are as far from Continue Watching as from View Details.
+- Home & Layout: Play Trailers in Hero (the title's trailer plays in the hero; without one the artwork shows) and Auto-Rotate Hero (on: next title every 8 seconds, 45 while a trailer plays; off: stays until you swipe), saved per profile.
+- New rows Movies Based on Your Genres and Series Based on Your Genres: titles from the loaded catalogs that share genres with the movie, or the series, watched last; the two rows are independent, each has its own switch, shows up to 30 titles and Show all opens the whole list.
+- Fixed order: Continue Watching, the two genre rows, a main Featured row (five large landscape cards, movies and series taking turns, no Show all), Popular – Movies, Popular – Series, Featured – Movies and Featured – Series (5 titles each), then every other catalog in Home rows order. Rows show up to 30 titles (was 18); posters are about 2.5 across the screen.
+- Every row has the earlier app's "Show all" button; posters can show a "New" banner for titles released in the last 30 days (Poster banners).
+- Home & Layout also brings Trailer sound, Featured section, Landscape posters, Poster labels, Hide unreleased content, Continue Watching sort, Episode thumbnails, Next up from furthest episode, Show unaired next up, Hide spoilers, Upcoming episode countdown, Home rows, Collections, Collection GIFs and Auto-refresh Home in one page.
+
+Search and Library
+- Search: the Search pill, a "Movies and Shows" field with a search icon, a Trending row (the popular titles of Home's catalogs) and Browse genre tiles that show their genre in the Discover grid. A Search settings page switches Trending, Browse and recent searches.
+- Library (saved titles): the Library pill, chips for Recently Added, Movies, TV Shows and Continue Watching, the section name with "N movies · M shows", a Sort pill (Added, Name, Recently Watched) and a grid of three posters per row with titles and watched checks. A Library settings page sets the start section, sort and watched marks.
+
+Profiles
+- Profile picker in Nuvio's layout and heights, without rings; Manage Profiles opens and closes editing and Add Profile; long press or Manage opens Edit Profile only after the PIN of a locked profile; the account status line is gone.
+- Add and Edit Profile: Confirm PIN after a new PIN; guests cannot set a PIN; cards follow AMOLED Black; a divider between Use initials and the pictures; initials colours are Morivia's theme colours with Original as the default (dark letters on light colours); the header hides content scrolling under it (also in Settings).
+- The picker shows the theme and app icon of the profile used last; signed out, the app uses Original. New guests and accounts start with only Add Profile.
+
+App
+- Changing the app icon no longer closes the app: the new icon is switched when the app goes to the background.
+- The in-app updater reads this repository's releases and understands two-part versions such as 1.6.
+- Version numbers go up by 0.1. Releases 1.0.0–1.7.1 were renamed v0.1–v1.5.
+- 1.6 is signed with Morivia's private release key, so it must be installed once after removing the old Morivia; later versions update over it.
+- Morivia is Android only.
+- Raise the version to 1.6, build 23.
 
 - The Original launcher icon, adaptive foreground, app icon, in-app symbol, iOS app icon and the README logo are redrawn from the earlier Morivia app's launcher artwork (`ic_launcher_symbol.png`, the same artwork as the logo on the profile picker), placed as there: the symbol in a 22 % inset on black.
 - Every theme's icons are recoloured again from the new artwork with `scripts/recolor-theme-icons.ps1`.

@@ -3,29 +3,35 @@
 A personal media app for your Android phone and tablet.
 Bring your own sources: Morivia turns your addons into a library with artwork, profiles, subtitles and your place saved on every device. Licensed GPLv3, like the project it is built on.
 
-**Version <!-- version -->1.5<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
+**Version <!-- version -->1.6<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
 
-## What's new in 1.5
+## What's new in 1.6
 
-- **The app icon from the earlier Morivia app.** The home screen icon and the Original app icon use the same logo, at the same size, as the earlier Morivia app, and every theme's icon is that logo in the theme's colours.
+- **A new Home.** One hero at the top with the Home button, the title, genre, year and description on the left, View Details, info and next. Below it Continue Watching, **Movies Based on Your Genres** and **Series Based on Your Genres** (from the movie and the series you watched last), a large Featured row, Popular and Featured movies and series, and every other catalog with up to 30 titles each, larger posters and Show all, in one page you scroll freely.
+- **Search and Library like the earlier Morivia app.** Search has the Search button, a "Movies and Shows" field, Trending and genre tiles. Library has Recently Added, Movies, TV Shows and Continue Watching, a count of movies and shows, Sort, and a grid of three posters per row.
+- **New settings.** Settings → Layout has Home & Layout (Play Trailers in Hero, Auto-Rotate Hero, the genre rows, posters, Continue Watching and rows), Search and Library.
+- **Profiles.** The profile picker follows Nuvio's layout. Manage Profiles opens and closes editing and Add Profile, a profile with a PIN asks for it before it can be edited, a new PIN must be entered twice, guests cannot set a PIN, and the picker shows the theme and app icon of the profile used last.
+- **The app no longer closes when you change the app icon**; the new icon appears when you leave the app.
+- **Install once more:** 1.6 is signed with Morivia's new private key, so remove the old Morivia before installing it. Sign in with Nuvio again and your profiles, library and progress come back. Later versions update as usual.
 
 See the [changelog](CHANGELOG.md) for every change.
 
 ## Get Morivia
 
-- Download `Morivia-Android-X.Y-arm64-v8a.apk` from the [latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest), open it and allow the install. New versions install over the old one and keep your data. Android 7.0 or newer on a 64-bit ARM device.
+- Download `Morivia-Android-X.Y-arm64-v8a.apk` from the [latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest), open it and allow the install. New versions install over the old one and keep your data, and the app shows a banner on Home when one is out. Android 7.0 or newer on a 64-bit ARM device.
+- A fresh install starts signed out: sign in with your Nuvio account or continue as a guest.
 
-The app ID is `com.morivia.app`, so Morivia can be installed next to Nuvio. The app shows a banner on Home when a new version is out.
+The app ID is `com.morivia.app`, so Morivia can be installed next to Nuvio.
 
 ## What Morivia does
 
 Morivia is a modified version of [Nuvio Mobile](https://github.com/NuvioMedia/NuvioMobile), a Kotlin Multiplatform and Compose Multiplatform app, with its own look and features:
 
 - **Addon catalogs** – add any Stremio addon by its `manifest.json` link; its catalogs become rows on Home.
-- **Home** – a hero at the top, Continue Watching and every addon catalog in one scrolling page.
-- **Search and Discover** – one field for movies and shows across every search-capable catalog, and Discover by type, catalog and genre.
-- **Library** – your saved titles, filtered and sorted the way you like, with Trakt, Simkl or MDBList as the source if you use them.
-- **Profiles** – up to six profiles with their own library, progress, theme and app icon, a PIN lock and a profile picker in the style of the earlier Morivia app.
+- **Home** – one hero (with trailers if you like), Continue Watching, rows based on the genres you watch, Featured, Popular and every addon catalog in one page you scroll freely. Settings → Layout → Home & Layout changes the hero, posters and rows.
+- **Search** – one "Movies and Shows" field across every search-capable catalog, with Trending, genre tiles and Discover by type, catalog and genre.
+- **Library** – Recently Added, Movies, TV Shows and Continue Watching in a poster grid, sorted by date added, name or recently watched, with Trakt, Simkl or MDBList as the source if you use them.
+- **Profiles** – up to six profiles with their own library, progress, theme and app icon, a PIN lock that also protects editing, and a profile picker in the style of the earlier Morivia app.
 - **Themes** – Original and the Morivia colour themes, AMOLED black and an app icon that follows the theme.
 - **Accounts and sync** – works as a guest, or sign in with a Nuvio account to sync profiles, library and progress through Nuvio Cloud. Trakt, Simkl, MDBList and TMDB connect with their own accounts or keys.
 - **In your language** – 31 language choices, with English for untranslated text.
