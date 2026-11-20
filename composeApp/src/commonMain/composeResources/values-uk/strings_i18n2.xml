@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">Тема в колір значка застосунку</string>
+    <string name="morivia_appearance_match_theme_description">Використовувати тему, що відповідає вибраному значку застосунку.</string>
+    <string name="settings_tracking_ratings">Оцінки</string>
+    <string name="settings_tracking_ratings_description">Де зберігаються і звідки показуються ваші оцінки</string>
+    <string name="settings_tracking_ratings_picker_subtitle">Оцінюйте тайтли на сторінці подробиць. Оцінки зберігаються у вибраному сервісі й показуються звідти.</string>
+    <string name="settings_tracking_ratings_off_description">Приховати кнопку оцінки.</string>
+    <string name="settings_tracking_ratings_simkl_description">Оцінюйте фільми й серіали. Оцінка тайтлу, якого немає у ваших списках Simkl, додає його туди.</string>
+    <string name="settings_tracking_ratings_mdblist_description">Оцінюйте фільми, серіали та епізоди.</string>
+    <string name="addons_tracking_consent_title">Доповнення відстеження</string>
+    <string name="addons_tracking_consent_body">%1$s — доповнення відстеження. Morivia надсилатиме йому вашу активність: що ви відтворюєте, ставите на паузу та зупиняєте разом із позицією, що додаєте до бібліотеки чи видаляєте з неї та що позначаєте як переглянуте чи непереглянуте. Ці дані залишають Morivia й обробляються розробником доповнення та сервісом, до якого воно підключається.</string>
+    <string name="addons_tracking_consent_checkbox">Я погоджуюся ділитися своєю активністю та бібліотекою з цим доповненням</string>
+    <string name="settings_mdb_ratings_credentials_required">Підключіть MDBList у Відстеженні або введіть API-ключ, щоб отримувати оцінки.</string>
+    <string name="settings_mdb_ratings_key_override_description">API-ключ замінює підключений обліковий запис для оцінок. Очистьте його й збережіть, щоб знову використовувати обліковий запис.</string>
+    <string name="settings_mdb_ratings_connected_account">Використовується підключений обліковий запис</string>
+    <string name="settings_mdblist_library_description">Список перегляду та ваші статичні списки фільмів і серіалів.</string>
+    <string name="settings_mdblist_progress_description">Історія переглядів, прогрес і «Далі» з MDBList.</string>
+    <string name="settings_mdblist_connect">Підключити MDBList</string>
+    <string name="settings_mdblist_connected_as">Підключено як %1$s</string>
+    <string name="settings_mdblist_connected_description">Синхронізуйте історію переглядів і прогрес відтворення між пристроями</string>
+    <string name="settings_mdblist_sign_in_description">Синхронізуйте історію переглядів і прогрес відтворення між пристроями</string>
+    <string name="settings_mdblist_finish_sign_in">Завершити підтвердження підключення</string>
+    <string name="settings_mdblist_approval_description">Підтвердьте підключення у своєму обліковому записі MDBList.</string>
+    <string name="settings_mdblist_open_login">Відкрити сторінку входу</string>
+    <string name="settings_mdblist_disconnect">Відключити MDBList</string>
+    <string name="settings_mdblist_missing_credentials">Підключення MDBList недоступне в цій збірці.</string>
+    <string name="settings_mdblist_sync_now">Синхронізувати</string>
+    <string name="settings_mdblist_visit">Відкрити MDBList</string>
+    <string name="settings_mdblist_unavailable">Не вдалося синхронізуватися з MDBList. Спробуйте ще раз.</string>
+    <string name="settings_mdblist_rate_limited">Досягнуто ліміту запитів MDBList. Синхронізація продовжиться після скидання ліміту.</string>
+    <string name="settings_mdblist_auth_expired">Термін дії коду минув. Спробуйте ще раз, щоб отримати новий код.</string>
+    <string name="settings_mdblist_auth_denied">Підключення відхилено. Спробуйте підключити обліковий запис ще раз.</string>
+    <string name="settings_mdblist_auth_revoked">Підключення до MDBList завершилося або його відкликано. Підключіться знову, щоб продовжити синхронізацію.</string>
+    <string name="settings_mdblist_invalid_response">MDBList повернув неповну відповідь. Спробуйте ще раз.</string>
+    <string name="settings_mdblist_write_required">MDBList не надав дозволу оновлювати історію переглядів. Підключіться знову й дозвольте запис.</string>
+    <string name="settings_mdblist_disconnect_description">Припинити надсилати оновлення переглядів із цього профілю. Ваша історія в MDBList збережеться.</string>
+    <string name="settings_mdblist_revoke_failed">Відключено на цьому пристрої. Видаліть застосунок у налаштуваннях облікового запису MDBList, щоб відкликати доступ.</string>
+    <string name="settings_mdblist_account_fallback">Користувач MDBList</string>
+    <string name="settings_mdblist_syncing">Синхронізація історії переглядів і прогресу…</string>
+    <string name="settings_mdblist_last_synced">Остання синхронізація: %1$s</string>
+</resources>

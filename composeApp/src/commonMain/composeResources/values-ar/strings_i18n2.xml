@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">مطابقة السمة مع أيقونة التطبيق</string>
+    <string name="morivia_appearance_match_theme_description">استخدام السمة المطابقة لأيقونة التطبيق المختارة.</string>
+    <string name="settings_tracking_ratings">التقييمات</string>
+    <string name="settings_tracking_ratings_description">أين تُحفظ تقييماتك ومن أين تُعرض</string>
+    <string name="settings_tracking_ratings_picker_subtitle">قيّم العناوين من صفحة تفاصيلها. تُحفظ تقييماتك في الخدمة التي تختارها وتُعرض منها.</string>
+    <string name="settings_tracking_ratings_off_description">إخفاء زر التقييم.</string>
+    <string name="settings_tracking_ratings_simkl_description">قيّم الأفلام والمسلسلات. تقييم عنوان غير موجود في قوائمك على Simkl يضيفه إليها.</string>
+    <string name="settings_tracking_ratings_mdblist_description">قيّم الأفلام والمسلسلات والحلقات.</string>
+    <string name="addons_tracking_consent_title">إضافة تتبّع</string>
+    <string name="addons_tracking_consent_body">%1$s إضافة تتبّع. سيرسل Morivia إليها نشاطك: ما تشغّله وتوقفه مؤقتًا وتوقفه مع موضع التشغيل، وما تضيفه إلى مكتبتك أو تزيله منها، وما تضع عليه علامة شوهد أو لم يُشاهد. تغادر هذه البيانات Morivia ويتعامل معها مطوّر الإضافة والخدمة التي تتصل بها.</string>
+    <string name="addons_tracking_consent_checkbox">أوافق على مشاركة نشاط المشاهدة ومكتبتي مع هذه الإضافة</string>
+</resources>

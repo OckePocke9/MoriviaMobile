@@ -7,6 +7,8 @@ Bring your own sources: Morivia turns your addons into a library with artwork, p
 
 ## What's new in 1.6
 
+- **Local test build 41:** Theme, App Icon and Initials use clear, vivid colours where dark tones blend in like Original. The selected app icon shows a check badge instead of turning dark. All 31 languages now cover tracking, MDBList, Simkl, Trakt, connected services, the cloud library and plugins.
+
 - **Local test build 40:** The 31 colour previews and their Morivia icons use brighter gradients. Dark backgrounds and saved profile colours are retained.
 
 - **Local test build 39:** Profile initials appear as soon as you type the first letter of the name.

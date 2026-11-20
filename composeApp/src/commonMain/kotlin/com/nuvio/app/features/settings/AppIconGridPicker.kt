@@ -182,21 +182,26 @@ private fun AppIconChip(
                     modifier = Modifier.fillMaxSize().graphicsLayer(scaleX = 1.45f, scaleY = 1.45f),
                     contentScale = ContentScale.Crop,
                 )
-                if (isSelected || isPending) {
-                    Box(
-                        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f)),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        if (isPending) {
-                            NuvioLoadingIndicator(modifier = Modifier.size(NuvioTokens.Space.s22), color = Color.White)
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = stringResource(Res.string.cd_selected),
-                                tint = Color.White,
-                                modifier = Modifier.size(NuvioTokens.Space.s22),
-                            )
-                        }
+            }
+            // A small badge instead of darkening the icon, so the chosen colour stays clear.
+            if (isSelected || isPending) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(NuvioTokens.Space.s22)
+                        .clip(CircleShape)
+                        .background(ring),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (isPending) {
+                        NuvioLoadingIndicator(modifier = Modifier.size(14.dp), color = Color(0xFF111111))
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = stringResource(Res.string.cd_selected),
+                            tint = Color(0xFF111111),
+                            modifier = Modifier.size(14.dp),
+                        )
                     }
                 }
             }

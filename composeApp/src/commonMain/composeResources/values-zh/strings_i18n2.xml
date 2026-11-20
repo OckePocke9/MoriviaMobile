@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">主题跟随应用图标</string>
+    <string name="morivia_appearance_match_theme_description">使用与所选应用图标相匹配的主题。</string>
+    <string name="settings_tracking_ratings">评分</string>
+    <string name="settings_tracking_ratings_description">评分的保存位置和显示来源</string>
+    <string name="settings_tracking_ratings_picker_subtitle">在影片的详情页评分。评分会保存到您选择的服务，并从中显示。</string>
+    <string name="settings_tracking_ratings_off_description">隐藏评分按钮。</string>
+    <string name="settings_tracking_ratings_simkl_description">为电影和剧集评分。为不在您 Simkl 列表中的影片评分会将其加入列表。</string>
+    <string name="settings_tracking_ratings_mdblist_description">为电影、剧集和单集评分。</string>
+    <string name="addons_tracking_consent_title">追踪插件</string>
+    <string name="addons_tracking_consent_body">%1$s 是追踪插件。Morivia 会将您的活动发送给它：您播放、暂停和停止的内容及播放位置，您添加到片库或从中移除的内容，以及您标记为已看或未看的内容。这些数据会离开 Morivia，由插件开发者及其连接的服务处理。</string>
+    <string name="addons_tracking_consent_checkbox">我同意与此插件分享我的观看活动和片库</string>
+</resources>

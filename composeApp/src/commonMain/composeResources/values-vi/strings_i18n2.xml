@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">Chủ đề theo biểu tượng ứng dụng</string>
+    <string name="morivia_appearance_match_theme_description">Dùng chủ đề khớp với biểu tượng ứng dụng đã chọn.</string>
+    <string name="addons_tracking_consent_title">Tiện ích theo dõi</string>
+    <string name="addons_tracking_consent_body">%1$s là tiện ích theo dõi. Morivia sẽ gửi hoạt động của bạn cho nó: bạn phát, tạm dừng và dừng gì cùng vị trí phát, bạn thêm hoặc xóa gì khỏi thư viện và đánh dấu gì là đã xem hoặc chưa xem. Dữ liệu này rời khỏi Morivia và do nhà phát triển tiện ích cùng dịch vụ mà nó kết nối xử lý.</string>
+    <string name="addons_tracking_consent_checkbox">Tôi đồng ý chia sẻ hoạt động xem và thư viện của mình với tiện ích này</string>
+</resources>

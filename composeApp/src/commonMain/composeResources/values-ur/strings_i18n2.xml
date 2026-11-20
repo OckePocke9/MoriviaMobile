@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">تھیم کو ایپ آئیکن سے ملائیں</string>
+    <string name="morivia_appearance_match_theme_description">منتخب ایپ آئیکن سے ملتی تھیم استعمال کریں۔</string>
+    <string name="settings_tracking_ratings">ریٹنگز</string>
+    <string name="settings_tracking_ratings_description">آپ کی ریٹنگز کہاں محفوظ ہوتی ہیں اور کہاں سے دکھائی جاتی ہیں</string>
+    <string name="settings_tracking_ratings_picker_subtitle">عنوانات کو ان کے تفصیلی صفحے سے ریٹ کریں۔ آپ کی ریٹنگز منتخب سروس میں محفوظ ہوتی ہیں اور وہیں سے دکھائی جاتی ہیں۔</string>
+    <string name="settings_tracking_ratings_off_description">ریٹنگ بٹن چھپائیں۔</string>
+    <string name="settings_tracking_ratings_simkl_description">فلمیں اور شوز ریٹ کریں۔ جو عنوان آپ کی Simkl فہرستوں میں نہیں اسے ریٹ کرنے سے وہ ان میں شامل ہو جاتا ہے۔</string>
+    <string name="settings_tracking_ratings_mdblist_description">فلمیں، شوز اور اقساط ریٹ کریں۔</string>
+    <string name="addons_tracking_consent_title">ٹریکنگ ایڈ آن</string>
+    <string name="addons_tracking_consent_body">%1$s ایک ٹریکنگ ایڈ آن ہے۔ Morivia اسے آپ کی سرگرمی بھیجے گی: آپ کیا چلاتے، روکتے اور بند کرتے ہیں پلے بیک پوزیشن کے ساتھ، اپنی لائبریری میں کیا شامل کرتے یا ہٹاتے ہیں، اور کیا دیکھا یا نہ دیکھا نشان زد کرتے ہیں۔ یہ ڈیٹا Morivia سے باہر جاتا ہے اور ایڈ آن کے ڈویلپر اور اس سے منسلک سروس کے پاس ہوتا ہے۔</string>
+    <string name="addons_tracking_consent_checkbox">میں اپنی دیکھنے کی سرگرمی اور لائبریری اس ایڈ آن کے ساتھ شیئر کرنے پر متفق ہوں</string>
+    <string name="settings_mdb_show_on_hero">ہیرو میں ریٹنگز استعمال کریں</string>
+    <string name="settings_mdb_show_on_hero_description">ہوم ہیرو میں MDBList ریٹنگز دکھائیں</string>
+    <string name="settings_tracking_mdblist_section">MDBList کی خصوصیات</string>
+    <string name="settings_mdblist_library_lists">لائبریری کی فہرستیں</string>
+    <string name="settings_mdblist_library_lists_description">منتخب کریں کہ کون سی MDBList فہرستیں لائبریری اور فہرستوں کے انتظام میں ظاہر ہوں۔ واچ لسٹ ہمیشہ دکھائی دیتی ہے۔</string>
+    <string name="settings_mdblist_library_lists_summary">%2$d میں سے %1$d دکھائی گئیں</string>
+    <string name="settings_mdblist_library_lists_empty">آپ کے MDBList اکاؤنٹ میں ابھی کوئی فہرست نہیں ملی۔ لوڈ کرنے کے لیے ہم آہنگ کریں۔</string>
+</resources>

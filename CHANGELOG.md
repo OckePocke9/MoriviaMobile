@@ -1,5 +1,11 @@
 # Changelog
 
+## Local test build 41 (1.6, unpublished)
+
+- Use clear four-step gradients for all 31 presets in Theme, App Icon and Initials, so dark tones blend in like Original without showing grey or black. Recolour the matching Morivia icons.
+- Mark the selected app icon with a small check badge instead of darkening the icon.
+- Translate the remaining app text in all 31 languages, including tracking, MDBList, Simkl, Trakt, connected services, cloud library and plugin settings. Nuvio sign-in remains unchanged.
+
 ## Local test build 40 (1.6, unpublished)
 
 - Brighten the 31 preset gradients and matching Morivia icons while retaining dark surfaces and saved colour identifiers.

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">Combinar tema com o ícone do app</string>
+    <string name="morivia_appearance_match_theme_description">Usar o tema que combina com o ícone do app escolhido.</string>
+    <string name="settings_tracking_ratings">Avaliações</string>
+    <string name="settings_tracking_ratings_description">Onde suas avaliações são salvas e exibidas</string>
+    <string name="settings_tracking_ratings_picker_subtitle">Avalie títulos na página de detalhes. Suas avaliações são salvas no serviço escolhido e exibidas a partir dele.</string>
+    <string name="settings_tracking_ratings_off_description">Ocultar o botão de avaliar.</string>
+    <string name="settings_tracking_ratings_simkl_description">Avalie filmes e séries. Avaliar um título que não está nas suas listas do Simkl o adiciona a elas.</string>
+    <string name="settings_tracking_ratings_mdblist_description">Avalie filmes, séries e episódios.</string>
+    <string name="addons_tracking_consent_title">Complemento de acompanhamento</string>
+    <string name="addons_tracking_consent_body">%1$s é um complemento de acompanhamento. O Morivia enviará sua atividade a ele: o que você reproduz, pausa e para com a posição de reprodução, o que adiciona ou remove da biblioteca e o que marca como assistido ou não assistido. Esses dados saem do Morivia e são tratados pelo desenvolvedor do complemento e pelo serviço ao qual ele se conecta.</string>
+    <string name="addons_tracking_consent_checkbox">Concordo em compartilhar minha atividade e minha biblioteca com este complemento</string>
+</resources>

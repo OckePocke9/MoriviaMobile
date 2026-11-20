@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">Abbina il tema all’icona dell’app</string>
+    <string name="morivia_appearance_match_theme_description">Usa il tema che corrisponde all’icona dell’app scelta.</string>
+    <string name="settings_tracking_ratings">Valutazioni</string>
+    <string name="settings_tracking_ratings_description">Dove vengono salvate e mostrate le tue valutazioni</string>
+    <string name="settings_tracking_ratings_picker_subtitle">Valuta i titoli dalla loro pagina dei dettagli. Le valutazioni vengono salvate nel servizio scelto e mostrate da lì.</string>
+    <string name="settings_tracking_ratings_off_description">Nascondi il pulsante di valutazione.</string>
+    <string name="settings_tracking_ratings_simkl_description">Valuta film e serie. Valutare un titolo che non è nelle tue liste Simkl lo aggiunge a esse.</string>
+    <string name="settings_tracking_ratings_mdblist_description">Valuta film, serie ed episodi.</string>
+    <string name="addons_tracking_consent_title">Componente di tracciamento</string>
+    <string name="addons_tracking_consent_body">%1$s è un componente di tracciamento. Morivia gli invierà la tua attività: cosa riproduci, metti in pausa e interrompi con la posizione di riproduzione, cosa aggiungi o rimuovi dalla libreria e cosa segni come visto o non visto. Questi dati escono da Morivia e sono gestiti dallo sviluppatore del componente e dal servizio a cui si collega.</string>
+    <string name="addons_tracking_consent_checkbox">Accetto di condividere la mia attività di visione e la mia libreria con questo componente</string>
+</resources>

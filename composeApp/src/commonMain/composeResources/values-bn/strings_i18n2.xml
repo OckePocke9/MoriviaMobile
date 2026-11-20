@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">থিম অ্যাপ আইকনের সাথে মেলান</string>
+    <string name="morivia_appearance_match_theme_description">বেছে নেওয়া অ্যাপ আইকনের সাথে মেলে এমন থিম ব্যবহার করুন।</string>
+    <string name="settings_tracking_ratings">রেটিং</string>
+    <string name="settings_tracking_ratings_description">আপনার রেটিং কোথায় সংরক্ষিত হয় এবং কোথা থেকে দেখানো হয়</string>
+    <string name="settings_tracking_ratings_picker_subtitle">বিস্তারিত পেজ থেকে শিরোনামে রেটিং দিন। আপনার রেটিং বেছে নেওয়া পরিষেবায় সংরক্ষিত হয় এবং সেখান থেকে দেখানো হয়।</string>
+    <string name="settings_tracking_ratings_off_description">রেটিং বোতাম লুকান।</string>
+    <string name="settings_tracking_ratings_simkl_description">মুভি ও শো রেট করুন। আপনার Simkl তালিকায় না থাকা শিরোনাম রেট করলে সেটি তালিকায় যোগ হয়।</string>
+    <string name="settings_tracking_ratings_mdblist_description">মুভি, শো ও পর্ব রেট করুন।</string>
+    <string name="addons_tracking_consent_title">ট্র্যাকিং অ্যাড-অন</string>
+    <string name="addons_tracking_consent_body">%1$s একটি ট্র্যাকিং অ্যাড-অন। Morivia এটিকে আপনার কার্যকলাপ পাঠাবে: আপনি কী চালান, থামান ও বন্ধ করেন প্লেব্যাক অবস্থানসহ, লাইব্রেরিতে কী যোগ করেন বা সরান এবং কী দেখা বা না-দেখা হিসেবে চিহ্নিত করেন। এই ডেটা Morivia থেকে বেরিয়ে যায় এবং অ্যাড-অনের ডেভেলপার ও এটি যে পরিষেবায় যুক্ত হয় তারা পরিচালনা করে।</string>
+    <string name="addons_tracking_consent_checkbox">আমি এই অ্যাড-অনের সাথে আমার দেখার কার্যকলাপ ও লাইব্রেরি শেয়ার করতে সম্মত</string>
+</resources>

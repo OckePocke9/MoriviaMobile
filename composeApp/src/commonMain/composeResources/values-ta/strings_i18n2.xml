@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">தீமை ஆப் ஐகானுடன் பொருத்து</string>
+    <string name="morivia_appearance_match_theme_description">தேர்ந்தெடுத்த ஆப் ஐகானுக்குப் பொருந்தும் தீமைப் பயன்படுத்து.</string>
+    <string name="settings_tracking_ratings">மதிப்பீடுகள்</string>
+    <string name="settings_tracking_ratings_description">உங்கள் மதிப்பீடுகள் எங்கே சேமிக்கப்பட்டு எங்கிருந்து காட்டப்படுகின்றன</string>
+    <string name="settings_tracking_ratings_picker_subtitle">தலைப்புகளை அவற்றின் விவரப் பக்கத்திலிருந்து மதிப்பிடுங்கள். நீங்கள் தேர்ந்த சேவையில் மதிப்பீடுகள் சேமிக்கப்பட்டு அங்கிருந்து காட்டப்படும்.</string>
+    <string name="settings_tracking_ratings_off_description">மதிப்பீட்டுப் பொத்தானை மறை.</string>
+    <string name="settings_tracking_ratings_simkl_description">திரைப்படங்களையும் தொடர்களையும் மதிப்பிடுங்கள். உங்கள் Simkl பட்டியல்களில் இல்லாத தலைப்பை மதிப்பிட்டால் அது அவற்றில் சேர்க்கப்படும்.</string>
+    <string name="settings_tracking_ratings_mdblist_description">திரைப்படங்கள், தொடர்கள், எபிசோடுகளை மதிப்பிடுங்கள்.</string>
+    <string name="addons_tracking_consent_title">கண்காணிப்புச் சேர்க்கை</string>
+    <string name="addons_tracking_consent_body">%1$s ஒரு கண்காணிப்புச் சேர்க்கை. Morivia உங்கள் செயல்பாட்டை அதற்கு அனுப்பும்: இயக்கும் நிலையுடன் நீங்கள் எதை இயக்குகிறீர்கள், இடைநிறுத்துகிறீர்கள், நிறுத்துகிறீர்கள், நூலகத்தில் எதைச் சேர்க்கிறீர்கள் அல்லது நீக்குகிறீர்கள், எதைப் பார்த்தது அல்லது பார்க்காதது எனக் குறிக்கிறீர்கள். இந்தத் தரவு Morivia-விலிருந்து வெளியேறி, சேர்க்கையின் உருவாக்குநராலும் அது இணையும் சேவையாலும் கையாளப்படுகிறது.</string>
+    <string name="addons_tracking_consent_checkbox">என் பார்வைச் செயல்பாட்டையும் நூலகத்தையும் இந்தச் சேர்க்கையுடன் பகிர ஒப்புக்கொள்கிறேன்</string>
+</resources>

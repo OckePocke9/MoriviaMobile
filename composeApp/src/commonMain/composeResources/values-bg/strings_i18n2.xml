@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="morivia_appearance_match_theme">Темата да следва иконата на приложението</string>
+    <string name="morivia_appearance_match_theme_description">Използване на темата, която отговаря на избраната икона.</string>
+    <string name="settings_tracking_ratings">Оценки</string>
+    <string name="settings_tracking_ratings_description">Къде се запазват и откъде се показват оценките ви</string>
+    <string name="settings_tracking_ratings_picker_subtitle">Оценявайте заглавия от страницата им с подробности. Оценките се запазват в избраната услуга и се показват от нея.</string>
+    <string name="settings_tracking_ratings_off_description">Скриване на бутона за оценка.</string>
+    <string name="settings_tracking_ratings_simkl_description">Оценявайте филми и сериали. Оценяването на заглавие, което не е в списъците ви в Simkl, го добавя към тях.</string>
+    <string name="settings_tracking_ratings_mdblist_description">Оценявайте филми, сериали и епизоди.</string>
+    <string name="addons_tracking_consent_title">Добавка за проследяване</string>
+    <string name="addons_tracking_consent_body">%1$s е добавка за проследяване. Morivia ще ѝ изпраща активността ви: какво пускате, паузирате и спирате заедно с позицията, какво добавяте или премахвате от библиотеката си и какво отбелязвате като гледано или негледано. Тези данни напускат Morivia и се обработват от разработчика на добавката и услугата, към която се свързва.</string>
+    <string name="addons_tracking_consent_checkbox">Съгласен съм да споделям активността и библиотеката си с тази добавка</string>
+    <string name="settings_mdb_show_on_hero">Оценки в банера</string>
+    <string name="settings_mdb_show_on_hero_description">Показване на оценките от MDBList в банера на Начало</string>
+    <string name="settings_tmdb_api_key_label">API ключ</string>
+    <string name="settings_tmdb_api_key_override_description">Използвайте свой API ключ за TMDB или оставете празно за ключа по подразбиране.</string>
+    <string name="settings_tmdb_personal_api_key">Личен API ключ</string>
+    <string name="settings_tracking_trakt_progress_required">Налично, когато Trakt е източник на напредъка</string>
+    <string name="settings_tracking_simkl_recommendations_description">Подобни заглавия и препоръки от общността в Simkl.</string>
+    <string name="settings_tracking_anime_id_tvdb">Предпочитане на TVDB</string>
+    <string name="settings_tracking_anime_id_tvdb_description">Групиране на сезоните по TVDB ID. По-стабилно от IMDB за аниме, разделено по сезони в IMDB.</string>
+    <string name="settings_tracking_mdblist_section">Функции на MDBList</string>
+    <string name="settings_mdblist_library_lists">Списъци в библиотеката</string>
+    <string name="settings_mdblist_library_lists_description">Изберете кои списъци от MDBList да се показват в Библиотеката и в Управление на списъците. Списъкът за гледане се показва винаги.</string>
+    <string name="settings_mdblist_library_lists_summary">Показани %1$d от %2$d</string>
+    <string name="settings_mdblist_library_lists_empty">Все още няма списъци в профила ви в MDBList. Синхронизирайте, за да ги заредите.</string>
+    <string name="profile_already_active">Вече използвате „%1$s“</string>
+    <string name="debrid_resolving_stream">Зареждане на debrid поток</string>
+</resources>
