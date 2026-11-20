@@ -1,86 +1,36 @@
 # Changelog
 
-## Local test build 41 (1.6, unpublished)
+## 1.7
 
-- Use clear four-step gradients for all 31 presets in Theme, App Icon and Initials, so dark tones blend in like Original without showing grey or black. Recolour the matching Morivia icons.
-- Mark the selected app icon with a small check badge instead of darkening the icon.
-- Translate the remaining app text in all 31 languages, including tracking, MDBList, Simkl, Trakt, connected services, cloud library and plugin settings. Nuvio sign-in remains unchanged.
-
-## Local test build 40 (1.6, unpublished)
-
-- Brighten the 31 preset gradients and matching Morivia icons while retaining dark surfaces and saved colour identifiers.
-
-## Local test build 39 (1.6, unpublished)
-
-- Show the profile’s first letter as it is typed. Initial previews stay empty before a letter is entered.
-
-## Local test build 38 (1.6, unpublished)
-
-- Use the same 31 alphabetized presets across Theme, App Icon and Initials, with a distinct preview for each picker.
-
-## Local test build 37 (1.6, unpublished)
-
-- Show the profile’s first initial on the colour previews. Center Custom Theme and alphabetize all three pickers in both views.
-
-## Local test build 36 (1.6, unpublished)
-
-- Add 31 coordinated theme palettes and Android launcher icons, also available for profile initials. Copper now has a matching theme.
-- Use icon previews and alphabetical expanded lists with a return to the expansion arrow. Add reset and custom controls across Theme, App Icon and Initials.
+Appearance
+- Add 31 coordinated theme palettes in alphabetical order, each with a matching Android launcher icon and profile initials colour. Copper now has a matching theme.
+- Theme, App Icon and Initials use the same presets, with colour swatches, launcher icons and initials as previews. Nine show first and the rest open behind the arrow, alphabetized in both views, with reset to Original and a custom colour editor. Custom Theme has a centered label.
+- Use clear four-step gradients for all 31 presets so dark tones blend in like Original without showing grey or black, and recolour the matching Morivia icons. Dark backgrounds and saved colour identifiers are kept.
+- The app icon picker is built like the theme picker: three per row on a phone and four on a tablet, with the same chips, names and order. The selected icon shows a check badge instead of turning dark.
 - Add Match theme to app icon, with independent manual selection. Remove Current theme from Appearance.
+- AMOLED black makes every card pure black and gives Home, Search and Library a pure black background. Profile and Settings keep the theme-tinted AMOLED background. Nuvio sign-in and the profile chooser are unchanged.
 
-## Local test build 35 (1.6, unpublished)
+Watch Party
+- Restore an available guest room when the app reopens, scoped to the signed-in account and server, and offer to continue watching with the group. Leaving manually forgets the room.
+- Open a shared or matching stream after joining, start from the host's position, audio and subtitles, and keep seeks local to each player. Back in sync returns to the host's current position after a personal seek.
+- Keep the guest's transition black while joining and loading, align playback before showing it, coordinate waiting-room starts and show the standard loading screen while joining and buffering.
+- End for Everyone closes the player on connected devices. Leave keeps the remaining viewers watching.
+- Retry after temporary connection errors and let playback continue on its own if the room ends.
+- Cap rooms at six viewers in the app, including the host, and accept 0 and 1 in room codes, pasted codes and invite links.
 
-- Add Back in sync after a personal seek, using a fresh playback position from the host.
-- Offer to continue watching with the group when Morivia restores a saved guest room.
-- Show the standard playback loading screen while joining and buffering.
+Profiles
+- The profile chooser has tinted, outlined initials circles, Nuvio typography, white pencil buttons and outlined Manage Profiles / Done controls. Add Profile matches those controls. Morivia's name, logo and background are kept.
+- Editing opens only from the themed pencil. Avatar choices are grouped on theme-aware cards.
+- Initials use exactly the Appearance presets and look the same in the profile chooser, profile editing, the in-app profile switcher and Party avatars. The first letter appears as the name is typed, and previews stay empty before that.
+- The PIN prompt animates open and stays open between entry and confirmation.
+- Editing a profile no longer turns off "uses primary plugins" on Nuvio. A failed save keeps you on the screen with a message, and a new profile only gets its PIN once it is really created. Profile sync also clears cached PINs changed or removed on another device.
+- Nuvio sign-in stays independent of Morivia's theme and AMOLED settings, with the fixed Nuvio wordmark and layout.
 
-## Local test build 34 (1.6, unpublished)
+Languages
+- All 31 app languages cover the whole app. Swedish and Finnish go from about 18 % to complete, and every language now also covers tracking, MDBList, Simkl, Trakt, TMDB, connected services, the cloud library and plugins. Nuvio sign-in and addon content are not translated.
 
-- Keep the guest’s transition black while joining and loading a matching stream, align playback before displaying it, and coordinate waiting-room starts.
-- End for Everyone closes the player on connected devices. Leave keeps the remaining viewers in the movie or episode.
-- Cap rooms at six viewers in the app, including the host.
-
-## Local test build 33 (1.6, unpublished)
-
-- Restore an available guest room when the app reopens, scoped to the signed-in account and server. Leaving manually forgets the room.
-- Retry after temporary connection errors and let playback continue independently if the room ends.
-- Open a shared or matching stream after joining, use the host’s position, audio and subtitles as starting choices, and keep seeks local to each player.
-
-## Local test build 32 (1.6, unpublished)
-
-- Accept 0 and 1 in Watch Party room codes, including pasted codes and invite links.
-
-## Local test builds 29–31 (1.6, unpublished)
-
-- AMOLED black: every card is pure black, Home, Search and Library get a pure black background, and Profile and Settings keep the theme-tinted AMOLED background. Nuvio sign-in and the profile chooser are unchanged.
-- Appearance: the app icon picker is built like the theme picker, three per row on a phone (four on a tablet), the same chips, names and order as the themes, nine first and the rest behind the arrow.
-- All 31 app languages are completed for the app itself: Swedish and Finnish from about 18 % to complete, and the remaining texts added in every other language. Addon and integration screens (TMDB, MDBList, debrid, Trakt, Simkl, tracking), the locked Nuvio sign-in and the profile chooser keep their texts; content from addons is not translated.
-
-## Local test build 28 (1.6, unpublished)
-
-- Initials colours are now exactly the Appearance app icons with their theme names, gradients and text colours (Copper included), shown as the same chips as the theme picker, nine first and the rest behind the arrow.
-- Initials look the same everywhere: profile chooser, profile editing, the in-app profile switcher and Party avatars.
-- Editing a profile no longer turns off "uses primary plugins" on Nuvio, a failed save keeps you on the screen with a message instead of looking saved, and a new profile only gets its PIN when it was really created.
-- Profile sync also clears cached PINs changed or removed on another device.
-
-## Local test build 27 (1.6, unpublished)
-
-- Keep the PIN dialog open between entry and confirmation, and match Add Profile colours and typography to Manage Profiles and Done.
-
-## Local test build 26 (1.6, unpublished)
-
-- Restore the Add Profile circle, open editing only from the themed pencil, reuse Appearance gradients for initials, group avatar choices on theme-aware cards and animate the PIN prompt opening.
-
-## Local test build 25 (1.6, unpublished)
-
-- Match the profile chooser references with tinted, outlined initials circles, Nuvio typography, white pencil buttons and outlined Manage Profiles / Done controls. Add Profile is a text button without a circle, as requested.
-- Retain Morivia's name, logo, background and existing profile selection, PIN and management behavior.
-- Lock Nuvio sign-in to the build 24 baseline; keep version name 1.6 and increase only build number to 25.
-
-## Local test build 24 (1.6, unpublished)
-
-- Keep Nuvio sign-in independent of Morivia's app theme and AMOLED settings, retaining the fixed Nuvio wordmark and existing layout.
-- Increase only the Android build number from 23 to 24; keep version name 1.6 for local phone testing.
+App
+- Raise the version to 1.7, build 42.
 
 ## 1.6
 
