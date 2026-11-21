@@ -9,8 +9,9 @@
   logo's average at that place, so the darker ribbon and the light play button stay visible.
 
   Reads the *_original images and writes, for every theme colour:
-    composeResources/drawable/morivia_symbol_<c>.png, app_icon_<c>.png, morivia_brand_symbol_<c>.png
-    androidMain/res/drawable-nodpi/morivia_foreground_<c>.png, morivia_launcher_<c>.png
+    composeResources/drawable/morivia_symbol_<c>.png, app_icon_<c>.webp, morivia_brand_symbol_<c>.webp
+    androidMain/res/drawable-nodpi/morivia_foreground_<c>.webp, morivia_launcher_<c>.webp
+  The WebP files are lossless and need Google's cwebp (see scripts/webp.ps1).
   Run scripts/generate-wordmarks.ps1 afterwards to redraw the wordmarks.
 
 .EXAMPLE
@@ -19,6 +20,7 @@
 param([string[]]$Only)
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'webp.ps1')
 Add-Type -AssemblyName System.Drawing
 Add-Type -ReferencedAssemblies System.Drawing -TypeDefinition @'
 using System;
@@ -187,5 +189,10 @@ foreach ($key in $themes.Keys) {
     $symbol.Dispose()
     (Save-Recolored (Join-Path $nodpi 'morivia_foreground_original.png') (Join-Path $nodpi "morivia_foreground_$key.png") $stops).Dispose()
     (Save-Recolored (Join-Path $drawable 'morivia_brand_symbol.png') (Join-Path $drawable "morivia_brand_symbol_$key.png") $stops).Dispose()
+    # morivia_symbol_<c> stays PNG: generate-wordmarks.ps1 reads it. The rest ship as lossless WebP.
+    Convert-ToWebp (Join-Path $drawable "app_icon_$key.png")
+    Convert-ToWebp (Join-Path $nodpi "morivia_launcher_$key.png")
+    Convert-ToWebp (Join-Path $nodpi "morivia_foreground_$key.png")
+    Convert-ToWebp (Join-Path $drawable "morivia_brand_symbol_$key.png")
     Write-Host "$key : $(($stops | ForEach-Object { '#{0:X6}' -f $_ }) -join ' ')"
 }

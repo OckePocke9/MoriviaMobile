@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Resource shrinking keeps these: AppIconPlatform looks up the launcher icons by name. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@mipmap/ic_launcher*,@drawable/morivia_foreground_*,@drawable/morivia_launcher_*" />

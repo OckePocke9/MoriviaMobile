@@ -178,7 +178,9 @@ baselineProfile {
 }
 
 sentry {
-    includeProguardMapping.set(true)
+    // Only with a Sentry upload configured: sentry-cli cannot run from a path with spaces
+    // ("Morivia Android"), and without an upload the mapping ID is never used.
+    includeProguardMapping.set(sentryMappingUploadEnabled)
     autoUploadProguardMapping.set(sentryMappingUploadEnabled)
     uploadNativeSymbols.set(false)
     autoUploadNativeSymbols.set(false)

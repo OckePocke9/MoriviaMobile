@@ -8,12 +8,14 @@
   The lettering follows the style of Nuvio's wordmark: heavy, rounded, lowercase strokes.
   The letters are drawn as strokes (no font file needed), white on a transparent background,
   to the right of the matching morivia_symbol_<colour>.png. Writes
-  composeApp/src/commonMain/composeResources/drawable/app_logo_wordmark*.png.
+  composeApp/src/commonMain/composeResources/drawable/app_logo_wordmark*.webp (lossless; needs
+  Google's cwebp, see scripts/webp.ps1).
 
 .EXAMPLE
   .\scripts\generate-wordmarks.ps1
 #>
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'webp.ps1')
 Add-Type -AssemblyName System.Drawing
 $root = Split-Path -Parent $PSScriptRoot
 $drawable = Join-Path $root 'composeApp/src/commonMain/composeResources/drawable'
@@ -106,7 +108,8 @@ function Write-Wordmark([string]$symbolName, [string]$outName) {
     $g.Dispose()
     $bmp.Save((Join-Path $drawable "$outName.png"), [System.Drawing.Imaging.ImageFormat]::Png)
     $bmp.Dispose(); $symbol.Dispose()
-    Write-Host "$outName.png ($width x $height)"
+    Convert-ToWebp (Join-Path $drawable "$outName.png")
+    Write-Host "$outName.webp ($width x $height)"
 }
 
 if (-not $Only) {

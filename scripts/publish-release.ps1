@@ -85,7 +85,7 @@ if ($ApkPath) {
 } else {
     $tasks = @(':androidApp:assembleFullRelease')
     if (-not $SkipTests) { $tasks = @(':composeApp:testAndroidHostTest') + $tasks }
-    & .\gradlew.bat @tasks '-Pnuvio.android.distribution=full' '-PreleaseMinifyEnabled=false' --console=plain
+    & .\gradlew.bat @tasks '-Pnuvio.android.distribution=full' --console=plain
     if ($LASTEXITCODE -ne 0) { Fail 'The Android build or its tests failed; nothing was published.' }
     $apk = Get-ChildItem 'androidApp/build/outputs/apk/full/release' -Filter '*arm64-v8a-release.apk' | Select-Object -First 1
 }

@@ -7,6 +7,8 @@ Bring your own sources: Morivia turns your addons into a library with artwork, p
 
 ## What's new in 1.7
 
+- **Local test build 43:** Morivia is about 30 MB smaller (58 MB instead of 87.5 MB), with the same features and identical images. Your data stays as it is.
+
 - **31 themes, app icons and initials colours.** Appearance has 31 matching colour themes with clear, vivid gradients, each with its own launcher icon and profile initials colour. Pick from previews, reset to Original or make a custom colour, and choose whether the app icon follows the theme. The selected icon shows a check badge.
 - **AMOLED black, everywhere it counts.** Every card turns pure black, and Home, Search and Library get a black background. Profile and Settings keep a hint of the theme.
 - **Watch Party.** Rejoin your last room when you reopen Morivia, start at the host's position, audio and subtitles, use Back in sync after skipping on your own, and let the host end the party for everyone. Rooms hold up to six viewers, and room codes accept 0 and 1.
@@ -55,7 +57,7 @@ Create an empty `local.properties` in the repository root. Optional keys, such a
 Requires Java 21 or newer and the Android SDK (Android Studio is easiest).
 
 ```bash
-./gradlew :androidApp:assembleFullRelease -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+./gradlew :androidApp:assembleFullRelease -Pnuvio.android.distribution=full
 ```
 
 The APK is written to `androidApp/build/outputs/apk/full/release/`.
