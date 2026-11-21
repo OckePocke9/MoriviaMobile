@@ -1,10 +1,11 @@
 # Changelog
 
-## Local test build 43 (1.7, unpublished)
+## 1.8
 
 - Shrink the release APK from 87.5 MB to 58 MB with the same features and data: R8 code and resource shrinking is on, and 238 theme icons, launcher icons and wordmarks are lossless WebP (16.7 MB to 7.4 MB, identical pixels). Launcher icons looked up by name are kept, and the release script and README build command no longer turn shrinking off.
 - Skip the unused Sentry mapping step, which failed from a folder path with spaces.
 - recolor-theme-icons.ps1 and generate-wordmarks.ps1 write lossless WebP through Google's cwebp (scripts/webp.ps1). The morivia_symbol_<colour> sources stay PNG because the scripts read them.
+- Raise the version to 1.8, build 44.
 
 ## 1.7
 

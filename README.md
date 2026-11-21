@@ -3,18 +3,12 @@
 A personal media app for your Android phone and tablet.
 Bring your own sources: Morivia turns your addons into a library with artwork, profiles, subtitles and your place saved on every device. Licensed GPLv3, like the project it is built on.
 
-**Version <!-- version -->1.7<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
+**Version <!-- version -->1.8<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
 
-## What's new in 1.7
+## What's new in 1.8
 
-- **Local test build 43:** Morivia is about 30 MB smaller (58 MB instead of 87.5 MB), with the same features and identical images. Your data stays as it is.
-
-- **31 themes, app icons and initials colours.** Appearance has 31 matching colour themes with clear, vivid gradients, each with its own launcher icon and profile initials colour. Pick from previews, reset to Original or make a custom colour, and choose whether the app icon follows the theme. The selected icon shows a check badge.
-- **AMOLED black, everywhere it counts.** Every card turns pure black, and Home, Search and Library get a black background. Profile and Settings keep a hint of the theme.
-- **Watch Party.** Rejoin your last room when you reopen Morivia, start at the host's position, audio and subtitles, use Back in sync after skipping on your own, and let the host end the party for everyone. Rooms hold up to six viewers, and room codes accept 0 and 1.
-- **Profiles.** A cleaner profile chooser with outlined initials circles, the first letter shown as you type a name, a steadier PIN prompt, and fixes so profile edits and PINs sync correctly with Nuvio.
-- **The whole app in 31 languages.** Swedish and Finnish are complete, and every language now also covers tracking, MDBList, Simkl, Trakt, connected services, the cloud library and plugins. Content from addons stays in its own language.
-- **Updates over 1.6** as usual and keeps your data.
+- **About a third smaller.** Morivia is 58 MB instead of 87.5 MB, with the same features and identical images and icons.
+- **Updates over 1.7** as usual and keeps your data.
 
 See the [changelog](CHANGELOG.md) for every change.
 
