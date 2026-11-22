@@ -1,6 +1,8 @@
 package com.nuvio.app.features.settings
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -154,58 +156,55 @@ internal fun LazyListScope.trackingSettingsContent(
                 settingsUiState = settingsUiState,
                 traktConnected = traktUiState.mode == TraktConnectionMode.CONNECTED,
                 simklConnected = simklUiState.mode == SimklConnectionMode.CONNECTED,
+                commentsEnabled = commentsEnabled,
+                onCommentsEnabledChange = onCommentsEnabledChange,
             )
-        }
-    }
-
-    if (traktUiState.mode == TraktConnectionMode.CONNECTED) {
-        item {
-            SettingsSection(
-                title = stringResource(Res.string.settings_tracking_viewing_discovery).uppercase(),
-                isTablet = isTablet,
-            ) {
-                TrackingViewingAndDiscovery(
-                    isTablet = isTablet,
-                    settingsUiState = settingsUiState,
-                    traktConnected = true,
-                    commentsEnabled = commentsEnabled,
-                    onCommentsEnabledChange = onCommentsEnabledChange,
-                )
-            }
-        }
-    }
-
-    if (simklUiState.mode == SimklConnectionMode.CONNECTED) {
-        item {
-            SettingsSection(
-                title = stringResource(Res.string.settings_tracking_anime_section).uppercase(),
-                isTablet = isTablet,
-            ) {
-                AnimeIdPreferenceSection(
-                    isTablet = isTablet,
-                    settingsUiState = settingsUiState,
-                )
-            }
-        }
-    }
-
-    if (mdbListConnected) {
-        item {
-            SettingsSection(
-                title = stringResource(Res.string.settings_tracking_mdblist_section).uppercase(),
-                isTablet = isTablet,
-            ) {
-                MdbListLibraryListsSection(isTablet = isTablet)
-            }
         }
     }
 }
 
-private enum class TrackingDataPicker {
-    LIBRARY,
-    WATCH_PROGRESS,
-    MORE_LIKE_THIS,
-    RATINGS,
+@Composable
+private fun MdbListLibraryListsRow(isTablet: Boolean) {
+    val tokens = MaterialTheme.nuvio
+    var showPicker by rememberSaveable { mutableStateOf(false) }
+    val options by remember { MdbListTracker.library.listOptions }.collectAsStateWithLifecycle(emptyList())
+    val isRefreshing by remember { MdbListTracker.library.isRefreshing }.collectAsStateWithLifecycle(false)
+
+    SettingsNavigationRow(
+        title = stringResource(Res.string.settings_mdblist_library_lists),
+        description = stringResource(Res.string.settings_mdblist_library_lists_description),
+        isTablet = isTablet,
+        trailingContent = {
+            if (options.isNotEmpty()) {
+                Text(
+                    text = stringResource(
+                        Res.string.settings_mdblist_library_lists_summary,
+                        options.count { it.visible },
+                        options.size,
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = tokens.colors.accent,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+        },
+        onClick = {
+            MdbListTracker.library.prepare()
+            showPicker = true
+        },
+    )
+
+    if (showPicker) {
+        MdbListLibraryListsPicker(
+            isTablet = isTablet,
+            options = options,
+            isLoading = isRefreshing,
+            onToggle = { option, onResult ->
+                MdbListTracker.library.setListVisibleAsync(option.key, !option.visible, onResult)
+            },
+            onDismiss = { showPicker = false },
+        )
+    }
 }
 
 @Composable
@@ -214,9 +213,9 @@ private fun TrackingDataSources(
     settingsUiState: TrackingSettingsUiState,
     traktConnected: Boolean,
     simklConnected: Boolean,
+    commentsEnabled: Boolean,
+    onCommentsEnabledChange: (Boolean) -> Unit,
 ) {
-    var activePickerName by rememberSaveable { mutableStateOf<String?>(null) }
-    val activePicker = activePickerName?.let(TrackingDataPicker::valueOf)
     val scope = rememberCoroutineScope()
     val transitionState by remember {
         WatchProgressSourceCoordinator.ensureStarted()
@@ -254,23 +253,30 @@ private fun TrackingDataSources(
     }
 
     SettingsGroup(isTablet = isTablet) {
-        TrackingPreferenceActionRow(
+        TrackingChoiceRow(
             title = stringResource(Res.string.trakt_library_source_title),
-            description = stringResource(Res.string.trakt_library_source_subtitle),
-            value = librarySourceModeLabel(effectiveLibrarySource),
+            options = librarySourceOptions(traktConnected, simklConnected, mdblistConnected),
+            selected = effectiveLibrarySource,
+            onSelected = TrackingSettingsRepository::setLibrarySourceMode,
             supportingMessage = libraryFallback,
             isTablet = isTablet,
-            onClick = { activePickerName = TrackingDataPicker.LIBRARY.name },
         )
         SettingsGroupDivider(isTablet = isTablet)
-        TrackingPreferenceActionRow(
+        TrackingChoiceRow(
             title = stringResource(Res.string.trakt_watch_progress_title),
-            description = stringResource(Res.string.trakt_watch_progress_subtitle),
-            value = watchProgressSourceLabel(effectiveProgressSource),
+            options = watchProgressSourceOptions(traktConnected, simklConnected, mdblistConnected),
+            selected = effectiveProgressSource,
+            onSelected = { source ->
+                scope.launch {
+                    WatchProgressSourceCoordinator.selectSource(
+                        profileId = ProfileRepository.activeProfileId,
+                        source = source,
+                    )
+                }
+            },
             supportingMessage = progressFallback,
             isLoading = transitionState.isRefreshing,
             isTablet = isTablet,
-            onClick = { activePickerName = TrackingDataPicker.WATCH_PROGRESS.name },
         )
         if (transitionState.lastRefreshSucceeded == false && !transitionState.isRefreshing) {
             SettingsGroupDivider(isTablet = isTablet)
@@ -299,13 +305,13 @@ private fun TrackingDataSources(
                 null
             }
             SettingsGroupDivider(isTablet = isTablet)
-            TrackingPreferenceActionRow(
+            TrackingChoiceRow(
                 title = stringResource(Res.string.trakt_more_like_this_source_title),
-                description = stringResource(Res.string.trakt_more_like_this_source_subtitle),
-                value = moreLikeThisSourceLabel(effectiveRecommendationsSource),
+                options = recommendationsSourceOptions(traktConnected),
+                selected = effectiveRecommendationsSource,
+                onSelected = TrackingSettingsRepository::setMoreLikeThisSource,
                 supportingMessage = recommendationsFallback,
                 isTablet = isTablet,
-                onClick = { activePickerName = TrackingDataPicker.MORE_LIKE_THIS.name },
             )
         }
         if (simklConnected || mdblistConnected) {
@@ -318,170 +324,54 @@ private fun TrackingDataSources(
                 )
             }
             SettingsGroupDivider(isTablet = isTablet)
-            TrackingPreferenceActionRow(
+            TrackingChoiceRow(
                 title = stringResource(Res.string.settings_tracking_ratings),
-                description = stringResource(Res.string.settings_tracking_ratings_description),
-                value = ratingSourceLabel(effectiveRatingSource),
+                options = ratingSourceOptions(simklConnected, mdblistConnected),
+                selected = effectiveRatingSource,
+                onSelected = TrackingRatings::setSource,
                 supportingMessage = ratingsFallback,
                 isTablet = isTablet,
-                onClick = { activePickerName = TrackingDataPicker.RATINGS.name },
             )
         }
+        // Per-service options live in Sources too (owner's request, 2026-11-22): the page has
+        // only the Tracking cards and this Sources group.
+        if (traktConnected && settingsUiState.watchProgressSource == WatchProgressSource.TRAKT) {
+            SettingsGroupDivider(isTablet = isTablet)
+            TrackingChoiceRow(
+                title = stringResource(Res.string.trakt_continue_watching_window),
+                description = stringResource(Res.string.trakt_continue_watching_subtitle),
+                options = continueWatchingOptions(),
+                selected = normalizeTraktContinueWatchingDaysCap(settingsUiState.continueWatchingDaysCap),
+                onSelected = TrackingSettingsRepository::setContinueWatchingDaysCap,
+                isTablet = isTablet,
+            )
+        }
+        if (traktConnected) {
+            SettingsGroupDivider(isTablet = isTablet)
+            SettingsSwitchRow(
+                title = stringResource(Res.string.settings_trakt_comments),
+                description = stringResource(Res.string.settings_trakt_comments_description),
+                checked = commentsEnabled,
+                isTablet = isTablet,
+                onCheckedChange = onCommentsEnabledChange,
+            )
+        }
+        if (simklConnected) {
+            SettingsGroupDivider(isTablet = isTablet)
+            TrackingChoiceRow(
+                title = stringResource(Res.string.settings_tracking_anime_id_title),
+                description = stringResource(Res.string.settings_tracking_anime_id_subtitle),
+                options = animeIdPreferenceOptions(),
+                selected = settingsUiState.simklAnimeIdPreference,
+                onSelected = TrackingSettingsRepository::setSimklAnimeIdPreference,
+                isTablet = isTablet,
+            )
+        }
+        if (mdblistConnected) {
+            SettingsGroupDivider(isTablet = isTablet)
+            MdbListLibraryListsRow(isTablet = isTablet)
+        }
     }
-
-    when (activePicker) {
-        TrackingDataPicker.LIBRARY -> TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.trakt_library_source_dialog_title),
-            subtitle = stringResource(Res.string.trakt_library_source_dialog_subtitle),
-            selectedValue = effectiveLibrarySource,
-            options = librarySourceOptions(traktConnected, simklConnected, mdblistConnected),
-            onSelected = TrackingSettingsRepository::setLibrarySourceMode,
-            onDismiss = { activePickerName = null },
-        )
-        TrackingDataPicker.WATCH_PROGRESS -> TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.trakt_watch_progress_dialog_title),
-            subtitle = stringResource(Res.string.tracking_watch_progress_dialog_subtitle),
-            selectedValue = effectiveProgressSource,
-            options = watchProgressSourceOptions(traktConnected, simklConnected, mdblistConnected),
-            onSelected = { source ->
-                scope.launch {
-                    WatchProgressSourceCoordinator.selectSource(
-                        profileId = ProfileRepository.activeProfileId,
-                        source = source,
-                    )
-                }
-            },
-            onDismiss = { activePickerName = null },
-        )
-        TrackingDataPicker.MORE_LIKE_THIS -> TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.trakt_more_like_this_source_dialog_title),
-            subtitle = stringResource(Res.string.trakt_more_like_this_source_dialog_subtitle),
-            selectedValue = effectiveTrackingRecommendationsSource(
-                source = settingsUiState.moreLikeThisSource,
-                traktConnected = traktConnected,
-            ),
-            options = recommendationsSourceOptions(traktConnected),
-            onSelected = TrackingSettingsRepository::setMoreLikeThisSource,
-            onDismiss = { activePickerName = null },
-        )
-        TrackingDataPicker.RATINGS -> TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.settings_tracking_ratings),
-            subtitle = stringResource(Res.string.settings_tracking_ratings_picker_subtitle),
-            selectedValue = settingsUiState.ratingSource?.takeIf { it in connectedProviders },
-            options = ratingSourceOptions(simklConnected, mdblistConnected),
-            onSelected = TrackingRatings::setSource,
-            onDismiss = { activePickerName = null },
-        )
-        null -> Unit
-    }
-}
-
-private enum class TrackingViewingPicker {
-    CONTINUE_WATCHING,
-}
-
-@Composable
-private fun TrackingViewingAndDiscovery(
-    isTablet: Boolean,
-    settingsUiState: TrackingSettingsUiState,
-    traktConnected: Boolean,
-    commentsEnabled: Boolean,
-    onCommentsEnabledChange: (Boolean) -> Unit,
-) {
-    var activePickerName by rememberSaveable { mutableStateOf<String?>(null) }
-    val activePicker = activePickerName?.let(TrackingViewingPicker::valueOf)
-    val traktProgressActive = traktConnected && settingsUiState.watchProgressSource == WatchProgressSource.TRAKT
-    val connectTraktFirst = stringResource(
-        Res.string.settings_tracking_connect_first,
-        TrackingBrand.TRAKT.displayName,
-    )
-
-    SettingsGroup(isTablet = isTablet) {
-        TrackingPreferenceActionRow(
-            title = stringResource(Res.string.trakt_continue_watching_window),
-            description = stringResource(
-                if (traktProgressActive) Res.string.trakt_continue_watching_subtitle
-                else Res.string.settings_tracking_trakt_progress_required,
-            ),
-            value = continueWatchingDaysCapLabel(settingsUiState.continueWatchingDaysCap),
-            enabled = traktProgressActive,
-            isTablet = isTablet,
-            onClick = { activePickerName = TrackingViewingPicker.CONTINUE_WATCHING.name },
-        )
-        SettingsGroupDivider(isTablet = isTablet)
-        SettingsSwitchRow(
-            title = stringResource(Res.string.settings_trakt_comments),
-            description = listOfNotNull(
-                stringResource(Res.string.settings_trakt_comments_description),
-                connectTraktFirst.takeUnless { traktConnected },
-            ).joinToString("\n"),
-            checked = commentsEnabled,
-            enabled = traktConnected,
-            isTablet = isTablet,
-            onCheckedChange = onCommentsEnabledChange,
-        )
-    }
-
-    when (activePicker) {
-        TrackingViewingPicker.CONTINUE_WATCHING -> TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.trakt_cw_window_title),
-            subtitle = stringResource(Res.string.trakt_cw_window_subtitle),
-            selectedValue = normalizeTraktContinueWatchingDaysCap(settingsUiState.continueWatchingDaysCap),
-            options = continueWatchingOptions(),
-            onSelected = TrackingSettingsRepository::setContinueWatchingDaysCap,
-            onDismiss = { activePickerName = null },
-        )
-        null -> Unit
-    }
-}
-
-@Composable
-private fun TrackingPreferenceActionRow(
-    title: String,
-    description: String,
-    value: String,
-    isTablet: Boolean,
-    onClick: () -> Unit,
-    supportingMessage: String? = null,
-    isLoading: Boolean = false,
-    enabled: Boolean = true,
-) {
-    val tokens = MaterialTheme.nuvio
-    SettingsNavigationRow(
-        title = title,
-        description = listOfNotNull(
-            description,
-            supportingMessage?.takeIf(String::isNotBlank),
-        ).joinToString("\n"),
-        enabled = enabled,
-        isTablet = isTablet,
-        trailingContent = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (isLoading) {
-                    NuvioLoadingIndicator(
-                        modifier = Modifier.size(16.dp),
-                    )
-                }
-                Text(
-                    text = value,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = tokens.colors.accent,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        },
-        onClick = onClick,
-    )
 }
 
 @Composable
@@ -718,73 +608,6 @@ internal fun effectiveTrackingRecommendationsSource(
         }
     }
     return source
-}
-
-@Composable
-private fun MdbListLibraryListsSection(isTablet: Boolean) {
-    var showPicker by rememberSaveable { mutableStateOf(false) }
-    val options by remember { MdbListTracker.library.listOptions }.collectAsStateWithLifecycle(emptyList())
-    val isRefreshing by remember { MdbListTracker.library.isRefreshing }.collectAsStateWithLifecycle(false)
-
-    SettingsGroup(isTablet = isTablet) {
-        TrackingPreferenceActionRow(
-            title = stringResource(Res.string.settings_mdblist_library_lists),
-            description = stringResource(Res.string.settings_mdblist_library_lists_description),
-            value = if (options.isEmpty()) "" else stringResource(
-                Res.string.settings_mdblist_library_lists_summary,
-                options.count { it.visible },
-                options.size,
-            ),
-            isLoading = isRefreshing && options.isEmpty(),
-            isTablet = isTablet,
-            onClick = {
-                MdbListTracker.library.prepare()
-                showPicker = true
-            },
-        )
-    }
-
-    if (showPicker) {
-        MdbListLibraryListsPicker(
-            isTablet = isTablet,
-            options = options,
-            isLoading = isRefreshing,
-            onToggle = { option, onResult ->
-                MdbListTracker.library.setListVisibleAsync(option.key, !option.visible, onResult)
-            },
-            onDismiss = { showPicker = false },
-        )
-    }
-}
-
-@Composable
-private fun AnimeIdPreferenceSection(
-    isTablet: Boolean,
-    settingsUiState: TrackingSettingsUiState,
-) {
-    var showPicker by rememberSaveable { mutableStateOf(false) }
-
-    SettingsGroup(isTablet = isTablet) {
-        TrackingPreferenceActionRow(
-            title = stringResource(Res.string.settings_tracking_anime_id_title),
-            description = stringResource(Res.string.settings_tracking_anime_id_subtitle),
-            value = animeIdPreferenceLabel(settingsUiState.simklAnimeIdPreference),
-            isTablet = isTablet,
-            onClick = { showPicker = true },
-        )
-    }
-
-    if (showPicker) {
-        TrackingAdaptivePicker(
-            isTablet = isTablet,
-            title = stringResource(Res.string.settings_tracking_anime_id_dialog_title),
-            subtitle = stringResource(Res.string.settings_tracking_anime_id_dialog_subtitle),
-            selectedValue = settingsUiState.simklAnimeIdPreference,
-            options = animeIdPreferenceOptions(),
-            onSelected = TrackingSettingsRepository::setSimklAnimeIdPreference,
-            onDismiss = { showPicker = false },
-        )
-    }
 }
 
 @Composable
