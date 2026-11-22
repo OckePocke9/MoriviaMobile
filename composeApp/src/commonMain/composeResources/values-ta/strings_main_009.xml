@@ -55,7 +55,6 @@
     <string name="settings_integrations_mdblist_description">வெளிப்புற மதிப்பீட்டு வழங்குநர்கள்</string>
     <string name="settings_integrations_debrid_description">இணைப்புகள் மற்றும் நூலக அணுகலுக்குக் கணக்குகளை இணைக்கவும்</string>
     <string name="settings_debrid_section_title">இணைக்கப்பட்ட சேவைகள்</string>
-    <string name="settings_debrid_experimental_notice">இந்த ஒருங்கிணைப்புகள் சோதனை நிலையில் உள்ளன; பின்னர் வைத்திருக்கப்படலாம், மாற்றப்படலாம் அல்லது அகற்றப்படலாம்.</string>
     <string name="settings_debrid_cloud_library">கிளவுட் நூலகம்</string>
     <string name="settings_debrid_cloud_library_description">இணைக்கப்பட்ட கணக்குகளில் ஏற்கனவே உள்ள கோப்புகளை உலாவி இயக்கவும்.</string>
     <string name="settings_debrid_enable">இயக்கக்கூடிய இணைப்புகளைப் பெறவும்</string>

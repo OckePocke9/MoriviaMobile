@@ -107,7 +107,6 @@ import nuvio.composeapp.generated.resources.settings_debrid_dialog_title
 import nuvio.composeapp.generated.resources.settings_debrid_disconnect
 import nuvio.composeapp.generated.resources.settings_debrid_enable
 import nuvio.composeapp.generated.resources.settings_debrid_enable_description
-import nuvio.composeapp.generated.resources.settings_debrid_experimental_notice
 import nuvio.composeapp.generated.resources.settings_debrid_description_template
 import nuvio.composeapp.generated.resources.settings_debrid_description_template_description
 import nuvio.composeapp.generated.resources.settings_debrid_formatter_reset_subtitle
@@ -228,11 +227,6 @@ internal fun LazyListScope.debridSettingsContent(
             isTablet = isTablet,
         ) {
             SettingsGroup(isTablet = isTablet) {
-                DebridInfoRow(
-                    isTablet = isTablet,
-                    text = stringResource(Res.string.settings_debrid_experimental_notice),
-                )
-                SettingsGroupDivider(isTablet = isTablet)
                 SettingsSwitchRow(
                     title = stringResource(Res.string.settings_debrid_cloud_library),
                     description = stringResource(Res.string.settings_debrid_cloud_library_description),

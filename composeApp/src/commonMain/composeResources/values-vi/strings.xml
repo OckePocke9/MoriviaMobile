@@ -864,7 +864,6 @@
     <string name="settings_integrations_mdblist_description">Nhà cung cấp điểm đánh giá bên ngoài</string>
     <string name="settings_integrations_debrid_description">Kết nối tài khoản để liên kết và truy cập thư viện</string>
     <string name="settings_debrid_section_title">DỊCH VỤ LIÊN KẾT</string>
-    <string name="settings_debrid_experimental_notice">Các tích hợp này đang thử nghiệm và có thể được giữ lại, thay đổi hoặc gỡ bỏ sau này.</string>
     <string name="settings_debrid_cloud_library">Thư viện đám mây</string>
     <string name="settings_debrid_cloud_library_description">Duyệt và phát các tệp đã có sẵn trong tài khoản đã kết nối.</string>
     <string name="settings_debrid_enable">Phân giải liên kết phát được</string>

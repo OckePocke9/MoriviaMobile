@@ -856,7 +856,6 @@
     <string name="settings_integrations_mdblist_description">外部評価プロバイダー</string>
     <string name="settings_integrations_debrid_description">リンクとライブラリアクセス用のアカウントを連携</string>
     <string name="settings_debrid_section_title">連携サービス</string>
-    <string name="settings_debrid_experimental_notice">これらの連携は試験的なものであり、今後維持・変更・削除される可能性があります。</string>
     <string name="settings_debrid_cloud_library">クラウドライブラリ</string>
     <string name="settings_debrid_cloud_library_description">連携済みアカウントのファイルを参照して再生します。</string>
     <string name="settings_debrid_enable">再生可能なリンクを解決</string>

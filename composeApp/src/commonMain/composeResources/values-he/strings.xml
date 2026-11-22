@@ -856,7 +856,6 @@
     <string name="settings_integrations_mdblist_description">ספקי דירוג חיצוניים</string>
     <string name="settings_integrations_debrid_description">חיבור חשבונות לגישה לקישורים ולספרייה</string>
     <string name="settings_debrid_section_title">שירותים מחוברים</string>
-    <string name="settings_debrid_experimental_notice">אינטגרציות אלו הן ניסיוניות וייתכן שיישארו, ישתנו או יוסרו בהמשך.</string>
     <string name="settings_debrid_cloud_library">ספריית ענן</string>
     <string name="settings_debrid_cloud_library_description">עיון והפעלה של קבצים שכבר נמצאים בחשבונות המחוברים.</string>
     <string name="settings_debrid_enable">פיענוח קישורים ניתנים לצפייה</string>

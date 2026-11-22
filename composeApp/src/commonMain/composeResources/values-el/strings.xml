@@ -2018,7 +2018,6 @@
     <string name="settings_debrid_disconnect_provider">Αποσύνδεση %1$s</string>
     <string name="settings_debrid_enable">Επίλυση αναπαράξιμων συνδέσμων</string>
     <string name="settings_debrid_enable_description">Ζητήστε από μια συνδεδεμένη υπηρεσία αναπαράξιμους συνδέσμους όταν χρειάζεται ένα αποτέλεσμα. Αυτό ενδέχεται να προσθέσει το στοιχείο σε αυτή την υπηρεσία.</string>
-    <string name="settings_debrid_experimental_notice">Αυτές οι ενσωματώσεις είναι πειραματικές και ενδέχεται να διατηρηθούν, να αλλάξουν ή να αφαιρεθούν αργότερα.</string>
     <string name="settings_debrid_formatter_reset_subtitle">Επαναφορά της προεπιλεγμένης μορφοποίησης αποτελεσμάτων.</string>
     <string name="settings_debrid_formatter_reset_title">Επαναφορά μορφοποίησης</string>
     <string name="settings_debrid_key_invalid">Δεν ήταν δυνατή η επικύρωση αυτού του κλειδιού API.</string>

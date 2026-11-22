@@ -668,7 +668,6 @@
     <string name="settings_integrations_mdblist_description">Furnizori externi de evaluări</string>
     <string name="settings_integrations_debrid_description">Conectează conturi pentru linkuri și acces la bibliotecă</string>
     <string name="settings_debrid_section_title">SERVICII CONECTATE</string>
-    <string name="settings_debrid_experimental_notice">Aceste integrări sunt experimentale și pot fi păstrate, modificate sau eliminate ulterior.</string>
     <string name="settings_debrid_cloud_library">Bibliotecă în cloud</string>
     <string name="settings_debrid_cloud_library_description">Răsfoiește și redă fișierele existente deja în conturile tale conectate.</string>
     <string name="settings_debrid_enable">Rezolvă linkurile redate</string>

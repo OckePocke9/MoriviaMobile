@@ -852,7 +852,6 @@
     <string name="settings_integrations_mdblist_description">外部评分来源</string>
     <string name="settings_integrations_debrid_description">连接账号以获取链接和媒体库访问</string>
     <string name="settings_debrid_section_title">已连接的服务</string>
-    <string name="settings_debrid_experimental_notice">这些集成仍处于实验阶段，后续可能保留、调整或移除。</string>
     <string name="settings_debrid_cloud_library">云媒体库</string>
     <string name="settings_debrid_cloud_library_description">浏览并播放在已连接账号中已有的文件。</string>
     <string name="settings_debrid_enable">解析可播放链接</string>

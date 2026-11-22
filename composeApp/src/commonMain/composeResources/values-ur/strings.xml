@@ -843,7 +843,6 @@
     <string name="settings_integrations_mdblist_description">بیرونی ریٹنگ فراہم کنندگان</string>
     <string name="settings_integrations_debrid_description">لنکس اور لائبریری تک رسائی کے لیے اکاؤنٹس منسلک کریں</string>
     <string name="settings_debrid_section_title">منسلک سروسز</string>
-    <string name="settings_debrid_experimental_notice">یہ integrations تجرباتی ہیں اور مستقبل میں برقرار، تبدیل یا ہٹائی جا سکتی ہیں۔</string>
     <string name="settings_debrid_cloud_library">Cloud Library</string>
     <string name="settings_debrid_cloud_library_description">اپنے منسلک اکاؤنٹس میں پہلے سے موجود فائلیں براؤز کریں اور چلائیں۔</string>
     <string name="settings_debrid_enable">Playable links حاصل کریں</string>

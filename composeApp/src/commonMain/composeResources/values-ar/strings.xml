@@ -851,7 +851,6 @@
     <string name="settings_integrations_mdblist_description">مصادر التقييمات الخارجية</string>
     <string name="settings_integrations_debrid_description">ربط الحسابات للحصول على الروابط والوصول للمكتبات</string>
     <string name="settings_debrid_section_title">الخدمات المرتبطة</string>
-    <string name="settings_debrid_experimental_notice">عمليات التكامل هذه تجريبية وقد يتم الإبقاء عليها أو تعديلها أو إزالتها لاحقًا.</string>
     <string name="settings_debrid_cloud_library">المكتبة السحابية</string>
     <string name="settings_debrid_cloud_library_description">تصفّح وشغّل الملفات الموجودة بالفعل في حساباتك المرتبطة.</string>
     <string name="settings_debrid_enable">تجهيز الروابط القابلة للتشغيل</string>

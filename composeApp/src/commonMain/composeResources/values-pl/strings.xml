@@ -644,7 +644,6 @@
     <string name="settings_integrations_mdblist_description">Dodaj oceny IMDb, Rotten Tomatoes, Metacritic i inne zewnętrzne oceny do stron szczegółów.</string>
     <string name="settings_integrations_debrid_description">Eksperymentalne źródła z kont chmurowych</string>
     <string name="settings_debrid_section_title">DEBRID</string>
-    <string name="settings_debrid_experimental_notice">Obsługa Debrid jest eksperymentalna i może zostać zachowana, zmieniona lub usunięta w przyszłości.</string>
     <string name="settings_debrid_cloud_library">Biblioteka w chmurze</string>
     <string name="settings_debrid_cloud_library_description">Przeglądaj i odtwarzaj pliki z połączonych kont.</string>
     <string name="settings_debrid_enable">Włącz źródła</string>

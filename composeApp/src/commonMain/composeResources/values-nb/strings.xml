@@ -1442,7 +1442,6 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_debrid_disconnect_provider">Koble fra %1$s</string>
     <string name="settings_debrid_enable">Løs spillbare lenker</string>
     <string name="settings_debrid_enable_description">Be en tilkoblet tjeneste om spillbare lenker når et resultat trenger det. Dette kan legge elementet til i den tjenesten.</string>
-    <string name="settings_debrid_experimental_notice">Disse integrasjonene er eksperimentelle og kan endres eller fjernes senere.</string>
     <string name="settings_debrid_formatter_reset_subtitle">Gjenopprett standard resultatformatering.</string>
     <string name="settings_debrid_formatter_reset_title">Tilbakestill formatering</string>
     <string name="settings_debrid_key_invalid">Kunne ikke validere denne API-nøkkelen.</string>

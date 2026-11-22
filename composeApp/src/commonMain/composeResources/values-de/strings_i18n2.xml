@@ -268,7 +268,6 @@
     <string name="settings_appearance_liquid_glass_description">Native iPhone-Tableiste ab iOS 26 verwenden.</string>
     <string name="settings_integrations_debrid_description">Konten für Links und Bibliothekszugriff verbinden</string>
     <string name="settings_debrid_section_title">VERBUNDENE DIENSTE</string>
-    <string name="settings_debrid_experimental_notice">Diese Integrationen sind experimentell und können später beibehalten, geändert oder entfernt werden.</string>
     <string name="settings_debrid_cloud_library">Cloud-Bibliothek</string>
     <string name="settings_debrid_cloud_library_description">Dateien durchsuchen und abspielen, die bereits in deinen verbundenen Konten liegen.</string>
     <string name="settings_debrid_enable">Abspielbare Links auflösen</string>

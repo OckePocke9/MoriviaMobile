@@ -843,7 +843,6 @@
     <string name="settings_integrations_mdblist_description">এক্সটার্নাল রেটিং প্রোভাইডার</string>
     <string name="settings_integrations_debrid_description">লিঙ্ক এবং লাইব্রেরি অ্যাক্সেসের জন্য অ্যাকাউন্ট সংযুক্ত করুন</string>
     <string name="settings_debrid_section_title">সংযুক্ত সার্ভিসসমূহ</string>
-    <string name="settings_debrid_experimental_notice">এই ইন্টিগ্রেশনগুলো পরীক্ষামূলক এবং পরে রাখা, পরিবর্তন করা বা সরানো হতে পারে।</string>
     <string name="settings_debrid_cloud_library">ক্লাউড লাইব্রেরি</string>
     <string name="settings_debrid_cloud_library_description">আপনার সংযুক্ত অ্যাকাউন্টগুলোতে থাকা ফাইল ব্রাউজ ও প্লে করুন।</string>
     <string name="settings_debrid_enable">প্লেযোগ্য লিঙ্কগুলো রিসলভ করুন</string>

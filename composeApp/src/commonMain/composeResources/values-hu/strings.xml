@@ -591,7 +591,6 @@
     <string name="settings_integrations_mdblist_description">Külső értékelési szolgáltatók</string>
     <string name="settings_integrations_debrid_description">Kísérleti felhőalapú fiókforrások</string>
     <string name="settings_debrid_section_title">DEBRID</string>
-    <string name="settings_debrid_experimental_notice">A Debrid támogatás kísérleti jellegű; a későbbiekben megtartható, módosítható vagy eltávolítható.</string>
     <string name="settings_debrid_enable">Források engedélyezése</string>
     <string name="settings_debrid_enable_description">Lejátszható találatok megjelenítése a csatlakoztatott fiókokból.</string>
     <string name="settings_debrid_add_key_first">Először adj meg egy API-kulcsot.</string>

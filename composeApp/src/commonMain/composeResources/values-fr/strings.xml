@@ -864,7 +864,6 @@
     <string name="settings_integrations_mdblist_description">Fournisseurs de notes externes</string>
     <string name="settings_integrations_debrid_description">Connecter des comptes pour les liens et l’accès à la bibliothèque</string>
     <string name="settings_debrid_section_title">SERVICES CONNECTÉS</string>
-    <string name="settings_debrid_experimental_notice">Ces intégrations sont expérimentales et pourront être conservées, modifiées ou supprimées par la suite.</string>
     <string name="settings_debrid_cloud_library">Bibliothèque cloud</string>
     <string name="settings_debrid_cloud_library_description">Parcourir et lire les fichiers déjà présents dans vos comptes connectés.</string>
     <string name="settings_debrid_enable">Résoudre les liens lisibles</string>

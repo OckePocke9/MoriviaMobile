@@ -864,7 +864,6 @@
     <string name="settings_integrations_mdblist_description">Зовнішні провайдери рейтингів</string>
     <string name="settings_integrations_debrid_description">Підключення облікових записів для отримання посилань і доступу до медіатеки</string>
     <string name="settings_debrid_section_title">ПІДКЛЮЧЕНІ СЕРВІСИ</string>
-    <string name="settings_debrid_experimental_notice">Ці інтеграції є експериментальними і згодом можуть бути збережені, змінені або видалені.</string>
     <string name="settings_debrid_cloud_library">Хмарна бібліотека</string>
     <string name="settings_debrid_cloud_library_description">Переглядайте та відтворюйте файли, які вже є у ваших підключених облікових записах.</string>
     <string name="settings_debrid_enable">Отримувати прямі посилання</string>
