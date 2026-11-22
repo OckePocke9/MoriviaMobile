@@ -132,4 +132,12 @@
     <string name="cloud_library_no_matches_message">Nenhum ficheiro na nuvem corresponde aos filtros atuais.</string>
     <string name="cloud_library_no_matches_title">Nenhum ficheiro correspondente</string>
     <string name="cloud_library_search_label">Pesquisar na biblioteca na nuvem</string>
+    <string name="settings_connections_title">Ligações</string>
+    <string name="settings_system_description">Notificações, definições avançadas e informações da app</string>
+    <string name="settings_connections_integrations_description">Metadados do TMDB, classificações do MDBList e a sua nuvem Torbox</string>
+    <string name="settings_connections_tracking_description">Sincronize o seu histórico de visualização e progresso com Trakt, Simkl e MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB e os seus serviços na nuvem</string>
+    <string name="settings_trakt_visit">Visitar Trakt</string>
+    <string name="settings_trakt_disconnect_account">Desligar Trakt</string>
+    <string name="settings_simkl_disconnect_account">Desligar Simkl</string>
 </resources>

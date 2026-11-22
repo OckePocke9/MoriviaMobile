@@ -107,4 +107,23 @@
     <string name="morivia_movies_by_genres_sub">Movies with the genres of the movie you watched last</string>
     <string name="morivia_series_by_genres">Series Based on Your Genres</string>
     <string name="morivia_series_by_genres_sub">Series with the genres of the series you watched last</string>
+    <string name="morivia_android_layout_title">Layout</string>
+    <string name="morivia_catalog_card_style">Catalog Card Style</string>
+    <string name="morivia_catalog_card_style_description">Order Home catalogs and customize their cards</string>
+    <string name="morivia_home_catalogs">Home Catalogs</string>
+    <string name="morivia_hero_settings_title">Hero</string>
+    <string name="morivia_hero_settings_description">Trailer playback and automatic rotation</string>
+    <string name="morivia_home_settings_title">Home</string>
+    <string name="morivia_home_settings_description">Collections and collection artwork</string>
+    <string name="morivia_catalogs_title">Catalogs</string>
+    <string name="morivia_appearance_title">Appearance</string>
+    <string name="morivia_catalog_show_all">Show All</string>
+    <string name="morivia_catalog_popular_movies">Popular Movies</string>
+    <string name="morivia_catalog_popular_series">Popular Series</string>
+    <string name="morivia_catalog_featured_movies">Featured Movies</string>
+    <string name="morivia_catalog_featured_series">Featured Series</string>
+    <string name="morivia_catalog_poster">Poster</string>
+    <string name="morivia_catalog_landscape">Landscape</string>
+
+    <string name="morivia_appearance_layout_description">Themes, app icons, navigation, and screen layout</string>
 </resources>

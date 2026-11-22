@@ -51,4 +51,12 @@
     <string name="library_list_friends">Znajomi</string>
     <string name="library_list_private_description">Tylko Ty widzisz tę listę.</string>
     <string name="library_list_public_description">Każdy może zobaczyć tę listę.</string>
+    <string name="settings_connections_title">Połączenia</string>
+    <string name="settings_system_description">Powiadomienia, ustawienia zaawansowane i informacje o aplikacji</string>
+    <string name="settings_connections_integrations_description">Metadane z TMDB, oceny z MDBList i Twoja chmura Torbox</string>
+    <string name="settings_connections_tracking_description">Synchronizuj historię oglądania i postęp z Trakt, Simkl i MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB i Twoje usługi w chmurze</string>
+    <string name="settings_trakt_visit">Odwiedź Trakt</string>
+    <string name="settings_trakt_disconnect_account">Odłącz Trakt</string>
+    <string name="settings_simkl_disconnect_account">Odłącz Simkl</string>
 </resources>

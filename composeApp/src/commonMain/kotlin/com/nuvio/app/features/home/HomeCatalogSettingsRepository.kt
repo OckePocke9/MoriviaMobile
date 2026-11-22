@@ -6,6 +6,7 @@ import com.nuvio.app.features.collection.Collection
 import com.nuvio.app.features.collection.CollectionRepository
 import com.nuvio.app.features.servers.ServerCatalog
 import com.nuvio.app.features.servers.ServerRepository
+import com.nuvio.app.features.settings.HomeCatalogRow
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,9 +30,21 @@ data class HomeCatalogSettingsItem(
     val isCollection: Boolean = false,
     val collectionId: String? = null,
     val isPinnedToTop: Boolean = false,
+    val contentType: String = "",
 ) {
     val displayTitle: String
         get() = customTitle.ifBlank { defaultTitle }
+}
+
+internal fun List<HomeCatalogSettingsItem>.findHomeCatalog(row: HomeCatalogRow): HomeCatalogSettingsItem? {
+    val matches = filter {
+        !it.isCollection &&
+            it.defaultTitle.contains(row.titleMatch, ignoreCase = true) &&
+            it.contentType.isSeriesLikeType() == row.series
+    }
+    return matches.firstOrNull {
+        it.key.startsWith("com.linvo.cinemeta:") || it.addonName.equals("Cinemeta", ignoreCase = true)
+    } ?: matches.firstOrNull()
 }
 
 data class HomeCatalogSettingsUiState(
@@ -245,6 +258,21 @@ object HomeCatalogSettingsRepository {
         }
     }
 
+    internal fun resetCatalogRows(keys: List<String>) {
+        ensureLoaded()
+        val reset = keys.mapNotNull { key ->
+            val preference = preferences[key] ?: return@mapNotNull null
+            key to preference.copy(enabled = true, customTitle = "")
+        }
+        val updated = preferences + reset
+        if (updated == preferences) return
+        preferences = updated
+        publish()
+        persist()
+        HomeRepository.applyCurrentSettings()
+        HomeCatalogSettingsSyncService.triggerPush()
+    }
+
     fun resetToDefaults() {
         ensureLoaded()
         heroEnabled = true
@@ -371,6 +399,7 @@ object HomeCatalogSettingsRepository {
                     key = definition.key,
                     defaultTitle = definition.defaultTitle,
                     addonName = definition.addonName,
+                    contentType = definition.type,
                     customTitle = preference?.customTitle.orEmpty(),
                     enabled = preference?.enabled ?: true,
                     heroSourceEnabled = preference?.heroSourceEnabled ?: true,

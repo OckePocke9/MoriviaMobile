@@ -52,4 +52,12 @@
     <string name="library_list_friends">الأصدقاء</string>
     <string name="library_list_private_description">أنت وحدك من يمكنه رؤية هذه القائمة.</string>
     <string name="library_list_public_description">يمكن لأي شخص رؤية هذه القائمة.</string>
+    <string name="settings_connections_title">اتصالات</string>
+    <string name="settings_system_description">الإشعارات والإعدادات المتقدمة ومعلومات التطبيق</string>
+    <string name="settings_connections_integrations_description">بيانات وصفية من TMDB وتقييمات من MDBList وسحابة Torbox الخاصة بك</string>
+    <string name="settings_connections_tracking_description">زامن سجل المشاهدة وتقدّمك مع Trakt وSimkl وMDBList</string>
+    <string name="settings_connections_description">Trakt وSimkl وMDBList وTMDB وخدماتك السحابية</string>
+    <string name="settings_trakt_visit">زيارة Trakt</string>
+    <string name="settings_trakt_disconnect_account">إلغاء ربط Trakt</string>
+    <string name="settings_simkl_disconnect_account">إلغاء ربط Simkl</string>
 </resources>

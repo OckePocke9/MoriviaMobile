@@ -51,4 +51,12 @@
     <string name="library_list_friends">Ismerősök</string>
     <string name="library_list_private_description">Csak te láthatod ezt a listát.</string>
     <string name="library_list_public_description">Bárki láthatja ezt a listát.</string>
+    <string name="settings_connections_title">Kapcsolatok</string>
+    <string name="settings_system_description">Értesítések, speciális beállítások és alkalmazásadatok</string>
+    <string name="settings_connections_integrations_description">Metaadatok a TMDB-ből, értékelések az MDBListből és a Torbox-felhőd</string>
+    <string name="settings_connections_tracking_description">Szinkronizáld a megtekintési előzményeidet és a haladásodat a Trakttal, Simkllel és MDBListtel</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB és a felhőszolgáltatásaid</string>
+    <string name="settings_trakt_visit">Trakt meglátogatása</string>
+    <string name="settings_trakt_disconnect_account">Trakt lekapcsolása</string>
+    <string name="settings_simkl_disconnect_account">Simkl lekapcsolása</string>
 </resources>

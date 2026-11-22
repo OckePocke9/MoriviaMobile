@@ -13,6 +13,61 @@ import com.nuvio.app.features.watchprogress.ContinueWatchingSortMode
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
+@Composable
+internal fun CollectionArtSettingsRow(isTablet: Boolean) {
+    val layout by rememberMoriviaLayout()
+    SettingsChipRow(
+        title = stringResource(Res.string.morivia_hl_collection_gifs),
+        description = stringResource(Res.string.morivia_hl_collection_gifs_sub),
+        isTablet = isTablet,
+    ) {
+        MoriviaCollectionGifs.entries.forEach { mode ->
+            Chip(
+                label = stringResource(
+                    if (mode == MoriviaCollectionGifs.ANIMATED) Res.string.morivia_hl_gifs_animated else Res.string.morivia_hl_gifs_still,
+                ),
+                selected = layout.collectionGifs == mode,
+                onClick = { MoriviaLayoutSettingsRepository.update { it.copy(collectionGifs = mode) } },
+            )
+        }
+    }
+}
+
+internal fun LazyListScope.moriviaHeroSettingsContent(isTablet: Boolean) {
+    item {
+        val layout by rememberMoriviaLayout()
+        SettingsSection(title = stringResource(Res.string.morivia_hl_section_hero), isTablet = isTablet) {
+            SettingsGroup(isTablet = isTablet) {
+                HeroPlaybackRows(layout = layout, isTablet = isTablet)
+            }
+        }
+    }
+}
+
+@Composable
+private fun HeroPlaybackRows(layout: MoriviaLayoutSettings, isTablet: Boolean) {
+    // Play Trailers in Hero and Auto-Rotate Hero work independently of each other.
+    SettingsSwitchRow(
+        title = stringResource(Res.string.morivia_hl_hero_video),
+        description = stringResource(Res.string.morivia_hl_hero_video_sub),
+        checked = layout.heroVideo,
+        isTablet = isTablet,
+        onCheckedChange = { value -> MoriviaLayoutSettingsRepository.update { it.copy(heroVideo = value) } },
+    )
+    SettingsGroupDivider(isTablet = isTablet)
+    SettingsSwitchRow(
+        title = stringResource(Res.string.morivia_hl_auto_rotate),
+        description = stringResource(Res.string.morivia_hl_auto_rotate_sub),
+        checked = layout.heroLayout != MoriviaHeroLayout.PINNED,
+        isTablet = isTablet,
+        onCheckedChange = { value ->
+            MoriviaLayoutSettingsRepository.update {
+                it.copy(heroLayout = if (value) MoriviaHeroLayout.ROLLING else MoriviaHeroLayout.PINNED)
+            }
+        },
+    )
+}
+
 /**
  * The earlier Morivia app's Home & Layout page: one place for the hero, posters, Continue
  * Watching and rows. Settings Nuvio already has are shown here too and change the same values.
@@ -28,26 +83,7 @@ internal fun LazyListScope.moriviaHomeLayoutContent(
         val home by HomeCatalogSettingsRepository.uiState.collectAsStateWithLifecycle()
         SettingsSection(title = stringResource(Res.string.morivia_hl_section_hero), isTablet = isTablet) {
             SettingsGroup(isTablet = isTablet) {
-                // Play Trailers in Hero and Auto-Rotate Hero work independently of each other.
-                SettingsSwitchRow(
-                    title = stringResource(Res.string.morivia_hl_hero_video),
-                    description = stringResource(Res.string.morivia_hl_hero_video_sub),
-                    checked = layout.heroVideo,
-                    isTablet = isTablet,
-                    onCheckedChange = { value -> MoriviaLayoutSettingsRepository.update { it.copy(heroVideo = value) } },
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsSwitchRow(
-                    title = stringResource(Res.string.morivia_hl_auto_rotate),
-                    description = stringResource(Res.string.morivia_hl_auto_rotate_sub),
-                    checked = layout.heroLayout != MoriviaHeroLayout.PINNED,
-                    isTablet = isTablet,
-                    onCheckedChange = { value ->
-                        MoriviaLayoutSettingsRepository.update {
-                            it.copy(heroLayout = if (value) MoriviaHeroLayout.ROLLING else MoriviaHeroLayout.PINNED)
-                        }
-                    },
-                )
+                HeroPlaybackRows(layout = layout, isTablet = isTablet)
                 SettingsGroupDivider(isTablet = isTablet)
                 SettingsNavigationRow(
                     title = stringResource(Res.string.morivia_hl_hero_source),
@@ -224,21 +260,7 @@ internal fun LazyListScope.moriviaHomeLayoutContent(
                     onClick = onCollectionsClick,
                 )
                 SettingsGroupDivider(isTablet = isTablet)
-                SettingsChipRow(
-                    title = stringResource(Res.string.morivia_hl_collection_gifs),
-                    description = stringResource(Res.string.morivia_hl_collection_gifs_sub),
-                    isTablet = isTablet,
-                ) {
-                    MoriviaCollectionGifs.entries.forEach { mode ->
-                        Chip(
-                            label = stringResource(
-                                if (mode == MoriviaCollectionGifs.ANIMATED) Res.string.morivia_hl_gifs_animated else Res.string.morivia_hl_gifs_still,
-                            ),
-                            selected = layout.collectionGifs == mode,
-                            onClick = { MoriviaLayoutSettingsRepository.update { it.copy(collectionGifs = mode) } },
-                        )
-                    }
-                }
+                CollectionArtSettingsRow(isTablet = isTablet)
                 SettingsGroupDivider(isTablet = isTablet)
                 SettingsChipRow(
                     title = stringResource(Res.string.morivia_hl_auto_refresh),

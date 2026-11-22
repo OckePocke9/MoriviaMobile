@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -116,7 +117,8 @@ private fun TrackingChoiceChip(
     }
     val textColor = when {
         selected && onBrandCard -> Color.Black
-        selected -> Color.White
+        // Light accent colours (for example the white theme) need dark text to stay readable.
+        selected -> if (fill.luminance() > 0.5f) Color.Black else Color.White
         onBrandCard -> Color.White.copy(alpha = 0.86f)
         else -> tokens.colors.textPrimary.copy(alpha = 0.86f)
     }

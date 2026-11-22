@@ -51,4 +51,12 @@
     <string name="library_list_friends">Prijatelji</string>
     <string name="library_list_private_description">Samo vi možete vidjeti ovaj popis.</string>
     <string name="library_list_public_description">Ovaj popis može vidjeti svatko.</string>
+    <string name="settings_connections_title">Veze</string>
+    <string name="settings_system_description">Obavijesti, napredne postavke i podaci o aplikaciji</string>
+    <string name="settings_connections_integrations_description">Metapodaci s TMDB-a, ocjene s MDBLista i vaš Torbox oblak</string>
+    <string name="settings_connections_tracking_description">Sinkronizirajte povijest gledanja i napredak s Traktom, Simklom i MDBListom</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB i vaše usluge u oblaku</string>
+    <string name="settings_trakt_visit">Posjeti Trakt</string>
+    <string name="settings_trakt_disconnect_account">Prekini vezu s Traktom</string>
+    <string name="settings_simkl_disconnect_account">Prekini vezu s Simklom</string>
 </resources>

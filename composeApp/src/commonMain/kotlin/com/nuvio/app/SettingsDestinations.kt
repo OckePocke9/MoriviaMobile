@@ -43,6 +43,7 @@ internal fun SettingsRootDestination(
     collectionsTitle: String,
     onCheckForUpdates: (() -> Unit)?,
     onTestUpdateBanner: (() -> Unit)?,
+    onTabSelected: ((AppScreenTab) -> Unit)? = null,
 ) {
     val onBack = rememberGuardedPopBackStack(navController, route)
     val watchPartyTitle = stringResource(Res.string.party_title)
@@ -54,6 +55,7 @@ internal fun SettingsRootDestination(
             navController.navigate(SettingsPageRoute(pageName, title))
         },
         onExternalBack = onBack,
+        onTabSelected = onTabSelected,
         showInternalHeader = !useNativeNavigation,
         onCollectionsClick = {
             navController.navigate(CollectionsRoute(collectionsTitle))

@@ -1,5 +1,6 @@
 package com.nuvio.app.features.settings
 
+import com.nuvio.app.isIos
 import com.nuvio.app.features.player.AndroidPlaybackEngine
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -8,18 +9,18 @@ import kotlin.test.assertTrue
 
 class SettingsNavigationTest {
     @Test
-    fun layoutChildrenReturnToLayout() {
+    fun layoutChildrenReturnToTheirPlatformSettingsPage() {
+        val parent = if (isIos) SettingsPage.Layout else SettingsPage.Appearance
         listOf(
-            SettingsPage.Homescreen,
             SettingsPage.MetaScreen,
-            SettingsPage.ContinueWatching,
-            SettingsPage.PosterCustomization,
             SettingsPage.Streams,
+            SettingsPage.MoriviaSearch,
+            SettingsPage.MoriviaLibrary,
         ).forEach { page ->
-            assertEquals(SettingsPage.Layout, page.previousPage())
+            assertEquals(parent, page.previousPage())
             assertEquals(SettingsCategory.Look, page.category)
         }
-        assertEquals(SettingsPage.Root, SettingsPage.Layout.previousPage())
+        assertEquals(SettingsPage.Root, parent.previousPage())
     }
 
     @Test

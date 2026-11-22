@@ -52,4 +52,12 @@
     <string name="library_list_friends">বন্ধুরা</string>
     <string name="library_list_private_description">শুধুমাত্র আপনি এই তালিকাটি দেখতে পারবেন।</string>
     <string name="library_list_public_description">যে কেউ এই তালিকাটি দেখতে পারবেন।</string>
+    <string name="settings_connections_title">সংযোগ</string>
+    <string name="settings_system_description">বিজ্ঞপ্তি, উন্নত সেটিংস এবং অ্যাপের তথ্য</string>
+    <string name="settings_connections_integrations_description">TMDB থেকে মেটাডেটা, MDBList থেকে রেটিং এবং আপনার Torbox ক্লাউড</string>
+    <string name="settings_connections_tracking_description">Trakt, Simkl ও MDBList-এর সাথে আপনার দেখার ইতিহাস ও অগ্রগতি সিঙ্ক করুন</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB এবং আপনার ক্লাউড পরিষেবা</string>
+    <string name="settings_trakt_visit">Trakt দেখুন</string>
+    <string name="settings_trakt_disconnect_account">Trakt সংযোগ বিচ্ছিন্ন করুন</string>
+    <string name="settings_simkl_disconnect_account">Simkl সংযোগ বিচ্ছিন্ন করুন</string>
 </resources>

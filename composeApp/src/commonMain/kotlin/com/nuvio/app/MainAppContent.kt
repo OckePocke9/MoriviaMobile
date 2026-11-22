@@ -1648,6 +1648,13 @@ internal fun MainAppContent(
                     SettingsRootDestination(
                         route = route,
                         navController = navController,
+                        // Landscape Settings navigation bar: go back to the tabs and open the chosen one.
+                        onTabSelected = { tab ->
+                            while (navController.routes.size > 1) {
+                                if (!navController.popBackStack()) break
+                            }
+                            activateTab(tab)
+                        },
                         useNativeNavigation = useNativeNavigation,
                         collectionsTitle = collectionsTitle,
                         onCheckForUpdates = if (AppFeaturePolicy.inAppUpdaterEnabled) {

@@ -73,6 +73,7 @@ import com.nuvio.app.core.ui.ScreenActivityEffect
 import com.nuvio.app.core.ui.heroStretchZoom
 import com.nuvio.app.core.ui.centeredVerticalBarPadding
 import com.nuvio.app.core.ui.withVerticalBar
+import com.nuvio.app.isIos
 import com.nuvio.app.features.home.MetaPreview
 import com.nuvio.app.features.home.stableKey
 import kotlinx.coroutines.CoroutineScope
@@ -95,7 +96,10 @@ private const val HERO_SCROLL_MAX_SCALE = 1.3f
 private const val HERO_SWIPE_THRESHOLD_FRACTION = 0.16f
 private const val HERO_SWIPE_VELOCITY_THRESHOLD = 300f
 private const val HERO_AUTO_SCROLL_INTERVAL_MS = 8_000L
-private const val HERO_TRAILER_SCROLL_INTERVAL_MS = 45_000L
+private const val HERO_IOS_TRAILER_SCROLL_INTERVAL_MS = 45_000L
+private const val HERO_TRAILER_START_TIMEOUT_MS = 20_000L
+
+private enum class HeroTrailerStatus { Loading, Playing, Ended, Unavailable }
 
 /**
  * The gap from View Details to the dots. The hero ends [HERO_BOTTOM_PADDING] below the dots and
@@ -166,22 +170,41 @@ fun HomeHeroSection(
             if (scrolling && !autoScrolling) userSwiped = true
         }
     }
-    var trailerPlaying by remember { mutableStateOf(false) }
+    val trailerEnabled = moriviaLayout.heroVideo &&
+        com.nuvio.app.core.build.AppFeaturePolicy.heroTrailerPlaybackSupported &&
+        com.nuvio.app.core.build.AppFeaturePolicy.trailerPlaybackMode == com.nuvio.app.core.build.TrailerPlaybackMode.IN_APP
+    val trailerItem = items[autoScrollPage % items.size]
+    val trailerStatus = remember(pagerState, autoScrollPage, trailerItem.id, trailerItem.type, trailerEnabled) {
+        mutableStateOf(if (trailerEnabled) HeroTrailerStatus.Loading else HeroTrailerStatus.Unavailable)
+    }
     val rolls = when (moriviaLayout.heroLayout) {
         com.nuvio.app.features.settings.MoriviaHeroLayout.ROLLING -> true
         com.nuvio.app.features.settings.MoriviaHeroLayout.PINNED -> false
-        com.nuvio.app.features.settings.MoriviaHeroLayout.HYBRID -> !userSwiped
+        com.nuvio.app.features.settings.MoriviaHeroLayout.HYBRID -> !isIos || !userSwiped
     }
 
-    ScreenActivityEffect(autoScrollPage, items.size, rolls, trailerPlaying) { active ->
-        if (!active || items.size <= 1 || !rolls) return@ScreenActivityEffect
-        // As in the earlier Morivia app: 8 seconds per title, 45 while a trailer plays.
-        delay(if (trailerPlaying) HERO_TRAILER_SCROLL_INTERVAL_MS else HERO_AUTO_SCROLL_INTERVAL_MS)
+    val advanceDelay = if (isIos) {
+        if (trailerStatus.value == HeroTrailerStatus.Playing) HERO_IOS_TRAILER_SCROLL_INTERVAL_MS
+        else HERO_AUTO_SCROLL_INTERVAL_MS
+    } else {
+        when (trailerStatus.value) {
+            HeroTrailerStatus.Loading -> HERO_TRAILER_START_TIMEOUT_MS
+            HeroTrailerStatus.Playing -> null
+            HeroTrailerStatus.Ended -> 0L
+            HeroTrailerStatus.Unavailable -> HERO_AUTO_SCROLL_INTERVAL_MS
+        }
+    }
+    ScreenActivityEffect(autoScrollPage, items.size, rolls, advanceDelay) { active ->
+        if (!active || items.size <= 1 || !rolls || advanceDelay == null) return@ScreenActivityEffect
+        delay(advanceDelay)
         while (pagerState.isScrollInProgress) {
             delay(100L)
         }
+        if (pagerState.settledPage != autoScrollPage ||
+            (!isIos && trailerStatus.value == HeroTrailerStatus.Playing)
+        ) return@ScreenActivityEffect
 
-        val nextPage = pagerState.currentPage + 1
+        val nextPage = autoScrollPage + 1
         autoScrolling = true
         try {
             pagerState.animateScrollToPage(nextPage)
@@ -294,14 +317,14 @@ fun HomeHeroSection(
                         }
                     }
                     // Hero video (Home & Layout): the title's trailer plays behind the hero.
-                    if (moriviaLayout.heroVideo) {
-                        HomeHeroTrailer(
-                            item = items[pagerState.settledPage % items.size],
-                            muted = !moriviaLayout.trailerSound,
-                            onPlayingChange = { trailerPlaying = it },
-                        )
-                    } else {
-                        LaunchedEffect(Unit) { trailerPlaying = false }
+                    if (trailerEnabled) {
+                        key(autoScrollPage, trailerItem.id, trailerItem.type) {
+                            HomeHeroTrailer(
+                                item = trailerItem,
+                                muted = !moriviaLayout.trailerSound,
+                                onStatusChange = { trailerStatus.value = it },
+                            )
+                        }
                     }
                 }
 
@@ -471,9 +494,10 @@ fun HomeHeroSection(
                     com.nuvio.app.core.ui.MoriviaPagePill(
                         label = stringResource(Res.string.compose_nav_home),
                         icon = Icons.Rounded.Home,
+                        compact = !isIos,
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .padding(PaddingValues(start = layout.contentHorizontalPadding).withVerticalBar())
+                            .padding(PaddingValues(start = if (isIos) layout.contentHorizontalPadding else 12.dp).withVerticalBar())
                             .padding(top = statusBarTop + 12.dp),
                     )
                 }
@@ -490,18 +514,12 @@ fun HomeHeroSection(
 private fun HomeHeroTrailer(
     item: MetaPreview,
     muted: Boolean,
-    onPlayingChange: (Boolean) -> Unit,
+    onStatusChange: (HeroTrailerStatus) -> Unit,
 ) {
-    if (!com.nuvio.app.core.build.AppFeaturePolicy.heroTrailerPlaybackSupported ||
-        com.nuvio.app.core.build.AppFeaturePolicy.trailerPlaybackMode != com.nuvio.app.core.build.TrailerPlaybackMode.IN_APP
-    ) {
-        return
-    }
     var source by remember(item.id) { mutableStateOf<com.nuvio.app.features.trailer.TrailerPlaybackSource?>(null) }
     var ready by remember(item.id) { mutableStateOf(false) }
     var finished by remember(item.id) { mutableStateOf(false) }
     LaunchedEffect(item.id, item.type) {
-        onPlayingChange(false)
         // Wait a moment so quick swipes do not start trailers.
         delay(1_200L)
         val meta = com.nuvio.app.features.details.MetaDetailsRepository.peek(item.type, item.id)
@@ -509,15 +527,16 @@ private fun HomeHeroTrailer(
         val trailer = meta?.let { com.nuvio.app.features.details.selectHeroTrailer(it.trailers) }
         if (trailer == null) {
             finished = true
+            onStatusChange(HeroTrailerStatus.Unavailable)
             return@LaunchedEffect
         }
         source = runCatching {
             com.nuvio.app.features.trailer.TrailerPlaybackResolver.resolveFromYouTubeUrl(trailer.youtubePlaybackUrl())
         }.getOrNull()
-        if (source == null) finished = true
-    }
-    androidx.compose.runtime.DisposableEffect(item.id) {
-        onDispose { onPlayingChange(false) }
+        if (source == null) {
+            finished = true
+            onStatusChange(HeroTrailerStatus.Unavailable)
+        }
     }
     val playing = source
     if (playing == null || finished) return
@@ -540,15 +559,15 @@ private fun HomeHeroTrailer(
             },
         onReady = {
             ready = true
-            onPlayingChange(true)
+            onStatusChange(HeroTrailerStatus.Playing)
         },
         onEnded = {
             finished = true
-            onPlayingChange(false)
+            onStatusChange(HeroTrailerStatus.Ended)
         },
         onError = {
             finished = true
-            onPlayingChange(false)
+            onStatusChange(HeroTrailerStatus.Unavailable)
         },
     )
 }

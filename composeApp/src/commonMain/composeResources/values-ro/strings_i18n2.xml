@@ -128,4 +128,12 @@
     <string name="cloud_library_no_matches_message">Niciun fișier din cloud nu corespunde filtrelor actuale.</string>
     <string name="cloud_library_no_matches_title">Niciun fișier potrivit</string>
     <string name="cloud_library_search_label">Caută în biblioteca din cloud</string>
+    <string name="settings_connections_title">Conexiuni</string>
+    <string name="settings_system_description">Notificări, setări avansate și informații despre aplicație</string>
+    <string name="settings_connections_integrations_description">Metadate din TMDB, evaluări din MDBList și cloudul tău Torbox</string>
+    <string name="settings_connections_tracking_description">Sincronizează istoricul de vizionare și progresul cu Trakt, Simkl și MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB și serviciile tale cloud</string>
+    <string name="settings_trakt_visit">Vizitează Trakt</string>
+    <string name="settings_trakt_disconnect_account">Deconectează Trakt</string>
+    <string name="settings_simkl_disconnect_account">Deconectează Simkl</string>
 </resources>

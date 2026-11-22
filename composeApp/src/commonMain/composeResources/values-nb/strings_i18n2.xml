@@ -48,4 +48,12 @@
     <string name="settings_mdblist_syncing">Synkroniserer seerhistorikk og avspillingsfremdrift…</string>
     <string name="settings_mdblist_last_synced">Sist synkronisert %1$s</string>
     <string name="settings_tracking_not_connected">Ikke tilkoblet</string>
+    <string name="settings_connections_title">Tilkoblinger</string>
+    <string name="settings_system_description">Varsler, avanserte innstillinger og appinfo</string>
+    <string name="settings_connections_integrations_description">Metadata fra TMDB, vurderinger fra MDBList og Torbox-skyen din</string>
+    <string name="settings_connections_tracking_description">Synkroniser seerhistorikken og fremdriften din med Trakt, Simkl og MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB og skytjenestene dine</string>
+    <string name="settings_trakt_visit">Besøk Trakt</string>
+    <string name="settings_trakt_disconnect_account">Koble fra Trakt</string>
+    <string name="settings_simkl_disconnect_account">Koble fra Simkl</string>
 </resources>

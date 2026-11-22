@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.home_view_all
+import nuvio.composeapp.generated.resources.morivia_catalog_show_all
 import nuvio.composeapp.generated.resources.morivia_show_all
 import nuvio.composeapp.generated.resources.morivia_poster_new
 import androidx.compose.foundation.border
@@ -59,6 +60,7 @@ enum class NuvioPosterShape {
 enum class NuvioViewAllPillSize {
     Default,
     Compact,
+    Home,
 }
 
 @Composable
@@ -313,7 +315,9 @@ private fun NuvioShelfSectionHeader(
         ) {
             Text(
                 text = title,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).then(
+                    if (viewAllPillSize == NuvioViewAllPillSize.Home) Modifier.alignByBaseline() else Modifier,
+                ),
                 style = MaterialTheme.typography.titleLarge,
                 color = tokens.colors.textPrimary,
                 maxLines = titleMaxLines,
@@ -329,7 +333,9 @@ private fun NuvioShelfSectionHeader(
             NuvioViewAllPill(
                 onClick = onViewAllClick,
                 size = viewAllPillSize,
-                modifier = viewAllPlaceholderModifier,
+                modifier = viewAllPlaceholderModifier.then(
+                    if (viewAllPillSize == NuvioViewAllPillSize.Home) Modifier.alignByBaseline() else Modifier,
+                ),
             )
         }
     }
@@ -346,6 +352,17 @@ private fun NuvioViewAllPill(
     val tokens = MaterialTheme.nuvio
     val compact = size == NuvioViewAllPillSize.Compact
     val showAllText = stringResource(Res.string.morivia_show_all)
+    if (size == NuvioViewAllPillSize.Home) {
+        if (onClick != null) {
+            MoriviaPagePill(
+                label = stringResource(Res.string.morivia_catalog_show_all),
+                modifier = modifier,
+                compact = true,
+                onClick = onClick,
+            )
+        }
+        return
+    }
     val pillShape = RoundedCornerShape(50)
 
     Row(

@@ -94,8 +94,9 @@ internal fun settingsSearchEntries(
 
     val accountPage = stringResource(Res.string.compose_settings_page_account)
     val trackingPage = stringResource(Res.string.compose_settings_page_tracking)
-    val appearancePage = stringResource(Res.string.settings_appearance_title)
-    val layoutPage = stringResource(Res.string.compose_settings_page_layout)
+    val appearanceTarget = if (isIos) SettingsPage.Appearance else SettingsPage.MoriviaAppearance
+    val appearancePage = stringResource(appearanceTarget.titleRes)
+    val layoutPage = stringResource(if (isIos) SettingsPage.Layout.titleRes else SettingsPage.Appearance.titleRes)
     val advancedPage = stringResource(Res.string.compose_settings_page_advanced)
     val contentDiscoveryPage = stringResource(Res.string.compose_settings_page_content_discovery)
     val playbackPage = stringResource(Res.string.compose_settings_page_playback)
@@ -107,7 +108,7 @@ internal fun settingsSearchEntries(
     val homeLayoutPage = stringResource(Res.string.compose_settings_page_homescreen)
     val detailPage = stringResource(Res.string.compose_settings_page_meta_screen)
     val continueWatchingPage = stringResource(Res.string.compose_settings_page_continue_watching)
-    val posterStylePage = stringResource(Res.string.compose_settings_page_poster_customization)
+    val posterStylePage = stringResource(SettingsPage.PosterCustomization.titleRes)
     val addonsPage = stringResource(Res.string.compose_settings_page_addons)
     val pluginsPage = stringResource(Res.string.compose_settings_page_plugins)
     val collectionsPage = stringResource(Res.string.collections_header)
@@ -208,13 +209,13 @@ internal fun settingsSearchEntries(
         category = accountCategory,
     )
     addPage(
-        page = SettingsPage.Appearance,
+        page = appearanceTarget,
         key = "appearance",
         title = appearancePage,
         description = stringResource(Res.string.settings_appearance_description),
     )
     addPage(
-        page = SettingsPage.Layout,
+        page = if (isIos) SettingsPage.Layout else SettingsPage.Appearance,
         key = "layout",
         title = layoutPage,
         description = stringResource(Res.string.compose_settings_root_layout_description),
@@ -370,14 +371,14 @@ internal fun settingsSearchEntries(
     }
 
     addRow(
-        page = SettingsPage.Appearance,
+        page = appearanceTarget,
         key = "theme",
         title = stringResource(Res.string.settings_appearance_section_theme),
         pageLabel = appearancePage,
         section = stringResource(Res.string.settings_appearance_section_theme),
     )
     addRow(
-        page = SettingsPage.Appearance,
+        page = appearanceTarget,
         key = "amoled",
         title = stringResource(Res.string.settings_appearance_amoled_black),
         description = stringResource(Res.string.settings_appearance_amoled_description),
@@ -386,7 +387,7 @@ internal fun settingsSearchEntries(
     )
     if (liquidGlassNativeTabBarSupported) {
         addRow(
-            page = SettingsPage.Layout,
+            page = if (isIos) SettingsPage.Layout else SettingsPage.Appearance,
             key = "liquid-glass",
             title = stringResource(Res.string.settings_appearance_liquid_glass),
             description = stringResource(Res.string.settings_appearance_liquid_glass_description),
@@ -395,7 +396,7 @@ internal fun settingsSearchEntries(
         )
     }
     addRow(
-        page = SettingsPage.Appearance,
+        page = appearanceTarget,
         key = "app-icon",
         title = stringResource(Res.string.settings_appearance_app_icon),
         pageLabel = appearancePage,
@@ -403,7 +404,7 @@ internal fun settingsSearchEntries(
     )
     if (!isIos) {
         addRow(
-            page = SettingsPage.Layout,
+            page = SettingsPage.Appearance,
             key = "navigation-bar",
             title = stringResource(Res.string.settings_appearance_nav_bar_style),
             pageLabel = layoutPage,
@@ -411,7 +412,7 @@ internal fun settingsSearchEntries(
         )
     }
     addRow(
-        page = SettingsPage.Appearance,
+        page = appearanceTarget,
         key = "app-language",
         title = stringResource(Res.string.settings_appearance_app_language),
         pageLabel = appearancePage,
@@ -456,7 +457,7 @@ internal fun settingsSearchEntries(
         page = SettingsPage.PosterCustomization,
         key = "poster-card-style",
         title = posterStylePage,
-        description = stringResource(Res.string.settings_appearance_poster_customization_description),
+        description = stringResource(if (isIos) Res.string.settings_appearance_poster_customization_description else Res.string.morivia_catalog_card_style_description),
     )
 
     addPage(
@@ -978,8 +979,59 @@ internal fun settingsSearchEntries(
         )
     }
 
+    if (!isIos) {
+        addPage(
+            page = SettingsPage.MoriviaHero,
+            key = "hero-layout",
+            title = pageTitles.getValue(SettingsPage.MoriviaHero),
+            description = stringResource(Res.string.morivia_hero_settings_description),
+        )
+        addPage(
+            page = SettingsPage.MoriviaHomeCatalogs,
+            key = "home-catalogs",
+            title = pageTitles.getValue(SettingsPage.MoriviaHomeCatalogs),
+            description = stringResource(Res.string.morivia_catalog_card_style_description),
+        )
+        addPage(
+            page = SettingsPage.MoriviaHome,
+            key = "morivia-home",
+            title = pageTitles.getValue(SettingsPage.MoriviaHome),
+            description = stringResource(Res.string.morivia_home_settings_description),
+        )
+        addRow(
+            page = SettingsPage.MoriviaHero,
+            key = "auto-rotate-hero",
+            title = stringResource(Res.string.morivia_hl_auto_rotate),
+            description = stringResource(Res.string.morivia_hl_auto_rotate_sub),
+            pageLabel = pageTitles.getValue(SettingsPage.MoriviaHero),
+            section = stringResource(Res.string.morivia_hl_section_hero),
+        )
+        addRow(
+            page = SettingsPage.MoriviaHero,
+            key = "hero-trailers",
+            title = stringResource(Res.string.morivia_hl_hero_video),
+            description = stringResource(Res.string.morivia_hl_hero_video_sub),
+            pageLabel = pageTitles.getValue(SettingsPage.MoriviaHero),
+            section = stringResource(Res.string.morivia_hl_section_hero),
+        )
+        addPage(
+            page = SettingsPage.MoriviaSearch,
+            key = "search-layout",
+            title = stringResource(Res.string.morivia_search_settings_title),
+            description = stringResource(Res.string.morivia_search_settings_description),
+        )
+        addPage(
+            page = SettingsPage.MoriviaLibrary,
+            key = "library-layout",
+            title = stringResource(Res.string.morivia_library_settings_title),
+            description = stringResource(Res.string.morivia_library_settings_description),
+        )
+    }
+
     return entries.filterNot {
-        it.target == SettingsSearchTarget.Page(SettingsPage.Account) || it.target == SettingsSearchTarget.SwitchProfile
+        val page = (it.target as? SettingsSearchTarget.Page)?.page
+        (!isIos && page?.isLegacyLayoutPage() == true) ||
+            page == SettingsPage.Account || it.target == SettingsSearchTarget.SwitchProfile
     }
 }
 

@@ -51,4 +51,12 @@
   <string name="library_list_friends">Приятели</string>
   <string name="library_list_private_description">Само вие можете да виждате този списък.</string>
   <string name="library_list_public_description">Всеки може да вижда това списък.</string>
+    <string name="settings_connections_title">Връзки</string>
+    <string name="settings_system_description">Известия, разширени настройки и информация за приложението</string>
+    <string name="settings_connections_integrations_description">Метаданни от TMDB, оценки от MDBList и вашият облак в Torbox</string>
+    <string name="settings_connections_tracking_description">Синхронизирайте историята на гледане и напредъка си с Trakt, Simkl и MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB и вашите облачни услуги</string>
+    <string name="settings_trakt_visit">Посетете Trakt</string>
+    <string name="settings_trakt_disconnect_account">Прекъсване на Trakt</string>
+    <string name="settings_simkl_disconnect_account">Прекъсване на Simkl</string>
 </resources>

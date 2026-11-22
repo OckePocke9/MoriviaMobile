@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.runtime.Composable
+import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -34,17 +35,19 @@ internal fun LazyListScope.settingsRootContent(
                     SettingsCategory.Look -> {
                         SettingsPageRow(
                             page = SettingsPage.Appearance,
-                            description = Res.string.settings_appearance_description,
+                            description = appearanceSettingsDescriptionRes,
                             isTablet = isTablet,
                             onPageClick = onPageClick,
                         )
-                        SettingsGroupDivider(isTablet = isTablet)
-                        SettingsPageRow(
-                            page = SettingsPage.Layout,
-                            description = Res.string.compose_settings_root_layout_description,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
+                        if (isIos) {
+                            SettingsGroupDivider(isTablet = isTablet)
+                            SettingsPageRow(
+                                page = SettingsPage.Layout,
+                                description = Res.string.compose_settings_root_layout_description,
+                                isTablet = isTablet,
+                                onPageClick = onPageClick,
+                            )
+                        }
                     }
                     SettingsCategory.Watch -> {
                         SettingsPageRow(
@@ -71,23 +74,11 @@ internal fun LazyListScope.settingsRootContent(
                         )
                     }
                     SettingsCategory.System -> {
+                        // One "System" card under Connections; Notifications, Advanced and About
+                        // open inside it (owner's request, 2026-11-22).
                         SettingsPageRow(
-                            page = SettingsPage.Notifications,
-                            description = Res.string.compose_settings_root_notifications_description,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
-                        SettingsGroupDivider(isTablet = isTablet)
-                        SettingsPageRow(
-                            page = SettingsPage.Advanced,
-                            description = Res.string.compose_settings_root_advanced_description,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
-                        SettingsGroupDivider(isTablet = isTablet)
-                        SettingsPageRow(
-                            page = SettingsPage.About,
-                            description = Res.string.compose_settings_root_about_description,
+                            page = SettingsPage.SystemSettings,
+                            description = Res.string.settings_system_description,
                             isTablet = isTablet,
                             onPageClick = onPageClick,
                         )

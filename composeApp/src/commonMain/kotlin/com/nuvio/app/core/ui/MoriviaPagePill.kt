@@ -2,9 +2,11 @@ package com.nuvio.app.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,37 +32,49 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun MoriviaPagePill(
     label: String,
-    icon: ImageVector,
+    icon: ImageVector? = null,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
+    onClick: (() -> Unit)? = null,
 ) {
     val shape = RoundedCornerShape(50)
     Row(
         modifier = modifier
-            .height(44.dp)
+            .then(if (compact) Modifier.defaultMinSize(minHeight = 30.dp) else Modifier.height(44.dp))
             .clip(shape)
             .background(Color.Black.copy(alpha = 0.35f), shape)
             .border(1.dp, Color.White.copy(alpha = 0.08f), shape)
-            .padding(start = 7.dp, end = 16.dp),
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .padding(
+                start = when {
+                    icon == null -> if (compact) 10.dp else 16.dp
+                    compact -> 5.dp
+                    else -> 7.dp
+                },
+                end = if (compact) 10.dp else 16.dp,
+            ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(if (compact) 6.dp else 10.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .size(30.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.size(17.dp),
-            )
+        if (icon != null) {
+            Box(
+                modifier = Modifier
+                    .size(if (compact) 20.dp else 30.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(if (compact) 12.dp else 17.dp),
+                )
+            }
         }
         Text(
             text = label,
-            style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
+            style = if (compact) MaterialTheme.typography.labelLarge else MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
             color = Color.White,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,

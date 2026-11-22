@@ -5,6 +5,8 @@ import androidx.compose.material.icons.automirrored.filled.PlaylistPlay
 import androidx.compose.material.icons.automirrored.filled.ViewList
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Cable
+import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Dns
@@ -27,13 +29,25 @@ import androidx.compose.material.icons.filled.RoundedCorner
 import androidx.compose.material.icons.filled.SmartDisplay
 import androidx.compose.material.icons.filled.Subtitles
 import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.SyncAlt
 import androidx.compose.material.icons.filled.VideoSettings
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
+
+internal val appearanceSettingsDescriptionRes: StringResource
+    get() = if (isIos) Res.string.settings_appearance_description else Res.string.morivia_appearance_layout_description
+
+internal fun SettingsPage.isLegacyLayoutPage(): Boolean = when (this) {
+    SettingsPage.Layout, SettingsPage.MoriviaHomeLayout, SettingsPage.Homescreen,
+    SettingsPage.ContinueWatching -> true
+    else -> false
+}
 
 internal enum class SettingsCategory(
     val labelRes: StringResource,
@@ -56,6 +70,12 @@ internal enum class SettingsPage(
         category = SettingsCategory.Look,
         parentPage = null,
     ),
+    // "System": Notifications, Advanced and About open on one page (owner's request, 2026-11-22).
+    SystemSettings(
+        titleRes = Res.string.settings_group_system,
+        category = SettingsCategory.System,
+        parentPage = Root,
+    ),
     Layout(
         titleRes = Res.string.compose_settings_page_layout,
         category = SettingsCategory.Look,
@@ -64,7 +84,7 @@ internal enum class SettingsPage(
     About(
         titleRes = Res.string.compose_settings_category_about,
         category = SettingsCategory.System,
-        parentPage = Root,
+        parentPage = SystemSettings,
     ),
     Account(
         titleRes = Res.string.compose_settings_page_account,
@@ -74,12 +94,12 @@ internal enum class SettingsPage(
     SupportersContributors(
         titleRes = Res.string.compose_settings_page_supporters_contributors,
         category = SettingsCategory.System,
-        parentPage = About,
+        parentPage = SystemSettings,
     ),
     LicensesAttributions(
         titleRes = Res.string.compose_settings_page_licenses_attributions,
         category = SettingsCategory.System,
-        parentPage = About,
+        parentPage = SystemSettings,
     ),
     Playback(
         titleRes = Res.string.compose_settings_page_playback,
@@ -137,24 +157,44 @@ internal enum class SettingsPage(
         parentPage = Playback,
     ),
     Appearance(
-        titleRes = Res.string.settings_appearance_title,
+        titleRes = if (isIos) Res.string.settings_appearance_title else Res.string.morivia_android_layout_title,
         category = SettingsCategory.Look,
         parentPage = Root,
+    ),
+    MoriviaAppearance(
+        titleRes = Res.string.morivia_appearance_title,
+        category = SettingsCategory.Look,
+        parentPage = Appearance,
+    ),
+    MoriviaHero(
+        titleRes = Res.string.morivia_hero_settings_title,
+        category = SettingsCategory.Look,
+        parentPage = Appearance,
+    ),
+    MoriviaHomeCatalogs(
+        titleRes = Res.string.morivia_home_catalogs,
+        category = SettingsCategory.Look,
+        parentPage = Appearance,
+    ),
+    MoriviaHome(
+        titleRes = Res.string.morivia_home_settings_title,
+        category = SettingsCategory.Look,
+        parentPage = Appearance,
     ),
     Streams(
         titleRes = Res.string.compose_settings_page_streams,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     Advanced(
         titleRes = Res.string.compose_settings_page_advanced,
         category = SettingsCategory.System,
-        parentPage = Root,
+        parentPage = SystemSettings,
     ),
     Notifications(
         titleRes = Res.string.compose_settings_page_notifications,
         category = SettingsCategory.System,
-        parentPage = Root,
+        parentPage = SystemSettings,
     ),
     ContinueWatching(
         titleRes = Res.string.compose_settings_page_continue_watching,
@@ -162,9 +202,9 @@ internal enum class SettingsPage(
         parentPage = Layout,
     ),
     PosterCustomization(
-        titleRes = Res.string.compose_settings_page_poster_customization,
+        titleRes = if (isIos) Res.string.compose_settings_page_poster_customization else Res.string.morivia_catalog_card_style,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else MoriviaHomeCatalogs,
     ),
     ContentDiscovery(
         titleRes = Res.string.compose_settings_page_content_discovery,
@@ -204,23 +244,28 @@ internal enum class SettingsPage(
     MoriviaSearch(
         titleRes = Res.string.morivia_search_settings_title,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     MoriviaLibrary(
         titleRes = Res.string.morivia_library_settings_title,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     MetaScreen(
         titleRes = Res.string.compose_settings_page_meta_screen,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     // "Connections": Integrations and Tracking on one page (owner's request, 2026-11-22).
     Integrations(
         titleRes = Res.string.settings_connections_title,
         category = SettingsCategory.Services,
         parentPage = Root,
+    ),
+    Debrid(
+        titleRes = Res.string.compose_settings_page_integrations,
+        category = SettingsCategory.Services,
+        parentPage = Integrations,
     ),
     TmdbEnrichment(
         titleRes = Res.string.compose_settings_page_tmdb_enrichment,
@@ -232,15 +277,10 @@ internal enum class SettingsPage(
         category = SettingsCategory.Services,
         parentPage = Integrations,
     ),
-    Debrid(
-        titleRes = Res.string.compose_settings_page_debrid,
-        category = SettingsCategory.Services,
-        parentPage = Integrations,
-    ),
     TraktAuthentication(
         titleRes = Res.string.compose_settings_page_tracking,
         category = SettingsCategory.Services,
-        parentPage = Root,
+        parentPage = Integrations,
     ),
 }
 
@@ -259,11 +299,12 @@ internal fun settingsCategoryForName(name: String): SettingsCategory = when (nam
 internal val SettingsPage.icon: ImageVector
     get() = when (this) {
         SettingsPage.Root -> Icons.Rounded.Settings
+        SettingsPage.SystemSettings -> Icons.Rounded.Tune
         SettingsPage.Account -> Icons.Default.Person
         SettingsPage.SupportersContributors -> Icons.Default.Favorite
         SettingsPage.LicensesAttributions -> Icons.Default.Info
         SettingsPage.Playback -> Icons.Rounded.PlayArrow
-        SettingsPage.Appearance -> Icons.Default.Palette
+        SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> Icons.Default.Palette
         SettingsPage.Layout -> Icons.Default.GridView
         SettingsPage.About -> Icons.Default.Info
         SettingsPage.Streams -> Icons.AutoMirrored.Filled.ViewList
@@ -277,15 +318,17 @@ internal val SettingsPage.icon: ImageVector
         SettingsPage.MediaServers -> Icons.Default.Dns
         SettingsPage.MediaServer -> Icons.Default.Dns
         SettingsPage.Homescreen -> Icons.Default.Dashboard
-        SettingsPage.MoriviaHomeLayout -> Icons.Default.Dashboard
+        SettingsPage.MoriviaHomeLayout, SettingsPage.MoriviaHome -> Icons.Default.Dashboard
+        SettingsPage.MoriviaHero -> Icons.Rounded.PlayArrow
+        SettingsPage.MoriviaHomeCatalogs -> Icons.Default.GridView
         SettingsPage.MoriviaSearch -> Icons.Default.Explore
         SettingsPage.MoriviaLibrary -> Icons.Default.History
         SettingsPage.MetaScreen -> Icons.Default.Description
-        SettingsPage.Integrations -> Icons.Default.Link
+        SettingsPage.Integrations -> Icons.Default.SyncAlt
         SettingsPage.TmdbEnrichment -> Icons.Default.Link
         SettingsPage.MdbListRatings -> Icons.Default.Link
-        SettingsPage.Debrid -> Icons.Default.Link
-        SettingsPage.TraktAuthentication -> Icons.Default.Sync
+        SettingsPage.Debrid -> Icons.Default.Cable
+        SettingsPage.TraktAuthentication -> Icons.Default.TaskAlt
         SettingsPage.PlaybackPlayer -> Icons.Default.SmartDisplay
         SettingsPage.PlaybackStreamSelection -> Icons.AutoMirrored.Filled.PlaylistPlay
         SettingsPage.PlaybackUpNext -> Icons.Default.QueuePlayNext

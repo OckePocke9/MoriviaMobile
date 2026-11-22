@@ -52,4 +52,12 @@
     <string name="library_list_link">Link</string>
     <string name="library_list_private_description">Questa lista è visibile solo a te.</string>
     <string name="library_list_public_description">Questa lista è visibile a tutti.</string>
+    <string name="settings_connections_title">Connessioni</string>
+    <string name="settings_system_description">Notifiche, impostazioni avanzate e informazioni sull\x{2019}app</string>
+    <string name="settings_connections_integrations_description">Metadati da TMDB, valutazioni da MDBList e il tuo cloud Torbox</string>
+    <string name="settings_connections_tracking_description">Sincronizza cronologia di visione e avanzamento con Trakt, Simkl e MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB e i tuoi servizi cloud</string>
+    <string name="settings_trakt_visit">Visita Trakt</string>
+    <string name="settings_trakt_disconnect_account">Scollega Trakt</string>
+    <string name="settings_simkl_disconnect_account">Scollega Simkl</string>
 </resources>

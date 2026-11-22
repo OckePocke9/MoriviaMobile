@@ -19,6 +19,14 @@ enum class MoriviaHeroLayout {
     HYBRID,
 }
 
+@Serializable
+enum class HomeCatalogRow(val titleMatch: String, val series: Boolean, val defaultLandscape: Boolean = false) {
+    POPULAR_MOVIES("popular", false),
+    POPULAR_SERIES("popular", true),
+    FEATURED_MOVIES("featured", false, defaultLandscape = true),
+    FEATURED_SERIES("featured", true, defaultLandscape = true),
+}
+
 /** How collection covers on Home move. */
 @Serializable
 enum class MoriviaCollectionGifs { ANIMATED, STILL }
@@ -49,6 +57,8 @@ data class MoriviaLayoutSettings(
     val moviesByGenres: Boolean = true,
     val seriesByGenres: Boolean = true,
     // Home: rows
+    val homeCatalogOrder: List<HomeCatalogRow> = HomeCatalogRow.entries.toList(),
+    val homeCatalogLandscape: Map<HomeCatalogRow, Boolean> = emptyMap(),
     val collectionGifs: MoriviaCollectionGifs = MoriviaCollectionGifs.ANIMATED,
     /** Minutes between automatic Home reloads; 0 is off. */
     val autoRefreshMinutes: Int = 0,
@@ -61,6 +71,12 @@ data class MoriviaLayoutSettings(
     val librarySort: MoriviaLibrarySort = MoriviaLibrarySort.ADDED,
     val libraryWatchedMarks: Boolean = true,
 )
+
+internal fun MoriviaLayoutSettings.orderedHomeCatalogRows(): List<HomeCatalogRow> =
+    (homeCatalogOrder + HomeCatalogRow.entries).distinct()
+
+internal fun MoriviaLayoutSettings.usesLandscapeCards(row: HomeCatalogRow): Boolean =
+    homeCatalogLandscape[row] ?: row.defaultLandscape
 
 internal expect object MoriviaLayoutSettingsStorage {
     fun loadPayload(): String?

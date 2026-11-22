@@ -39,4 +39,12 @@
     <string name="settings_mdblist_account_fallback">MDBList ユーザー</string>
     <string name="settings_mdblist_syncing">視聴履歴と再生の進捗を同期中…</string>
     <string name="settings_mdblist_last_synced">最終同期: %1$s</string>
+    <string name="settings_connections_title">接続</string>
+    <string name="settings_system_description">通知、詳細設定、アプリ情報</string>
+    <string name="settings_connections_integrations_description">TMDB のメタデータ、MDBList の評価、Torbox クラウド</string>
+    <string name="settings_connections_tracking_description">Trakt、Simkl、MDBList と視聴履歴や進捗を同期</string>
+    <string name="settings_connections_description">Trakt、Simkl、MDBList、TMDB とクラウドサービス</string>
+    <string name="settings_trakt_visit">Trakt にアクセス</string>
+    <string name="settings_trakt_disconnect_account">Trakt の接続を解除</string>
+    <string name="settings_simkl_disconnect_account">Simkl の接続を解除</string>
 </resources>

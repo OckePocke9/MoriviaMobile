@@ -39,4 +39,12 @@
     <string name="settings_mdblist_account_fallback">Користувач MDBList</string>
     <string name="settings_mdblist_syncing">Синхронізація історії переглядів і прогресу…</string>
     <string name="settings_mdblist_last_synced">Остання синхронізація: %1$s</string>
+    <string name="settings_connections_title">Підключення</string>
+    <string name="settings_system_description">Сповіщення, розширені налаштування й інформація про застосунок</string>
+    <string name="settings_connections_integrations_description">Метадані з TMDB, оцінки з MDBList і ваша хмара Torbox</string>
+    <string name="settings_connections_tracking_description">Синхронізуйте історію переглядів і прогрес із Trakt, Simkl і MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB і ваші хмарні сервіси</string>
+    <string name="settings_trakt_visit">Відкрити Trakt</string>
+    <string name="settings_trakt_disconnect_account">Відключити Trakt</string>
+    <string name="settings_simkl_disconnect_account">Відключити Simkl</string>
 </resources>

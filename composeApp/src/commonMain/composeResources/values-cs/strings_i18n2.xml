@@ -55,4 +55,12 @@
     <string name="settings_mdblist_syncing">Synchronizace historie a průběhu sledování…</string>
     <string name="settings_mdblist_last_synced">Naposledy synchronizováno %1$s</string>
     <string name="settings_tracking_not_connected">Nepřipojeno</string>
+    <string name="settings_connections_title">Připojení</string>
+    <string name="settings_system_description">Oznámení, pokročilá nastavení a informace o aplikaci</string>
+    <string name="settings_connections_integrations_description">Metadata z TMDB, hodnocení z MDBList a váš cloud Torbox</string>
+    <string name="settings_connections_tracking_description">Synchronizujte historii sledování a postup s Trakt, Simkl a MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB a vaše cloudové služby</string>
+    <string name="settings_trakt_visit">Navštívit Trakt</string>
+    <string name="settings_trakt_disconnect_account">Odpojit Trakt</string>
+    <string name="settings_simkl_disconnect_account">Odpojit Simkl</string>
 </resources>

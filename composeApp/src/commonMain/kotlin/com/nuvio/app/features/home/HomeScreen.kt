@@ -52,6 +52,7 @@ import com.nuvio.app.features.details.MetaVideo
 import com.nuvio.app.features.details.SeriesPrimaryAction
 import com.nuvio.app.features.details.seriesPrimaryAction
 import com.nuvio.app.features.home.components.HomeCatalogRowSection
+import com.nuvio.app.features.home.components.homeCatalogCardWidth
 import com.nuvio.app.features.home.components.homePosterWidth
 import com.nuvio.app.features.home.components.homeFeaturedCardWidth
 import com.nuvio.app.features.home.components.HomeContinueWatchingSection
@@ -101,6 +102,10 @@ import com.nuvio.app.features.watching.domain.WatchingContentRef
 import com.nuvio.app.features.watching.domain.isReleasedBy
 import com.nuvio.app.features.collection.CollectionRepository
 import com.nuvio.app.features.profiles.ProfileRepository
+import com.nuvio.app.features.settings.HomeCatalogRow
+import com.nuvio.app.features.settings.orderedHomeCatalogRows
+import com.nuvio.app.features.settings.usesLandscapeCards
+import com.nuvio.app.isIos
 import com.nuvio.app.features.home.components.HomeCollectionRowSection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -1023,11 +1028,23 @@ private fun HomeScreenWithCatalogs(
                     section.title.contains(word, ignoreCase = true) &&
                     section.target.contentType.isSeriesLikeType() == series
             }
-    val popularMovies = findSection("popular", series = false)
-    val popularSeries = findSection("popular", series = true)
-    val featuredMovies = findSection("featured", series = false)
-    val featuredSeries = findSection("featured", series = true)
-    val pinnedSectionKeys = listOfNotNull(popularMovies, popularSeries, featuredMovies, featuredSeries).map { it.key }.toSet()
+    fun sectionFor(row: HomeCatalogRow): HomeCatalogSection? {
+        if (isIos) return findSection(row.titleMatch, row.series)
+        val catalog = homeSettingsUiState.items.findHomeCatalog(row) ?: return null
+        if (!catalog.enabled) return null
+        return sectionsMap[catalog.key]?.takeIf { it.items.isNotEmpty() }
+    }
+    val popularMovies = sectionFor(HomeCatalogRow.POPULAR_MOVIES)
+    val popularSeries = sectionFor(HomeCatalogRow.POPULAR_SERIES)
+    val featuredMovies = sectionFor(HomeCatalogRow.FEATURED_MOVIES)
+    val featuredSeries = sectionFor(HomeCatalogRow.FEATURED_SERIES)
+    val pinnedSections = mapOf(
+        HomeCatalogRow.POPULAR_MOVIES to popularMovies,
+        HomeCatalogRow.POPULAR_SERIES to popularSeries,
+        HomeCatalogRow.FEATURED_MOVIES to featuredMovies,
+        HomeCatalogRow.FEATURED_SERIES to featuredSeries,
+    )
+    val pinnedSectionKeys = pinnedSections.values.filterNotNull().map { it.key }.toSet()
     // The main Featured row: five large cards, movies and series taking turns, no repeats.
     val mainFeaturedItems = remember(featuredMovies, featuredSeries, popularMovies, popularSeries) {
         val sources = listOfNotNull(featuredMovies, featuredSeries).ifEmpty { listOfNotNull(popularMovies, popularSeries) }
@@ -1379,15 +1396,23 @@ private fun HomeScreenWithCatalogs(
                         }
                     }
 
-                    listOfNotNull(popularMovies, popularSeries, featuredMovies, featuredSeries).forEach { section ->
-                        val limit = if (section == featuredMovies || section == featuredSeries) FEATURED_ROW_LIMIT else HOME_CATALOG_PREVIEW_LIMIT
+                    val catalogOrder = if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()
+                    catalogOrder.forEach { row ->
+                        val section = pinnedSections[row] ?: return@forEach
+                        val limit = if (isIos && row.titleMatch == "featured") FEATURED_ROW_LIMIT else HOME_CATALOG_PREVIEW_LIMIT
+                        val useLandscape = moriviaLayout.usesLandscapeCards(row)
+                        val cardWidth = if (isIos) {
+                            homePosterSize
+                        } else {
+                            homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, useLandscape)
+                        }
                         item(key = "morivia_pinned_${section.key}", contentType = "catalog") {
                             HomeCatalogRowSection(
                                 section = section,
                                 entries = section.items.take(limit),
                                 modifier = Modifier.padding(bottom = 12.dp),
                                 sectionPadding = homeSectionPadding,
-                                onViewAllClick = if (section.canOpenCatalog(limit)) {
+                                onViewAllClick = if (!isIos || section.canOpenCatalog(limit)) {
                                     onCatalogClick?.let { { it(section) } }
                                 } else {
                                     null
@@ -1396,7 +1421,9 @@ private fun HomeScreenWithCatalogs(
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
-                                posterWidth = homePosterSize,
+                                posterWidth = cardWidth,
+                                landscapeOverride = useLandscape.takeUnless { isIos },
+                                useHomePill = !isIos,
                             )
                         }
                     }

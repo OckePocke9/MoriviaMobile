@@ -52,4 +52,12 @@
     <string name="library_list_friends">Arkadaşlar</string>
     <string name="library_list_private_description">Bu listeyi yalnızca siz görebilirsiniz.</string>
     <string name="library_list_public_description">Bu listeyi herkes görebilir.</string>
+    <string name="settings_connections_title">Bağlantılar</string>
+    <string name="settings_system_description">Bildirimler, gelişmiş ayarlar ve uygulama bilgileri</string>
+    <string name="settings_connections_integrations_description">TMDB'den meta veriler, MDBList'ten puanlar ve Torbox bulutunuz</string>
+    <string name="settings_connections_tracking_description">İzleme geçmişinizi ve ilerlemenizi Trakt, Simkl ve MDBList ile eşitleyin</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB ve bulut hizmetleriniz</string>
+    <string name="settings_trakt_visit">Trakt'ı Ziyaret Et</string>
+    <string name="settings_trakt_disconnect_account">Trakt Bağlantısını Kes</string>
+    <string name="settings_simkl_disconnect_account">Simkl Bağlantısını Kes</string>
 </resources>

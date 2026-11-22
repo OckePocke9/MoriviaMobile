@@ -446,4 +446,12 @@
     <string name="player_video_settings_gamma">Gamma</string>
     <string name="stream_info_section_video">VIDEO</string>
     <string name="media_tv">TV</string>
+    <string name="settings_connections_title">Yhteydet</string>
+    <string name="settings_system_description">Ilmoitukset, lisäasetukset ja sovelluksen tiedot</string>
+    <string name="settings_connections_integrations_description">Metatiedot TMDB:stä, arviot MDBLististä ja Torbox-pilvesi</string>
+    <string name="settings_connections_tracking_description">Synkronoi katseluhistoriasi ja edistymisesi Traktin, Simklin ja MDBListin kanssa</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB ja pilvipalvelusi</string>
+    <string name="settings_trakt_visit">Siirry Traktiin</string>
+    <string name="settings_trakt_disconnect_account">Katkaise yhteys Traktiin</string>
+    <string name="settings_simkl_disconnect_account">Katkaise yhteys Simkliin</string>
 </resources>

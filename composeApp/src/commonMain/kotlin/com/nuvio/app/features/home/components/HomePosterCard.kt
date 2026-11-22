@@ -21,9 +21,10 @@ fun HomePosterCard(
     onLongClick: (() -> Unit)? = null,
     showLandscapeOverlay: Boolean = true,
     width: androidx.compose.ui.unit.Dp? = null,
+    landscapeOverride: Boolean? = null,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
-    val isLandscapeMode = useLandscapeBackdropMode || posterCardStyle.catalogLandscapeModeEnabled
+    val isLandscapeMode = landscapeOverride ?: (useLandscapeBackdropMode || posterCardStyle.catalogLandscapeModeEnabled)
     val effectiveLandscapePoster = if (posterCardStyle.alwaysShowLandscapeClearlogo) null else item.landscapePoster
     val imageUrl = if (isLandscapeMode) {
         effectiveLandscapePoster ?: item.banner ?: item.poster
@@ -40,7 +41,11 @@ fun HomePosterCard(
         imageUrl = imageUrl,
         modifier = modifier,
         fallbackImageUrl = fallbackImageUrl,
-        shape = if (isLandscapeMode) NuvioPosterShape.Landscape else item.posterShape.toNuvioPosterShape(),
+        shape = when {
+            isLandscapeMode -> NuvioPosterShape.Landscape
+            landscapeOverride == false -> NuvioPosterShape.Poster
+            else -> item.posterShape.toNuvioPosterShape()
+        },
         detailLine = if (isLandscapeMode || posterCardStyle.hideLabelsEnabled) null else item.releaseInfo?.let { formatReleaseDateForDisplay(it) },
         showTitleBelow = !posterCardStyle.hideLabelsEnabled,
         bottomLeftLogoUrl = if (isLandscapeMode && showLandscapeOverlay && effectiveLandscapePoster.isNullOrBlank()) item.logo else null,

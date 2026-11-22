@@ -4,6 +4,8 @@ import com.nuvio.app.features.addons.ManagedAddon
 import com.nuvio.app.features.addons.AddonRepository
 import com.nuvio.app.features.addons.enabledAddons
 import com.nuvio.app.features.catalog.CatalogTarget
+import com.nuvio.app.features.settings.HomeCatalogRow
+import com.nuvio.app.isIos
 import com.nuvio.app.features.catalog.fetchCatalogPage
 import com.nuvio.app.core.poster.CustomPosterUrlRepository
 import com.nuvio.app.core.poster.reapplyCustomPosterUrls
@@ -262,17 +264,38 @@ object HomeRepository {
         serverConnectionId?.let { connectionId -> return toServerSection(connectionId) }
         CustomPosterUrlRepository.ensureLoaded()
         val pattern = CustomPosterUrlRepository.patternForScreen(com.nuvio.app.core.poster.CustomPosterScreen.HOME)
-        val page = fetchCatalogPage(
+        val limit = previewFetchLimit()
+        var page = fetchCatalogPage(
             manifestUrl = manifestUrl,
             type = type,
             catalogId = catalogId,
-            maxItems = HOME_CATALOG_PREVIEW_FETCH_LIMIT,
+            maxItems = limit,
             forceRefresh = forceRefresh,
         )
+        val preview = page.items.toMutableList()
+        var rawItemCount = page.rawItemCount
+        if (limit > HOME_CATALOG_PREVIEW_FETCH_LIMIT && supportsPagination) {
+            val seen = preview.mapTo(mutableSetOf()) { it.stableKey() }
+            while (preview.size < limit) {
+                val skip = page.nextSkip ?: break
+                page = fetchCatalogPage(
+                    manifestUrl = manifestUrl,
+                    type = type,
+                    catalogId = catalogId,
+                    skip = skip,
+                    maxItems = limit,
+                    forceRefresh = forceRefresh,
+                )
+                val added = page.items.filter { seen.add(it.stableKey()) }
+                rawItemCount += page.rawItemCount
+                preview.addAll(added)
+                if (added.isEmpty() || (page.nextSkip ?: 0) <= skip) break
+            }
+        }
         val items = if (pattern.isNotBlank()) {
-            page.items.withCustomPosterUrls(pattern)
+            preview.take(limit).withCustomPosterUrls(pattern)
         } else {
-            page.items
+            preview.take(limit)
         }
         if (items.isEmpty()) {
             return HomeCatalogSection(
@@ -304,14 +327,21 @@ object HomeRepository {
                 supportsPagination = supportsPagination,
             ),
             items = items,
-            availableItemCount = page.rawItemCount,
+            availableItemCount = rawItemCount,
             hasMore = supportsPagination && page.nextSkip != null,
         )
     }
 
+    private fun HomeCatalogDefinition.previewFetchLimit(): Int =
+        if (!isIos && HomeCatalogRow.entries.any { defaultTitle.contains(it.titleMatch, ignoreCase = true) }) {
+            30
+        } else {
+            HOME_CATALOG_PREVIEW_FETCH_LIMIT
+        }
+
     private suspend fun HomeCatalogDefinition.toServerSection(connectionId: String): HomeCatalogSection {
         val target = CatalogTarget.Server(connectionId, catalogId, type)
-        val page = ServerCatalog.page(target, skip = 0, limit = HOME_CATALOG_PREVIEW_FETCH_LIMIT)
+        val page = ServerCatalog.page(target, skip = 0, limit = previewFetchLimit())
         return HomeCatalogSection(
             key = key,
             title = defaultTitle,

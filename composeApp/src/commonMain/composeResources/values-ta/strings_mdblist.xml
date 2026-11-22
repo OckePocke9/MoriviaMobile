@@ -52,4 +52,12 @@
     <string name="library_list_friends">நண்பர்கள்</string>
     <string name="library_list_private_description">இந்தப் பட்டியலை நீங்கள் மட்டுமே பார்க்க முடியும்.</string>
     <string name="library_list_public_description">இந்தப் பட்டியலை யாரும் பார்க்கலாம்.</string>
+    <string name="settings_connections_title">இணைப்புகள்</string>
+    <string name="settings_system_description">அறிவிப்புகள், மேம்பட்ட அமைப்புகள் மற்றும் ஆப் தகவல்</string>
+    <string name="settings_connections_integrations_description">TMDB மெட்டாடேட்டா, MDBList மதிப்பீடுகள் மற்றும் உங்கள் Torbox கிளவுட்</string>
+    <string name="settings_connections_tracking_description">Trakt, Simkl மற்றும் MDBList உடன் உங்கள் பார்வை வரலாறு மற்றும் முன்னேற்றத்தை ஒத்திசைக்கவும்</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB மற்றும் உங்கள் கிளவுட் சேவைகள்</string>
+    <string name="settings_trakt_visit">Trakt-ஐப் பார்வையிடவும்</string>
+    <string name="settings_trakt_disconnect_account">Trakt இணைப்பைத் துண்டிக்கவும்</string>
+    <string name="settings_simkl_disconnect_account">Simkl இணைப்பைத் துண்டிக்கவும்</string>
 </resources>

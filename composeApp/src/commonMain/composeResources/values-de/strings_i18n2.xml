@@ -354,4 +354,12 @@
     <string name="cloud_library_status_ready">Bereit zum Abspielen</string>
     <string name="cloud_library_type_all">Alle</string>
     <string name="cloud_library_type_files">Dateien</string>
+    <string name="settings_connections_title">Verbindungen</string>
+    <string name="settings_system_description">Benachrichtigungen, erweiterte Einstellungen und App-Infos</string>
+    <string name="settings_connections_integrations_description">Metadaten von TMDB, Bewertungen von MDBList und deine Torbox-Cloud</string>
+    <string name="settings_connections_tracking_description">Synchronisiere Wiedergabeverlauf und Fortschritt mit Trakt, Simkl und MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB und deine Cloud-Dienste</string>
+    <string name="settings_trakt_visit">Trakt besuchen</string>
+    <string name="settings_trakt_disconnect_account">Trakt trennen</string>
+    <string name="settings_simkl_disconnect_account">Simkl trennen</string>
 </resources>

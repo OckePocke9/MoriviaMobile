@@ -261,4 +261,12 @@
     <string name="plugins_test_results_count">Hasil uji (%1$d)</string>
     <string name="trakt_connected_status">Terhubung ke Trakt</string>
     <string name="trakt_disconnected_status">Terputus dari Trakt</string>
+    <string name="settings_connections_title">Koneksi</string>
+    <string name="settings_system_description">Notifikasi, pengaturan lanjutan, dan info aplikasi</string>
+    <string name="settings_connections_integrations_description">Metadata dari TMDB, rating dari MDBList, dan cloud Torbox Anda</string>
+    <string name="settings_connections_tracking_description">Sinkronkan riwayat tontonan dan progres Anda dengan Trakt, Simkl, dan MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB, dan layanan cloud Anda</string>
+    <string name="settings_trakt_visit">Kunjungi Trakt</string>
+    <string name="settings_trakt_disconnect_account">Putuskan Trakt</string>
+    <string name="settings_simkl_disconnect_account">Putuskan Simkl</string>
 </resources>

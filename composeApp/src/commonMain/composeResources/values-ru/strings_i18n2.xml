@@ -56,4 +56,12 @@
     <string name="settings_mdblist_syncing">Синхронизация истории и прогресса просмотра…</string>
     <string name="settings_mdblist_last_synced">Последняя синхронизация: %1$s</string>
     <string name="settings_tracking_not_connected">Не подключено</string>
+    <string name="settings_connections_title">Подключения</string>
+    <string name="settings_system_description">Уведомления, расширенные настройки и сведения о приложении</string>
+    <string name="settings_connections_integrations_description">Метаданные из TMDB, оценки из MDBList и ваше облако Torbox</string>
+    <string name="settings_connections_tracking_description">Синхронизируйте историю просмотров и прогресс с Trakt, Simkl и MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB и ваши облачные сервисы</string>
+    <string name="settings_trakt_visit">Открыть Trakt</string>
+    <string name="settings_trakt_disconnect_account">Отключить Trakt</string>
+    <string name="settings_simkl_disconnect_account">Отключить Simkl</string>
 </resources>

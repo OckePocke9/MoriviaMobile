@@ -1,51 +1,138 @@
 package com.nuvio.app.features.settings
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.lazy.LazyListScope
-import nuvio.composeapp.generated.resources.compose_settings_page_debrid
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.nuvio.app.core.ui.nuvio
+import com.nuvio.app.features.debrid.DebridSettings
+import com.nuvio.app.features.simkl.SimklAuthUiState
+import com.nuvio.app.features.tracking.TrackingSettingsUiState
+import com.nuvio.app.features.trakt.TraktAuthUiState
 import nuvio.composeapp.generated.resources.Res
-import nuvio.composeapp.generated.resources.compose_settings_page_mdblist_ratings
-import nuvio.composeapp.generated.resources.compose_settings_page_tmdb_enrichment
-import nuvio.composeapp.generated.resources.settings_integrations_mdblist_description
-import nuvio.composeapp.generated.resources.settings_integrations_debrid_description
-import nuvio.composeapp.generated.resources.settings_integrations_section_title
-import nuvio.composeapp.generated.resources.settings_integrations_tmdb_description
+import nuvio.composeapp.generated.resources.compose_settings_page_integrations
+import nuvio.composeapp.generated.resources.compose_settings_page_tracking
+import nuvio.composeapp.generated.resources.settings_connections_integrations_description
+import nuvio.composeapp.generated.resources.settings_connections_tracking_description
 import org.jetbrains.compose.resources.stringResource
 
-internal fun LazyListScope.integrationsContent(
+/** Which Connections sections are open. Both can be open at once; kept while the app runs. */
+internal object ConnectionsSections {
+    var integrationsOpen by mutableStateOf(false)
+    var trackingOpen by mutableStateOf(false)
+}
+
+/**
+ * The Connections page (owner's request, 2026-11-22): two cards, Integrations and Tracking,
+ * each with its own icon and description. Tapping a card opens its settings right on this page,
+ * and both can be open at the same time.
+ */
+internal fun LazyListScope.connectionsContent(
     isTablet: Boolean,
+    debridSettings: DebridSettings,
     onTmdbClick: () -> Unit,
     onMdbListClick: () -> Unit,
-    onDebridClick: () -> Unit,
+    traktUiState: TraktAuthUiState,
+    simklUiState: SimklAuthUiState,
+    trackingSettingsUiState: TrackingSettingsUiState,
+    commentsEnabled: Boolean,
+    onCommentsEnabledChange: (Boolean) -> Unit,
+    mdbListConnected: Boolean,
 ) {
-    item {
-        SettingsSection(
-            title = stringResource(Res.string.settings_integrations_section_title),
+    val integrationsOpen = ConnectionsSections.integrationsOpen
+    val trackingOpen = ConnectionsSections.trackingOpen
+
+    val integrationsHeader: @Composable () -> Unit = {
+        ConnectionsSectionHeader(
+            title = stringResource(Res.string.compose_settings_page_integrations),
+            description = stringResource(Res.string.settings_connections_integrations_description),
+            icon = SettingsPage.Debrid.icon,
+            expanded = integrationsOpen,
             isTablet = isTablet,
-        ) {
+            onToggle = { ConnectionsSections.integrationsOpen = !ConnectionsSections.integrationsOpen },
+        )
+    }
+    val trackingHeader: @Composable () -> Unit = {
+        ConnectionsSectionHeader(
+            title = stringResource(Res.string.compose_settings_page_tracking),
+            description = stringResource(Res.string.settings_connections_tracking_description),
+            icon = SettingsPage.TraktAuthentication.icon,
+            expanded = trackingOpen,
+            isTablet = isTablet,
+            onToggle = { ConnectionsSections.trackingOpen = !ConnectionsSections.trackingOpen },
+        )
+    }
+
+    if (!integrationsOpen) {
+        // Integrations is closed: both cards sit in one group with a light line between them.
+        item(key = "connections_headers") {
             SettingsGroup(isTablet = isTablet) {
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_tmdb_enrichment),
-                    description = stringResource(Res.string.settings_integrations_tmdb_description),
-                    iconPainter = integrationLogoPainter(IntegrationLogo.Tmdb),
-                    isTablet = isTablet,
-                    onClick = onTmdbClick,
-                )
+                integrationsHeader()
                 SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_mdblist_ratings),
-                    description = stringResource(Res.string.settings_integrations_mdblist_description),
-                    iconPainter = integrationLogoPainter(IntegrationLogo.MdbList),
-                    isTablet = isTablet,
-                    onClick = onMdbListClick,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_debrid),
-                    description = stringResource(Res.string.settings_integrations_debrid_description),
-                    isTablet = isTablet,
-                    onClick = onDebridClick,
-                )
+                trackingHeader()
             }
         }
+    } else {
+        item(key = "connections_integrations_header") {
+            SettingsGroup(isTablet = isTablet) { integrationsHeader() }
+        }
+        debridSettingsContent(
+            isTablet = isTablet,
+            settings = debridSettings,
+            onTmdbClick = onTmdbClick,
+            onMdbListClick = onMdbListClick,
+        )
+        item(key = "connections_tracking_header") {
+            SettingsGroup(isTablet = isTablet) { trackingHeader() }
+        }
     }
+    if (trackingOpen) {
+        trackingSettingsContent(
+            isTablet = isTablet,
+            traktUiState = traktUiState,
+            simklUiState = simklUiState,
+            settingsUiState = trackingSettingsUiState,
+            commentsEnabled = commentsEnabled,
+            onCommentsEnabledChange = onCommentsEnabledChange,
+            mdbListConnected = mdbListConnected,
+            accountsSectionTitle = Res.string.compose_settings_page_tracking,
+        )
+    }
+}
+
+@Composable
+internal fun ConnectionsSectionHeader(
+    title: String,
+    description: String,
+    icon: ImageVector,
+    expanded: Boolean,
+    isTablet: Boolean,
+    onToggle: () -> Unit,
+) {
+    val tokens = MaterialTheme.nuvio
+    val rotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "connectionsChevron")
+    SettingsNavigationRow(
+        title = title,
+        description = description,
+        icon = icon,
+        isTablet = isTablet,
+        trailingContent = {
+            Icon(
+                imageVector = Icons.Rounded.ExpandMore,
+                contentDescription = null,
+                tint = tokens.colors.textSecondary,
+                modifier = Modifier.rotate(rotation),
+            )
+        },
+        onClick = onToggle,
+    )
 }

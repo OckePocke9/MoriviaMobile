@@ -92,7 +92,7 @@ class SettingsPagesTest {
     }
 
     @Test
-    fun phoneRootRoutesLayoutAndPlayback() {
+    fun phoneRootRoutesAppearanceLayoutAndPlayback() {
         var opened: SettingsPage? = null
         compose.setContent {
             NuvioTheme {
@@ -102,7 +102,7 @@ class SettingsPagesTest {
             }
         }
         compose.onNodeWithText("Layout").performScrollTo().performClick()
-        assertEquals(SettingsPage.Layout, opened)
+        assertEquals(SettingsPage.Appearance, opened)
         compose.onNodeWithText("Playback").performScrollTo().performClick()
         assertEquals(SettingsPage.Playback, opened)
         compose.onNodeWithText("Connections").performScrollTo().performClick()
@@ -132,7 +132,7 @@ class SettingsPagesTest {
     }
 
     @Test
-    fun layoutKeepsItsChildPagesAndMobileNavigationControls() {
+    fun layoutKeepsSelectedChildPagesAndMobileNavigationControls() {
         var opened = ""
         compose.setContent {
             NuvioTheme {
@@ -140,24 +140,21 @@ class SettingsPagesTest {
                     layoutSettingsContent(
                         isTablet = false,
                         liquidGlassNativeTabBarSupported = false,
-                        onHomescreenClick = { opened = "home" },
                         onMetaScreenClick = { opened = "details" },
                         onStreamsClick = { opened = "streams" },
+                        onPosterCustomizationClick = { opened = "catalog-style" },
                         onCollectionsClick = { opened = "collections" },
-                        onContinueWatchingClick = { opened = "continue" },
-                        onPosterCustomizationClick = { opened = "posters" },
                         onMoriviaPageClick = { opened = it.name },
                     )
                 }
             }
         }
         mapOf(
-            "Home Layout" to "home",
-            "Collections" to "collections",
-            "Continue Watching" to "continue",
-            "Poster Card Style" to "posters",
+            "Appearance" to "MoriviaAppearance",
+            "Hero" to "MoriviaHero",
+            "Home Catalogs" to "MoriviaHomeCatalogs",
+            "Home" to "MoriviaHome",
             "Streams" to "streams",
-            "Home & Layout" to "MoriviaHomeLayout",
             "Search" to "MoriviaSearch",
             "Library" to "MoriviaLibrary",
             "Detail Page" to "details",
@@ -274,12 +271,15 @@ class SettingsPagesTest {
                 "playback-auto-switch-engine" to SettingsPage.PlaybackPlayer,
                 "playback-libass-render-mode" to SettingsPage.PlaybackSubtitles,
                 "playback-custom-buffers" to SettingsPage.PlaybackBuffer,
-                "liquid-glass" to SettingsPage.Layout,
-                "navigation-bar" to SettingsPage.Layout,
-                "app-icon" to SettingsPage.Appearance,
+                "liquid-glass" to SettingsPage.Appearance,
+                "navigation-bar" to SettingsPage.Appearance,
+                "app-icon" to SettingsPage.MoriviaAppearance,
+                "auto-rotate-hero" to SettingsPage.MoriviaHero,
+                "hero-trailers" to SettingsPage.MoriviaHero,
             ).forEach { (key, page) ->
                 assertEquals(SettingsSearchTarget.Page(page), entries.single { it.key == key }.target)
             }
+            assertTrue(entries.none { (it.target as? SettingsSearchTarget.Page)?.page?.isLegacyLayoutPage() == true })
             assertEquals("Services", entries.single { it.key == "tracking" }.category)
             PlayerSettingsRepository.setAndroidPlaybackEngine(AndroidPlaybackEngine.Libmpv)
         }

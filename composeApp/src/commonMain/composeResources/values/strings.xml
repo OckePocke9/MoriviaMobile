@@ -549,7 +549,10 @@
     <string name="compose_settings_root_general_section">GENERAL</string>
     <string name="compose_settings_root_integrations_description">Manage available integrations</string>
     <string name="settings_connections_title">Connections</string>
-    <string name="settings_connections_description">Integrations, tracking services and connected accounts</string>
+    <string name="settings_system_description">Notifications, advanced settings and app info</string>
+    <string name="settings_connections_integrations_description">Metadata from TMDB, ratings from MDBList and your Torbox cloud</string>
+    <string name="settings_connections_tracking_description">Sync your watch history and progress with Trakt, Simkl and MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB and your cloud services</string>
     <string name="compose_settings_root_notifications_description">Manage episode release alerts and send a test notification.</string>
     <string name="compose_settings_root_privacy_policy_description">Learn how Morivia handles your data</string>
     <string name="compose_settings_root_streams_description">Stream result display and badge URL rules.</string>

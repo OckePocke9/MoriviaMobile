@@ -31,6 +31,24 @@ internal fun ProfileScreen(
     onAccount: () -> Unit,
     onSettings: () -> Unit,
 ) {
+    // Profile uses the same Nuvio colours as Settings (owner's request, 2026-11-22).
+    SettingsBackground(modifier = modifier.fillMaxSize()) {
+        ProfileScreenContent(
+            modifier = Modifier.fillMaxSize(),
+            onSwitchProfile = onSwitchProfile,
+            onAccount = onAccount,
+            onSettings = onSettings,
+        )
+    }
+}
+
+@Composable
+private fun ProfileScreenContent(
+    modifier: Modifier = Modifier,
+    onSwitchProfile: (() -> Unit)?,
+    onAccount: () -> Unit,
+    onSettings: () -> Unit,
+) {
     val profiles by ProfileRepository.state.collectAsStateWithLifecycle()
     val avatars by AvatarRepository.avatars.collectAsStateWithLifecycle()
     val auth by AuthRepository.state.collectAsStateWithLifecycle()

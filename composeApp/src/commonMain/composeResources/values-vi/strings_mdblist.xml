@@ -51,4 +51,12 @@
     <string name="library_list_friends">Bạn bè</string>
     <string name="library_list_private_description">Chỉ bạn mới có thể xem danh sách này.</string>
     <string name="library_list_public_description">Bất kỳ ai cũng có thể xem danh sách này.</string>
+    <string name="settings_connections_title">Kết nối</string>
+    <string name="settings_system_description">Thông báo, cài đặt nâng cao và thông tin ứng dụng</string>
+    <string name="settings_connections_integrations_description">Siêu dữ liệu từ TMDB, đánh giá từ MDBList và đám mây Torbox của bạn</string>
+    <string name="settings_connections_tracking_description">Đồng bộ lịch sử xem và tiến độ của bạn với Trakt, Simkl và MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB và dịch vụ đám mây của bạn</string>
+    <string name="settings_trakt_visit">Truy cập Trakt</string>
+    <string name="settings_trakt_disconnect_account">Ngắt kết nối Trakt</string>
+    <string name="settings_simkl_disconnect_account">Ngắt kết nối Simkl</string>
 </resources>

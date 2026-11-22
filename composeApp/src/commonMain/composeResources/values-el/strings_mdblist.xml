@@ -51,4 +51,12 @@
     <string name="library_list_friends">Φίλοι</string>
     <string name="library_list_private_description">Μόνο εσείς μπορείτε να βλέπετε αυτή τη λίστα.</string>
     <string name="library_list_public_description">Ο καθένας μπορεί να βλέπει αυτή τη λίστα.</string>
+    <string name="settings_connections_title">Συνδέσεις</string>
+    <string name="settings_system_description">Ειδοποιήσεις, ρυθμίσεις για προχωρημένους και πληροφορίες εφαρμογής</string>
+    <string name="settings_connections_integrations_description">Μεταδεδομένα από το TMDB, βαθμολογίες από το MDBList και το cloud σας στο Torbox</string>
+    <string name="settings_connections_tracking_description">Συγχρονίστε το ιστορικό προβολής και την πρόοδό σας με Trakt, Simkl και MDBList</string>
+    <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB και οι υπηρεσίες cloud σας</string>
+    <string name="settings_trakt_visit">Επίσκεψη στο Trakt</string>
+    <string name="settings_trakt_disconnect_account">Αποσύνδεση Trakt</string>
+    <string name="settings_simkl_disconnect_account">Αποσύνδεση Simkl</string>
 </resources>

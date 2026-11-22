@@ -37,55 +37,76 @@ import org.jetbrains.compose.resources.stringResource
 internal fun LazyListScope.layoutSettingsContent(
     isTablet: Boolean,
     liquidGlassNativeTabBarSupported: Boolean,
-    onHomescreenClick: () -> Unit,
+    onHomescreenClick: () -> Unit = {},
     onMetaScreenClick: () -> Unit,
     onStreamsClick: () -> Unit,
     onCollectionsClick: () -> Unit,
-    onContinueWatchingClick: () -> Unit,
-    onPosterCustomizationClick: () -> Unit,
+    onContinueWatchingClick: () -> Unit = {},
+    onPosterCustomizationClick: () -> Unit = {},
     onMoriviaPageClick: (SettingsPage) -> Unit = {},
 ) {
-    item {
-        SettingsSection(
-            title = stringResource(Res.string.settings_appearance_section_home),
-            isTablet = isTablet,
-        ) {
-            SettingsGroup(isTablet = isTablet) {
-                // The earlier Morivia app's Home & Layout page, first in Home.
-                SettingsNavigationRow(
-                    title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_title),
-                    description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_description),
-                    isTablet = isTablet,
-                    onClick = { onMoriviaPageClick(SettingsPage.MoriviaHomeLayout) },
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_homescreen),
-                    description = stringResource(Res.string.settings_content_discovery_homescreen_description),
-                    isTablet = isTablet,
-                    onClick = onHomescreenClick,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.collections_header),
-                    description = stringResource(Res.string.settings_content_discovery_collections_description),
-                    isTablet = isTablet,
-                    onClick = onCollectionsClick,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_continue_watching),
-                    description = stringResource(Res.string.settings_appearance_continue_watching_description),
-                    isTablet = isTablet,
-                    onClick = onContinueWatchingClick,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                SettingsNavigationRow(
-                    title = stringResource(Res.string.compose_settings_page_poster_customization),
-                    description = stringResource(Res.string.settings_appearance_poster_customization_description),
-                    isTablet = isTablet,
-                    onClick = onPosterCustomizationClick,
-                )
+    if (isIos) {
+        item {
+            SettingsSection(
+                title = stringResource(Res.string.settings_appearance_section_home),
+                isTablet = isTablet,
+            ) {
+                SettingsGroup(isTablet = isTablet) {
+                    // The earlier Morivia app's Home & Layout page, first in Home.
+                    SettingsNavigationRow(
+                        title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_title),
+                        description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_description),
+                        isTablet = isTablet,
+                        onClick = { onMoriviaPageClick(SettingsPage.MoriviaHomeLayout) },
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.compose_settings_page_homescreen),
+                        description = stringResource(Res.string.settings_content_discovery_homescreen_description),
+                        isTablet = isTablet,
+                        onClick = onHomescreenClick,
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.collections_header),
+                        description = stringResource(Res.string.settings_content_discovery_collections_description),
+                        isTablet = isTablet,
+                        onClick = onCollectionsClick,
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.compose_settings_page_continue_watching),
+                        description = stringResource(Res.string.settings_appearance_continue_watching_description),
+                        isTablet = isTablet,
+                        onClick = onContinueWatchingClick,
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.compose_settings_page_poster_customization),
+                        description = stringResource(Res.string.settings_appearance_poster_customization_description),
+                        isTablet = isTablet,
+                        onClick = onPosterCustomizationClick,
+                    )
+                }
+            }
+        }
+    } else {
+        listOf(
+            SettingsPage.MoriviaAppearance to Res.string.settings_appearance_description,
+            SettingsPage.MoriviaHero to Res.string.morivia_hero_settings_description,
+            SettingsPage.MoriviaHomeCatalogs to Res.string.morivia_catalog_card_style_description,
+            SettingsPage.MoriviaHome to Res.string.morivia_home_settings_description,
+        ).forEach { (page, description) ->
+            item {
+                SettingsGroup(isTablet = isTablet) {
+                    SettingsNavigationRow(
+                        title = stringResource(page.titleRes),
+                        description = stringResource(description),
+                        icon = page.icon,
+                        isTablet = isTablet,
+                        onClick = { onMoriviaPageClick(page) },
+                    )
+                }
             }
         }
     }
@@ -192,6 +213,41 @@ internal fun LazyListScope.layoutSettingsContent(
                     onDismiss = { showNavBarStyleSheet = false },
                 )
             }
+        }
+    }
+}
+
+internal fun LazyListScope.moriviaHomeCatalogsSettingsContent(
+    isTablet: Boolean,
+    onPosterCustomizationClick: () -> Unit,
+) {
+    item {
+        SettingsGroup(isTablet = isTablet) {
+            SettingsNavigationRow(
+                title = stringResource(SettingsPage.PosterCustomization.titleRes),
+                description = stringResource(Res.string.morivia_catalog_card_style_description),
+                icon = SettingsPage.PosterCustomization.icon,
+                isTablet = isTablet,
+                onClick = onPosterCustomizationClick,
+            )
+        }
+    }
+}
+
+internal fun LazyListScope.moriviaHomeSettingsContent(
+    isTablet: Boolean,
+    onCollectionsClick: () -> Unit,
+) {
+    item {
+        SettingsGroup(isTablet = isTablet) {
+            SettingsNavigationRow(
+                title = stringResource(Res.string.collections_header),
+                description = stringResource(Res.string.settings_content_discovery_collections_description),
+                isTablet = isTablet,
+                onClick = onCollectionsClick,
+            )
+            SettingsGroupDivider(isTablet = isTablet)
+            CollectionArtSettingsRow(isTablet = isTablet)
         }
     }
 }

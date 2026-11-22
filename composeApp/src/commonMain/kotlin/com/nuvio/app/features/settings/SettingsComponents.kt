@@ -78,7 +78,7 @@ private fun SettingsCard(
     val tokens = MaterialTheme.nuvio
     Surface(
         modifier = modifier.fillMaxWidth(),
-        color = tokens.colors.surface,
+        color = settingsCardColor(),
         shape = tokens.shapes.card,
         border = BorderStroke(
             tokens.borders.hairline,
@@ -430,6 +430,7 @@ internal fun HomescreenCatalogRow(
     onEnabledChange: (Boolean) -> Unit,
     dragHandleScope: ReorderableCollectionItemScope,
     onPinnedDragAttempt: () -> Unit = {},
+    useCatalogCardStyle: Boolean = false,
 ) {
     val tokens = MaterialTheme.nuvio
     val horizontalPadding = if (isTablet) 20.dp else 16.dp
@@ -439,12 +440,14 @@ internal fun HomescreenCatalogRow(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onExpandedChange(!expanded) }
+            .then(if (useCatalogCardStyle) Modifier else Modifier.clickable { onExpandedChange(!expanded) })
             .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(if (useCatalogCardStyle) Modifier.clickable { onExpandedChange(!expanded) } else Modifier),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top,
         ) {
@@ -456,7 +459,7 @@ internal fun HomescreenCatalogRow(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    text = item.displayTitle,
+                    text = if (useCatalogCardStyle) item.defaultTitle else item.displayTitle,
                     style = MaterialTheme.typography.bodyLarge,
                     color = tokens.colors.textPrimary,
                     fontWeight = FontWeight.SemiBold,
@@ -561,7 +564,11 @@ internal fun HomescreenCatalogRow(
                     label = { Text(stringResource(Res.string.settings_homescreen_display_name)) },
                     placeholder = { Text(item.defaultTitle) },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = tokens.colors.borderFocus.copy(alpha = tokens.opacity.strong),
+                        focusedBorderColor = if (useCatalogCardStyle) {
+                            tokens.colors.borderDefault.copy(alpha = tokens.opacity.medium)
+                        } else {
+                            tokens.colors.borderFocus.copy(alpha = tokens.opacity.strong)
+                        },
                         unfocusedBorderColor = tokens.colors.borderDefault.copy(alpha = tokens.opacity.medium),
                         focusedContainerColor = tokens.colors.surface,
                         unfocusedContainerColor = tokens.colors.surface,

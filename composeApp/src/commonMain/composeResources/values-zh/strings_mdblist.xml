@@ -51,4 +51,12 @@
     <string name="library_list_friends">好友</string>
     <string name="library_list_private_description">只有你能看到此列表。</string>
     <string name="library_list_public_description">所有人都能看到此列表。</string>
+    <string name="settings_connections_title">连接</string>
+    <string name="settings_system_description">通知、高级设置和应用信息</string>
+    <string name="settings_connections_integrations_description">来自 TMDB 的元数据、MDBList 的评分和你的 Torbox 云</string>
+    <string name="settings_connections_tracking_description">与 Trakt、Simkl 和 MDBList 同步你的观看记录和进度</string>
+    <string name="settings_connections_description">Trakt、Simkl、MDBList、TMDB 和你的云服务</string>
+    <string name="settings_trakt_visit">访问 Trakt</string>
+    <string name="settings_trakt_disconnect_account">断开 Trakt</string>
+    <string name="settings_simkl_disconnect_account">断开 Simkl</string>
 </resources>

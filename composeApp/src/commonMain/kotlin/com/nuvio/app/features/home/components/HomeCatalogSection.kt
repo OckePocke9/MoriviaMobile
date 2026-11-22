@@ -9,11 +9,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nuvio.app.core.ui.NuvioShelfSection
 import com.nuvio.app.core.ui.NuvioViewAllPillSize
+import com.nuvio.app.core.ui.landscapePosterWidth
 import com.nuvio.app.core.ui.rememberPosterCardStyleUiState
 import com.nuvio.app.features.home.HomeCatalogSection
 import com.nuvio.app.features.home.MetaPreview
 import com.nuvio.app.features.home.stableKey
 import com.nuvio.app.features.watching.application.WatchingState
+import kotlin.math.roundToInt
 
 /** The gap between posters in a Home row. */
 internal val HomePosterSpacing = 12.dp
@@ -29,6 +31,24 @@ internal fun homePosterWidth(screenWidth: Dp, sectionPadding: Dp): Dp =
 internal fun homeFeaturedCardWidth(screenWidth: Dp, sectionPadding: Dp): Dp =
     ((screenWidth - sectionPadding * 2) * 0.86f).coerceAtMost(520.dp)
 
+/** Fit full cards plus a visible portion of the next one, near the selected card size. */
+internal fun homeCatalogCardWidth(
+    screenWidth: Dp,
+    startPadding: Dp,
+    basePosterWidthDp: Int,
+    landscape: Boolean,
+): Dp {
+    val availableWidth = screenWidth - startPadding
+    val preferredWidth = if (landscape) landscapePosterWidth(basePosterWidthDp) else basePosterWidthDp.dp
+    val cardsAcross = (availableWidth + HomePosterSpacing) / (preferredWidth + HomePosterSpacing)
+    val fullCards = (cardsAcross - 0.35f).roundToInt().coerceAtLeast(1)
+    val cardSpace = (availableWidth - HomePosterSpacing * fullCards).coerceAtLeast(1.dp)
+    return preferredWidth.coerceIn(
+        minimumValue = cardSpace / (fullCards + 0.45f),
+        maximumValue = cardSpace / (fullCards + 0.25f),
+    )
+}
+
 @Composable
 fun HomeCatalogRowSection(
     section: HomeCatalogSection,
@@ -42,6 +62,8 @@ fun HomeCatalogRowSection(
     onPosterLongClick: ((MetaPreview) -> Unit)? = null,
     posterWidth: Dp? = null,
     landscape: Boolean = false,
+    landscapeOverride: Boolean? = null,
+    useHomePill: Boolean = false,
 ) {
     if (sectionPadding != null) {
         HomeCatalogRowSectionContent(
@@ -56,6 +78,8 @@ fun HomeCatalogRowSection(
             onPosterLongClick = onPosterLongClick,
             posterWidth = posterWidth,
             landscape = landscape,
+            landscapeOverride = landscapeOverride,
+            useHomePill = useHomePill,
         )
     } else {
         BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -71,6 +95,8 @@ fun HomeCatalogRowSection(
                 onPosterLongClick = onPosterLongClick,
                 posterWidth = posterWidth,
                 landscape = landscape,
+                landscapeOverride = landscapeOverride,
+                useHomePill = useHomePill,
             )
         }
     }
@@ -89,6 +115,8 @@ private fun HomeCatalogRowSectionContent(
     onPosterLongClick: ((MetaPreview) -> Unit)?,
     posterWidth: Dp?,
     landscape: Boolean,
+    landscapeOverride: Boolean?,
+    useHomePill: Boolean,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
 
@@ -100,12 +128,14 @@ private fun HomeCatalogRowSectionContent(
         rowContentPadding = PaddingValues(horizontal = sectionPadding),
         itemSpacing = HomePosterSpacing,
         onViewAllClick = onViewAllClick,
-        viewAllPillSize = NuvioViewAllPillSize.Compact,
+        viewAllPillSize = if (useHomePill) NuvioViewAllPillSize.Home else NuvioViewAllPillSize.Compact,
+        titleMaxLines = if (useHomePill) 2 else 1,
         key = { item -> item.stableKey() },
     ) { item ->
         HomePosterCard(
             item = item,
             useLandscapeBackdropMode = landscape || posterCardStyle.catalogLandscapeModeEnabled,
+            landscapeOverride = landscapeOverride,
             isWatched = WatchingState.isPosterWatched(
                 watchedKeys = watchedKeys,
                 item = item,

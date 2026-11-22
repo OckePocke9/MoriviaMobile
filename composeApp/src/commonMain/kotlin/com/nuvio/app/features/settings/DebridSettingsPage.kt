@@ -79,6 +79,11 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import nuvio.composeapp.generated.resources.Res
+import nuvio.composeapp.generated.resources.settings_integrations_mdblist_description
+import nuvio.composeapp.generated.resources.compose_settings_page_mdblist_ratings
+import nuvio.composeapp.generated.resources.settings_integrations_tmdb_description
+import nuvio.composeapp.generated.resources.compose_settings_page_tmdb_enrichment
+import nuvio.composeapp.generated.resources.settings_integrations_section_title
 import nuvio.composeapp.generated.resources.action_cancel
 import nuvio.composeapp.generated.resources.action_clear
 import nuvio.composeapp.generated.resources.action_delete
@@ -217,7 +222,44 @@ private val DEVICE_AUTH_MAX_POLL_DURATION = 15.minutes
 internal fun LazyListScope.debridSettingsContent(
     isTablet: Boolean,
     settings: DebridSettings,
+    onTmdbClick: (() -> Unit)? = null,
+    onMdbListClick: (() -> Unit)? = null,
 ) {
+    // TMDB Enrichment and MDBList Ratings live here, above Cloud library (owner's request,
+    // 2026-11-22); the Connections page lists only Connected Services under Integrations.
+    if (onTmdbClick != null || onMdbListClick != null) {
+        item {
+            SettingsSection(
+                title = stringResource(Res.string.settings_integrations_section_title),
+                isTablet = isTablet,
+            ) {
+                SettingsGroup(isTablet = isTablet) {
+                    if (onTmdbClick != null) {
+                        SettingsNavigationRow(
+                            title = stringResource(Res.string.compose_settings_page_tmdb_enrichment),
+                            description = stringResource(Res.string.settings_integrations_tmdb_description),
+                            iconPainter = integrationLogoPainter(IntegrationLogo.Tmdb),
+                            isTablet = isTablet,
+                            onClick = onTmdbClick,
+                        )
+                    }
+                    if (onTmdbClick != null && onMdbListClick != null) {
+                        SettingsGroupDivider(isTablet = isTablet)
+                    }
+                    if (onMdbListClick != null) {
+                        SettingsNavigationRow(
+                            title = stringResource(Res.string.compose_settings_page_mdblist_ratings),
+                            description = stringResource(Res.string.settings_integrations_mdblist_description),
+                            iconPainter = integrationLogoPainter(IntegrationLogo.MdbList),
+                            isTablet = isTablet,
+                            onClick = onMdbListClick,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     item {
         var showResolverProviderDialog by rememberSaveable { mutableStateOf(false) }
         val resolverProviders = settings.resolverServices.map { it.provider }

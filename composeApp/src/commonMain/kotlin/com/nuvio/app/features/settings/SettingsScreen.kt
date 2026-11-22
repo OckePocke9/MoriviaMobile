@@ -7,6 +7,18 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.ui.graphics.Color
+import nuvio.composeapp.generated.resources.party_title
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.rounded.Groups
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.Icons
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -111,7 +123,7 @@ private fun watchPartyRow(onClick: () -> Unit): (() -> Unit)? {
     return onClick.takeIf { available }
 }
 
-private fun SettingsPage.isEnabledByPolicy(): Boolean =
+internal fun SettingsPage.isEnabledByPolicy(): Boolean =
     when (this) {
         SettingsPage.SupportersContributors -> AppFeaturePolicy.supportersContributorsPageEnabled
         SettingsPage.PlaybackP2p -> P2pSettingsRepository.isVisible
@@ -139,6 +151,7 @@ fun SettingsScreen(
     isSelectedTab: Boolean = true,
     onNavigatePage: ((pageName: String, title: String) -> Unit)? = null,
     onExternalBack: (() -> Unit)? = null,
+    onTabSelected: ((com.nuvio.app.AppScreenTab) -> Unit)? = null,
     showInternalHeader: Boolean = true,
     onSwitchProfile: (() -> Unit)? = null,
     onHomescreenClick: () -> Unit = {},
@@ -386,7 +399,7 @@ fun SettingsScreen(
 
         if (isSelectedTab || page == SettingsPage.Root) {
             pageStateHolder.SaveableStateProvider("content") {
-                com.nuvio.app.features.profiles.MoriviaThemedBackground(modifier = Modifier.fillMaxSize()) {
+                SettingsBackground(modifier = Modifier.fillMaxSize()) {
                 if (maxWidth >= 768.dp) {
                     TabletSettingsScreen(
                         page = page,
@@ -394,6 +407,8 @@ fun SettingsScreen(
                         onPageChange = ::openPage,
                         onNavigateBack = ::navigateBack,
                         showRootBack = onExternalBack != null,
+                        onExitSettings = onExternalBack,
+                        onTabSelected = onTabSelected,
                         showInternalHeader = showInternalHeader,
                         rememberLastProfileEnabled = profileSettingsState.rememberLastProfileEnabled,
                         selectedTheme = selectedTheme,
@@ -547,6 +562,11 @@ private fun MobileSettingsScreen(
         var rootSearchVisible by rememberSaveable { mutableStateOf(false) }
         var rootSearchRevealAnimating by rememberSaveable { mutableStateOf(false) }
         val listState = rememberLazyListState()
+        val catalogRowsState = if (!isIos && page == SettingsPage.PosterCustomization) {
+            rememberHomeCatalogRowsState(listState)
+        } else {
+            null
+        }
         ScreenActivityEffect(listState) { screenActive ->
             if (!screenActive) listState.stopScroll()
         }
@@ -682,17 +702,40 @@ private fun MobileSettingsScreen(
                 SettingsPage.Streams -> streamsSettingsContent(
                     isTablet = false,
                 )
-                SettingsPage.Appearance -> appearanceSettingsContent(
+                SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> {
+                    if (isIos || page == SettingsPage.MoriviaAppearance) {
+                        appearanceSettingsContent(
+                            isTablet = false,
+                            selectedTheme = selectedTheme,
+                            onThemeSelected = onThemeSelected,
+                            amoledEnabled = amoledEnabled,
+                            onAmoledToggle = onAmoledToggle,
+                            appIconState = appIconState,
+                            onAppIconSelected = onAppIconSelected,
+                            onAppIconFailureDismissed = onAppIconFailureDismissed,
+                            selectedAppLanguage = selectedAppLanguage,
+                            onAppLanguageSelected = onAppLanguageSelected,
+                        )
+                    } else {
+                        layoutSettingsContent(
+                            isTablet = false,
+                            liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
+                            onMetaScreenClick = { onPageChange(SettingsPage.MetaScreen) },
+                            onStreamsClick = { onPageChange(SettingsPage.Streams) },
+                            onCollectionsClick = onCollectionsClick,
+                            onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
+                            onMoriviaPageClick = { onPageChange(it) },
+                        )
+                    }
+                }
+                SettingsPage.MoriviaHero -> moriviaHeroSettingsContent(isTablet = false)
+                SettingsPage.MoriviaHomeCatalogs -> moriviaHomeCatalogsSettingsContent(
                     isTablet = false,
-                    selectedTheme = selectedTheme,
-                    onThemeSelected = onThemeSelected,
-                    amoledEnabled = amoledEnabled,
-                    onAmoledToggle = onAmoledToggle,
-                    appIconState = appIconState,
-                    onAppIconSelected = onAppIconSelected,
-                    onAppIconFailureDismissed = onAppIconFailureDismissed,
-                    selectedAppLanguage = selectedAppLanguage,
-                    onAppLanguageSelected = onAppLanguageSelected,
+                    onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
+                )
+                SettingsPage.MoriviaHome -> moriviaHomeSettingsContent(
+                    isTablet = false,
+                    onCollectionsClick = onCollectionsClick,
                 )
                 SettingsPage.Layout -> layoutSettingsContent(
                     isTablet = false,
@@ -721,6 +764,16 @@ private fun MobileSettingsScreen(
                     isTablet = false,
                     uiState = episodeReleaseNotificationsUiState,
                 )
+                SettingsPage.SystemSettings -> systemSettingsContent(
+                    isTablet = false,
+                    episodeReleaseNotificationsUiState = episodeReleaseNotificationsUiState,
+                    rememberLastProfileEnabled = rememberLastProfileEnabled,
+                    onSupportersContributorsClick = onSupportersContributorsClick,
+                    onLicensesAttributionsClick = onLicensesAttributionsClick,
+                    onCheckForUpdatesClick = onCheckForUpdatesClick,
+                    onTestUpdateBannerClick = onTestUpdateBannerClick,
+                    showSupportersContributorsPage = AppFeaturePolicy.supportersContributorsPageEnabled,
+                )
                 SettingsPage.ContinueWatching -> continueWatchingSettingsContent(
                     isTablet = false,
                     isVisible = continueWatchingPreferencesUiState.isVisible,
@@ -736,6 +789,7 @@ private fun MobileSettingsScreen(
                 SettingsPage.PosterCustomization -> posterCustomizationSettingsContent(
                     isTablet = false,
                     uiState = posterCardStyleUiState,
+                    catalogRowsState = catalogRowsState,
                 )
                 SettingsPage.ContentDiscovery -> contentDiscoveryContent(
                     isTablet = false,
@@ -775,26 +829,29 @@ private fun MobileSettingsScreen(
                     isTablet = false,
                     uiState = metaScreenSettingsUiState,
                 )
-                // "Connections": integrations first, tracking underneath. The old Tracking
-                // page (search results, saved navigation) opens the same combined page.
-                SettingsPage.Integrations, SettingsPage.TraktAuthentication -> {
-                    integrationsContent(
-                        isTablet = false,
-                        onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
-                        onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
-                        onDebridClick = { onPageChange(SettingsPage.Debrid) },
-                    )
-                    trackingSettingsContent(
-                        isTablet = false,
-                        traktUiState = traktAuthUiState,
-                        simklUiState = simklAuthUiState,
-                        settingsUiState = trackingSettingsUiState,
-                        commentsEnabled = traktCommentsEnabled,
-                        mdbListConnected = mdbListConnected,
-                        onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
-                        accountsSectionTitle = Res.string.compose_settings_page_tracking,
-                    )
-                }
+                // "Connections": two cards, Integrations and Tracking.
+                SettingsPage.Integrations -> connectionsContent(
+                    isTablet = false,
+                    debridSettings = debridSettings,
+                    onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                    onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
+                    traktUiState = traktAuthUiState,
+                    simklUiState = simklAuthUiState,
+                    trackingSettingsUiState = trackingSettingsUiState,
+                    commentsEnabled = traktCommentsEnabled,
+                    onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                    mdbListConnected = mdbListConnected,
+                )
+                SettingsPage.TraktAuthentication -> trackingSettingsContent(
+                    isTablet = false,
+                    traktUiState = traktAuthUiState,
+                    simklUiState = simklAuthUiState,
+                    settingsUiState = trackingSettingsUiState,
+                    commentsEnabled = traktCommentsEnabled,
+                    mdbListConnected = mdbListConnected,
+                    onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                    accountsSectionTitle = Res.string.compose_settings_page_tracking,
+                )
                 SettingsPage.TmdbEnrichment -> tmdbSettingsContent(
                     isTablet = false,
                     settings = tmdbSettings,
@@ -806,6 +863,8 @@ private fun MobileSettingsScreen(
                 SettingsPage.Debrid -> debridSettingsContent(
                     isTablet = false,
                     settings = debridSettings,
+                    onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                    onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
                 )
             }
         }
@@ -861,6 +920,8 @@ private fun TabletSettingsScreen(
     onPageChange: (SettingsPage) -> Unit,
     onNavigateBack: () -> Unit,
     showRootBack: Boolean = false,
+    onExitSettings: (() -> Unit)? = null,
+    onTabSelected: ((com.nuvio.app.AppScreenTab) -> Unit)? = null,
     showInternalHeader: Boolean,
     rememberLastProfileEnabled: Boolean,
     selectedTheme: AppTheme,
@@ -902,7 +963,9 @@ private fun TabletSettingsScreen(
     var selectedCategory by rememberSaveable { mutableStateOf(SettingsCategory.Look.name) }
     val activeCategory = settingsCategoryForName(selectedCategory)
     val statusBarPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-    val topOffset = max(statusBarPadding + 24.dp, 48.dp) + 64.dp
+    // Landscape: the sidebar back arrow sits as far below the status bar clock as from the
+    // left edge (measured on the owner's phone: 114 px both ways).
+    val topOffset = statusBarPadding + 5.dp
 
     LaunchedEffect(page) {
         if (page.opensInlineOnTablet) {
@@ -918,43 +981,50 @@ private fun TabletSettingsScreen(
     val saveableStateHolder = rememberSaveableStateHolder()
 
     Row(modifier = Modifier.fillMaxSize()) {
+        // Landscape: navigation bar on the left (Settings only), one background colour across
+        // the screen (black with AMOLED, #0E0C0E without) - owner's request, 2026-11-22.
+        if (onTabSelected != null) {
+            Box(modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.Center) {
+                SettingsNavigationRail(onTabSelected = onTabSelected)
+            }
+        }
         Surface(
             modifier = Modifier
-                .width(280.dp)
+                .width(344.dp)
                 .fillMaxSize(),
-            color = MaterialTheme.colorScheme.surface,
+            color = Color.Transparent,
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = topOffset),
             ) {
-                Text(
-                    text = stringResource(Res.string.compose_settings_page_root),
+                // Landscape sidebar (owner's request, 2026-11-22): a back arrow next to Settings,
+                // no divider line, and our own setting cards instead of the category names.
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
+                        .padding(start = 24.dp, end = 24.dp)
                         .padding(bottom = 20.dp),
-                    style = MaterialTheme.typography.displayLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-                Spacer(modifier = Modifier.height(10.dp))
-                SettingsCategory.entries.forEach { category ->
-                    SettingsSidebarItem(
-                        label = stringResource(category.labelRes),
-                        icon = category.icon,
-                        selected = category == activeCategory,
-                        onClick = {
-                            selectedCategory = category.name
-                            if (page != SettingsPage.Root) {
-                                onPageChange(SettingsPage.Root)
-                            }
-                        },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(Res.string.compose_settings_page_root),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
                     )
                 }
+
+                SettingsSidebarList(
+                    onPageClick = ::openInlinePage,
+                    onSwitchProfile = onSwitchProfile,
+                    onWatchPartyClick = watchPartyRow(onWatchPartyClick),
+                    onCollectionsClick = onCollectionsClick,
+                    onCheckForUpdatesClick = onCheckForUpdatesClick,
+                    liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
+                )
             }
         }
 
@@ -978,6 +1048,11 @@ private fun TabletSettingsScreen(
             }
 
             val listState = rememberLazyListState()
+            val catalogRowsState = if (!isIos && page == SettingsPage.PosterCustomization) {
+                rememberHomeCatalogRowsState(listState)
+            } else {
+                null
+            }
             ScreenActivityEffect(listState) { screenActive ->
                 if (!screenActive) listState.stopScroll()
             }
@@ -1020,55 +1095,22 @@ private fun TabletSettingsScreen(
                 ),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                if (showInternalHeader) {
+                if (showInternalHeader && page != SettingsPage.Root) {
+                    // "Settings" and the exit arrow live only in the sidebar; a page shows its own
+                    // back arrow only inside a card (e.g. Tracking back to Connections).
                     item {
                         val previousPage = page.previousPage()
                         TabletPageHeader(
-                            title = if (page == SettingsPage.Root) {
-                                if (settingsSearchQuery.isBlank()) {
-                                    stringResource(activeCategory.labelRes)
-                                } else {
-                                    stringResource(Res.string.compose_settings_page_root)
-                                }
-                            } else {
-                                stringResource(page.titleRes)
-                            },
-                            showBack = previousPage != null || showRootBack,
+                            title = stringResource(page.titleRes),
+                            showBack = previousPage != null && previousPage != SettingsPage.Root,
                             onBack = onNavigateBack,
                         )
                     }
                 }
                 when (page) {
                     SettingsPage.Root -> {
-                        settingsSearchRootContent(
-                            query = settingsSearchQuery,
-                            entries = {
-                                settingsSearchEntries(
-                                    isTablet = true,
-                                    pluginsEnabled = AppFeaturePolicy.pluginsEnabled,
-                                    supportersContributorsPageEnabled = AppFeaturePolicy.supportersContributorsPageEnabled,
-                                    accountDeletionEnabled = AppFeaturePolicy.accountDeletionEnabled,
-                                    personalMediaAddonCopyEnabled = AppFeaturePolicy.personalMediaAddonCopyEnabled,
-                                    liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
-                                    switchProfileAvailable = false,
-                                    checkForUpdatesAvailable = onCheckForUpdatesClick != null,
-                                )
-                            },
-                            isTablet = true,
-                            showSearchField = rootSearchVisible,
-                            animateSearchField = rootSearchRevealAnimating,
-                            onQueryChange = { settingsSearchQuery = it },
-                            onTargetClick = { openSearchTarget(it) },
-                        )
-                        if (settingsSearchQuery.isBlank()) {
-                            settingsRootContent(
-                                isTablet = true,
-                                onPageClick = ::openInlinePage,
-                                onSwitchProfileClick = onSwitchProfile,
-                                onWatchPartyClick = watchPartyRowClick,
-                                category = activeCategory,
-                            )
-                        }
+                        // Landscape: the Settings list and search live in the sidebar; the right
+                        // side stays empty until a card is opened (owner's request, 2026-11-22).
                     }
                     SettingsPage.Account -> accountSettingsContent(
                         isTablet = true,
@@ -1099,17 +1141,40 @@ private fun TabletSettingsScreen(
                     SettingsPage.Streams -> streamsSettingsContent(
                         isTablet = true,
                     )
-                    SettingsPage.Appearance -> appearanceSettingsContent(
+                    SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> {
+                        if (isIos || page == SettingsPage.MoriviaAppearance) {
+                            appearanceSettingsContent(
+                                isTablet = true,
+                                selectedTheme = selectedTheme,
+                                onThemeSelected = onThemeSelected,
+                                amoledEnabled = amoledEnabled,
+                                onAmoledToggle = onAmoledToggle,
+                                appIconState = appIconState,
+                                onAppIconSelected = onAppIconSelected,
+                                onAppIconFailureDismissed = onAppIconFailureDismissed,
+                                selectedAppLanguage = selectedAppLanguage,
+                                onAppLanguageSelected = onAppLanguageSelected,
+                            )
+                        } else {
+                            layoutSettingsContent(
+                                isTablet = true,
+                                liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
+                                onMetaScreenClick = { openInlinePage(SettingsPage.MetaScreen) },
+                                onStreamsClick = { openInlinePage(SettingsPage.Streams) },
+                                onCollectionsClick = onCollectionsClick,
+                                onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
+                                onMoriviaPageClick = { openInlinePage(it) },
+                            )
+                        }
+                    }
+                    SettingsPage.MoriviaHero -> moriviaHeroSettingsContent(isTablet = true)
+                    SettingsPage.MoriviaHomeCatalogs -> moriviaHomeCatalogsSettingsContent(
                         isTablet = true,
-                        selectedTheme = selectedTheme,
-                        onThemeSelected = onThemeSelected,
-                        amoledEnabled = amoledEnabled,
-                        onAmoledToggle = onAmoledToggle,
-                        appIconState = appIconState,
-                        onAppIconSelected = onAppIconSelected,
-                        onAppIconFailureDismissed = onAppIconFailureDismissed,
-                        selectedAppLanguage = selectedAppLanguage,
-                        onAppLanguageSelected = onAppLanguageSelected,
+                        onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
+                    )
+                    SettingsPage.MoriviaHome -> moriviaHomeSettingsContent(
+                        isTablet = true,
+                        onCollectionsClick = onCollectionsClick,
                     )
                     SettingsPage.Layout -> layoutSettingsContent(
                         isTablet = true,
@@ -1138,6 +1203,16 @@ private fun TabletSettingsScreen(
                         isTablet = true,
                         uiState = episodeReleaseNotificationsUiState,
                     )
+                    SettingsPage.SystemSettings -> systemSettingsContent(
+                        isTablet = true,
+                        episodeReleaseNotificationsUiState = episodeReleaseNotificationsUiState,
+                        rememberLastProfileEnabled = rememberLastProfileEnabled,
+                        onSupportersContributorsClick = { openInlinePage(SettingsPage.SupportersContributors) },
+                        onLicensesAttributionsClick = { openInlinePage(SettingsPage.LicensesAttributions) },
+                        onCheckForUpdatesClick = onCheckForUpdatesClick,
+                        onTestUpdateBannerClick = onTestUpdateBannerClick,
+                        showSupportersContributorsPage = AppFeaturePolicy.supportersContributorsPageEnabled,
+                    )
                     SettingsPage.ContinueWatching -> continueWatchingSettingsContent(
                         isTablet = true,
                         isVisible = continueWatchingPreferencesUiState.isVisible,
@@ -1153,6 +1228,7 @@ private fun TabletSettingsScreen(
                     SettingsPage.PosterCustomization -> posterCustomizationSettingsContent(
                         isTablet = true,
                         uiState = posterCardStyleUiState,
+                        catalogRowsState = catalogRowsState,
                     )
                     SettingsPage.ContentDiscovery -> contentDiscoveryContent(
                         isTablet = true,
@@ -1192,24 +1268,28 @@ private fun TabletSettingsScreen(
                         isTablet = true,
                         uiState = metaScreenSettingsUiState,
                     )
-                    SettingsPage.Integrations, SettingsPage.TraktAuthentication -> {
-                        integrationsContent(
-                            isTablet = true,
-                            onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
-                            onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
-                            onDebridClick = { onPageChange(SettingsPage.Debrid) },
-                        )
-                        trackingSettingsContent(
-                            isTablet = true,
-                            traktUiState = traktAuthUiState,
-                            simklUiState = simklAuthUiState,
-                            settingsUiState = trackingSettingsUiState,
-                            commentsEnabled = traktCommentsEnabled,
-                            mdbListConnected = mdbListConnected,
-                            onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
-                            accountsSectionTitle = Res.string.compose_settings_page_tracking,
-                        )
-                    }
+                    SettingsPage.Integrations -> connectionsContent(
+                        isTablet = true,
+                        debridSettings = debridSettings,
+                        onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                        onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
+                        traktUiState = traktAuthUiState,
+                        simklUiState = simklAuthUiState,
+                        trackingSettingsUiState = trackingSettingsUiState,
+                        commentsEnabled = traktCommentsEnabled,
+                        onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                        mdbListConnected = mdbListConnected,
+                    )
+                    SettingsPage.TraktAuthentication -> trackingSettingsContent(
+                        isTablet = true,
+                        traktUiState = traktAuthUiState,
+                        simklUiState = simklAuthUiState,
+                        settingsUiState = trackingSettingsUiState,
+                        commentsEnabled = traktCommentsEnabled,
+                        mdbListConnected = mdbListConnected,
+                        onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                        accountsSectionTitle = Res.string.compose_settings_page_tracking,
+                    )
                     SettingsPage.TmdbEnrichment -> tmdbSettingsContent(
                         isTablet = true,
                         settings = tmdbSettings,
@@ -1221,6 +1301,8 @@ private fun TabletSettingsScreen(
                     SettingsPage.Debrid -> debridSettingsContent(
                         isTablet = true,
                         settings = debridSettings,
+                        onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                        onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
                     )
                 }
             }
