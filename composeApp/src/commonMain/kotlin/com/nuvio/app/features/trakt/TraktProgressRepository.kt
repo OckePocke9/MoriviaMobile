@@ -65,6 +65,8 @@ data class TraktProgressUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val hasLoadedRemoteProgress: Boolean = false,
+    /** When watched history and playback progress last finished loading from Trakt. */
+    val lastSyncedAtEpochMs: Long? = null,
 )
 
 private data class TraktMetadataHydrationResult(
@@ -411,6 +413,7 @@ object TraktProgressRepository {
             isLoading = false,
             errorMessage = null,
             hasLoadedRemoteProgress = true,
+            lastSyncedAtEpochMs = TraktPlatformClock.nowEpochMs(),
         )
 
         val visibleEntries = _uiState.value.entries
@@ -442,6 +445,7 @@ object TraktProgressRepository {
         isLoading: Boolean = _uiState.value.isLoading,
         errorMessage: String? = _uiState.value.errorMessage,
         hasLoadedRemoteProgress: Boolean = _uiState.value.hasLoadedRemoteProgress,
+        lastSyncedAtEpochMs: Long? = _uiState.value.lastSyncedAtEpochMs,
     ) {
         val publishedEntries = mergeWithActiveOptimistic(entries)
         _uiState.value = TraktProgressUiState(
@@ -449,6 +453,7 @@ object TraktProgressRepository {
             isLoading = isLoading,
             errorMessage = errorMessage,
             hasLoadedRemoteProgress = hasLoadedRemoteProgress,
+            lastSyncedAtEpochMs = lastSyncedAtEpochMs,
         )
     }
 

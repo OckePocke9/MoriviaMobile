@@ -50,6 +50,17 @@
                     android:host="auth"
                     android:path="/simkl" />
             </intent-filter>
+            <!-- Morivia's own sign-in callbacks. The official Nuvio app also handles nuvio://,
+                 so Morivia's Trakt, SIMKL and MDBList apps return to morivia://auth/... instead. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="morivia" android:host="auth" android:path="/simkl" />
+                <data android:scheme="morivia" android:host="auth" android:path="/trakt" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

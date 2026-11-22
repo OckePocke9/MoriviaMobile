@@ -80,10 +80,16 @@ import com.nuvio.app.features.trakt.TraktAuthRepository
 import com.nuvio.app.features.trakt.TraktAuthUiState
 import com.nuvio.app.features.trakt.TraktBrandAsset
 import com.nuvio.app.features.trakt.TraktConnectionMode
+import com.nuvio.app.features.trakt.TraktProgressRepository
 import com.nuvio.app.features.trakt.traktBrandPainter
+import com.nuvio.app.core.format.formatLocalDateTime
 import com.nuvio.app.features.watchprogress.WatchProgressSourceCoordinator
 import kotlinx.coroutines.launch
 import nuvio.composeapp.generated.resources.settings_mdblist_disconnect_description
+import nuvio.composeapp.generated.resources.settings_mdblist_last_synced
+import nuvio.composeapp.generated.resources.settings_mdblist_sync_now
+import nuvio.composeapp.generated.resources.settings_mdblist_syncing
+import nuvio.composeapp.generated.resources.settings_trakt_visit
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.action_cancel
 import nuvio.composeapp.generated.resources.action_collapse
@@ -198,6 +204,8 @@ internal fun TrackingProviderCards(
         SimklProviderCard(
             uiState = simklUiState,
             isSyncing = syncState.isLoading,
+            lastSyncedAtEpochMs = syncState.snapshot.lastSyncedAtEpochMs
+                ?: syncState.snapshot.lastCheckedAtEpochMs,
             syncErrorMessage = syncState.errorMessage,
             onSyncRequested = onSimklSyncRequested,
             onInfoRequested = { showSyncInfo = true },
@@ -216,6 +224,12 @@ private fun TraktProviderCard(
     uiState: TraktAuthUiState,
     modifier: Modifier,
 ) {
+    val progress by remember {
+        TraktProgressRepository.ensureLoaded()
+        TraktProgressRepository.uiState
+    }.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    val connected = uiState.mode == TraktConnectionMode.CONNECTED
     TrackingProviderCard(
         brand = TrackingBrand.TRAKT,
         mode = uiState.mode.toTrackingConnectionCardMode(),
@@ -233,10 +247,32 @@ private fun TraktProviderCard(
         openLoginLabel = stringResource(Res.string.settings_trakt_open_login),
         disconnectLabel = stringResource(Res.string.settings_trakt_disconnect),
         missingCredentialsMessage = stringResource(Res.string.settings_trakt_missing_credentials),
-        statusMessage = uiState.statusMessage.takeUnless {
-            uiState.mode == TraktConnectionMode.CONNECTED
+        syncLabel = stringResource(Res.string.settings_mdblist_sync_now),
+        isSyncing = connected && progress.isLoading,
+        statusMessage = when {
+            !connected -> uiState.statusMessage
+            progress.isLoading -> stringResource(Res.string.settings_mdblist_syncing)
+            progress.lastSyncedAtEpochMs != null -> stringResource(
+                Res.string.settings_mdblist_last_synced,
+                formatLocalDateTime(progress.lastSyncedAtEpochMs!!),
+            )
+            else -> null
         },
-        errorMessage = uiState.errorMessage,
+        errorMessage = uiState.errorMessage ?: progress.errorMessage.takeIf { connected },
+        websiteLabel = stringResource(Res.string.settings_trakt_visit),
+        websiteUrl = TRAKT_WEBSITE_URL,
+        onSyncRequested = {
+            scope.launch {
+                WatchProgressSourceCoordinator.refreshProviderAndActiveSource(
+                    profileId = ProfileRepository.activeProfileId,
+                    providerId = TrackingProviderId.TRAKT,
+                    refreshProvider = {
+                        TraktProgressRepository.refreshNow()
+                        TraktProgressRepository.uiState.value.let { it.hasLoadedRemoteProgress && it.errorMessage == null }
+                    },
+                )
+            }
+        },
         onConnectRequested = TraktAuthRepository::onConnectRequested,
         onResumeAuthorization = {
             TraktAuthRepository.pendingAuthorizationUrl()
@@ -252,6 +288,7 @@ private fun TraktProviderCard(
 private fun SimklProviderCard(
     uiState: SimklAuthUiState,
     isSyncing: Boolean,
+    lastSyncedAtEpochMs: Long?,
     syncErrorMessage: String?,
     onSyncRequested: () -> Unit,
     onInfoRequested: () -> Unit,
@@ -276,6 +313,15 @@ private fun SimklProviderCard(
         syncLabel = stringResource(Res.string.settings_simkl_sync_now),
         infoLabel = stringResource(Res.string.settings_simkl_sync_info_action),
         isSyncing = isSyncing,
+        statusMessage = when {
+            uiState.mode != SimklConnectionMode.CONNECTED -> null
+            isSyncing -> stringResource(Res.string.settings_mdblist_syncing)
+            lastSyncedAtEpochMs != null -> stringResource(
+                Res.string.settings_mdblist_last_synced,
+                formatLocalDateTime(lastSyncedAtEpochMs),
+            )
+            else -> null
+        },
         missingCredentialsMessage = stringResource(Res.string.settings_simkl_missing_credentials),
         errorMessage = simklErrorMessage(uiState.error) ?: syncErrorMessage,
         websiteLabel = stringResource(Res.string.settings_simkl_visit),
@@ -813,3 +859,4 @@ private fun simklErrorMessage(error: SimklAuthError?): String? = when (error) {
 
 private val TrackingErrorColor = Color(0xFFFFDAD6)
 private const val SIMKL_WEBSITE_URL = "https://simkl.com"
+private const val TRAKT_WEBSITE_URL = "https://trakt.tv"

@@ -24,6 +24,8 @@ param(
     # An APK already built in Android Studio (full release variant). It is checked but not
     # rebuilt. Without it the script runs the tests and builds the APK itself.
     [string]$ApkPath,
+    # Matching unsigned device IPA, built and version-checked from the same commit.
+    [string]$IpaPath,
     # Skip the Android host tests (about 10 minutes). Not recommended.
     [switch]$SkipTests
 )
@@ -59,10 +61,7 @@ $remote = (& $git rev-parse origin/main).Trim()
 if ($head -ne $remote) { Fail 'Push main to GitHub first (HEAD is not origin/main).' }
 
 # GitHub login from Git Credential Manager.
-$request = [System.IO.Path]::GetTempFileName()
-[System.IO.File]::WriteAllText($request, "protocol=https`nhost=github.com`n`n", (New-Object System.Text.UTF8Encoding($false)))
-$credential = cmd /c "`"$git`" credential fill < `"$request`" 2>nul"
-Remove-Item $request -ErrorAction SilentlyContinue
+$credential = "protocol=https`nhost=github.com`npath=$repository.git`n`n" | & $git -c credential.interactive=never credential fill
 $token = ($credential | Where-Object { $_ -like 'password=*' }) -replace '^password=', ''
 if (-not $token) { Fail 'No GitHub login found. Sign in once with: git fetch' }
 $headers = @{ Authorization = "Bearer $token"; Accept = 'application/vnd.github+json' }
@@ -70,11 +69,31 @@ $api = "https://api.github.com/repos/$repository"
 try {
     Invoke-RestMethod -ErrorAction Stop -Headers $headers -Uri "$api/releases/tags/v$version" | Out-Null
     Fail "Morivia Android v$version is already published. Raise the version with scripts/bump-version.ps1."
-} catch [System.Net.WebException] {
-    if ($_.Exception.Response.StatusCode.value__ -ne 404) { throw }
+} catch {
+    if ([int]$_.Exception.Response.StatusCode -ne 404) { throw }
 }
 
 if ($ApkPath -and -not (Test-Path $ApkPath)) { Fail "APK not found: $ApkPath" }
+
+$ipa = $null
+if ($IpaPath) {
+    if (-not (Test-Path -LiteralPath $IpaPath -PathType Leaf)) { Fail "IPA not found: $IpaPath" }
+    $ipa = Get-Item -LiteralPath $IpaPath
+    if ($ipa.Name -cne "Morivia-iOS-$version-release.ipa") { Fail "Use the Release IPA from the iOS build for $version." }
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $package = [System.IO.Compression.ZipFile]::OpenRead($ipa.FullName)
+    try {
+        foreach ($entry in 'Info.plist', 'Morivia') {
+            if (-not $package.GetEntry("Payload/Morivia.app/$entry")) { Fail "IPA lacks the Morivia iOS app $entry." }
+        }
+        if ($package.GetEntry('Payload/Morivia.app/embedded.mobileprovision') -or
+            $package.GetEntry('Payload/Morivia.app/_CodeSignature/CodeResources')) {
+            Fail 'Use the unsigned IPA for Sideloadly.'
+        }
+    } finally {
+        $package.Dispose()
+    }
+}
 
 # 2. Build and check the Android APK
 if (-not $env:JAVA_HOME) { $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr' }
@@ -106,10 +125,11 @@ if (-not ($signer | Select-String -SimpleMatch "certificate SHA-256 digest: $rel
 
 # 3. Publish
 $dist = Join-Path $root "build/release-$version"
-if (Test-Path $dist) { Remove-Item -Recurse -Force $dist }
+if (Test-Path $dist) { $dist = "$dist-" + [guid]::NewGuid().ToString("N") }
 New-Item -ItemType Directory -Force $dist | Out-Null
 $apkName = "Morivia-Android-$version-arm64-v8a.apk"
 Copy-Item $apk.FullName (Join-Path $dist $apkName)
+if ($ipa) { Copy-Item -LiteralPath $ipa.FullName -Destination (Join-Path $dist $ipa.Name) }
 foreach ($file in 'README.md', 'CHANGELOG.md', 'LICENSE') { Copy-Item $file (Join-Path $dist $file) }
 $sums = Get-ChildItem $dist -Filter 'Morivia-*' | ForEach-Object {
     "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)"
@@ -117,7 +137,10 @@ $sums = Get-ChildItem $dist -Filter 'Morivia-*' | ForEach-Object {
 [System.IO.File]::WriteAllText((Join-Path $dist 'SHA256SUMS.txt'), (($sums -join "`n") + "`n"), $utf8)
 
 $notes = [regex]::Match($changelog, "(?ms)^## $([regex]::Escape($version))\r?\n(.*?)(?=^## |\z)").Groups[1].Value.Trim()
-$download = "`n`n## Download`n`n- **Android phones and tablets:** ``$apkName```n"
+$download = "`n`n## Download`n`n- **Android phones and tablets with a 64-bit ARM processor and Android 7.0 or newer:** ``$apkName```n"
+if ($ipa) {
+    $download += "- **iPhone and iPad with iOS or iPadOS 16.1 or newer:** ``$($ipa.Name)``. Install the unsigned IPA with [Sideloadly](https://sideloadly.io/).`n"
+}
 $download += "`nSHA256SUMS.txt lists the checksums. Built and published from a PC with scripts/publish-release.ps1 from commit $($head.Substring(0, 8)).`n"
 
 $body = @{ tag_name = "v$version"; target_commitish = $head; name = "Morivia Android v$version"; body = $notes + $download; draft = $true } |
@@ -125,7 +148,7 @@ $body = @{ tag_name = "v$version"; target_commitish = $head; name = "Morivia And
 $release = Invoke-RestMethod -ErrorAction Stop -Method Post -Headers $headers -Uri "$api/releases" `
     -Body ([System.Text.Encoding]::UTF8.GetBytes($body)) -ContentType 'application/json; charset=utf-8'
 foreach ($file in Get-ChildItem $dist) {
-    $type = if ($file.Extension -eq '.apk') { 'application/octet-stream' } else { 'text/plain' }
+    $type = if ($file.Extension -in '.apk', '.ipa') { 'application/octet-stream' } else { 'text/plain' }
     Write-Host "Uploading $($file.Name)..."
     Invoke-RestMethod -ErrorAction Stop -Method Post -Headers @{ Authorization = "Bearer $token" } `
         -Uri "https://uploads.github.com/repos/$repository/releases/$($release.id)/assets?name=$($file.Name)" `

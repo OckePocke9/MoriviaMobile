@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.9
+
+- Restore Morivia for iPhone and iPad, including the mpv player and the shared library, profiles and watch progress.
+- Add an unsigned arm64 IPA for iOS and iPadOS 16.1 or newer and a manual Codemagic build for installation with Sideloadly.
+- Use Morivia’s own Trakt and SIMKL sign-in links. The Trakt settings card shows status and supports manual sync, and the SIMKL card shows its last sync.
+- Renew expired SIMKL access tokens when the service has provided a refresh token. Save refresh tokens per profile in the platform’s secure storage.
+- Adjust Trakt authorization and progress refresh handling.
+- Raise the version to 1.9, build 49.
+
 ## 1.8
 
 - Shrink the release APK from 87.5 MB to 58 MB with the same features and data: R8 code and resource shrinking is on, and 238 theme icons, launcher icons and wordmarks are lossless WebP (16.7 MB to 7.4 MB, identical pixels). Launcher icons looked up by name are kept, and the release script and README build command no longer turn shrinking off.

@@ -4,7 +4,13 @@ import com.nuvio.app.core.build.AppVersionConfig
 import io.ktor.http.encodeURLParameter
 
 internal const val SIMKL_API_BASE_URL = "https://api.simkl.com"
-internal const val SIMKL_AUTHORIZE_URL = "https://simkl.com/oauth/authorize"
+// Simkl AUTH V2 (OAuth 2.0). V2 client IDs are rejected by the old /oauth/* endpoints.
+internal const val SIMKL_AUTHORIZE_URL = "https://simkl.com/oauth2/authorize"
+internal const val SIMKL_TOKEN_URL = "$SIMKL_API_BASE_URL/oauth2/token"
+internal const val SIMKL_REVOKE_URL = "$SIMKL_API_BASE_URL/oauth2/revoke"
+
+/** Without a scope, AUTH V2 grants read-only access; Morivia also writes history, ratings and scrobbles. */
+internal const val SIMKL_OAUTH_SCOPE = "media:read media:write"
 
 internal val simklAppVersion: String
     get() = AppVersionConfig.VERSION_NAME.ifBlank { "dev" }

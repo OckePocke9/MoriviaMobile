@@ -291,6 +291,7 @@
     <string name="settings_tmdb_module_episodes">Avsnitt</string>
     <string name="settings_tmdb_preferred_language">Språk</string>
     <string name="settings_trakt_disconnect">Koppla från</string>
+    <string name="settings_trakt_visit">Besök Trakt</string>
     <string name="settings_simkl_disconnect">Koppla från</string>
     <string name="settings_simkl_sync_now">Synkronisera nu</string>
     <string name="settings_tracking_not_connected">Inte ansluten</string>

@@ -1339,6 +1339,7 @@
     <string name="settings_trakt_connected_as">Connected as %1$s</string>
     <string name="settings_trakt_default_user">Trakt user</string>
     <string name="settings_trakt_disconnect">Disconnect</string>
+    <string name="settings_trakt_visit">Visit Trakt</string>
     <string name="settings_trakt_failed_open_browser">Failed to open browser</string>
     <string name="settings_trakt_features">FEATURES</string>
     <string name="settings_trakt_finish_sign_in">Finish connection approval</string>

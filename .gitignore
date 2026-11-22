@@ -15,6 +15,17 @@ captures
 .idea
 .DS_Store
 
+# Xcode
+xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+iosApp/Configuration/DeviceSigning.local.json
+# Local MPVKit iOS build environment (sparse APFS image, see MPVKit docs)
+.mpvkit-build.sparseimage
 
 # Signing keys other than the shared development keystore in .ci/
 keystore/

@@ -1,6 +1,6 @@
 # Morivia project rules
 
-Morivia is an Android app for phones and tablets, built with Kotlin Multiplatform and Compose Multiplatform. Shared code lives in `composeApp/src/commonMain`; Android code in `androidMain`/`androidFull`/`androidPlaystore`; the app module in `androidApp/`. Morivia is Android only since 2026-11-19 (the owner's decision): iOS and desktop are not targets, and the iOS app, its code and MPVKit were removed.
+Morivia is an Android app for phones and tablets, built with Kotlin Multiplatform and Compose Multiplatform. Shared code lives in `composeApp/src/commonMain`; Android code in `androidMain`/`androidFull`/`androidPlaystore`; the app module in `androidApp/`. The mobile repository also targets iPhone and iPad. Apple platform code lives in the iOS source sets and iosApp/. Desktop and TV are outside this repository.
 
 ## Release process for every app change
 
