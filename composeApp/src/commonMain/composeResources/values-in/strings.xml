@@ -445,8 +445,6 @@
     <string name="settings_licenses_attributions_imdb_body">Morivia menggunakan Dataset Non-Komersial IMDb, termasuk title.ratings.tsv.gz, untuk rating dan jumlah suara IMDb. Informasi disediakan oleh IMDb (https://www.imdb.com). Digunakan dengan izin. Data IMDb untuk penggunaan pribadi dan non-komersial sesuai ketentuan IMDb.</string>
     <string name="settings_licenses_attributions_trakt_title">Trakt</string>
     <string name="settings_licenses_attributions_trakt_body">Morivia terhubung ke Trakt untuk autentikasi akun, riwayat tontonan, sinkronisasi progres, data pustaka, rating, daftar, dan komentar. Morivia tidak berafiliasi atau didukung oleh Trakt.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia menhubungi Premiumize untuk autentikasi akun, akses pustaka cloud, pemeriksaan cache,dan fitur pemutaran cloud. Morivia tidak berafiliasi dengan atau diendorse oleh Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia menhubungi TorBox untuk autentikasi akun, akses pustaka cloud, pemeriksaan cache,dan fitur pemutaran cloud. Morivia tidak berafiliasi dengan atau diendorse oleh TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

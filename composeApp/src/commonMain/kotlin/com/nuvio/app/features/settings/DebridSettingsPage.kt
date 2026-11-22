@@ -211,7 +211,7 @@ import kotlinx.coroutines.runBlocking
 private const val CLOUD_SERVICES_FAQ_URL = "https://nuvioapp.space/faq#common-cloud-library-and-cloud-services"
 
 // Upper bound for device-authorization polling when every redeem keeps throwing. Device codes
-// expire server-side within minutes (TorBox/Premiumize), so this is comfortably beyond any code's
+// expire server-side within minutes (TorBox), so this is comfortably beyond any code's
 // lifetime — it only exists to stop an indefinitely-offline dialog from polling forever.
 private val DEVICE_AUTH_MAX_POLL_DURATION = 15.minutes
 
@@ -1349,7 +1349,7 @@ private fun DebridDeviceAuthDialog(
         session?.let(::savePendingDeviceAuthorization)
         isStarting = false
         statusMessage = if (session == null) {
-            startResult.exceptionOrNull()?.message?.takeIf { it.contains("PREMIUMIZE_CLIENT_ID") }
+            startResult.exceptionOrNull()?.message?.takeIf { it.contains("_CLIENT_ID") }
                 ?.let { missingConfigurationMessage }
                 ?: failedMessage
         } else {

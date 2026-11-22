@@ -94,8 +94,8 @@ class DebridStreamPresentationTest {
 
     @Test
     fun `default formatter replaces addon source labels for managed streams`() {
-        val stream = premiumizeDirectStream(
-            name = "[P2P] Torrentio 2160p - PM Instant",
+        val stream = torboxDirectStream(
+            name = "[P2P] Torrentio 2160p - TB Instant",
             filename = "The.Boys.S03E01.Payback.2160p.WEB-DL.H265.mkv",
             size = 12_000_000_000,
         )
@@ -110,12 +110,12 @@ class DebridStreamPresentationTest {
             ),
             settings = DebridSettings(
                 enabled = true,
-                providerApiKeys = mapOf(DebridProviders.PREMIUMIZE_ID to "pm_key"),
+                providerApiKeys = mapOf(DebridProviders.TORBOX_ID to "tb_key"),
             ),
         ).single().streams.single()
 
         val name = presented.name.orEmpty()
-        assertEquals("2160p PM Instant", name)
+        assertEquals("2160p TB Instant", name)
         assertFalse(name.contains("P2P", ignoreCase = true))
         assertFalse(name.contains("torrent", ignoreCase = true))
         assertFalse(name.contains("Torrentio", ignoreCase = true))
@@ -361,8 +361,8 @@ class DebridStreamPresentationTest {
 
     @Test
     fun `accepts release name words in parsed languages`() {
-        val stream = premiumizeDirectStream(
-            name = "PM Instant",
+        val stream = torboxDirectStream(
+            name = "TB Instant",
             filename = "Movie.2023.2160p.WEB-DL.H265.mkv",
             size = 12_000_000_000,
         ).let { stream ->
@@ -402,7 +402,7 @@ class DebridStreamPresentationTest {
     @Test
     fun `does not read title words as the stream language`() {
         fun languages(filename: String, title: String) = DebridStreamMetadata.facts(
-            stream = premiumizeDirectStream(name = "PM Instant", filename = filename, size = 1_000_000_000, title = title),
+            stream = torboxDirectStream(name = "TB Instant", filename = filename, size = 1_000_000_000, title = title),
             preferences = DebridStreamPreferences(),
         ).languages
 
@@ -420,8 +420,8 @@ class DebridStreamPresentationTest {
 
     @Test
     fun `does not read the parsed title as the stream language`() {
-        val stream = premiumizeDirectStream(
-            name = "PM Instant",
+        val stream = torboxDirectStream(
+            name = "TB Instant",
             filename = "The.French.Dispatch.2021.1080p.BluRay.ITA.x264-GRP.mkv",
             size = 1_000_000_000,
         ).let { stream ->
@@ -443,13 +443,13 @@ class DebridStreamPresentationTest {
 
     @Test
     fun `required language hides streams whose title only has the language word`() {
-        val italianTitle = premiumizeDirectStream(
+        val italianTitle = torboxDirectStream(
             name = "First",
             filename = "The.Italian.Job.2003.1080p.BluRay.ENG.x264-GRP.mkv",
             size = 1_000_000_000,
             title = "The Italian Job",
         )
-        val italianAudio = premiumizeDirectStream(
+        val italianAudio = torboxDirectStream(
             name = "Second",
             filename = "The.Italian.Job.2003.1080p.BluRay.ITA.x264-GRP.mkv",
             size = 2_000_000_000,
@@ -460,7 +460,7 @@ class DebridStreamPresentationTest {
             streams = listOf(italianTitle, italianAudio),
             settings = DebridSettings(
                 enabled = true,
-                providerApiKeys = mapOf(DebridProviders.PREMIUMIZE_ID to "key"),
+                providerApiKeys = mapOf(DebridProviders.TORBOX_ID to "key"),
                 streamPreferences = DebridStreamPreferences(requiredLanguages = listOf(DebridStreamLanguage.IT)),
             ),
         )
@@ -492,7 +492,7 @@ class DebridStreamPresentationTest {
             ),
         )
 
-    private fun premiumizeDirectStream(
+    private fun torboxDirectStream(
         name: String,
         filename: String,
         size: Long,
@@ -504,7 +504,7 @@ class DebridStreamPresentationTest {
             addonId = "addon:torrentio",
             clientResolve = StreamClientResolve(
                 type = "debrid",
-                service = DebridProviders.PREMIUMIZE_ID,
+                service = DebridProviders.TORBOX_ID,
                 filename = filename,
                 title = title,
                 isCached = true,

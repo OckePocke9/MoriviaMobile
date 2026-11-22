@@ -94,8 +94,6 @@
     <string name="settings_licenses_attributions_trakt_body">கணக்கு அங்கீகாரம், பார்த்த வரலாறு, முன்னேற்ற ஒத்திசைவு, நூலகத் தரவு, மதிப்பீடுகள், பட்டியல்கள் மற்றும் கருத்துகளுக்காக Morivia Trakt-ஐ இணைக்கிறது. Morivia, Trakt உடன் இணைக்கப்பட்டதோ அதன் ஆதரவைப் பெற்றதோ அல்ல.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">கணக்கு அங்கீகாரம், பார்க்கும் பட்டியல்கள், பார்த்த வரலாறு, பிளேபேக் முன்னேற்றம் மற்றும் scrobbling-க்காக Morivia Simkl-ஐ இணைக்கிறது. திரைப்படம், தொலைக்காட்சி மற்றும் anime கண்காணிப்புத் தரவை Simkl வழங்குகிறது. Morivia, Simkl உடன் இணைக்கப்பட்டதோ அதன் ஆதரவைப் பெற்றதோ அல்ல.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">கணக்கு அங்கீகாரம், cloud நூலக அணுகல், cache சரிபார்ப்பு மற்றும் cloud பிளேபேக் வசதிகளுக்காக Morivia Premiumize-ஐ இணைக்கிறது. Morivia, Premiumize உடன் இணைக்கப்பட்டதோ அதன் ஆதரவைப் பெற்றதோ அல்ல.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">கணக்கு அங்கீகாரம், cloud நூலக அணுகல், cache சரிபார்ப்பு மற்றும் cloud பிளேபேக் வசதிகளுக்காக Morivia TorBox-ஐ இணைக்கிறது. Morivia, TorBox உடன் இணைக்கப்பட்டதோ அதன் ஆதரவைப் பெற்றதோ அல்ல.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

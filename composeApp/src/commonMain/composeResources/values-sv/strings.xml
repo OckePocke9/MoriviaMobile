@@ -213,6 +213,8 @@
     <string name="compose_settings_root_downloads_title">Nedladdningar</string>
     <string name="compose_settings_root_general_section">ALLMÄNT</string>
     <string name="compose_settings_root_integrations_description">Hantera tillgängliga integrationer</string>
+    <string name="settings_connections_title">Anslutningar</string>
+    <string name="settings_connections_description">Integrationer, spårningstjänster och anslutna konton</string>
     <string name="compose_settings_root_notifications_description">Hantera aviseringar om nya avsnitt och skicka en testavisering.</string>
     <string name="compose_settings_root_privacy_policy_description">Läs hur Morivia hanterar dina uppgifter</string>
     <string name="compose_settings_root_streams_description">Visning av strömresultat och regler för märkesadresser.</string>

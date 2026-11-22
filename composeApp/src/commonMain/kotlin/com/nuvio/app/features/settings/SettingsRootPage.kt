@@ -62,16 +62,10 @@ internal fun LazyListScope.settingsRootContent(
                         )
                     }
                     SettingsCategory.Services -> {
+                        // One "Connections" card: integrations first, tracking underneath.
                         SettingsPageRow(
                             page = SettingsPage.Integrations,
-                            description = Res.string.compose_settings_root_integrations_description,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
-                        SettingsGroupDivider(isTablet = isTablet)
-                        SettingsPageRow(
-                            page = SettingsPage.TraktAuthentication,
-                            description = Res.string.compose_settings_root_tracking_description,
+                            description = Res.string.settings_connections_description,
                             isTablet = isTablet,
                             onPageClick = onPageClick,
                         )

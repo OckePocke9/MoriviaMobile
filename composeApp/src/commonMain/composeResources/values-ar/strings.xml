@@ -593,8 +593,6 @@
     <string name="settings_licenses_attributions_trakt_body">يتصل Morivia بخدمة Trakt لمصادقة الحساب وسجل المشاهدة ومزامنة التقدم وبيانات المكتبة والتقييمات والقوائم والتعليقات. لا يرتبط Morivia بخدمة Trakt ولا يحظى بتأييدها.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">يتصل Morivia بخدمة Simkl لمصادقة الحساب وقوائم المشاهدة وسجل المشاهدة وتقدم التشغيل وميزة scrobbling. توفر Simkl بيانات تتبع الأفلام والمسلسلات والأنمي. لا يرتبط Morivia بخدمة Simkl ولا يحظى بتأييدها.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">يتصل Morivia بخدمة Premiumize لمصادقة الحساب والوصول إلى المكتبة السحابية وفحص التخزين المؤقت وميزات التشغيل السحابي. لا يرتبط Morivia بخدمة Premiumize ولا يحظى بتأييدها.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">يتصل Morivia بخدمة TorBox لمصادقة الحساب والوصول إلى المكتبة السحابية وفحص التخزين المؤقت وميزات التشغيل السحابي. لا يرتبط Morivia بخدمة TorBox ولا يحظى بتأييدها.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

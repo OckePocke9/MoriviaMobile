@@ -38,26 +38,6 @@ internal class RealDebridFileSelector {
     )
 }
 
-internal class PremiumizeDirectDownloadFileSelector {
-    fun selectFile(
-        files: List<PremiumizeDirectDownloadFileDto>,
-        resolve: StreamClientResolve,
-        season: Int?,
-        episode: Int?,
-    ): PremiumizeDirectDownloadFileDto? = selectDebridFile(
-        files = files,
-        resolve = resolve,
-        season = season,
-        episode = episode,
-        path = { it.path.orEmpty() },
-        isPlayable = { !it.link.isNullOrBlank() && it.displayName().hasVideoExtension() },
-        size = { it.size ?: 0L },
-    )
-}
-
-internal fun PremiumizeDirectDownloadFileDto.displayName(): String =
-    path.orEmpty().substringAfterLast('/').substringAfterLast('\\').ifBlank { path.orEmpty() }
-
 private fun <T> selectDebridFile(
     files: List<T>,
     resolve: StreamClientResolve,

@@ -1600,8 +1600,6 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_licenses_attributions_nuvio_body">Kildekode og lisensvilkår finnes i prosjektets repository.</string>
     <string name="settings_licenses_attributions_nuvio_license">Lisensiert under GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_nuvio_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia kobler til Premiumize for kontoautentisering, tilgang til skybibliotek, cachesjekker og skyavspillingsfunksjoner. Morivia er ikke tilknyttet eller godkjent av Premiumize.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
     <string name="settings_licenses_attributions_section_app">APP-LISENS</string>
     <string name="settings_licenses_attributions_section_data">DATA &amp; TJENESTER</string>
     <string name="settings_licenses_attributions_section_playback">AVSPILLINGS-LISENS</string>

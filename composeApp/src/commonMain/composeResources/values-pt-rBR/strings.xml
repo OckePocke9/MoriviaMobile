@@ -596,8 +596,6 @@
     <string name="settings_licenses_attributions_trakt_body">O Morivia conecta-se ao Trakt para autenticação de conta, histórico de assistidos, sincronização de progresso, dados da biblioteca, notas, listas e comentários. O Morivia não é afiliado ou endossado pelo Trakt.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">O Morivia se conecta ao Simkl para autenticação de conta, listas, histórico de reprodução, progresso e scrobbling. Dados de rastreamento de filmes, séries e animes são fornecidos pelo Simkl. O Morivia não é afiliado nem endossado pelo Simkl.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">O Morivia conecta-se ao Premiumize para autenticação de conta, acesso à biblioteca na nuvem, verificações de cache e recursos de reprodução na nuvem. O Morivia não é afiliado nem endossado pelo Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">O Morivia conecta-se ao TorBox para autenticação de conta, acesso à biblioteca na nuvem, verificações de cache e recursos de reprodução na nuvem. O Morivia não é afiliado nem endossado pelo TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

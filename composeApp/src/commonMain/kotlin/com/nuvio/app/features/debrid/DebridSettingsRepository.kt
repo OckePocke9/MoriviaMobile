@@ -95,10 +95,6 @@ object DebridSettingsRepository {
         setProviderApiKey(DebridProviders.REAL_DEBRID_ID, value)
     }
 
-    fun setPremiumizeApiKey(value: String) {
-        setProviderApiKey(DebridProviders.PREMIUMIZE_ID, value)
-    }
-
     fun setPreferredResolverProviderId(providerId: String) {
         ensureLoaded()
         val normalized = DebridProviders.byId(providerId)?.id.orEmpty()

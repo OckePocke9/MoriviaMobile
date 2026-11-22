@@ -32,16 +32,6 @@ class DebridFileSelectorReleaseTest {
                     )?.id,
                     release.title,
                 )
-                assertEquals(
-                    expected.name,
-                    PremiumizeDirectDownloadFileSelector().selectFile(
-                        files.map { PremiumizeDirectDownloadFileDto(path = it.name, size = it.size, link = "https://example.com/${it.id}") },
-                        resolve,
-                        release.season,
-                        release.episode,
-                    )?.path,
-                    release.title,
-                )
             }
         }
     }

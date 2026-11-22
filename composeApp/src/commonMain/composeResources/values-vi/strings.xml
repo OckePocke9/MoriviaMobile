@@ -596,8 +596,6 @@
     <string name="settings_licenses_attributions_trakt_body">Morivia kết nối với Trakt để xác thực tài khoản, đồng bộ lịch sử đã xem, tiến độ xem, dữ liệu thư viện, xếp hạng, danh sách và bình luận. Morivia không có liên kết hoặc được Trakt chứng thực.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">Morivia kết nối với Simkl để xác thực tài khoản, đồng bộ danh sách theo dõi, lịch sử đã xem, tiến trình phát lại và ghi nhật ký phát lại. Dữ liệu theo dõi phim, TV và anime do Simkl cung cấp. Morivia không liên kết hoặc được xác nhận bởi Simkl.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia kết nối với Premiumize để xác thực tài khoản, truy cập thư viện đám mây, kiểm tra bộ nhớ đệm và tính năng phát từ đám mây. Morivia không liên kết hoặc được xác nhận bởi Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia kết nối với TorBox để xác thực tài khoản, truy cập thư viện đám mây, kiểm tra bộ nhớ đệm và tính năng phát từ đám mây. Morivia không liên kết hoặc được xác nhận bởi TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

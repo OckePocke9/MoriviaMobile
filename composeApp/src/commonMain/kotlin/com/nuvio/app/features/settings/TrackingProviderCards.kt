@@ -204,8 +204,12 @@ internal fun TrackingProviderCards(
         SimklProviderCard(
             uiState = simklUiState,
             isSyncing = syncState.isLoading,
-            lastSyncedAtEpochMs = syncState.snapshot.lastSyncedAtEpochMs
-                ?: syncState.snapshot.lastCheckedAtEpochMs,
+            // When the last sync ran: a check that finds no changes on Simkl only moves
+            // lastChecked, so show the later of the two.
+            lastSyncedAtEpochMs = listOfNotNull(
+                syncState.snapshot.lastSyncedAtEpochMs,
+                syncState.snapshot.lastCheckedAtEpochMs,
+            ).maxOrNull(),
             syncErrorMessage = syncState.errorMessage,
             onSyncRequested = onSimklSyncRequested,
             modifier = Modifier.fillMaxWidth(),

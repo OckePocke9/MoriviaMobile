@@ -495,8 +495,6 @@
     <string name="settings_licenses_attributions_imdb_body">Morivia utilizează seturi de date IMDb non-comerciale, inclusiv title.ratings.tsv.gz, pentru evaluări și numărul de voturi IMDb. Informații oferite prin amabilitatea IMDb (https://www.imdb.com). Utilizate cu permisiune. Datele IMDb sunt destinate exclusiv utilizării personale și non-comerciale, conform termenilor IMDb.</string>
     <string name="settings_licenses_attributions_trakt_title">Trakt</string>
     <string name="settings_licenses_attributions_trakt_body">Morivia se conectează la Trakt pentru autentificarea contului, istoricul de vizionare, sincronizarea progresului, datele din bibliotecă, evaluări, liste și comentarii. Morivia nu este afiliat cu și nici aprobat de Trakt.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia se conectează la Premiumize pentru autentificarea contului, accesul la biblioteca din cloud, verificarea cache-ului și funcții de redare în cloud. Morivia nu este afiliat cu și nici aprobat de Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia se conectează la TorBox pentru autentificarea contului, accesul la biblioteca din cloud, verificarea cache-ului și funcții de redare în cloud. Morivia nu este afiliat cu și nici aprobat de TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

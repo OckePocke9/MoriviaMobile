@@ -596,8 +596,6 @@
     <string name="settings_licenses_attributions_trakt_body">Morivia maakt verbinding met Trakt voor accountauthenticatie, kijkgeschiedenis, voortgangssynchronisatie, bibliotheekgegevens, beoordelingen, lijsten en reacties. Morivia is niet gelieerd aan of goedgekeurd door Trakt.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">Morivia maakt verbinding met Simkl voor accountauthenticatie, kijklijsten, kijkgeschiedenis, voortgangssynchronisatie en scrobbelen. Film-, tv- en animetrackinggegevens worden door Simkl geleverd. Morivia is niet gelieerd aan of goedgekeurd door Simkl.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia maakt verbinding met Premiumize voor accountauthenticatie, toegang tot cloudbibliotheek, cachecontroles en cloud-afspeelfuncties. Morivia is niet gelieerd aan of goedgekeurd door Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia maakt verbinding met TorBox voor accountauthenticatie, toegang tot cloudbibliotheek, cachecontroles en cloud-afspeelfuncties. Morivia is niet gelieerd aan of goedgekeurd door TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

@@ -596,8 +596,6 @@
     <string name="settings_licenses_attributions_trakt_body">Moriviaはアカウント認証、視聴履歴、進捗同期、ライブラリデータ、評価、リスト、コメントのためにTraktと連携しています。MoriviaはTraktと提携・承認されたものではありません。</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">Moriviaはアカウント認証、ウォッチリスト、視聴履歴、再生進捗、スクロブルのためにSimklと連携しています。映画・TV・アニメのトラッキングデータはSimklが提供しています。MoriviaはSimklと提携・承認されたものではありません。</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Moriviaはアカウント認証、クラウドライブラリアクセス、キャッシュ確認、クラウド再生機能のためにPremiumizeと連携しています。MoriviaはPremiumizeと提携・承認されたものではありません。</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Moriviaはアカウント認証、クラウドライブラリアクセス、キャッシュ確認、クラウド再生機能のためにTorBoxと連携しています。MoriviaはTorBoxと提携・承認されたものではありません。</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

@@ -189,17 +189,10 @@ class CloudLibraryStoreTest {
             TorboxCloudLibraryPosterUrl,
             cloudLibraryProviderPosterUrl("torbox:Torrent:29773238"),
         )
-        assertEquals(
-            PremiumizeCloudLibraryPosterUrl,
-            cloudLibraryProviderPosterUrl("cloud:premiumize"),
-        )
+        assertEquals(null, cloudLibraryProviderPosterUrl("cloud:premiumize"))
         assertTrue(
             cloudLibraryDisplayArtworkUrl(TorboxCloudLibraryPosterUrl)
                 ?.startsWith("data:image/svg+xml;base64,") == true,
-        )
-        assertEquals(
-            PremiumizeCloudLibraryPosterUrl,
-            cloudLibraryDisplayArtworkUrl(PremiumizeCloudLibraryPosterUrl),
         )
     }
 }

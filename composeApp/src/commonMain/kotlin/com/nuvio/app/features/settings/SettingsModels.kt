@@ -216,8 +216,9 @@ internal enum class SettingsPage(
         category = SettingsCategory.Look,
         parentPage = Layout,
     ),
+    // "Connections": Integrations and Tracking on one page (owner's request, 2026-11-22).
     Integrations(
-        titleRes = Res.string.compose_settings_page_integrations,
+        titleRes = Res.string.settings_connections_title,
         category = SettingsCategory.Services,
         parentPage = Root,
     ),

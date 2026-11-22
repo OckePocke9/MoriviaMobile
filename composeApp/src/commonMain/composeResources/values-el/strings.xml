@@ -2149,8 +2149,6 @@
     <string name="settings_licenses_attributions_nuvio_body">Ο πηγαίος κώδικας και οι όροι αδειοδότησης είναι διαθέσιμοι στο αποθετήριο του έργου.</string>
     <string name="settings_licenses_attributions_nuvio_license">Αδειοδοτείται υπό την GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_nuvio_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_premiumize_body">Το Morivia συνδέεται με το Premiumize για ταυτοποίηση λογαριασμού, πρόσβαση σε βιβλιοθήκη Cloud, ελέγχους προσωρινής μνήμης και λειτουργίες αναπαραγωγής από το Cloud. Το Morivia δεν σχετίζεται με το Premiumize ούτε έχει την υποστήριξή του.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
     <string name="settings_licenses_attributions_section_app">ΑΔΕΙΑ ΕΦΑΡΜΟΓΗΣ</string>
     <string name="settings_licenses_attributions_section_data">ΔΕΔΟΜΕΝΑ &amp; ΥΠΗΡΕΣΙΕΣ</string>
     <string name="settings_licenses_attributions_section_playback">ΑΔΕΙΑ ΑΝΑΠΑΡΑΓΩΓΗΣ</string>

@@ -504,8 +504,6 @@
     <string name="settings_licenses_attributions_trakt_body">Morivia; hesap doğrulama, izleme geçmişi, ilerleme eşitleme, kitaplık verileri, puanlar, listeler ve yorumlar için Trakt'a bağlanır. Morivia'nun Trakt ile hiçbir bağı yoktur ve Trakt tarafından onaylanmamıştır.</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">Morivia; hesap kimlik doğrulaması, izleme listeleri, izleme geçmişi, oynatma ilerlemesi ve scrobbling için Simkl'ye bağlanır. Film, TV ve anime takip verileri Simkl tarafından sağlanır. Morivia'nun Simkl ile herhangi bir bağı veya Simkl onayı yoktur.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia; hesap doğrulama, bulut kitaplığı erişimi, önbellek kontrolleri ve bulut oynatma özellikleri için Premiumize'a bağlanır. Morivia'nun Premiumize ile hiçbir bağı yoktur ve Premiumize tarafından onaylanmamıştır.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia; hesap doğrulama, bulut kitaplığı erişimi, önbellek kontrolleri ve bulut oynatma özellikleri için TorBox'a bağlanır. Morivia'nun TorBox ile hiçbir bağı yoktur ve TorBox tarafından onaylanmamıştır.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

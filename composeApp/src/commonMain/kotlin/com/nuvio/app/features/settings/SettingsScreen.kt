@@ -93,6 +93,7 @@ import com.nuvio.app.features.p2p.P2pSettingsRepository
 import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.compose_settings_page_root
+import nuvio.composeapp.generated.resources.compose_settings_page_tracking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -774,12 +775,26 @@ private fun MobileSettingsScreen(
                     isTablet = false,
                     uiState = metaScreenSettingsUiState,
                 )
-                SettingsPage.Integrations -> integrationsContent(
-                    isTablet = false,
-                    onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
-                    onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
-                    onDebridClick = { onPageChange(SettingsPage.Debrid) },
-                )
+                // "Connections": integrations first, tracking underneath. The old Tracking
+                // page (search results, saved navigation) opens the same combined page.
+                SettingsPage.Integrations, SettingsPage.TraktAuthentication -> {
+                    integrationsContent(
+                        isTablet = false,
+                        onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                        onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
+                        onDebridClick = { onPageChange(SettingsPage.Debrid) },
+                    )
+                    trackingSettingsContent(
+                        isTablet = false,
+                        traktUiState = traktAuthUiState,
+                        simklUiState = simklAuthUiState,
+                        settingsUiState = trackingSettingsUiState,
+                        commentsEnabled = traktCommentsEnabled,
+                        mdbListConnected = mdbListConnected,
+                        onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                        accountsSectionTitle = Res.string.compose_settings_page_tracking,
+                    )
+                }
                 SettingsPage.TmdbEnrichment -> tmdbSettingsContent(
                     isTablet = false,
                     settings = tmdbSettings,
@@ -791,15 +806,6 @@ private fun MobileSettingsScreen(
                 SettingsPage.Debrid -> debridSettingsContent(
                     isTablet = false,
                     settings = debridSettings,
-                )
-                SettingsPage.TraktAuthentication -> trackingSettingsContent(
-                    isTablet = false,
-                    traktUiState = traktAuthUiState,
-                    simklUiState = simklAuthUiState,
-                    settingsUiState = trackingSettingsUiState,
-                    commentsEnabled = traktCommentsEnabled,
-                    mdbListConnected = mdbListConnected,
-                    onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
                 )
             }
         }
@@ -1186,12 +1192,24 @@ private fun TabletSettingsScreen(
                         isTablet = true,
                         uiState = metaScreenSettingsUiState,
                     )
-                    SettingsPage.Integrations -> integrationsContent(
-                        isTablet = true,
-                        onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
-                        onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
-                        onDebridClick = { onPageChange(SettingsPage.Debrid) },
-                    )
+                    SettingsPage.Integrations, SettingsPage.TraktAuthentication -> {
+                        integrationsContent(
+                            isTablet = true,
+                            onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
+                            onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
+                            onDebridClick = { onPageChange(SettingsPage.Debrid) },
+                        )
+                        trackingSettingsContent(
+                            isTablet = true,
+                            traktUiState = traktAuthUiState,
+                            simklUiState = simklAuthUiState,
+                            settingsUiState = trackingSettingsUiState,
+                            commentsEnabled = traktCommentsEnabled,
+                            mdbListConnected = mdbListConnected,
+                            onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
+                            accountsSectionTitle = Res.string.compose_settings_page_tracking,
+                        )
+                    }
                     SettingsPage.TmdbEnrichment -> tmdbSettingsContent(
                         isTablet = true,
                         settings = tmdbSettings,
@@ -1203,15 +1221,6 @@ private fun TabletSettingsScreen(
                     SettingsPage.Debrid -> debridSettingsContent(
                         isTablet = true,
                         settings = debridSettings,
-                    )
-                    SettingsPage.TraktAuthentication -> trackingSettingsContent(
-                        isTablet = true,
-                        traktUiState = traktAuthUiState,
-                        simklUiState = simklAuthUiState,
-                        settingsUiState = trackingSettingsUiState,
-                        commentsEnabled = traktCommentsEnabled,
-                        mdbListConnected = mdbListConnected,
-                        onCommentsEnabledChange = TraktCommentsSettings::setEnabled,
                     )
                 }
             }

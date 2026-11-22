@@ -448,8 +448,6 @@
     <string name="settings_licenses_attributions_imdb_body">Morivia korzysta z niekomercyjnych zbiorów danych IMDb, w tym title.ratings.tsv.gz, do ocen i liczby głosów IMDb. Informacje dzięki uprzejmości IMDb (https://www.imdb.com). Wykorzystywane za zgodą. Dane IMDb służą do użytku osobistego i niekomercyjnego zgodnie z warunkami IMDb.</string>
     <string name="settings_licenses_attributions_trakt_title">Trakt</string>
     <string name="settings_licenses_attributions_trakt_body">Morivia łączy się z Trakt w celu uwierzytelniania konta, historii oglądania, synchronizacji postępu, danych biblioteki, ocen, list i komentarzy. Morivia nie jest powiązane z Trakt ani przez nie wspierane.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia łączy się z Premiumize w celu uwierzytelniania konta, dostępu do biblioteki w chmurze, sprawdzania pamięci podręcznej i odtwarzania z chmury. Morivia nie jest powiązane z Premiumize ani przez nie wspierane.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia łączy się z TorBox w celu uwierzytelniania konta, dostępu do biblioteki w chmurze, sprawdzania pamięci podręcznej i odtwarzania z chmury. Morivia nie jest powiązane z TorBox ani przez nie wspierane.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

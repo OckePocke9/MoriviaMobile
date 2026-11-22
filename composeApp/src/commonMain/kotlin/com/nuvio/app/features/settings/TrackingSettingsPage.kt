@@ -118,6 +118,7 @@ import nuvio.composeapp.generated.resources.trakt_watch_progress_source_nuvio
 import nuvio.composeapp.generated.resources.trakt_watch_progress_source_trakt
 import nuvio.composeapp.generated.resources.trakt_watch_progress_subtitle
 import nuvio.composeapp.generated.resources.trakt_watch_progress_title
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.trackingSettingsContent(
@@ -128,10 +129,11 @@ internal fun LazyListScope.trackingSettingsContent(
     commentsEnabled: Boolean,
     onCommentsEnabledChange: (Boolean) -> Unit,
     mdbListConnected: Boolean,
+    accountsSectionTitle: StringResource = Res.string.settings_tracking_services,
 ) {
     item {
         SettingsSection(
-            title = stringResource(Res.string.settings_tracking_services),
+            title = stringResource(accountsSectionTitle).uppercase(),
             isTablet = isTablet,
         ) {
             TrackingProviderCards(
@@ -144,7 +146,7 @@ internal fun LazyListScope.trackingSettingsContent(
 
     item {
         SettingsSection(
-            title = stringResource(Res.string.settings_tracking_data_sources),
+            title = stringResource(Res.string.settings_tracking_data_sources).uppercase(),
             isTablet = isTablet,
         ) {
             TrackingDataSources(
@@ -159,7 +161,7 @@ internal fun LazyListScope.trackingSettingsContent(
     if (traktUiState.mode == TraktConnectionMode.CONNECTED) {
         item {
             SettingsSection(
-                title = stringResource(Res.string.settings_tracking_viewing_discovery),
+                title = stringResource(Res.string.settings_tracking_viewing_discovery).uppercase(),
                 isTablet = isTablet,
             ) {
                 TrackingViewingAndDiscovery(
@@ -176,7 +178,7 @@ internal fun LazyListScope.trackingSettingsContent(
     if (simklUiState.mode == SimklConnectionMode.CONNECTED) {
         item {
             SettingsSection(
-                title = stringResource(Res.string.settings_tracking_anime_section),
+                title = stringResource(Res.string.settings_tracking_anime_section).uppercase(),
                 isTablet = isTablet,
             ) {
                 AnimeIdPreferenceSection(
@@ -190,7 +192,7 @@ internal fun LazyListScope.trackingSettingsContent(
     if (mdbListConnected) {
         item {
             SettingsSection(
-                title = stringResource(Res.string.settings_tracking_mdblist_section),
+                title = stringResource(Res.string.settings_tracking_mdblist_section).uppercase(),
                 isTablet = isTablet,
             ) {
                 MdbListLibraryListsSection(isTablet = isTablet)

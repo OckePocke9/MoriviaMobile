@@ -479,8 +479,6 @@
     <string name="settings_licenses_attributions_imdb_body">Morivia používá nekomerční datové sady IMDb, včetně title.ratings.tsv.gz, pro hodnocení a počty hlasů na IMDb. Informace poskytl IMDb (https://www.imdb.com). Použito se svolením. Data IMDb jsou určena pro osobní a nekomerční použití podle podmínek IMDb.</string>
     <string name="settings_licenses_attributions_trakt_title">Trakt</string>
     <string name="settings_licenses_attributions_trakt_body">Morivia se připojuje k Trakt pro ověřování účtu, historii sledování, synchronizaci postupu, data knihovny, hodnocení, seznamy a komentáře. Morivia není přidruženo k Trakt a Trakt tuto aplikaci nijak neschválil.</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia se připojuje k Premiumize pro ověřování účtu, přístup do cloudové knihovny, kontrolu mezipaměti a funkce cloudového přehrávání. Morivia není přidruženo k Premiumize.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia se připojuje k TorBox pro ověřování účtu, přístup do cloudové knihovny, kontrolu mezipaměti a funkce cloudového přehrávání. Morivia není přidruženo k TorBox.</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

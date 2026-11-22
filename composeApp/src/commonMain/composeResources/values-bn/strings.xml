@@ -589,8 +589,6 @@
     <string name="settings_licenses_attributions_trakt_body">Morivia অ্যাকাউন্ট প্রমাণীকরণ, দেখার হিস্ট্রি, অগ্রগতি সিঙ্ক, লাইব্রেরি ডেটা, রেটিং, তালিকা এবং মন্তব্যের জন্য Trakt-এর সাথে সংযোগ করে। Morivia Trakt-এর সাথে সম্পর্কিত বা তাদের দ্বারা অনুমোদিত নয়।</string>
     <string name="settings_licenses_attributions_simkl_title">Simkl</string>
     <string name="settings_licenses_attributions_simkl_body">Morivia অ্যাকাউন্ট প্রমাণীকরণ, ওয়াচলিস্ট, দেখার হিস্ট্রি, প্লেব্যাক অগ্রগতি এবং স্ক্রবলিংয়ের জন্য Simkl-এর সাথে সংযোগ করে। সিনেমা, টিভি এবং অ্যানিমে ট্র্যাকিং ডেটা Simkl সরবরাহ করে। Morivia Simkl-এর সাথে সম্পর্কিত বা তাদের দ্বারা অনুমোদিত নয়।</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">Morivia অ্যাকাউন্ট প্রমাণীকরণ, ক্লাউড লাইব্রেরি অ্যাক্সেস, ক্যাশে চেক এবং ক্লাউড প্লেব্যাক ফিচারের জন্য Premiumize-এর সাথে সংযোগ করে। Morivia Premiumize-এর সাথে সম্পর্কিত বা তাদের দ্বারা অনুমোদিত নয়।</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">Morivia অ্যাকাউন্ট প্রমাণীকরণ, ক্লাউড লাইব্রেরি অ্যাক্সেস, ক্যাশে চেক এবং ক্লাউড প্লেব্যাক ফিচারের জন্য TorBox-এর সাথে সংযোগ করে। Morivia TorBox-এর সাথে সম্পর্কিত বা তাদের দ্বারা অনুমোদিত নয়।</string>
     <string name="settings_licenses_attributions_mdblist_title">MDBList</string>

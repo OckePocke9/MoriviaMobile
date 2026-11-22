@@ -105,12 +105,12 @@ class SettingsPagesTest {
         assertEquals(SettingsPage.Layout, opened)
         compose.onNodeWithText("Playback").performScrollTo().performClick()
         assertEquals(SettingsPage.Playback, opened)
-        compose.onNodeWithText("Tracking").performScrollTo().performClick()
-        assertEquals(SettingsPage.TraktAuthentication, opened)
+        compose.onNodeWithText("Connections").performScrollTo().performClick()
+        assertEquals(SettingsPage.Integrations, opened)
     }
 
     @Test
-    fun tabletServicesGroupContainsIntegrationsAndTracking() {
+    fun tabletServicesGroupHasOneConnectionsCard() {
         var opened: SettingsPage? = null
         compose.setContent {
             NuvioTheme {
@@ -123,9 +123,10 @@ class SettingsPagesTest {
                 }
             }
         }
-        compose.onNodeWithText("Integrations").assertIsDisplayed()
-        compose.onNodeWithText("Tracking").performClick()
-        assertEquals(SettingsPage.TraktAuthentication, opened)
+        // Integrations and Tracking are one "Connections" card; there is no separate Tracking row.
+        compose.onNodeWithText("Connections").performClick()
+        assertEquals(SettingsPage.Integrations, opened)
+        compose.onNodeWithText("Tracking").assertDoesNotExist()
         compose.onNodeWithText("Appearance").assertDoesNotExist()
         compose.onNodeWithText("Playback").assertDoesNotExist()
     }

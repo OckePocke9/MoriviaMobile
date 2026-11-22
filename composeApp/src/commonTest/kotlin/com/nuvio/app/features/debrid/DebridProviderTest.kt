@@ -15,13 +15,9 @@ class DebridProviderTest {
     }
 
     @Test
-    fun `premiumize exposes oauth and cloud service capabilities`() {
-        assertTrue(DebridProviders.Premiumize.visibleInUi)
-        assertTrue(DebridProviders.Premiumize.authMethod == DebridProviderAuthMethod.DeviceCode)
-        assertTrue(DebridProviders.Premiumize.supports(DebridProviderCapability.ClientResolve))
-        assertTrue(DebridProviders.Premiumize.supports(DebridProviderCapability.LocalTorrentCacheCheck))
-        assertTrue(DebridProviders.Premiumize.supports(DebridProviderCapability.LocalTorrentResolve))
-        assertTrue(DebridProviders.Premiumize.supports(DebridProviderCapability.CloudLibrary))
+    fun `premiumize is no longer a provider`() {
+        assertTrue(DebridProviders.byId("premiumize") == null)
+        assertTrue(DebridProviders.all().none { it.id == "premiumize" })
     }
 
     @Test

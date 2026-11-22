@@ -1387,8 +1387,6 @@
     <string name="settings_advanced_clear_cw_cache">„Nézés folytatása” gyorsítótár törlése</string>
     <string name="settings_advanced_clear_cw_cache_subtitle">A gyorsítótárazott „Nézés folytatása” adatok eltávolítása és a lejátszási folyamat frissítése</string>
     <string name="settings_advanced_clear_cw_cache_done">Gyorsítótár törölve</string>
-    <string name="settings_licenses_attributions_premiumize_title">Premiumize</string>
-    <string name="settings_licenses_attributions_premiumize_body">A Morivia a Premiumize szolgáltatáshoz kapcsolódik a fiók hitelesítése, a felhő könyvtár elérése, a gyorsítótár ellenőrzése és a felhőalapú lejátszási funkciók érdekében. A Morivia nem áll kapcsolatban a Premiumize-zal, és az nem támogatja azt.</string>
     <string name="settings_licenses_attributions_torbox_title">TorBox</string>
     <string name="settings_licenses_attributions_torbox_body">A Morivia a TorBox szolgáltatáshoz kapcsolódik a fiók hitelesítése, a felhő könyvtár elérése, a gyorsítótár ellenőrzése és a felhőalapú lejátszási funkciók érdekében. A Morivia nem áll kapcsolatban a TorBox-szal, és az nem támogatja azt.</string>
     <string name="settings_account_sync_backend">Szinkronizációs háttérrendszer</string>
