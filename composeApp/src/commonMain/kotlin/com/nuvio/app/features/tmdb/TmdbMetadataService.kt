@@ -1140,6 +1140,7 @@ object TmdbMetadataService {
                 }
             }
         }.getOrElse { error ->
+            if (error is kotlinx.coroutines.CancellationException) throw error
             log.w(error) { "Failed to fetch English credits fallback for $numericId" }
             emptyMap()
         }
@@ -1196,11 +1197,15 @@ object TmdbMetadataService {
     ): T? {
         val apiKey = TmdbSettingsRepository.effectiveApiKey().takeIf(String::isNotBlank) ?: return null
         val url = buildTmdbUrl(endpoint = endpoint, apiKey = apiKey, query = query)
-        return runCatching {
+        return try {
             json.decodeFromString<T>(httpGetText(url))
-        }.onFailure { error ->
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            // Leaving a screen cancels its requests; that is not a TMDB failure.
+            throw error
+        } catch (error: Exception) {
             log.w { "TMDB request failed for $endpoint: ${error.message}" }
-        }.getOrNull()
+            null
+        }
     }
 
     private suspend fun fetchMoreLikeThis(

@@ -103,11 +103,15 @@ object TmdbService {
         query: Map<String, String> = emptyMap(),
     ): T? {
         val url = buildTmdbUrl(endpoint = endpoint, apiKey = apiKey, query = query)
-        return runCatching {
+        return try {
             json.decodeFromString<T>(httpGetText(url))
-        }.onFailure { error ->
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            // Leaving a screen cancels its requests; that is not a TMDB failure.
+            throw error
+        } catch (error: Exception) {
             log.w { "TMDB request failed for $endpoint: ${error.message}" }
-        }.getOrNull()
+            null
+        }
     }
 
     internal fun normalizeMediaType(mediaType: String): String =

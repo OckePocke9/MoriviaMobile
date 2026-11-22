@@ -362,11 +362,14 @@ object TmdbCollectionSourceResolver {
         query: Map<String, String> = emptyMap(),
     ): T? {
         val url = buildTmdbUrl(endpoint = endpoint, apiKey = apiKey, query = query)
-        return runCatching {
+        return try {
             json.decodeFromString<T>(httpGetText(url))
-        }.onFailure { error ->
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            throw error
+        } catch (error: Exception) {
             log.w(error) { "TMDB source request failed for $endpoint" }
-        }.getOrNull()
+            null
+        }
     }
 
     private fun List<MetaPreview>.sortedFor(sortBy: String?): List<MetaPreview> =

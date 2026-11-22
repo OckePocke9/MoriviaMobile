@@ -90,6 +90,8 @@ import nuvio.composeapp.generated.resources.settings_mdblist_last_synced
 import nuvio.composeapp.generated.resources.settings_mdblist_sync_now
 import nuvio.composeapp.generated.resources.settings_mdblist_syncing
 import nuvio.composeapp.generated.resources.settings_trakt_visit
+import nuvio.composeapp.generated.resources.settings_trakt_disconnect_account
+import nuvio.composeapp.generated.resources.settings_simkl_disconnect_account
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.action_cancel
 import nuvio.composeapp.generated.resources.action_collapse
@@ -108,7 +110,6 @@ import nuvio.composeapp.generated.resources.settings_simkl_missing_credentials
 import nuvio.composeapp.generated.resources.settings_simkl_open_login
 import nuvio.composeapp.generated.resources.settings_simkl_sign_in_description
 import nuvio.composeapp.generated.resources.settings_simkl_sign_in_failed
-import nuvio.composeapp.generated.resources.settings_simkl_sync_info_action
 import nuvio.composeapp.generated.resources.settings_simkl_sync_now
 import nuvio.composeapp.generated.resources.settings_simkl_visit
 import nuvio.composeapp.generated.resources.settings_tracking_approval_redirect
@@ -180,7 +181,6 @@ internal fun TrackingProviderCards(
         SimklSyncRepository.state
     }.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-    var showSyncInfo by rememberSaveable { mutableStateOf(false) }
     val onSimklSyncRequested: () -> Unit = {
         scope.launch {
             WatchProgressSourceCoordinator.refreshProviderAndActiveSource(
@@ -208,14 +208,9 @@ internal fun TrackingProviderCards(
                 ?: syncState.snapshot.lastCheckedAtEpochMs,
             syncErrorMessage = syncState.errorMessage,
             onSyncRequested = onSimklSyncRequested,
-            onInfoRequested = { showSyncInfo = true },
             modifier = Modifier.fillMaxWidth(),
         )
         MdbListProviderCard(Modifier.fillMaxWidth())
-    }
-
-    if (showSyncInfo) {
-        SimklSyncInfoDialog(onDismiss = { showSyncInfo = false })
     }
 }
 
@@ -245,7 +240,7 @@ private fun TraktProviderCard(
         approvalDescription = stringResource(Res.string.settings_trakt_approval_redirect),
         connectLabel = stringResource(Res.string.settings_trakt_connect),
         openLoginLabel = stringResource(Res.string.settings_trakt_open_login),
-        disconnectLabel = stringResource(Res.string.settings_trakt_disconnect),
+        disconnectLabel = stringResource(Res.string.settings_trakt_disconnect_account),
         missingCredentialsMessage = stringResource(Res.string.settings_trakt_missing_credentials),
         syncLabel = stringResource(Res.string.settings_mdblist_sync_now),
         isSyncing = connected && progress.isLoading,
@@ -291,7 +286,6 @@ private fun SimklProviderCard(
     lastSyncedAtEpochMs: Long?,
     syncErrorMessage: String?,
     onSyncRequested: () -> Unit,
-    onInfoRequested: () -> Unit,
     modifier: Modifier,
 ) {
     TrackingProviderCard(
@@ -309,9 +303,8 @@ private fun SimklProviderCard(
         approvalDescription = stringResource(Res.string.settings_tracking_approval_redirect),
         connectLabel = stringResource(Res.string.settings_simkl_connect),
         openLoginLabel = stringResource(Res.string.settings_simkl_open_login),
-        disconnectLabel = stringResource(Res.string.settings_simkl_disconnect),
+        disconnectLabel = stringResource(Res.string.settings_simkl_disconnect_account),
         syncLabel = stringResource(Res.string.settings_simkl_sync_now),
-        infoLabel = stringResource(Res.string.settings_simkl_sync_info_action),
         isSyncing = isSyncing,
         statusMessage = when {
             uiState.mode != SimklConnectionMode.CONNECTED -> null
@@ -333,7 +326,6 @@ private fun SimklProviderCard(
         },
         onCancelAuthorization = SimklAuthRepository::onCancelAuthorization,
         onSyncRequested = onSyncRequested,
-        onInfoRequested = onInfoRequested,
         onDisconnect = SimklAuthRepository::onDisconnectRequested,
         modifier = modifier,
     )
@@ -356,7 +348,6 @@ internal fun TrackingProviderCard(
     missingCredentialsMessage: String,
     modifier: Modifier = Modifier,
     syncLabel: String? = null,
-    infoLabel: String? = null,
     isSyncing: Boolean = false,
     authorizationCode: String? = null,
     statusMessage: String? = null,
@@ -367,7 +358,6 @@ internal fun TrackingProviderCard(
     onResumeAuthorization: suspend () -> String?,
     onCancelAuthorization: () -> Unit,
     onSyncRequested: (() -> Unit)? = null,
-    onInfoRequested: (() -> Unit)? = null,
     onDisconnect: () -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
@@ -563,67 +553,30 @@ internal fun TrackingProviderCard(
                         TrackingBrandMessage(text = failedOpenBrowserMessage, isError = true)
                     }
 
+                    // Same footer on every provider card: "Visit" always in the left half and
+                    // "Disconnect" in the right half (kept empty while not connected), so both
+                    // buttons sit in exactly the same place on Trakt, Simkl and MDBList.
                     val hasWebsiteAction = !websiteLabel.isNullOrBlank() && !websiteUrl.isNullOrBlank()
                     val hasDisconnectAction = mode == TrackingConnectionCardMode.CONNECTED
-                    val hasInfoAction = mode == TrackingConnectionCardMode.CONNECTED &&
-                        infoLabel != null && onInfoRequested != null
-                    val footerActionCount = listOf(
-                        hasWebsiteAction,
-                        hasDisconnectAction,
-                        hasInfoAction,
-                    ).count { it }
-                    if (footerActionCount > 0) {
+                    if (hasWebsiteAction || hasDisconnectAction) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(2.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            if (hasWebsiteAction) {
-                                TextButton(
-                                    onClick = { openUrl(websiteUrl) },
-                                    modifier = if (footerActionCount > 1) Modifier.weight(0.95f) else Modifier,
-                                    contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp),
-                                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
-                                ) {
-                                    Text(
-                                        text = websiteLabel.orEmpty(),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
+                            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+                                if (hasWebsiteAction) {
+                                    TrackingFooterButton(
+                                        label = websiteLabel.orEmpty(),
+                                        onClick = { openUrl(websiteUrl) },
                                     )
                                 }
                             }
-                            if (hasDisconnectAction) {
-                                TextButton(
-                                    onClick = { showDisconnectDialog = true },
-                                    modifier = if (footerActionCount > 1) Modifier.weight(1.05f) else Modifier,
-                                    enabled = !isLoading && !isSyncing,
-                                    contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp),
-                                    colors = ButtonDefaults.textButtonColors(
-                                        contentColor = Color.White.copy(alpha = 0.84f),
-                                        disabledContentColor = Color.White.copy(alpha = 0.38f),
-                                    ),
-                                ) {
-                                    Text(
-                                        text = disconnectLabel,
-                                        style = MaterialTheme.typography.labelMedium,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                    )
-                                }
-                            }
-                            if (hasInfoAction) {
-                                TextButton(
-                                    onClick = { onInfoRequested?.invoke() },
-                                    modifier = if (footerActionCount > 1) Modifier.weight(1.55f) else Modifier,
-                                    contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp),
-                                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
-                                ) {
-                                    Text(
-                                        text = infoLabel.orEmpty(),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
+                            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
+                                if (hasDisconnectAction) {
+                                    TrackingFooterButton(
+                                        label = disconnectLabel,
+                                        enabled = !isLoading && !isSyncing,
+                                        onClick = { showDisconnectDialog = true },
                                     )
                                 }
                             }
@@ -642,6 +595,30 @@ internal fun TrackingProviderCard(
                 onDisconnect()
             },
             onDismiss = { showDisconnectDialog = false },
+        )
+    }
+}
+
+@Composable
+private fun TrackingFooterButton(
+    label: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
+    TextButton(
+        onClick = onClick,
+        enabled = enabled,
+        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp),
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = Color.White,
+            disabledContentColor = Color.White.copy(alpha = 0.38f),
+        ),
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
