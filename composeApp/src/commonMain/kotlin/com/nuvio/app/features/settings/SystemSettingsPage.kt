@@ -1,5 +1,6 @@
 package com.nuvio.app.features.settings
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -119,10 +120,10 @@ internal fun LazyListScope.expandableSettingsSections(
     while (index < sections.size) {
         val section = sections[index]
         if (section.open) {
-            item(key = "${section.key}_header") {
-                SettingsGroup(isTablet = isTablet) { section.header() }
+            item(key = section.key) {
+                SettingsGroup(isTablet = isTablet, modifier = settingsItemMotion().animateContentSize()) { section.header() }
             }
-            section.content(this)
+            animatedSettingsItems(section.key, section.content)
             index++
             continue
         }
@@ -135,15 +136,15 @@ internal fun LazyListScope.expandableSettingsSections(
             next++
         }
         val last = run.last()
-        item(key = run.joinToString("+") { it.key }) {
-            SettingsGroup(isTablet = isTablet) {
+        item(key = section.key) {
+            SettingsGroup(isTablet = isTablet, modifier = settingsItemMotion().animateContentSize()) {
                 run.forEachIndexed { position, member ->
                     if (position > 0) SettingsGroupDivider(isTablet = isTablet)
                     member.header()
                 }
             }
         }
-        if (last.open) last.content(this)
+        if (last.open) animatedSettingsItems(last.key, last.content)
         index += run.size
     }
 }

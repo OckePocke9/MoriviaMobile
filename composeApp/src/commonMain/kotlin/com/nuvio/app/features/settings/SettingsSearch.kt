@@ -5,7 +5,9 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -243,6 +245,14 @@ internal fun settingsSearchEntries(
         description = stringResource(Res.string.compose_settings_root_advanced_description),
         category = advancedCategory,
     )
+    if (!isIos) {
+        addPage(
+            page = SettingsPage.BrowsePlayback,
+            key = "browse-playback",
+            title = pageTitles.getValue(SettingsPage.BrowsePlayback),
+            description = stringResource(Res.string.morivia_browse_playback_description),
+        )
+    }
     addPage(
         page = SettingsPage.ContentDiscovery,
         key = "content-discovery",
@@ -1102,14 +1112,13 @@ internal fun LazyListScope.settingsSearchRootContent(
     query: String,
     entries: @Composable () -> List<SettingsSearchEntry>,
     isTablet: Boolean,
-    showSearchField: Boolean,
-    animateSearchField: Boolean,
+    searchVisibility: MutableTransitionState<Boolean>,
     onQueryChange: (String) -> Unit,
     onTargetClick: (SettingsSearchTarget) -> Unit,
 ) {
-    if (showSearchField || query.isNotBlank()) {
+    if (searchVisibility.currentState || searchVisibility.targetState || !searchVisibility.isIdle) {
         item(key = "settings-search-field") {
-            SettingsSearchRevealItem(animate = animateSearchField) {
+            SettingsSearchRevealItem(visibleState = searchVisibility) {
                 SettingsSearchField(
                     query = query,
                     onQueryChange = onQueryChange,
@@ -1125,25 +1134,27 @@ internal fun LazyListScope.settingsSearchRootContent(
             query = query,
             entries = entries(),
         )
-        if (results.isEmpty()) {
-            SettingsSearchEmptyState(isTablet = isTablet)
-        } else {
-            SettingsSection(
-                title = stringResource(Res.string.settings_search_results_section),
-                isTablet = isTablet,
-            ) {
-                SettingsGroup(isTablet = isTablet) {
-                    results.forEachIndexed { index, entry ->
-                        if (index > 0) {
-                            SettingsGroupDivider(isTablet = isTablet)
+        Box(modifier = settingsItemMotion(fade = false)) {
+            if (results.isEmpty()) {
+                SettingsSearchEmptyState(isTablet = isTablet)
+            } else {
+                SettingsSection(
+                    title = stringResource(Res.string.settings_search_results_section),
+                    isTablet = isTablet,
+                ) {
+                    SettingsGroup(isTablet = isTablet) {
+                        results.forEachIndexed { index, entry ->
+                            if (index > 0) {
+                                SettingsGroupDivider(isTablet = isTablet)
+                            }
+                            SettingsNavigationRow(
+                                title = entry.title,
+                                description = entry.resultDescription(),
+                                icon = entry.icon,
+                                isTablet = isTablet,
+                                onClick = { onTargetClick(entry.target) },
+                            )
                         }
-                        SettingsNavigationRow(
-                            title = entry.title,
-                            description = entry.resultDescription(),
-                            icon = entry.icon,
-                            isTablet = isTablet,
-                            onClick = { onTargetClick(entry.target) },
-                        )
                     }
                 }
             }
@@ -1152,20 +1163,14 @@ internal fun LazyListScope.settingsSearchRootContent(
 }
 
 @Composable
+internal fun rememberSettingsSearchVisibility(visible: Boolean): MutableTransitionState<Boolean> =
+    remember { MutableTransitionState(visible) }.apply { targetState = visible }
+
+@Composable
 private fun SettingsSearchRevealItem(
-    animate: Boolean,
+    visibleState: MutableTransitionState<Boolean>,
     content: @Composable () -> Unit,
 ) {
-    if (!animate) {
-        content()
-        return
-    }
-
-    val visibleState = remember {
-        MutableTransitionState(false).apply {
-            targetState = true
-        }
-    }
     AnimatedVisibility(
         visibleState = visibleState,
         enter = expandVertically(
@@ -1173,9 +1178,12 @@ private fun SettingsSearchRevealItem(
             expandFrom = Alignment.Top,
         ) + fadeIn(
             animationSpec = tween(durationMillis = NuvioTokens.Motion.fastMillis),
-        ) + slideInVertically(
+        ),
+        exit = shrinkVertically(
             animationSpec = tween(durationMillis = NuvioTokens.Motion.normalMillis),
-            initialOffsetY = { -it / 4 },
+            shrinkTowards = Alignment.Top,
+        ) + fadeOut(
+            animationSpec = tween(durationMillis = NuvioTokens.Motion.fastMillis),
         ),
     ) {
         content()

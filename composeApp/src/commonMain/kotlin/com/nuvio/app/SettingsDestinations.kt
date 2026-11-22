@@ -12,6 +12,7 @@ import com.nuvio.app.features.collection.CollectionRepository
 import com.nuvio.app.features.collection.FolderDetailRepository
 import com.nuvio.app.features.collection.FolderDetailScreen
 import com.nuvio.app.features.home.HomeCatalogSection
+import com.nuvio.app.features.settings.SettingsBackground
 import com.nuvio.app.features.settings.SettingsScreen
 import com.nuvio.app.navigation.AppRoute
 import com.nuvio.app.navigation.CollectionEditorPageRoute
@@ -32,7 +33,13 @@ internal fun SettingsDestination(
     content: @Composable (onBack: () -> Unit) -> Unit,
 ) {
     val onBack = rememberGuardedPopBackStack(navController, route)
-    content(onBack)
+    if (isIos) {
+        content(onBack)
+    } else {
+        SettingsBackground(modifier = Modifier.fillMaxSize()) {
+            content(onBack)
+        }
+    }
 }
 
 @Composable

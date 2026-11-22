@@ -34,6 +34,55 @@ import nuvio.composeapp.generated.resources.settings_nav_bar_summary
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
+internal object LayoutSections {
+    var appearanceOpen by mutableStateOf(false)
+    var layoutOpen by mutableStateOf(false)
+}
+
+internal fun LazyListScope.expandableLayoutSettingsContent(
+    isTablet: Boolean,
+    appearanceContent: LazyListScope.() -> Unit,
+    layoutContent: LazyListScope.() -> Unit,
+) {
+    val appearanceOpen = LayoutSections.appearanceOpen
+    val layoutOpen = LayoutSections.layoutOpen
+    expandableSettingsSections(
+        isTablet = isTablet,
+        sections = listOf(
+            ExpandableSettingsSection(
+                key = "layout_appearance",
+                open = appearanceOpen,
+                header = {
+                    ConnectionsSectionHeader(
+                        title = stringResource(SettingsPage.MoriviaAppearance.titleRes),
+                        description = stringResource(Res.string.settings_appearance_description),
+                        icon = SettingsPage.MoriviaAppearance.icon,
+                        expanded = appearanceOpen,
+                        isTablet = isTablet,
+                        onToggle = { LayoutSections.appearanceOpen = !appearanceOpen },
+                    )
+                },
+                content = appearanceContent,
+            ),
+            ExpandableSettingsSection(
+                key = "layout_options",
+                open = layoutOpen,
+                header = {
+                    ConnectionsSectionHeader(
+                        title = stringResource(Res.string.morivia_android_layout_title),
+                        description = stringResource(Res.string.compose_settings_root_layout_description),
+                        icon = SettingsPage.Layout.icon,
+                        expanded = layoutOpen,
+                        isTablet = isTablet,
+                        onToggle = { LayoutSections.layoutOpen = !layoutOpen },
+                    )
+                },
+                content = layoutContent,
+            ),
+        ),
+    )
+}
+
 internal fun LazyListScope.layoutSettingsContent(
     isTablet: Boolean,
     liquidGlassNativeTabBarSupported: Boolean,
@@ -92,7 +141,6 @@ internal fun LazyListScope.layoutSettingsContent(
         }
     } else {
         listOf(
-            SettingsPage.MoriviaAppearance to Res.string.settings_appearance_description,
             SettingsPage.MoriviaHero to Res.string.morivia_hero_settings_description,
             SettingsPage.MoriviaHomeCatalogs to Res.string.morivia_catalog_card_style_description,
             SettingsPage.MoriviaHome to Res.string.morivia_home_settings_description,

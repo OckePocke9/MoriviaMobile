@@ -19,7 +19,7 @@ internal fun LazyListScope.settingsRootContent(
 ) {
     SettingsCategory.entries.filter { category == null || it == category }.forEach { group ->
         item(key = group.name) {
-            SettingsGroup(isTablet = isTablet) {
+            SettingsGroup(isTablet = isTablet, modifier = settingsItemMotion(fade = false)) {
                 when (group) {
                     SettingsCategory.You -> {
                         if (onWatchPartyClick != null) {
@@ -50,19 +50,28 @@ internal fun LazyListScope.settingsRootContent(
                         }
                     }
                     SettingsCategory.Watch -> {
-                        SettingsPageRow(
-                            page = SettingsPage.ContentDiscovery,
-                            description = Res.string.compose_settings_root_content_discovery_description,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
-                        SettingsGroupDivider(isTablet = isTablet)
-                        SettingsPageRow(
-                            page = SettingsPage.Playback,
-                            description = Res.string.settings_playback_subtitle,
-                            isTablet = isTablet,
-                            onPageClick = onPageClick,
-                        )
+                        if (isIos) {
+                            SettingsPageRow(
+                                page = SettingsPage.ContentDiscovery,
+                                description = Res.string.compose_settings_root_content_discovery_description,
+                                isTablet = isTablet,
+                                onPageClick = onPageClick,
+                            )
+                            SettingsGroupDivider(isTablet = isTablet)
+                            SettingsPageRow(
+                                page = SettingsPage.Playback,
+                                description = Res.string.settings_playback_subtitle,
+                                isTablet = isTablet,
+                                onPageClick = onPageClick,
+                            )
+                        } else {
+                            SettingsPageRow(
+                                page = SettingsPage.BrowsePlayback,
+                                description = Res.string.morivia_browse_playback_description,
+                                isTablet = isTablet,
+                                onPageClick = onPageClick,
+                            )
+                        }
                     }
                     SettingsCategory.Services -> {
                         // One "Connections" card: integrations first, tracking underneath.

@@ -63,6 +63,8 @@ import com.nuvio.app.core.ui.nuvioPlatformExtraTopPadding
 import com.nuvio.app.core.ui.nuvioSafeBottomPadding
 import kotlinx.coroutines.Job
 import com.nuvio.app.features.player.OpeningOverlay
+import com.nuvio.app.features.settings.SettingsGroup
+import com.nuvio.app.isIos
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
@@ -175,7 +177,7 @@ private fun PartyHome(
                                 .fillMaxWidth(),
                         ) { target ->
                             when (target) {
-                                PartyScreenMode.Join -> com.nuvio.app.features.settings.SettingsGroup(isTablet = false) {
+                                PartyScreenMode.Join -> SettingsGroup(isTablet = false) {
                                     Box(Modifier.padding(20.dp)) {
                                         JoinContent(
                                             initialCode = pendingCode,
@@ -373,7 +375,7 @@ private fun JoinContent(
                 code = target.take(index + 1)
             }
             lookUp(target)
-        } else {
+        } else if (isIos) {
             delay(650)
             runCatching { focusRequester.requestFocus() }
             delay(550)

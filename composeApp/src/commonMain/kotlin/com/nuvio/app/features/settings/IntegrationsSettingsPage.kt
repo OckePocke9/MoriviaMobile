@@ -72,41 +72,41 @@ internal fun LazyListScope.connectionsContent(
         )
     }
 
-    if (!integrationsOpen) {
-        // Integrations is closed: both cards sit in one group with a light line between them.
-        item(key = "connections_headers") {
-            SettingsGroup(isTablet = isTablet) {
-                integrationsHeader()
-                SettingsGroupDivider(isTablet = isTablet)
-                trackingHeader()
-            }
-        }
-    } else {
-        item(key = "connections_integrations_header") {
-            SettingsGroup(isTablet = isTablet) { integrationsHeader() }
-        }
-        debridSettingsContent(
-            isTablet = isTablet,
-            settings = debridSettings,
-            onTmdbClick = onTmdbClick,
-            onMdbListClick = onMdbListClick,
-        )
-        item(key = "connections_tracking_header") {
-            SettingsGroup(isTablet = isTablet) { trackingHeader() }
-        }
-    }
-    if (trackingOpen) {
-        trackingSettingsContent(
-            isTablet = isTablet,
-            traktUiState = traktUiState,
-            simklUiState = simklUiState,
-            settingsUiState = trackingSettingsUiState,
-            commentsEnabled = commentsEnabled,
-            onCommentsEnabledChange = onCommentsEnabledChange,
-            mdbListConnected = mdbListConnected,
-            accountsSectionTitle = Res.string.compose_settings_page_tracking,
-        )
-    }
+    expandableSettingsSections(
+        isTablet = isTablet,
+        sections = listOf(
+            ExpandableSettingsSection(
+                key = "connections_integrations",
+                open = integrationsOpen,
+                header = integrationsHeader,
+                content = {
+                    debridSettingsContent(
+                        isTablet = isTablet,
+                        settings = debridSettings,
+                        onTmdbClick = onTmdbClick,
+                        onMdbListClick = onMdbListClick,
+                    )
+                },
+            ),
+            ExpandableSettingsSection(
+                key = "connections_tracking",
+                open = trackingOpen,
+                header = trackingHeader,
+                content = {
+                    trackingSettingsContent(
+                        isTablet = isTablet,
+                        traktUiState = traktUiState,
+                        simklUiState = simklUiState,
+                        settingsUiState = trackingSettingsUiState,
+                        commentsEnabled = commentsEnabled,
+                        onCommentsEnabledChange = onCommentsEnabledChange,
+                        mdbListConnected = mdbListConnected,
+                        accountsSectionTitle = Res.string.compose_settings_page_tracking,
+                    )
+                },
+            ),
+        ),
+    )
 }
 
 @Composable

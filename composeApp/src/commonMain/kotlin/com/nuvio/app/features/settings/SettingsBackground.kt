@@ -16,6 +16,9 @@ import com.nuvio.app.core.ui.NuvioTheme
 internal val SettingsNuvioBackground = Color(0xFF0E0C0E)
 internal val SettingsNuvioCard = Color(0xFF1A191B)
 
+@Composable
+internal fun settingsBackgroundColor(): Color = if (LocalAmoled.current) Color.Black else SettingsNuvioBackground
+
 /**
  * Settings looks like Nuvio's original app whatever theme is picked (owner's request,
  * 2026-11-22): background #0E0C0E, grey cards #1A191B and white icons on grey tiles (Nuvio's
@@ -27,11 +30,10 @@ internal fun SettingsBackground(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val amoled = LocalAmoled.current
+    val background = settingsBackgroundColor()
     NuvioTheme(darkTheme = true, appTheme = AppTheme.WHITE, amoled = false) {
         val tokens = LocalNuvioThemeTokens.current
         val colorScheme = MaterialTheme.colorScheme
-        val background = if (amoled) Color.Black else SettingsNuvioBackground
         CompositionLocalProvider(
             LocalNuvioThemeTokens provides tokens.copy(
                 colors = tokens.colors.copy(

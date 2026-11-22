@@ -4,10 +4,15 @@ import android.app.Application
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasClickAction
@@ -18,6 +23,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
+import androidx.compose.ui.test.swipeUp
 import com.nuvio.app.core.ui.NuvioTheme
 import com.nuvio.app.features.player.AndroidPlaybackEngine
 import com.nuvio.app.features.player.PlayerSettingsRepository
@@ -54,6 +62,10 @@ class SettingsPagesTest {
 
     @AfterTest
     fun clearState() {
+        LayoutSections.appearanceOpen = false
+        LayoutSections.layoutOpen = false
+        BrowsePlaybackSections.discoveryOpen = false
+        BrowsePlaybackSections.playbackOpen = false
         PlayerSettingsRepository.clearLocalState()
         ThemeSettingsRepository.clearLocalState()
     }
@@ -92,7 +104,7 @@ class SettingsPagesTest {
     }
 
     @Test
-    fun phoneRootRoutesAppearanceLayoutAndPlayback() {
+    fun phoneRootRoutesLayoutAndBrowsePlayback() {
         var opened: SettingsPage? = null
         compose.setContent {
             NuvioTheme {
@@ -103,10 +115,39 @@ class SettingsPagesTest {
         }
         compose.onNodeWithText("Layout").performScrollTo().performClick()
         assertEquals(SettingsPage.Appearance, opened)
-        compose.onNodeWithText("Playback").performScrollTo().performClick()
-        assertEquals(SettingsPage.Playback, opened)
+        compose.onNodeWithText("Browse & Playback").performScrollTo().performClick()
+        assertEquals(SettingsPage.BrowsePlayback, opened)
+        compose.onNodeWithText("Playback").assertDoesNotExist()
+        compose.onNodeWithText("Content & Discovery").assertDoesNotExist()
         compose.onNodeWithText("Connections").performScrollTo().performClick()
         assertEquals(SettingsPage.Integrations, opened)
+    }
+
+    @Test
+    fun browseAndPlaybackCanBeExpandedTogether() {
+        var opened: SettingsPage? = null
+        compose.setContent {
+            NuvioTheme {
+                LazyColumn(Modifier.fillMaxSize()) {
+                    browsePlaybackSettingsContent(
+                        isTablet = false,
+                        onAddonsClick = { opened = SettingsPage.Addons },
+                        onPluginsClick = {},
+                        onPageChange = { opened = it },
+                    )
+                }
+            }
+        }
+
+        compose.onNodeWithText("Addons").assertDoesNotExist()
+        compose.onNodeWithText("Player").assertDoesNotExist()
+        compose.onNodeWithText("Content & Discovery").performClick()
+        compose.onNodeWithText("Playback").performScrollTo().performClick()
+        assertTrue(BrowsePlaybackSections.discoveryOpen && BrowsePlaybackSections.playbackOpen)
+        compose.onNodeWithText("Addons").performScrollTo().performClick()
+        assertEquals(SettingsPage.Addons, opened)
+        compose.onNodeWithText("Player").performScrollTo().performClick()
+        assertEquals(SettingsPage.PlaybackPlayer, opened)
     }
 
     @Test
@@ -132,25 +173,68 @@ class SettingsPagesTest {
     }
 
     @Test
+    fun settingsSearchCanBeRevealedAgainAfterAnUpwardSwipe() {
+        compose.setContent {
+            NuvioTheme {
+                var visible by remember { mutableStateOf(false) }
+                val listState = rememberLazyListState()
+                val connection = rememberSettingsSearchScrollConnection(listState, visible) { visible = it }
+                val searchVisibility = rememberSettingsSearchVisibility(visible)
+                LazyColumn(Modifier.fillMaxSize().nestedScroll(connection), state = listState) {
+                    settingsSearchRootContent(
+                        query = "",
+                        entries = { emptyList() },
+                        isTablet = false,
+                        searchVisibility = searchVisibility,
+                        onQueryChange = {},
+                        onTargetClick = {},
+                    )
+                    item { Text("Settings options") }
+                }
+            }
+        }
+
+        val search = compose.onNodeWithText("Search settings...")
+        val list = compose.onNode(hasScrollAction())
+        search.assertDoesNotExist()
+        list.performTouchInput { swipeDown() }
+        search.assertIsDisplayed()
+        list.performTouchInput { swipeUp() }
+        search.assertDoesNotExist()
+        list.performTouchInput { swipeDown() }
+        search.assertIsDisplayed()
+    }
+
+    @Test
     fun layoutKeepsSelectedChildPagesAndMobileNavigationControls() {
         var opened = ""
         compose.setContent {
             NuvioTheme {
                 LazyColumn(Modifier.fillMaxSize()) {
-                    layoutSettingsContent(
+                    expandableLayoutSettingsContent(
                         isTablet = false,
-                        liquidGlassNativeTabBarSupported = false,
-                        onMetaScreenClick = { opened = "details" },
-                        onStreamsClick = { opened = "streams" },
-                        onPosterCustomizationClick = { opened = "catalog-style" },
-                        onCollectionsClick = { opened = "collections" },
-                        onMoriviaPageClick = { opened = it.name },
-                    )
+                        appearanceContent = { item { Text("Appearance options") } },
+                    ) {
+                        layoutSettingsContent(
+                            isTablet = false,
+                            liquidGlassNativeTabBarSupported = false,
+                            onMetaScreenClick = { opened = "details" },
+                            onStreamsClick = { opened = "streams" },
+                            onPosterCustomizationClick = { opened = "catalog-style" },
+                            onCollectionsClick = { opened = "collections" },
+                            onMoriviaPageClick = { opened = it.name },
+                        )
+                    }
                 }
             }
         }
+        compose.onNodeWithText("Appearance options").assertDoesNotExist()
+        compose.onNodeWithText("Hero").assertDoesNotExist()
+        compose.onNode(hasText("Appearance", substring = false) and hasClickAction()).performClick()
+        compose.onNode(hasText("Layout", substring = false) and hasClickAction()).performClick()
+        compose.onNodeWithText("Appearance options").assertIsDisplayed()
+        compose.onNodeWithText("Hero").assertIsDisplayed()
         mapOf(
-            "Appearance" to "MoriviaAppearance",
             "Hero" to "MoriviaHero",
             "Home Catalogs" to "MoriviaHomeCatalogs",
             "Home" to "MoriviaHome",

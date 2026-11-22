@@ -4,14 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.nuvio.app.core.build.AppFeaturePolicy
+import com.nuvio.app.isIos
 
 /** The top-level card a page belongs to (its ancestor right under the Settings root). */
 internal fun SettingsPage.topLevelPage(): SettingsPage {
@@ -38,8 +41,15 @@ internal fun SettingsSidebarList(
     liquidGlassNativeTabBarSupported: Boolean,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
+    var searchVisible by rememberSaveable { mutableStateOf(isIos) }
+    val searchVisibility = rememberSettingsSearchVisibility(searchVisible)
+    val listState = rememberLazyListState()
+    val searchScroll = rememberSettingsSearchScrollConnection(listState, searchVisible, enabled = !isIos) {
+        searchVisible = it
+    }
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        state = listState,
+        modifier = Modifier.fillMaxSize().nestedScroll(searchScroll),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -58,8 +68,7 @@ internal fun SettingsSidebarList(
                 )
             },
             isTablet = false,
-            showSearchField = true,
-            animateSearchField = false,
+            searchVisibility = searchVisibility,
             onQueryChange = { query = it },
             onTargetClick = { target ->
                 when (target) {

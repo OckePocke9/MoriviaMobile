@@ -157,6 +157,7 @@ import com.nuvio.app.features.settings.MetaScreenSettingsScreen
 import com.nuvio.app.features.settings.PluginsSettingsScreen
 import com.nuvio.app.features.settings.SupportersContributorsSettingsScreen
 import com.nuvio.app.features.settings.ThemeSettingsRepository
+import com.nuvio.app.features.settings.settingsBackgroundColor
 import com.nuvio.app.features.streams.BingeGroupCacheRepository
 import com.nuvio.app.features.streams.StreamAutoPlayPolicy
 import com.nuvio.app.features.streams.StreamLaunch
@@ -1322,6 +1323,15 @@ internal fun MainAppContent(
             selectedContinueWatchingForActions = item
         }
 
+        val navigationBackground = if (!isIos && (
+                currentRoute is SettingsDestinationRoute ||
+                    (currentRoute is TabsRoute && selectedTab == AppScreenTab.Settings)
+                )
+        ) {
+            settingsBackgroundColor()
+        } else {
+            MaterialTheme.nuvio.colors.background
+        }
         AppUpdaterHost(
             controller = appUpdaterController,
             modifier = Modifier.fillMaxSize(),
@@ -1329,7 +1339,7 @@ internal fun MainAppContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.nuvio.colors.background),
+                    .background(navigationBackground),
             ) {
             Box(
                 modifier = Modifier
@@ -1341,7 +1351,7 @@ internal fun MainAppContent(
                             Modifier
                         },
                     )
-                    .background(MaterialTheme.nuvio.colors.background),
+                    .background(navigationBackground),
             ) {
             val verticalBarPadding = LocalVerticalBarPadding.current
             val drawsUnderVerticalBar = currentRoute.drawsUnderVerticalBar(selectedTab)

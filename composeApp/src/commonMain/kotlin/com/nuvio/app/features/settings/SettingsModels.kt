@@ -101,10 +101,15 @@ internal enum class SettingsPage(
         category = SettingsCategory.System,
         parentPage = SystemSettings,
     ),
+    BrowsePlayback(
+        titleRes = Res.string.morivia_browse_playback_title,
+        category = SettingsCategory.Watch,
+        parentPage = Root,
+    ),
     Playback(
         titleRes = Res.string.compose_settings_page_playback,
         category = SettingsCategory.Watch,
-        parentPage = Root,
+        parentPage = if (isIos) Root else BrowsePlayback,
     ),
     PlaybackPlayer(
         titleRes = Res.string.settings_playback_page_player,
@@ -209,7 +214,7 @@ internal enum class SettingsPage(
     ContentDiscovery(
         titleRes = Res.string.compose_settings_page_content_discovery,
         category = SettingsCategory.Watch,
-        parentPage = Root,
+        parentPage = if (isIos) Root else BrowsePlayback,
     ),
     Addons(
         titleRes = Res.string.compose_settings_page_addons,
@@ -303,7 +308,7 @@ internal val SettingsPage.icon: ImageVector
         SettingsPage.Account -> Icons.Default.Person
         SettingsPage.SupportersContributors -> Icons.Default.Favorite
         SettingsPage.LicensesAttributions -> Icons.Default.Info
-        SettingsPage.Playback -> Icons.Rounded.PlayArrow
+        SettingsPage.BrowsePlayback, SettingsPage.Playback -> Icons.Rounded.PlayArrow
         SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> Icons.Default.Palette
         SettingsPage.Layout -> Icons.Default.GridView
         SettingsPage.About -> Icons.Default.Info

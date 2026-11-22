@@ -29,7 +29,9 @@ class SettingsNavigationTest {
             assertEquals(SettingsPage.Playback, section.page.previousPage())
             assertEquals(SettingsCategory.Watch, section.page.category)
         }
-        assertEquals(SettingsPage.Root, SettingsPage.Playback.previousPage())
+        val parent = if (isIos) SettingsPage.Root else SettingsPage.BrowsePlayback
+        assertEquals(parent, SettingsPage.Playback.previousPage())
+        assertEquals(parent, SettingsPage.ContentDiscovery.previousPage())
     }
 
     @Test

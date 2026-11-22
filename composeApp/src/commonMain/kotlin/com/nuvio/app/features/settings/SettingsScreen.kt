@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
@@ -42,21 +43,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nuvio.app.core.ui.LocalScreenActive
 import com.nuvio.app.core.ui.ScreenActivityEffect
@@ -106,16 +99,11 @@ import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.compose_settings_page_root
 import nuvio.composeapp.generated.resources.compose_settings_page_tracking
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-
-private val SettingsSearchRevealThreshold = 28.dp
-private const val SettingsSearchRevealAnimationMillis = 240L
-private const val SettingsSearchRevealHapticDelayMillis = 90L
 
 @Composable
 private fun watchPartyRow(onClick: () -> Unit): (() -> Unit)? {
@@ -291,20 +279,38 @@ fun SettingsScreen(
         }
         val previousPage = page.previousPage()
 
+        fun inlineSettingsDestination(targetPage: SettingsPage): SettingsPage =
+            if (isIos) targetPage else when (targetPage) {
+                SettingsPage.MoriviaAppearance -> {
+                    LayoutSections.appearanceOpen = true
+                    SettingsPage.Appearance
+                }
+                SettingsPage.ContentDiscovery -> {
+                    BrowsePlaybackSections.discoveryOpen = true
+                    SettingsPage.BrowsePlayback
+                }
+                SettingsPage.Playback -> {
+                    BrowsePlaybackSections.playbackOpen = true
+                    SettingsPage.BrowsePlayback
+                }
+                else -> targetPage
+            }
+
         fun openPage(targetPage: SettingsPage) {
             if (!targetPage.isEnabledByPolicy()) return
+            val destination = inlineSettingsDestination(targetPage)
             val externalNavigator = onNavigatePage
             if (externalNavigator == null) {
-                currentPage = targetPage.name
+                currentPage = destination.name
                 return
             }
-            if (targetPage == SettingsPage.Root && onExternalBack != null) {
+            if (destination == SettingsPage.Root && onExternalBack != null) {
                 onExternalBack()
                 return
             }
             externalNavigator(
-                targetPage.name,
-                pageTitles.getValue(targetPage),
+                destination.name,
+                pageTitles.getValue(destination),
             )
         }
 
@@ -317,7 +323,7 @@ fun SettingsScreen(
             if (onNavigatePage != null && onExternalBack != null) {
                 onExternalBack()
             } else {
-                currentPage = parentPage.name
+                currentPage = inlineSettingsDestination(parentPage).name
             }
         }
 
@@ -560,7 +566,7 @@ private fun MobileSettingsScreen(
     saveableStateHolder.SaveableStateProvider(page.name) {
         var settingsSearchQuery by rememberSaveable { mutableStateOf("") }
         var rootSearchVisible by rememberSaveable { mutableStateOf(false) }
-        var rootSearchRevealAnimating by rememberSaveable { mutableStateOf(false) }
+        val searchVisibility = rememberSettingsSearchVisibility(rootSearchVisible || (isIos && settingsSearchQuery.isNotBlank()))
         val listState = rememberLazyListState()
         val catalogRowsState = if (!isIos && page == SettingsPage.PosterCustomization) {
             rememberHomeCatalogRowsState(listState)
@@ -570,20 +576,12 @@ private fun MobileSettingsScreen(
         ScreenActivityEffect(listState) { screenActive ->
             if (!screenActive) listState.stopScroll()
         }
-        val hapticFeedback = LocalHapticFeedback.current
-        val hapticScope = rememberCoroutineScope()
-        val rootSearchRevealConnection = rememberSettingsRootSearchRevealConnection(
-            page = page,
+        val rootSearchRevealConnection = rememberSettingsSearchScrollConnection(
             listState = listState,
-            query = settingsSearchQuery,
-            searchVisible = rootSearchVisible,
-        ) {
-            rootSearchVisible = true
-            rootSearchRevealAnimating = true
-            hapticScope.launch {
-                delay(SettingsSearchRevealHapticDelayMillis)
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-            }
+            visible = rootSearchVisible,
+            enabled = page == SettingsPage.Root,
+        ) { visible ->
+            rootSearchVisible = visible
         }
         fun openSearchTarget(target: SettingsSearchTarget) {
             when (target) {
@@ -609,13 +607,6 @@ private fun MobileSettingsScreen(
                 SettingsSearchTarget.Collections -> onCollectionsClick()
                 SettingsSearchTarget.SwitchProfile -> onSwitchProfile?.invoke()
                 SettingsSearchTarget.CheckForUpdates -> onCheckForUpdatesClick?.invoke()
-            }
-        }
-
-        LaunchedEffect(rootSearchRevealAnimating) {
-            if (rootSearchRevealAnimating) {
-                delay(SettingsSearchRevealAnimationMillis)
-                rootSearchRevealAnimating = false
             }
         }
 
@@ -659,8 +650,7 @@ private fun MobileSettingsScreen(
                             )
                         },
                         isTablet = false,
-                        showSearchField = rootSearchVisible,
-                        animateSearchField = rootSearchRevealAnimating,
+                        searchVisibility = searchVisibility,
                         onQueryChange = { settingsSearchQuery = it },
                         onTargetClick = { openSearchTarget(it) },
                     )
@@ -703,7 +693,7 @@ private fun MobileSettingsScreen(
                     isTablet = false,
                 )
                 SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> {
-                    if (isIos || page == SettingsPage.MoriviaAppearance) {
+                    val appearanceContent: LazyListScope.() -> Unit = {
                         appearanceSettingsContent(
                             isTablet = false,
                             selectedTheme = selectedTheme,
@@ -716,16 +706,24 @@ private fun MobileSettingsScreen(
                             selectedAppLanguage = selectedAppLanguage,
                             onAppLanguageSelected = onAppLanguageSelected,
                         )
+                    }
+                    if (isIos || page == SettingsPage.MoriviaAppearance) {
+                        appearanceContent()
                     } else {
-                        layoutSettingsContent(
+                        expandableLayoutSettingsContent(
                             isTablet = false,
-                            liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
-                            onMetaScreenClick = { onPageChange(SettingsPage.MetaScreen) },
-                            onStreamsClick = { onPageChange(SettingsPage.Streams) },
-                            onCollectionsClick = onCollectionsClick,
-                            onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
-                            onMoriviaPageClick = { onPageChange(it) },
-                        )
+                            appearanceContent = appearanceContent,
+                        ) {
+                            layoutSettingsContent(
+                                isTablet = false,
+                                liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
+                                onMetaScreenClick = { onPageChange(SettingsPage.MetaScreen) },
+                                onStreamsClick = { onPageChange(SettingsPage.Streams) },
+                                onCollectionsClick = onCollectionsClick,
+                                onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
+                                onMoriviaPageClick = { onPageChange(it) },
+                            )
+                        }
                     }
                 }
                 SettingsPage.MoriviaHero -> moriviaHeroSettingsContent(isTablet = false)
@@ -790,6 +788,12 @@ private fun MobileSettingsScreen(
                     isTablet = false,
                     uiState = posterCardStyleUiState,
                     catalogRowsState = catalogRowsState,
+                )
+                SettingsPage.BrowsePlayback -> browsePlaybackSettingsContent(
+                    isTablet = false,
+                    onAddonsClick = onAddonsClick,
+                    onPluginsClick = onPluginsClick,
+                    onPageChange = onPageChange,
                 )
                 SettingsPage.ContentDiscovery -> contentDiscoveryContent(
                     isTablet = false,
@@ -866,48 +870,6 @@ private fun MobileSettingsScreen(
                     onTmdbClick = { onPageChange(SettingsPage.TmdbEnrichment) },
                     onMdbListClick = { onPageChange(SettingsPage.MdbListRatings) },
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun rememberSettingsRootSearchRevealConnection(
-    page: SettingsPage,
-    listState: LazyListState,
-    query: String,
-    searchVisible: Boolean,
-    onReveal: () -> Unit,
-): NestedScrollConnection {
-    val revealThresholdPx = with(LocalDensity.current) { SettingsSearchRevealThreshold.toPx() }
-    val currentOnReveal by rememberUpdatedState(onReveal)
-    var pullDistancePx by remember(page) { mutableStateOf(0f) }
-    var revealTriggered by remember(page) { mutableStateOf(false) }
-
-    return remember(page, listState, query, searchVisible, revealThresholdPx) {
-        object : NestedScrollConnection {
-            override fun onPostScroll(
-                consumed: Offset,
-                available: Offset,
-                source: NestedScrollSource,
-            ): Offset {
-                val isRootAtTop = page == SettingsPage.Root &&
-                    listState.firstVisibleItemIndex == 0 &&
-                    listState.firstVisibleItemScrollOffset == 0
-                val canRevealSearch = isRootAtTop && !searchVisible && !revealTriggered && query.isBlank()
-
-                if (canRevealSearch && available.y > 0f) {
-                    pullDistancePx += available.y
-                    if (pullDistancePx >= revealThresholdPx) {
-                        pullDistancePx = 0f
-                        revealTriggered = true
-                        currentOnReveal()
-                    }
-                } else if (!isRootAtTop || available.y < 0f) {
-                    pullDistancePx = 0f
-                }
-
-                return Offset.Zero
             }
         }
     }
@@ -1029,24 +991,6 @@ private fun TabletSettingsScreen(
         }
 
         saveableStateHolder.SaveableStateProvider(page.name) {
-            var settingsSearchQuery by rememberSaveable { mutableStateOf("") }
-            var rootSearchVisible by rememberSaveable { mutableStateOf(false) }
-            var rootSearchRevealAnimating by rememberSaveable { mutableStateOf(false) }
-            val hapticFeedback = LocalHapticFeedback.current
-            val hapticScope = rememberCoroutineScope()
-            fun openSearchTarget(target: SettingsSearchTarget) {
-                when (target) {
-                    is SettingsSearchTarget.Page -> {
-                        if (target.page.isEnabledByPolicy()) {
-                            openInlinePage(target.page)
-                        }
-                    }
-                    SettingsSearchTarget.Collections -> onCollectionsClick()
-                    SettingsSearchTarget.SwitchProfile -> onSwitchProfile?.invoke()
-                    SettingsSearchTarget.CheckForUpdates -> onCheckForUpdatesClick?.invoke()
-                }
-            }
-
             val listState = rememberLazyListState()
             val catalogRowsState = if (!isIos && page == SettingsPage.PosterCustomization) {
                 rememberHomeCatalogRowsState(listState)
@@ -1057,36 +1001,14 @@ private fun TabletSettingsScreen(
                 if (!screenActive) listState.stopScroll()
             }
             val bottomOverlayPadding = LocalNuvioBottomNavigationOverlayPadding.current
-            val rootSearchRevealConnection = rememberSettingsRootSearchRevealConnection(
-                page = page,
-                listState = listState,
-                query = settingsSearchQuery,
-                searchVisible = rootSearchVisible,
-            ) {
-                rootSearchVisible = true
-                rootSearchRevealAnimating = true
-                hapticScope.launch {
-                    delay(SettingsSearchRevealHapticDelayMillis)
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                }
-            }
-            LaunchedEffect(rootSearchRevealAnimating) {
-                if (rootSearchRevealAnimating) {
-                    delay(SettingsSearchRevealAnimationMillis)
-                    rootSearchRevealAnimating = false
-                }
-            }
             LaunchedEffect(scrollToTopRequests) {
                 scrollToTopRequests.collect {
                     listState.animateScrollToItem(0)
                 }
             }
-            val watchPartyRowClick = watchPartyRow(onWatchPartyClick)
             LazyColumn(
                 state = listState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(rootSearchRevealConnection),
+                modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(
                     start = 40.dp,
                     top = topOffset,
@@ -1142,7 +1064,7 @@ private fun TabletSettingsScreen(
                         isTablet = true,
                     )
                     SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> {
-                        if (isIos || page == SettingsPage.MoriviaAppearance) {
+                        val appearanceContent: LazyListScope.() -> Unit = {
                             appearanceSettingsContent(
                                 isTablet = true,
                                 selectedTheme = selectedTheme,
@@ -1155,16 +1077,24 @@ private fun TabletSettingsScreen(
                                 selectedAppLanguage = selectedAppLanguage,
                                 onAppLanguageSelected = onAppLanguageSelected,
                             )
+                        }
+                        if (isIos || page == SettingsPage.MoriviaAppearance) {
+                            appearanceContent()
                         } else {
-                            layoutSettingsContent(
+                            expandableLayoutSettingsContent(
                                 isTablet = true,
-                                liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
-                                onMetaScreenClick = { openInlinePage(SettingsPage.MetaScreen) },
-                                onStreamsClick = { openInlinePage(SettingsPage.Streams) },
-                                onCollectionsClick = onCollectionsClick,
-                                onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
-                                onMoriviaPageClick = { openInlinePage(it) },
-                            )
+                                appearanceContent = appearanceContent,
+                            ) {
+                                layoutSettingsContent(
+                                    isTablet = true,
+                                    liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
+                                    onMetaScreenClick = { openInlinePage(SettingsPage.MetaScreen) },
+                                    onStreamsClick = { openInlinePage(SettingsPage.Streams) },
+                                    onCollectionsClick = onCollectionsClick,
+                                    onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
+                                    onMoriviaPageClick = { openInlinePage(it) },
+                                )
+                            }
                         }
                     }
                     SettingsPage.MoriviaHero -> moriviaHeroSettingsContent(isTablet = true)
@@ -1229,6 +1159,12 @@ private fun TabletSettingsScreen(
                         isTablet = true,
                         uiState = posterCardStyleUiState,
                         catalogRowsState = catalogRowsState,
+                    )
+                    SettingsPage.BrowsePlayback -> browsePlaybackSettingsContent(
+                        isTablet = true,
+                        onAddonsClick = { openInlinePage(SettingsPage.Addons) },
+                        onPluginsClick = { openInlinePage(SettingsPage.Plugins) },
+                        onPageChange = ::openInlinePage,
                     )
                     SettingsPage.ContentDiscovery -> contentDiscoveryContent(
                         isTablet = true,
