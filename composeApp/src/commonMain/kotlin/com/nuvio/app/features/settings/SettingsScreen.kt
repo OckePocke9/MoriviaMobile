@@ -620,6 +620,9 @@ private fun MobileSettingsScreen(
         NuvioScreen(
             modifier = Modifier.nestedScroll(rootSearchRevealConnection),
             listState = listState,
+            // On the Settings start page the space under the version matches the space above the
+            // search field (owner, 2026-11-23).
+            bottomPadding = if (page == SettingsPage.Root) com.nuvio.app.core.ui.nuvioSafeBottomPadding(22.dp) else null,
         ) {
             if (showInternalHeader) {
                 stickyHeader {

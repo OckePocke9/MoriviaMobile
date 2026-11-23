@@ -2,6 +2,7 @@ package com.nuvio.app.features.profiles
 
 import com.nuvio.app.features.settings.collapsedPresets
 import androidx.compose.material.icons.rounded.TextFields
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material.icons.rounded.Wallpaper
 import com.nuvio.app.features.settings.CustomThemeEditor
 import com.nuvio.app.features.settings.PresetExpansionArrow
@@ -122,9 +123,8 @@ private fun ProfileEditContent(
         }
     }
     // The fallback colour behind the initials, as on nuvio.tv ("Use initials").
-    var fallbackColorHex by rememberSaveable { mutableStateOf(currentProfile?.avatarColorHex ?: PROFILE_COLORS.first()) }
-    var initialColourOpen by rememberSaveable { mutableStateOf(false) }
-    var backgroundColourOpen by rememberSaveable { mutableStateOf(false) }
+    // The initials colour comes from the Appearance theme (owner, 2026-11-23).
+    val fallbackColorHex = com.nuvio.app.core.ui.formatHexColor(rememberThemeInitialsColour().toArgb() and 0xFFFFFF)
 
     var name by rememberSaveable { mutableStateOf(currentProfile?.name ?: "") }
     var selectedAvatarId by rememberSaveable { mutableStateOf(currentProfile?.avatarId) }
@@ -137,6 +137,8 @@ private fun ProfileEditContent(
     var usesPrimaryAddons by rememberSaveable { mutableStateOf(currentProfile?.usesPrimaryAddons ?: false) }
     var isSaving by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
+    // A profile with a PIN must be unlocked before it can be deleted (owner, 2026-11-23).
+    var showDeletePin by remember { mutableStateOf(false) }
     var showPinSetup by remember { mutableStateOf(false) }
     var showPinClear by remember { mutableStateOf(false) }
     // Add Profile: the PIN is kept here and set on the new profile right after it is created.
@@ -173,10 +175,8 @@ private fun ProfileEditContent(
         parseHexColor(visibleAvatarItem?.bgColor ?: fallbackColorHex)
     }
 
-    // With initials the profile's own colour is used instead of the Appearance theme; with a
-    // picture, Appearance decides (owner, 2026-11-23).
-    val profileAccentOverride = if (useInitials && customAvatarUrl == null) parseHexColor(fallbackColorHex) else null
-    com.nuvio.app.features.settings.ThemedAccent(accentOverride = profileAccentOverride) {
+    // Switches, PIN lock and Save changes in the Appearance theme colour (owner, 2026-11-23).
+    com.nuvio.app.features.settings.ThemedAccent {
     NuvioScreen(modifier = modifier) {
         stickyHeader {
             NuvioScreenHeader(
@@ -289,39 +289,10 @@ private fun ProfileEditContent(
                         },
                     )
 
-                    Text(
-                        text = stringResource(Res.string.profile_fallback_colour),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                    // A card that opens the colour picker for the initial (owner, 2026-11-23).
-                    ExpandableColourCard(
-                        title = stringResource(Res.string.profile_initial_colour),
-                        description = initialsColourLabel(fallbackColorHex),
-                        icon = androidx.compose.material.icons.Icons.Rounded.TextFields,
-                        open = initialColourOpen,
-                        onToggle = { initialColourOpen = !initialColourOpen },
-                    ) {
-                        FallbackColourPicker(
-                            initial = profileInitial(name),
-                            selectedHex = fallbackColorHex,
-                            onSelected = { fallbackColorHex = it },
-                        )
-                    }
-                    // The same for the profile view background: Original, Black or a theme colour.
-                    val profileViewBackground by ThemeSettingsRepository.profileViewBackground.collectAsStateWithLifecycle()
-                    ExpandableColourCard(
-                        title = stringResource(Res.string.profile_background_colour),
-                        description = profileBackgroundLabel(profileViewBackground),
-                        icon = androidx.compose.material.icons.Icons.Rounded.Wallpaper,
-                        open = backgroundColourOpen,
-                        onToggle = { backgroundColourOpen = !backgroundColourOpen },
-                    ) {
-                        ProfileBackgroundColourPicker(
-                            selected = profileViewBackground,
-                            onSelected = ThemeSettingsRepository::setProfileViewBackground,
-                        )
-                    }
+                    // No colour cards: the Appearance theme gives the initials their colour (owner,
+                    // 2026-11-23).
+                    // An "Initials" heading, like "Animals" above the avatars (owner, 2026-11-23).
+                    Text("Initials", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     UseInitialsOption(
                         initial = profileInitial(name),
                         colour = parseHexColor(fallbackColorHex),
@@ -410,6 +381,8 @@ private fun ProfileEditContent(
                                 avatarUrl = customAvatarUrl,
                                 usesPrimaryAddons = usesPrimaryAddons,
                             )
+                            // Every new profile starts with the Original theme and app icon (owner, 2026-11-23).
+                            newProfileIndex?.let(com.nuvio.app.features.settings.ThemeSettingsStorage::resetProfileAppearance)
                             val pin = pendingPin
                             if (newProfileIndex != null && pin != null && hasNuvioAccount) {
                                 val result = ProfileRepository.setPin(profileIndex = newProfileIndex, pin = pin)
@@ -483,13 +456,32 @@ private fun ProfileEditContent(
         dismissText = stringResource(Res.string.action_cancel),
         onConfirm = {
             showDeleteConfirm = false
-            scope.launch {
-                currentProfile?.let { ProfileRepository.deleteProfile(it.profileIndex) }
-                onBack()
+            if (currentProfile?.pinEnabled == true) {
+                showDeletePin = true
+            } else {
+                scope.launch {
+                    currentProfile?.let { ProfileRepository.deleteProfile(it.profileIndex) }
+                    onBack()
+                }
             }
         },
         onDismiss = { showDeleteConfirm = false },
     )
+
+    if (showDeletePin && currentProfile != null) {
+        PinEntryDialog(
+            profileName = currentProfile.name,
+            onVerify = { pin -> ProfileRepository.verifyPin(currentProfile.profileIndex, pin) },
+            onVerified = {
+                showDeletePin = false
+                scope.launch {
+                    ProfileRepository.deleteProfile(currentProfile.profileIndex)
+                    onBack()
+                }
+            },
+            onDismiss = { showDeletePin = false },
+        )
+    }
 
     if (showPinSetup && isNew) {
         NewPinWithConfirmDialog(

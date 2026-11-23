@@ -116,7 +116,9 @@ internal fun LazyListScope.noriviaBrandFooter(isTablet: Boolean) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = if (isTablet) 24.dp else 20.dp),
+                // No extra space on top: the gap from the System card to the logo is the list's usual gap,
+                // the same as under the search field (owner, 2026-11-23).
+                .padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(if (isTablet) 10.dp else 8.dp),
         ) {

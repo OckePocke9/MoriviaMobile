@@ -581,7 +581,7 @@ private fun PopupProfileBubble(
     onClick: () -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
-    val avatarColor = remember(profile.avatarColorHex) { parseHexColor(profile.avatarColorHex) }
+    val avatarColor = rememberThemeInitialsColour() // Initials follow the Appearance theme (owner, 2026-11-23).
     val avatarItem = remember(profile.avatarId, avatars) {
         profile.avatarId?.let { id -> avatars.find { it.id == id } }
     }
@@ -761,7 +761,7 @@ fun ActiveProfileMiniAvatar(
         return
     }
 
-    val avatarColor = remember(profile.avatarColorHex) { parseHexColor(profile.avatarColorHex) }
+    val avatarColor = rememberThemeInitialsColour() // Initials follow the Appearance theme (owner, 2026-11-23).
     val avatarItem = remember(profile.avatarId, avatars) {
         profile.avatarId?.let { id -> avatars.find { it.id == id } }
     }

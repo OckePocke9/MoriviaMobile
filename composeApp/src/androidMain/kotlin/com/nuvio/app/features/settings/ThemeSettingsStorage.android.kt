@@ -140,6 +140,29 @@ actual object ThemeSettingsStorage {
         }
     }
 
+    // The account the saved themes and app icons belong to (device-wide).
+    actual fun loadAppearanceOwner(): String? = preferences?.getString("appearance_owner", null)
+
+    actual fun saveAppearanceOwner(userId: String) {
+        preferences?.edit()?.putString("appearance_owner", userId)?.apply()
+    }
+
+    // A new profile starts with the Original theme and app icon (owner, 2026-11-23).
+    actual fun resetProfileAppearance(profileId: Int) {
+        preferences?.edit()
+            ?.putString(ProfileScopedKey.of(selectedThemeKey, profileId), "ORIGINAL")
+            ?.putString(ProfileScopedKey.of("profile_app_icon", profileId), "original")
+            ?.apply()
+    }
+
+    // The app icon each profile chose, so it comes back with that profile (owner, 2026-11-23).
+    actual fun loadProfileAppIcon(): String? =
+        preferences?.getString(ProfileScopedKey.of("profile_app_icon"), null)
+
+    actual fun saveProfileAppIcon(key: String) {
+        preferences?.edit()?.putString(ProfileScopedKey.of("profile_app_icon"), key)?.apply()
+    }
+
     // The profile view background (owner, 2026-11-23): device-wide, so the profile picker shows it too.
     actual fun loadProfileViewBackground(): String? =
         preferences?.getString("profile_view_background", null)

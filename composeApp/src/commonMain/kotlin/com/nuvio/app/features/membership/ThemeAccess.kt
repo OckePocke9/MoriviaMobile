@@ -27,13 +27,8 @@ fun resolveAppTheme(
     selectedTheme: AppTheme?,
     entitlements: CosmeticEntitlements,
 ): AppTheme {
-    if (selectedTheme == null) {
-        return supporterThemes
-            .filterValues(entitlements::includes)
-            .keys
-            .firstOrNull()
-            ?: AppTheme.ORIGINAL
-    }
+    // A profile without a saved theme starts on Original (owner, 2026-11-23).
+    if (selectedTheme == null) return AppTheme.ORIGINAL
     return selectedTheme.takeIf { it in availableAppThemes(entitlements) } ?: AppTheme.ORIGINAL
 }
 

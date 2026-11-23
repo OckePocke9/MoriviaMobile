@@ -185,14 +185,24 @@ fun ProfileSelectionScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    // The new Norivia logo in the theme colour (owner, 2026-11-23).
-                    val logoTheme by com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
-                    androidx.compose.foundation.Image(
-                        painter = org.jetbrains.compose.resources.painterResource(logoTheme.noriviaLogoResource()),
-                        contentDescription = null,
-                        modifier = Modifier.height(34.dp),
-                        contentScale = androidx.compose.ui.layout.ContentScale.Fit,
-                    )
+                    // The Norivia logo in the colour of the app icon chosen in Appearance (owner, 2026-11-23).
+                    val appIconState by remember {
+                        com.nuvio.app.features.settings.AppIconRepository.ensureLoaded()
+                        com.nuvio.app.features.settings.AppIconRepository.state
+                    }.collectAsStateWithLifecycle()
+                    val logoTheme = appIconState.selected.theme ?: com.nuvio.app.core.ui.AppTheme.ORIGINAL
+                    androidx.compose.animation.Crossfade(
+                        targetState = logoTheme,
+                        animationSpec = androidx.compose.animation.core.tween(600),
+                        label = "profileLogo",
+                    ) { theme ->
+                        androidx.compose.foundation.Image(
+                            painter = org.jetbrains.compose.resources.painterResource(theme.noriviaLogoResource()),
+                            contentDescription = null,
+                            modifier = Modifier.height(34.dp),
+                            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                        )
+                    }
                     Text(
                         text = "Norivia",
                         style = MaterialTheme.typography.headlineLarge.copy(fontSize = 25.sp, letterSpacing = 0.25.sp, fontFamily = earlierMoriviaFont(800)),
@@ -361,8 +371,8 @@ fun ProfileSelectionScreen(
     }
 
     pinDialogProfile?.let { profile ->
-        // The PIN lock in the profile's initial colour, or the Appearance theme for a picture.
-        com.nuvio.app.features.settings.ThemedAccent(accentOverride = profile.initialsAccentOrNull()) {
+        // The PIN lock in the Appearance theme colour (owner, 2026-11-23).
+        com.nuvio.app.features.settings.ThemedAccent {
         PinEntryDialog(
             profileName = profile.name,
             onVerify = { pin -> ProfileRepository.verifyPin(profile.profileIndex, pin) },
@@ -402,9 +412,8 @@ private fun ProfileAvatarCard(
     enabled: Boolean,
     onClick: () -> Unit,
 ) {
-    val avatarColor = remember(profile.avatarColorHex) {
-        parseHexColor(profile.avatarColorHex)
-    }
+    // Initials take the Appearance theme colour (owner, 2026-11-23).
+    val avatarColor = rememberThemeInitialsColour()
     val avatars by AvatarRepository.avatars.collectAsStateWithLifecycle()
     val avatarItem = remember(profile.avatarId, avatars) {
         profile.avatarId?.let { id -> avatars.find { it.id == id } }
@@ -494,10 +503,10 @@ private fun ProfileAvatarCard(
                 }
             }
 
-            val pencilInitials = profile.initialsAccentOrNull()
-            val pencilTheme = com.nuvio.app.features.settings.rememberThemeAccent()
-            val pencilBrush = pencilInitials?.let(::initialsBrush) ?: androidx.compose.ui.graphics.SolidColor(pencilTheme.accent)
-            val pencilTint = pencilInitials?.let(::initialsTextColor) ?: pencilTheme.onAccent
+            // The same pencil on every profile, in the Appearance theme colour (owner, 2026-11-23).
+            val pencilColour = rememberThemeInitialsColour()
+            val pencilBrush = initialsBrush(pencilColour)
+            val pencilTint = initialsTextColor(pencilColour)
             if (isEditMode) {
                 Box(
                     modifier = Modifier
@@ -644,3 +653,16 @@ private fun profileActionStyle() = MaterialTheme.typography.bodyLarge.copy(fontS
 /** The profile's initial colour when it shows initials (no picture), otherwise null. */
 internal fun NuvioProfile.initialsAccentOrNull(): Color? =
     if (avatarId == null && normalizedAvatarUrl(avatarUrl) == null) parseHexColor(avatarColorHex) else null
+
+/** The Appearance theme's colour, used for profile initials, pencils and the profile background. */
+@Composable
+internal fun rememberThemeInitialsColour(): Color {
+    val theme by remember {
+        com.nuvio.app.features.settings.ThemeSettingsRepository.ensureLoaded()
+        com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme
+    }.collectAsStateWithLifecycle()
+    val custom by com.nuvio.app.features.settings.ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
+    val target = remember(theme, custom) { com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme, custom).secondary }
+    val colour by androidx.compose.animation.animateColorAsState(target, androidx.compose.animation.core.tween(600), label = "themeInitials")
+    return colour
+}

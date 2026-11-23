@@ -8,10 +8,10 @@ import kotlin.test.assertTrue
 
 class ThemeAccessTest {
     @Test
-    fun memberWithoutSavedThemeDefaultsToGold() {
+    fun memberWithoutSavedThemeDefaultsToOriginal() {
         val entitlements = CosmeticEntitlements(setOf(CosmeticEntitlement.GOLD_THEME))
 
-        assertEquals(AppTheme.GOLD, resolveAppTheme(null, entitlements))
+        assertEquals(AppTheme.ORIGINAL, resolveAppTheme(null, entitlements))
     }
 
     @Test

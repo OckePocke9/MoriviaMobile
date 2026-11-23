@@ -167,14 +167,24 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawMoriviaGlow(
     val h = canvas.height
     drawRect(Color.Black, size = canvas)
     if (rightGlow.alpha < 1f) {
-        // A theme colour (owner, 2026-11-23): the dark base, with the colour faintly behind the
-        // logo at the top, fading out downwards.
-        drawRect(leftGlow, size = canvas)
+        // A theme colour, as Nuvio draws it (owner, 2026-11-23): a soft, dark glow of the colour from the
+        // top left across the top of the screen, fading into black about halfway down.
+        drawRect(Color.Black, size = canvas)
+        drawRect(
+            brush = androidx.compose.ui.graphics.Brush.verticalGradient(
+                0f to rightGlow.copy(alpha = rightGlow.alpha * 0.55f),
+                0.55f to Color.Transparent,
+                1f to Color.Transparent,
+                startY = 0f,
+                endY = h,
+            ),
+            size = canvas,
+        )
         ellipticalGlow(
-            center = Offset(w * 0.5f, h * 0.12f),
-            radiusX = w * 0.95f,
-            radiusY = h * 0.48f,
-            stops = arrayOf(0f to rightGlow, 0.55f to rightGlow.copy(alpha = rightGlow.alpha * 0.35f), 1f to Color.Transparent),
+            center = Offset(0f, 0f),
+            radiusX = w * 1.25f,
+            radiusY = h * 0.55f,
+            stops = arrayOf(0f to rightGlow, 0.6f to rightGlow.copy(alpha = rightGlow.alpha * 0.3f), 1f to Color.Transparent),
             canvas = canvas,
         )
         return
@@ -221,20 +231,16 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.ellipticalGlow(
  */
 @Composable
 internal fun rememberProfileViewGlowColors(): Pair<Color, Color> {
-    val choice by remember {
+    // The Appearance theme decides the profile background (owner, 2026-11-23).
+    val appearanceTheme by remember {
         com.nuvio.app.features.settings.ThemeSettingsRepository.ensureLoaded()
-        com.nuvio.app.features.settings.ThemeSettingsRepository.profileViewBackground
+        com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme
     }.collectAsStateWithLifecycle()
-    // A profile with a Nuvio picture follows the Appearance theme; a profile with initials keeps the
-    // Background colour chosen in Edit Profile (owner, 2026-11-23).
-    val profileState by ProfileRepository.state.collectAsStateWithLifecycle()
-    val appearanceTheme by com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
-    val usesPicture = profileState.activeProfile?.let { it.initialsAccentOrNull() == null } == true
-    val effective = if (usesPicture) appearanceTheme.name else choice
+    val effective = appearanceTheme.name
     // Settings' dark base (pure black with AMOLED Black) with a faint glow of the colour behind the
     // logo, fading out downwards (owner, 2026-11-23).
     val base = com.nuvio.app.features.settings.settingsBackgroundColor()
-    return remember(effective, base) {
+    val target = remember(effective, base) {
         if (effective == com.nuvio.app.features.settings.PROFILE_BACKGROUND_BLACK) {
             Color.Black to Color.Black
         } else {
@@ -243,8 +249,12 @@ internal fun rememberProfileViewGlowColors(): Pair<Color, Color> {
             if (theme == com.nuvio.app.core.ui.AppTheme.ORIGINAL) {
                 profileGlowColors(theme, com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme))
             } else {
-                base to com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme).secondary.copy(alpha = 0.72f)
+                base to com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme).secondary.copy(alpha = 0.42f)
             }
         }
     }
+    // A new profile's theme fades in instead of jumping (owner, 2026-11-23).
+    val left by androidx.compose.animation.animateColorAsState(target.first, androidx.compose.animation.core.tween(600), label = "profileGlowLeft")
+    val right by androidx.compose.animation.animateColorAsState(target.second, androidx.compose.animation.core.tween(600), label = "profileGlowRight")
+    return left to right
 }

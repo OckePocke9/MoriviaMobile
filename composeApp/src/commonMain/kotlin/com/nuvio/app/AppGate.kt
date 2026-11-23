@@ -343,6 +343,7 @@ internal fun AppGate(
 
     LaunchedEffect((authState as? AuthState.Authenticated)?.userId) {
         val authenticatedState = authState as? AuthState.Authenticated ?: return@LaunchedEffect
+        com.nuvio.app.features.settings.ThemeSettingsRepository.onAccountSignedIn(authenticatedState.userId)
         ProfileRepository.ensureLoaded(authenticatedState.userId)
         ProfileRepository.pullProfiles()
     }

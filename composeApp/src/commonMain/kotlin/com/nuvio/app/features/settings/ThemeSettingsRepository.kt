@@ -98,6 +98,7 @@ object ThemeSettingsRepository {
     private fun loadFromDisk() {
         hasLoaded = true
         _profileViewBackground.value = ThemeSettingsStorage.loadProfileViewBackground() ?: PROFILE_BACKGROUND_ORIGINAL
+        applyProfileAppIcon()
         val stored = ThemeSettingsStorage.loadSelectedTheme()
         val theme = if (stored != null) {
             try {
@@ -122,6 +123,36 @@ object ThemeSettingsRepository {
         _selectedAppLanguage.value = appLanguage
         _navBarGlowEnabled.value = ThemeSettingsStorage.loadNavBarGlowEnabled() ?: true
         _navBarStyle.value = NavBarStyle.fromKey(ThemeSettingsStorage.loadNavBarStyle())
+    }
+
+    /**
+     * Brings back the app icon this profile chose (owner, 2026-11-23). A profile that never chose one
+     * keeps the current icon, which is then saved as its own.
+     */
+    private fun applyProfileAppIcon() {
+        AppIconRepository.ensureLoaded()
+        val saved = ThemeSettingsStorage.loadProfileAppIcon()
+        val icon = AppIconOption.entries.firstOrNull { it.key == saved }
+        if (icon == null) {
+            ThemeSettingsStorage.saveProfileAppIcon(AppIconRepository.state.value.selected.key)
+            return
+        }
+        if (AppIconRepository.state.value.selected != icon) {
+            scope.launch(Dispatchers.Main) { AppIconRepository.select(icon) }
+        }
+    }
+
+    /**
+     * A different account on this device starts every profile with the Original theme and app icon
+     * (owner, 2026-11-23). The first account seen after this update keeps its own settings.
+     */
+    fun onAccountSignedIn(userId: String) {
+        val owner = ThemeSettingsStorage.loadAppearanceOwner()
+        if (owner == userId) return
+        ThemeSettingsStorage.saveAppearanceOwner(userId)
+        if (owner == null) return
+        for (profileId in 1..8) ThemeSettingsStorage.resetProfileAppearance(profileId)
+        loadFromDisk()
     }
 
     fun setTheme(theme: AppTheme) {

@@ -133,6 +133,27 @@ internal actual object ThemeSettingsStorage {
         NSUserDefaults.standardUserDefaults.synchronize()
     }
 
+    // The account the saved themes and app icons belong to (device-wide).
+    actual fun loadAppearanceOwner(): String? = NSUserDefaults.standardUserDefaults.stringForKey("appearance_owner")
+
+    actual fun saveAppearanceOwner(userId: String) {
+        NSUserDefaults.standardUserDefaults.setObject(userId, forKey = "appearance_owner")
+    }
+
+    // A new profile starts with the Original theme and app icon (owner, 2026-11-23).
+    actual fun resetProfileAppearance(profileId: Int) {
+        NSUserDefaults.standardUserDefaults.setObject("ORIGINAL", forKey = ProfileScopedKey.of(selectedThemeKey, profileId))
+        NSUserDefaults.standardUserDefaults.setObject("original", forKey = ProfileScopedKey.of("profile_app_icon", profileId))
+    }
+
+    // The app icon each profile chose, so it comes back with that profile (owner, 2026-11-23).
+    actual fun loadProfileAppIcon(): String? =
+        NSUserDefaults.standardUserDefaults.stringForKey(ProfileScopedKey.of("profile_app_icon"))
+
+    actual fun saveProfileAppIcon(key: String) {
+        NSUserDefaults.standardUserDefaults.setObject(key, forKey = ProfileScopedKey.of("profile_app_icon"))
+    }
+
     // The profile view background (owner, 2026-11-23): device-wide, so the profile picker shows it too.
     actual fun loadProfileViewBackground(): String? =
         NSUserDefaults.standardUserDefaults.stringForKey("profile_view_background")

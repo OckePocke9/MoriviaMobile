@@ -120,8 +120,15 @@ internal val INITIALS_COLOR_OPTIONS: List<InitialsColorOption> = AppIconOption.e
 
 val PROFILE_COLORS: List<String> = INITIALS_COLOR_OPTIONS.map { it.hex }
 
+// Matched within a small tolerance, so a colour that has just faded in (e.g. after a profile
+// switch) still finds its theme and its gradient, such as Original's (owner, 2026-11-23).
 internal fun initialsPalette(color: Color): ThemeColorPalette? =
-    INITIALS_COLOR_OPTIONS.firstOrNull { it.palette.secondary == color }?.palette
+    INITIALS_COLOR_OPTIONS.firstOrNull { option ->
+        val c = option.palette.secondary
+        kotlin.math.abs(c.red - color.red) < 0.01f &&
+            kotlin.math.abs(c.green - color.green) < 0.01f &&
+            kotlin.math.abs(c.blue - color.blue) < 0.01f
+    }?.palette
 
 /** The theme gradient behind initials, or the plain colour when it is not a Morivia colour. */
 internal fun initialsBrush(color: Color): Brush = initialsPalette(color)?.accentBrush() ?: SolidColor(color)

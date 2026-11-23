@@ -26,7 +26,7 @@ internal fun rememberThemeAccent(): ThemeAccentColors {
         ThemeSettingsRepository.selectedTheme
     }.collectAsStateWithLifecycle()
     val customColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
-    return remember(theme, customColors) {
+    val target = remember(theme, customColors) {
         // Original: the violet in the middle of the new app icon.
         val accent = if (theme == AppTheme.ORIGINAL) Color(0xFF7A2BFF)
         else ThemeColors.getColorPalette(theme, customColors).secondary
@@ -35,6 +35,10 @@ internal fun rememberThemeAccent(): ThemeAccentColors {
             onAccent = if (accent.luminance() > 0.45f) Color(0xFF111111) else Color.White,
         )
     }
+    // Fades to a new profile's theme colour instead of jumping (owner, 2026-11-23).
+    val accent by androidx.compose.animation.animateColorAsState(target.accent, androidx.compose.animation.core.tween(600), label = "themeAccent")
+    val onAccent by androidx.compose.animation.animateColorAsState(target.onAccent, androidx.compose.animation.core.tween(600), label = "themeOnAccent")
+    return ThemeAccentColors(accent, onAccent)
 }
 
 /** An accent set by an outer [ThemedAccent], e.g. a profile's initial colour. */

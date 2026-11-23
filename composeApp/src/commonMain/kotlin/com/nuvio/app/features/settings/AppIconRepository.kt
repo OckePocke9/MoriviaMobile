@@ -46,6 +46,7 @@ internal object AppIconRepository {
         }.getOrDefault(false)
         _state.value = if (changed) {
             AppIconPlatform.saveSelectedIconKey(icon.key)
+            ThemeSettingsStorage.saveProfileAppIcon(icon.key)
             AppIconSettingsState(selected = icon)
         } else {
             current.copy(changeFailed = true)
