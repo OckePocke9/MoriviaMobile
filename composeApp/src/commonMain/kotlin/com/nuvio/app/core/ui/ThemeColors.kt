@@ -18,15 +18,15 @@ data class ThemeColorPalette(
 
 object ThemeColors {
 
-    // Sampled from the original Morivia logo: violet #9A15F9 to blue #3182F6 to cyan #01E8F6.
+    // The new app icon's colours (owner, 2026-11-23): magenta #F23BFF, violet, blue #037EFE, cyan #00CFFD.
     val Original = ThemeColorPalette(
         secondary = Color(0xFF6B4BF5),
-        secondaryVariant = Color(0xFF01BEF7),
-        accentGradient = listOf(Color(0xFF9A15F9), Color(0xFF6B4BF5), Color(0xFF3182F6), Color(0xFF01E8F6)),
+        secondaryVariant = Color(0xFF00CFFD),
+        accentGradient = listOf(Color(0xFFF23BFF), Color(0xFFA80CFE), Color(0xFF4B2BFD), Color(0xFF037EFE), Color(0xFF00CFFD)),
         nativeAccentHex = "#6B4BF5",
         onSecondary = Color.White,
         onSecondaryVariant = Color(0xFF111111),
-        focusRing = Color(0xFF01E8F6),
+        focusRing = Color(0xFF00CFFD),
         focusBackground = Color(0xFF261B4A),
         background = Color(0xFF0C0B14),
         backgroundElevated = Color(0xFF161424),
@@ -143,10 +143,10 @@ object ThemeColors {
     )
 
     val Emerald = ThemeColorPalette(
-        secondary = Color(0xFF43A047),
+        secondary = Color(0xFF22C55E),
         secondaryVariant = Color(0xFF2E7D32),
-        nativeAccentHex = "#43A047",
-        focusRing = Color(0xFF66BB6A),
+        nativeAccentHex = "#22C55E",
+        focusRing = Color(0xFF22C55E),
         focusBackground = Color(0xFF1A3D1E),
         background = Color(0xFF0D0D0D),
         backgroundElevated = Color(0xFF1A1A1A),
@@ -154,10 +154,10 @@ object ThemeColors {
     )
 
     val Amber = ThemeColorPalette(
-        secondary = Color(0xFFFB8C00),
+        secondary = Color(0xFFFFB300),
         secondaryVariant = Color(0xFFEF6C00),
-        nativeAccentHex = "#FB8C00",
-        focusRing = Color(0xFFFFA726),
+        nativeAccentHex = "#FFB300",
+        focusRing = Color(0xFFFFB300),
         focusBackground = Color(0xFF3D2D1A),
         background = Color(0xFF0F0D0D),
         backgroundElevated = Color(0xFF1E1A1A),
@@ -189,18 +189,11 @@ object ThemeColors {
     )
 
     val Copper = ThemeColorPalette(
-        secondary = Color(0xFFC9804A),
+        secondary = Color(0xFFD9772E),
         secondaryVariant = Color(0xFF914407),
-        accentGradient = listOf(
-            Color(0xFF914407),
-            Color(0xFFC9804A),
-            Color(0xFFE6B37E),
-            Color(0xFFDB9C62),
-            Color(0xFF965529),
-        ),
-        nativeAccentHex = "#C9804A",
+        nativeAccentHex = "#D9772E",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFE6B37E),
+        focusRing = Color(0xFFD9772E),
         focusBackground = Color(0xFF3D261A),
     )
 
@@ -244,12 +237,11 @@ object ThemeColors {
     )
 
     val Azure = ThemeColorPalette(
-        secondary = Color(0xFF42ACFA),
+        secondary = Color(0xFF2F8DFF),
         secondaryVariant = Color(0xFF205BBC),
-        accentGradient = listOf(Color(0xFF0A6CFF), Color(0xFF2F8DFF), Color(0xFF4FB3FF), Color(0xFF7DD6FF)),
-        nativeAccentHex = "#42ACFA",
+        nativeAccentHex = "#2F8DFF",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF42ACFA),
+        focusRing = Color(0xFF2F8DFF),
         focusBackground = Color(0xFF112D41),
         background = Color(0xFF050D13),
         backgroundElevated = Color(0xFF0A1924),
@@ -270,12 +262,11 @@ object ThemeColors {
     )
 
     val Berry = ThemeColorPalette(
-        secondary = Color(0xFFD65086),
+        secondary = Color(0xFFFF2E88),
         secondaryVariant = Color(0xFF932452),
-        accentGradient = listOf(Color(0xFFC2185B), Color(0xFFE0287A), Color(0xFFF04E98), Color(0xFFFF7EB8)),
-        nativeAccentHex = "#D65086",
+        nativeAccentHex = "#FF2E88",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFD65086),
+        focusRing = Color(0xFFFF2E88),
         focusBackground = Color(0xFF381523),
         background = Color(0xFF10060A),
         backgroundElevated = Color(0xFF1F0C13),
@@ -296,12 +287,11 @@ object ThemeColors {
     )
 
     val Cerulean = ThemeColorPalette(
-        secondary = Color(0xFF30C3E9),
+        secondary = Color(0xFF00B0F0),
         secondaryVariant = Color(0xFF087493),
-        accentGradient = listOf(Color(0xFF0091EA), Color(0xFF00B0F0), Color(0xFF2CCCF5), Color(0xFF6FE3FF)),
-        nativeAccentHex = "#30C3E9",
+        nativeAccentHex = "#00B0F0",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF30C3E9),
+        focusRing = Color(0xFF00B0F0),
         focusBackground = Color(0xFF0C333D),
         background = Color(0xFF040F11),
         backgroundElevated = Color(0xFF071C22),
@@ -309,12 +299,11 @@ object ThemeColors {
     )
 
     val Cherry = ThemeColorPalette(
-        secondary = Color(0xFFEF485D),
+        secondary = Color(0xFFF0213F),
         secondaryVariant = Color(0xFFAD203A),
-        accentGradient = listOf(Color(0xFFD7002D), Color(0xFFF0213F), Color(0xFFFF4D5E), Color(0xFFFF7A85)),
-        nativeAccentHex = "#EF485D",
+        nativeAccentHex = "#F0213F",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFEF485D),
+        focusRing = Color(0xFFF0213F),
         focusBackground = Color(0xFF3E1318),
         background = Color(0xFF120507),
         backgroundElevated = Color(0xFF230A0D),
@@ -322,12 +311,11 @@ object ThemeColors {
     )
 
     val Cobalt = ThemeColorPalette(
-        secondary = Color(0xFF5D75F0),
+        secondary = Color(0xFF3D5AFE),
         secondaryVariant = Color(0xFF2A3DA9),
-        accentGradient = listOf(Color(0xFF1F3BEA), Color(0xFF3D5AFE), Color(0xFF5C7CFF), Color(0xFF82A0FF)),
-        nativeAccentHex = "#5D75F0",
+        nativeAccentHex = "#3D5AFE",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF5D75F0),
+        focusRing = Color(0xFF3D5AFE),
         focusBackground = Color(0xFF181E3E),
         background = Color(0xFF070912),
         backgroundElevated = Color(0xFF0D1123),
@@ -335,12 +323,11 @@ object ThemeColors {
     )
 
     val Coral = ThemeColorPalette(
-        secondary = Color(0xFFFF7D6D),
+        secondary = Color(0xFFFF6B5A),
         secondaryVariant = Color(0xFFCC5048),
-        accentGradient = listOf(Color(0xFFFF4F45), Color(0xFFFF6B5A), Color(0xFFFF8A6E), Color(0xFFFFAF8C)),
-        nativeAccentHex = "#FF7D6D",
+        nativeAccentHex = "#FF6B5A",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFFF7D6D),
+        focusRing = Color(0xFFFF6B5A),
         focusBackground = Color(0xFF42201C),
         background = Color(0xFF130908),
         backgroundElevated = Color(0xFF251210),
@@ -387,12 +374,11 @@ object ThemeColors {
     )
 
     val Grape = ThemeColorPalette(
-        secondary = Color(0xFFBE68F0),
+        secondary = Color(0xFFA033F0),
         secondaryVariant = Color(0xFF7534B4),
-        accentGradient = listOf(Color(0xFF7B1FFF), Color(0xFFA033F0), Color(0xFFC04DFF), Color(0xFFDA7BFF)),
-        nativeAccentHex = "#BE68F0",
+        nativeAccentHex = "#A033F0",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFBE68F0),
+        focusRing = Color(0xFFA033F0),
         focusBackground = Color(0xFF311B3E),
         background = Color(0xFF0E0812),
         backgroundElevated = Color(0xFF1C0F23),
@@ -413,12 +399,11 @@ object ThemeColors {
     )
 
     val Indigo = ThemeColorPalette(
-        secondary = Color(0xFF7772DA),
+        secondary = Color(0xFF6A4CFF),
         secondaryVariant = Color(0xFF413591),
-        accentGradient = listOf(Color(0xFF3A1FD6), Color(0xFF5B3DF0), Color(0xFF7A5CFF), Color(0xFF9E86FF)),
-        nativeAccentHex = "#7772DA",
+        nativeAccentHex = "#6A4CFF",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF7772DA),
+        focusRing = Color(0xFF6A4CFF),
         focusBackground = Color(0xFF1F1E39),
         background = Color(0xFF090910),
         backgroundElevated = Color(0xFF111120),
@@ -452,12 +437,11 @@ object ThemeColors {
     )
 
     val Lemon = ThemeColorPalette(
-        secondary = Color(0xFFF9DD60),
+        secondary = Color(0xFFFFE01A),
         secondaryVariant = Color(0xFFAB831D),
-        accentGradient = listOf(Color(0xFFF5C400), Color(0xFFFFD600), Color(0xFFFFE23B), Color(0xFFFFF07A)),
-        nativeAccentHex = "#F9DD60",
+        nativeAccentHex = "#FFE01A",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFF9DD60),
+        focusRing = Color(0xFFFFE01A),
         focusBackground = Color(0xFF413919),
         background = Color(0xFF131107),
         backgroundElevated = Color(0xFF24200E),
@@ -478,12 +462,11 @@ object ThemeColors {
     )
 
     val Lime = ThemeColorPalette(
-        secondary = Color(0xFFC5E94E),
+        secondary = Color(0xFF9BDB10),
         secondaryVariant = Color(0xFF7AA621),
-        accentGradient = listOf(Color(0xFF7CC800), Color(0xFF9BDB10), Color(0xFFB9EA30), Color(0xFFD6F65E)),
-        nativeAccentHex = "#C5E94E",
+        nativeAccentHex = "#9BDB10",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFC5E94E),
+        focusRing = Color(0xFF9BDB10),
         focusBackground = Color(0xFF333D14),
         background = Color(0xFF0F1106),
         backgroundElevated = Color(0xFF1D220B),
@@ -491,12 +474,11 @@ object ThemeColors {
     )
 
     val Mango = ThemeColorPalette(
-        secondary = Color(0xFFFFC658),
+        secondary = Color(0xFFFF8A00),
         secondaryVariant = Color(0xFFD17A20),
-        accentGradient = listOf(Color(0xFFFF8F00), Color(0xFFFFA51F), Color(0xFFFFBE33), Color(0xFFFFD45C)),
-        nativeAccentHex = "#FFC658",
+        nativeAccentHex = "#FF8A00",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFFFC658),
+        focusRing = Color(0xFFFF8A00),
         focusBackground = Color(0xFF423317),
         background = Color(0xFF130F07),
         backgroundElevated = Color(0xFF251D0D),
@@ -504,12 +486,11 @@ object ThemeColors {
     )
 
     val Mint = ThemeColorPalette(
-        secondary = Color(0xFF75E7C3),
+        secondary = Color(0xFF2EE6B0),
         secondaryVariant = Color(0xFF329E80),
-        accentGradient = listOf(Color(0xFF00C98D), Color(0xFF1EDBA0), Color(0xFF5EEAB8), Color(0xFF9AF5D4)),
-        nativeAccentHex = "#75E7C3",
+        nativeAccentHex = "#2EE6B0",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF75E7C3),
+        focusRing = Color(0xFF2EE6B0),
         focusBackground = Color(0xFF1E3C33),
         background = Color(0xFF09110F),
         backgroundElevated = Color(0xFF11211C),
@@ -530,12 +511,11 @@ object ThemeColors {
     )
 
     val Orchid = ThemeColorPalette(
-        secondary = Color(0xFFF38BE8),
+        secondary = Color(0xFFE040D8),
         secondaryVariant = Color(0xFFAA449D),
-        accentGradient = listOf(Color(0xFFD63CC8), Color(0xFFEA55D8), Color(0xFFF57DE6), Color(0xFFFFA8F2)),
-        nativeAccentHex = "#F38BE8",
+        nativeAccentHex = "#E040D8",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFFF38BE8),
+        focusRing = Color(0xFFE040D8),
         focusBackground = Color(0xFF3F243C),
         background = Color(0xFF120A11),
         backgroundElevated = Color(0xFF231422),
@@ -595,12 +575,11 @@ object ThemeColors {
     )
 
     val Teal = ThemeColorPalette(
-        secondary = Color(0xFF43C5CB),
+        secondary = Color(0xFF00BFC8),
         secondaryVariant = Color(0xFF167880),
-        accentGradient = listOf(Color(0xFF0097A7), Color(0xFF00B3BF), Color(0xFF26CCD3), Color(0xFF6CE3E6)),
-        nativeAccentHex = "#43C5CB",
+        nativeAccentHex = "#00BFC8",
         onSecondary = Color(0xFF111111),
-        focusRing = Color(0xFF43C5CB),
+        focusRing = Color(0xFF00BFC8),
         focusBackground = Color(0xFF113335),
         background = Color(0xFF050F0F),
         backgroundElevated = Color(0xFF0A1D1D),

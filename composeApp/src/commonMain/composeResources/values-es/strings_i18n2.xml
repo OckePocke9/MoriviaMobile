@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">Valora películas y series. Valorar un título que no está en tus listas de Simkl lo añade a ellas.</string>
     <string name="settings_tracking_ratings_mdblist_description">Valora películas, series y episodios.</string>
     <string name="addons_tracking_consent_title">Complemento de seguimiento</string>
-    <string name="addons_tracking_consent_body">%1$s es un complemento de seguimiento. Morivia le enviará tu actividad: lo que reproduces, pausas y detienes con la posición de reproducción, lo que añades o quitas de tu biblioteca y lo que marcas como visto o no visto. Estos datos salen de Morivia y los gestiona el desarrollador del complemento y el servicio al que se conecta.</string>
+    <string name="addons_tracking_consent_body">%1$s es un complemento de seguimiento. Norivia le enviará tu actividad: lo que reproduces, pausas y detienes con la posición de reproducción, lo que añades o quitas de tu biblioteca y lo que marcas como visto o no visto. Estos datos salen de Norivia y los gestiona el desarrollador del complemento y el servicio al que se conecta.</string>
     <string name="addons_tracking_consent_checkbox">Acepto compartir mi actividad de visionado y mi biblioteca con este complemento</string>
 </resources>

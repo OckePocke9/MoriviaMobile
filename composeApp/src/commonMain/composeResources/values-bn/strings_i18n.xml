@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">অ্যাপ আইকন · %1$s</string>
     <string name="morivia_appearance_preview_text">টেক্সট ও ব্যাকগ্রাউন্ড</string>
     <string name="morivia_appearance_preview_button">বোতাম</string>
-    <string name="updates_repository_access">Morivia GitHub-এ তার আপডেট পেজে পৌঁছাতে পারেনি। আপনার ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন, অথবা সর্বশেষ সংস্করণ ডাউনলোড করতে GitHub খুলুন।</string>
+    <string name="updates_repository_access">Norivia GitHub-এ তার আপডেট পেজে পৌঁছাতে পারেনি। আপনার ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন, অথবা সর্বশেষ সংস্করণ ডাউনলোড করতে GitHub খুলুন।</string>
     <string name="updates_open_github">GitHub খুলুন</string>
     <string name="profile_save_failed">প্রোফাইল সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।</string>
     <string name="library_filter_genre">জঁরা</string>

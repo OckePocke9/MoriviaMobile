@@ -207,14 +207,14 @@
     <string name="compose_settings_root_check_updates_description">Lataa uusin versio</string>
     <string name="compose_settings_root_check_updates_title">Tarkista päivitykset</string>
     <string name="compose_settings_root_content_discovery_description">Hallitse lisäosia ja sisältölähteitä.</string>
-    <string name="compose_settings_root_content_discovery_description_appstore">Hallitse lisäosia ja valitse Moriviassa näkyvä sisältö.</string>
+    <string name="compose_settings_root_content_discovery_description_appstore">Hallitse lisäosia ja valitse Noriviassa näkyvä sisältö.</string>
     <string name="compose_settings_root_downloads_description">Hallitse ladattuja elokuvia ja jaksoja.</string>
     <string name="compose_settings_root_downloads_description_appstore">Hallitse tälle laitteelle tallennettua sisältöä.</string>
     <string name="compose_settings_root_downloads_title">Lataukset</string>
     <string name="compose_settings_root_general_section">YLEISET</string>
     <string name="compose_settings_root_integrations_description">Hallitse käytettävissä olevia integraatioita</string>
     <string name="compose_settings_root_notifications_description">Hallitse uusien jaksojen ilmoituksia ja lähetä testi-ilmoitus.</string>
-    <string name="compose_settings_root_privacy_policy_description">Lue, miten Morivia käsittelee tietojasi</string>
+    <string name="compose_settings_root_privacy_policy_description">Lue, miten Norivia käsittelee tietojasi</string>
     <string name="compose_settings_root_streams_description">Suoratoistotulosten näyttö ja tunnisteiden URL-säännöt.</string>
     <string name="compose_settings_root_switch_profile_description">Vaihda toiseen profiiliin.</string>
     <string name="compose_settings_root_switch_profile_title">Vaihda profiilia</string>
@@ -232,7 +232,7 @@
     <string name="settings_appearance_amoled_description">Käytä täysin mustaa taustaa OLED-näytöillä.</string>
     <string name="settings_appearance_app_icon">Sovelluskuvake</string>
     <string name="settings_appearance_app_icon_arctic_blue">Arktinen sininen</string>
-    <string name="settings_appearance_app_icon_android_confirmation_message">Vaihtaminen kuvakkeeseen %1$s sulkee Morivian. Jatka napauttamalla OK.</string>
+    <string name="settings_appearance_app_icon_android_confirmation_message">Vaihtaminen kuvakkeeseen %1$s sulkee Norivian. Jatka napauttamalla OK.</string>
     <string name="settings_appearance_app_icon_android_confirmation_title">Vaihda sovelluskuvake?</string>
     <string name="settings_appearance_app_icon_change_failed">Kuvaketta ei voitu vaihtaa. Yritä uudelleen.</string>
     <string name="settings_appearance_app_icon_copper">Kupari</string>
@@ -376,7 +376,7 @@
     <string name="resume_prompt_action">Jatka</string>
     <string name="streams_episode_fallback_title">Jakso</string>
     <string name="updates_check_failed">Päivitysten tarkistus epäonnistui</string>
-    <string name="updates_repository_access">Morivia ei tavoittanut päivityssivuaan GitHubissa. Tarkista internetyhteys ja yritä uudelleen, tai avaa GitHub ja lataa uusin versio.</string>
+    <string name="updates_repository_access">Norivia ei tavoittanut päivityssivuaan GitHubissa. Tarkista internetyhteys ja yritä uudelleen, tai avaa GitHub ja lataa uusin versio.</string>
     <string name="updates_open_github">Avaa GitHub</string>
     <string name="updates_download_failed">Lataus epäonnistui</string>
     <string name="updates_download_empty_body">Ladattu sisältö on tyhjä</string>
@@ -387,7 +387,7 @@
     <string name="updates_debug_test_title">Testaa päivitysbanneria</string>
     <string name="updates_install_failed">Asennusta ei voitu käynnistää</string>
     <string name="updates_latest_version">Käytössäsi on uusin versio.</string>
-    <string name="updates_message_allow_installs">Salli sovellusten asentaminen Morivialle ja palaa sitten jatkamaan.</string>
+    <string name="updates_message_allow_installs">Salli sovellusten asentaminen Norivialle ja palaa sitten jatkamaan.</string>
     <string name="updates_message_downloading">Ladataan päivitystä…</string>
     <string name="updates_message_no_updates">Päivityksiä ei löytynyt.</string>
     <string name="updates_message_ready">Uusi versio on valmis asennettavaksi.</string>

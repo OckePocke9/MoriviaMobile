@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Biểu tượng ứng dụng · %1$s</string>
     <string name="morivia_appearance_preview_text">Chữ và nền</string>
     <string name="morivia_appearance_preview_button">Nút</string>
-    <string name="updates_repository_access">Morivia không thể truy cập trang cập nhật trên GitHub. Hãy kiểm tra kết nối Internet và thử lại, hoặc mở GitHub để tải phiên bản mới nhất.</string>
+    <string name="updates_repository_access">Norivia không thể truy cập trang cập nhật trên GitHub. Hãy kiểm tra kết nối Internet và thử lại, hoặc mở GitHub để tải phiên bản mới nhất.</string>
     <string name="updates_open_github">Mở GitHub</string>
     <string name="profile_save_failed">Không thể lưu hồ sơ. Hãy thử lại.</string>
     <string name="library_filter_genre">Thể loại</string>

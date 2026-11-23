@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Дивіться разом синхронно й спілкуйтеся з друзями</string>
+    <string name="settings_appearance_card_description">Колір теми, значок застосунку, мова й макет</string>
+    <string name="settings_theme_card_title">Тема</string>
+    <string name="profile_initial_colour">Колір ініціала</string>
+    <string name="profile_background_colour">Колір тла</string>
+    <string name="profile_background_black">Чорний</string>
+</resources>

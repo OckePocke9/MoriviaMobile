@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Gledajte zajedno sinkronizirano i dopisujte se s prijateljima</string>
+    <string name="settings_appearance_card_description">Boja teme, ikona aplikacije, jezik i raspored</string>
+    <string name="settings_theme_card_title">Tema</string>
+    <string name="profile_initial_colour">Boja inicijala</string>
+    <string name="profile_background_colour">Boja pozadine</string>
+    <string name="profile_background_black">Crna</string>
+</resources>

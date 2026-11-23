@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Wiśnia</string>
+    <string name="theme_coral">Koral</string>
+    <string name="theme_mango">Mango</string>
+    <string name="theme_lemon">Cytryna</string>
+    <string name="theme_lime">Limonka</string>
+    <string name="theme_mint">Mięta</string>
+    <string name="theme_teal">Morski</string>
+    <string name="theme_cerulean">Błękit</string>
+    <string name="theme_azure">Lazur</string>
+    <string name="theme_cobalt">Kobalt</string>
+    <string name="theme_indigo">Indygo</string>
+    <string name="theme_grape">Winogrono</string>
+    <string name="theme_orchid">Orchidea</string>
+    <string name="theme_berry">Jagoda</string>
+</resources>

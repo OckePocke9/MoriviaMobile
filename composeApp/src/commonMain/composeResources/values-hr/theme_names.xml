@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Trešnja</string>
+    <string name="theme_coral">Koralj</string>
+    <string name="theme_mango">Mango</string>
+    <string name="theme_lemon">Limun</string>
+    <string name="theme_lime">Limeta</string>
+    <string name="theme_mint">Menta</string>
+    <string name="theme_teal">Plavozelena</string>
+    <string name="theme_cerulean">Nebeskoplava</string>
+    <string name="theme_azure">Azurna</string>
+    <string name="theme_cobalt">Kobalt</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_grape">Grožđe</string>
+    <string name="theme_orchid">Orhideja</string>
+    <string name="theme_berry">Bobica</string>
+</resources>

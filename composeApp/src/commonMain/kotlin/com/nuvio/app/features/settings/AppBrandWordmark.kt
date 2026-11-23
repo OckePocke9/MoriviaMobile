@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
 import com.nuvio.app.core.ui.appTheme
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,12 +44,20 @@ internal fun AppBrandWordmark(
     } else {
         painterResource(resource)
     }
-    Image(
-        painter = painter,
-        contentDescription = contentDescription,
-        modifier = modifier,
-        contentScale = ContentScale.Fit,
-    )
+    // The logo part of the wordmark picture, then the name written as "Norivia" (owner, 2026-11-23).
+    androidx.compose.foundation.layout.BoxWithConstraints(modifier = modifier) {
+        val height = if (maxHeight.value.isFinite()) maxHeight else 40.dp
+        // The new Norivia logo in the theme colour (owner, 2026-11-23).
+        val logoTheme by ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
+        NoriviaNameRow(height = height, fontRatio = 0.43f, gapRatio = 0.21f) {
+            Image(
+                painter = painterResource(logoTheme.noriviaLogoResource()),
+                contentDescription = contentDescription,
+                modifier = Modifier.height(height),
+                contentScale = ContentScale.Fit,
+            )
+        }
+    }
 }
 
 @Composable

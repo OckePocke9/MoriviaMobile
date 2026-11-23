@@ -33,11 +33,14 @@ internal fun rememberSettingsSearchScrollConnection(
         object : NestedScrollConnection {
             private var distance = 0f
             private var changedDuringDrag = false
+            // After an upward swipe closes search, the rest of that swipe is used up, so the list
+            // does not scroll while the search field is shrinking (that caused a jolt).
+            private var hidDuringDrag = false
 
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (!enabled || isIos || !isVisible || changedDuringDrag || source != NestedScrollSource.UserInput) {
-                    return Offset.Zero
-                }
+                if (!enabled || isIos || source != NestedScrollSource.UserInput) return Offset.Zero
+                if (hidDuringDrag) return Offset(0f, available.y)
+                if (!isVisible || changedDuringDrag) return Offset.Zero
                 if (listState.canScrollBackward || available.y >= 0f) {
                     distance = 0f
                     return Offset.Zero
@@ -48,6 +51,7 @@ internal fun rememberSettingsSearchScrollConnection(
                     changedDuringDrag = true
                     distance = 0f
                     focusManager.clearFocus()
+                    hidDuringDrag = true
                     setVisibility(false)
                 }
                 return Offset(0f, available.y)
@@ -77,6 +81,7 @@ internal fun rememberSettingsSearchScrollConnection(
                 val consumed = if (changedDuringDrag && !isIos) Velocity(0f, available.y) else Velocity.Zero
                 distance = 0f
                 changedDuringDrag = false
+                hidDuringDrag = false
                 return consumed
             }
         }

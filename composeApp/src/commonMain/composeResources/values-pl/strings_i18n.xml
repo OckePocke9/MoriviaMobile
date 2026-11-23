@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Ikona aplikacji · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst i tło</string>
     <string name="morivia_appearance_preview_button">Przycisk</string>
-    <string name="updates_repository_access">Morivia nie mogła połączyć się ze swoją stroną aktualizacji na GitHubie. Sprawdź połączenie z internetem i spróbuj ponownie lub otwórz GitHub, aby pobrać najnowszą wersję.</string>
+    <string name="updates_repository_access">Norivia nie mogła połączyć się ze swoją stroną aktualizacji na GitHubie. Sprawdź połączenie z internetem i spróbuj ponownie lub otwórz GitHub, aby pobrać najnowszą wersję.</string>
     <string name="updates_open_github">Otwórz GitHub</string>
     <string name="profile_save_failed">Nie udało się zapisać profilu. Spróbuj ponownie.</string>
     <string name="compose_player_audio_delay">Opóźnienie dźwięku</string>

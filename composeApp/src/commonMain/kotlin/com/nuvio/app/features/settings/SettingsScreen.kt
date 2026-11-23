@@ -565,7 +565,7 @@ private fun MobileSettingsScreen(
     val saveableStateHolder = rememberSaveableStateHolder()
     saveableStateHolder.SaveableStateProvider(page.name) {
         var settingsSearchQuery by rememberSaveable { mutableStateOf("") }
-        var rootSearchVisible by rememberSaveable { mutableStateOf(false) }
+        var rootSearchVisible by rememberSaveable { mutableStateOf(true) }
         val searchVisibility = rememberSettingsSearchVisibility(rootSearchVisible || (isIos && settingsSearchQuery.isNotBlank()))
         val listState = rememberLazyListState()
         val catalogRowsState = if (!isIos && page == SettingsPage.PosterCustomization) {

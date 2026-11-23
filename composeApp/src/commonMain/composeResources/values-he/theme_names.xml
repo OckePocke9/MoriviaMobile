@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">דובדבן</string>
+    <string name="theme_coral">אלמוג</string>
+    <string name="theme_mango">מנגו</string>
+    <string name="theme_lemon">לימון</string>
+    <string name="theme_lime">ליים</string>
+    <string name="theme_mint">מנטה</string>
+    <string name="theme_teal">כחול-ירקרק</string>
+    <string name="theme_cerulean">תכלת</string>
+    <string name="theme_azure">תכול</string>
+    <string name="theme_cobalt">קובלט</string>
+    <string name="theme_indigo">אינדיגו</string>
+    <string name="theme_grape">ענב</string>
+    <string name="theme_orchid">סחלב</string>
+    <string name="theme_berry">פירות יער</string>
+</resources>

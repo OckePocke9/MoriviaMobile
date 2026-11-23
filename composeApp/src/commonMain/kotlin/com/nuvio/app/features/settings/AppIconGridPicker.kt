@@ -72,8 +72,8 @@ internal fun AppIconGridPicker(
     var expanded by rememberSaveable { mutableStateOf(false) }
     var showCustom by rememberSaveable { mutableStateOf(false) }
     val customColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
-    val alphabetic = icons.map { it to stringResource(it.labelResource).lowercase() }.sortedBy { it.second }.map { it.first }
-    val visible = if (expanded) alphabetic else alphabetic.collapsedPresets(state.selected, COLLAPSED_ICON_COUNT)
+    val alphabetic = icons.map { it to alphabeticalKey(stringResource(it.labelResource)) }.sortedBy { it.second }.map { it.first }
+    val visible = if (expanded) alphabetic else alphabetic.take(COLLAPSED_ICON_COUNT)
     val spacing = if (isTablet) NuvioTokens.Space.s16 else NuvioTokens.Space.s12
     BoxWithConstraints(
         modifier = Modifier
@@ -182,26 +182,22 @@ private fun AppIconChip(
                     modifier = Modifier.fillMaxSize().graphicsLayer(scaleX = 1.45f, scaleY = 1.45f),
                     contentScale = ContentScale.Crop,
                 )
-            }
-            // A small badge instead of darkening the icon, so the chosen colour stays clear.
-            if (isSelected || isPending) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .size(NuvioTokens.Space.s22)
-                        .clip(CircleShape)
-                        .background(ring),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (isPending) {
-                        NuvioLoadingIndicator(modifier = Modifier.size(14.dp), color = Color(0xFF111111))
-                    } else {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = stringResource(Res.string.cd_selected),
-                            tint = Color(0xFF111111),
-                            modifier = Modifier.size(14.dp),
-                        )
+                // The same check as the theme picker: centred on the chosen icon.
+                if (isSelected || isPending) {
+                    Box(
+                        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.38f)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (isPending) {
+                            NuvioLoadingIndicator(modifier = Modifier.size(NuvioTokens.Space.s22), color = Color.White)
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = stringResource(Res.string.cd_selected),
+                                tint = Color.White,
+                                modifier = Modifier.size(NuvioTokens.Space.s22),
+                            )
+                        }
                     }
                 }
             }

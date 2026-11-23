@@ -63,3 +63,17 @@ internal fun <T> List<T>.collapsedPresets(selected: T, limit: Int): List<T> {
     if (selected in first || selected !in this) return first
     return filterIndexed { index, preset -> index < limit - 1 || preset == selected }
 }
+
+/**
+ * Sort key for colour names: case-insensitive, with å, ä and ö after z as in the Swedish and
+ * Finnish alphabets (owner, 2026-11-23).
+ */
+internal fun alphabeticalKey(label: String): String =
+    label.lowercase().map { char ->
+        when (char) {
+            'å' -> "z\u0001"
+            'ä', 'æ' -> "z\u0002"
+            'ö', 'ø' -> "z\u0003"
+            else -> char.toString()
+        }
+    }.joinToString("")

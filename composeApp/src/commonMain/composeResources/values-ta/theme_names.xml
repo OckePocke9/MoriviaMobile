@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">செர்ரி</string>
+    <string name="theme_coral">பவளம்</string>
+    <string name="theme_mango">மாம்பழம்</string>
+    <string name="theme_lemon">எலுமிச்சை</string>
+    <string name="theme_lime">லைம்</string>
+    <string name="theme_mint">புதினா</string>
+    <string name="theme_teal">டீல்</string>
+    <string name="theme_cerulean">வான்நீலம்</string>
+    <string name="theme_azure">அஸூர்</string>
+    <string name="theme_cobalt">கோபால்ட்</string>
+    <string name="theme_indigo">அவுரி</string>
+    <string name="theme_grape">திராட்சை</string>
+    <string name="theme_orchid">ஆர்க்கிட்</string>
+    <string name="theme_berry">பெர்ரி</string>
+</resources>

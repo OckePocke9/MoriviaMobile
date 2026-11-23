@@ -464,6 +464,8 @@ private fun JoinContent(
             text = stringResource(Res.string.party_join_action),
             onClick = ::submit,
             style = DialogButtonStyle.Primary,
+            primaryColor = com.nuvio.app.features.settings.rememberThemeAccent().accent,
+            onPrimaryColor = com.nuvio.app.features.settings.rememberThemeAccent().onAccent,
             enabled = isValidPartyCode(code) && blockedError == null &&
                 error !in setOf(PartyError.NotFound, PartyError.Removed, PartyError.RateLimited),
             loading = state.busy || previewing,

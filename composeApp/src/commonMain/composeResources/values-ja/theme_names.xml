@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">チェリー</string>
+    <string name="theme_coral">コーラル</string>
+    <string name="theme_mango">マンゴー</string>
+    <string name="theme_lemon">レモン</string>
+    <string name="theme_lime">ライム</string>
+    <string name="theme_mint">ミント</string>
+    <string name="theme_teal">ティール</string>
+    <string name="theme_cerulean">セルリアン</string>
+    <string name="theme_azure">アジュール</string>
+    <string name="theme_cobalt">コバルト</string>
+    <string name="theme_indigo">インディゴ</string>
+    <string name="theme_grape">グレープ</string>
+    <string name="theme_orchid">オーキッド</string>
+    <string name="theme_berry">ベリー</string>
+</resources>

@@ -71,6 +71,8 @@ fun PinEntryDialog(
     LaunchedEffect(Unit) {
         entrance.animateTo(1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy))
     }
+    // The theme colour on the PIN dots and buttons (owner, 2026-11-23).
+    com.nuvio.app.features.settings.ThemedAccent {
     DialogSurface(
         onDismissRequest = onDismiss,
     ) {
@@ -169,6 +171,7 @@ fun PinEntryDialog(
                 )
             }
         }
+    }
     }
 }
 

@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">فلمیں اور شوز ریٹ کریں۔ جو عنوان آپ کی Simkl فہرستوں میں نہیں اسے ریٹ کرنے سے وہ ان میں شامل ہو جاتا ہے۔</string>
     <string name="settings_tracking_ratings_mdblist_description">فلمیں، شوز اور اقساط ریٹ کریں۔</string>
     <string name="addons_tracking_consent_title">ٹریکنگ ایڈ آن</string>
-    <string name="addons_tracking_consent_body">%1$s ایک ٹریکنگ ایڈ آن ہے۔ Morivia اسے آپ کی سرگرمی بھیجے گی: آپ کیا چلاتے، روکتے اور بند کرتے ہیں پلے بیک پوزیشن کے ساتھ، اپنی لائبریری میں کیا شامل کرتے یا ہٹاتے ہیں، اور کیا دیکھا یا نہ دیکھا نشان زد کرتے ہیں۔ یہ ڈیٹا Morivia سے باہر جاتا ہے اور ایڈ آن کے ڈویلپر اور اس سے منسلک سروس کے پاس ہوتا ہے۔</string>
+    <string name="addons_tracking_consent_body">%1$s ایک ٹریکنگ ایڈ آن ہے۔ Norivia اسے آپ کی سرگرمی بھیجے گی: آپ کیا چلاتے، روکتے اور بند کرتے ہیں پلے بیک پوزیشن کے ساتھ، اپنی لائبریری میں کیا شامل کرتے یا ہٹاتے ہیں، اور کیا دیکھا یا نہ دیکھا نشان زد کرتے ہیں۔ یہ ڈیٹا Norivia سے باہر جاتا ہے اور ایڈ آن کے ڈویلپر اور اس سے منسلک سروس کے پاس ہوتا ہے۔</string>
     <string name="addons_tracking_consent_checkbox">میں اپنی دیکھنے کی سرگرمی اور لائبریری اس ایڈ آن کے ساتھ شیئر کرنے پر متفق ہوں</string>
     <string name="settings_mdb_show_on_hero">ہیرو میں ریٹنگز استعمال کریں</string>
     <string name="settings_mdb_show_on_hero_description">ہوم ہیرو میں MDBList ریٹنگز دکھائیں</string>

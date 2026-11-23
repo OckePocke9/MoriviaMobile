@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Kirsikka</string>
+    <string name="theme_coral">Koralli</string>
+    <string name="theme_mango">Mango</string>
+    <string name="theme_lemon">Sitruuna</string>
+    <string name="theme_lime">Lime</string>
+    <string name="theme_mint">Minttu</string>
+    <string name="theme_teal">Sinivihreä</string>
+    <string name="theme_cerulean">Taivaansininen</string>
+    <string name="theme_azure">Asuuri</string>
+    <string name="theme_cobalt">Koboltti</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_grape">Viinirypäle</string>
+    <string name="theme_orchid">Orkidea</string>
+    <string name="theme_berry">Marja</string>
+</resources>

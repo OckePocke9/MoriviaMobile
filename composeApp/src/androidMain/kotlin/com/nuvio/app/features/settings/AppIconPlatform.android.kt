@@ -6,9 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 
 /**
- * Android shows the app icon of the launcher entry (activity alias) that is turned on. Turning off
- * the entry the app was opened from ends the app, even with DONT_KILL_APP, so a new icon is only
- * switched when the app goes to the background: the app never closes while it is in use.
+ * Android shows the app icon of the launcher entry (activity alias) that is turned on. The entries
+ * only open MainActivity and close (see LauncherEntryActivity), so the icon is switched right away
+ * and the running app is never closed or restarted.
  */
 internal actual object AppIconPlatform {
     actual val requiresCloseConfirmation: Boolean = false
@@ -111,11 +111,9 @@ internal actual object AppIconPlatform {
             ?: com.nuvio.app.R.mipmap.ic_launcher
     }
 
-    fun currentLauncherComponent(context: Context): ComponentName {
-        val currentName = currentIconName(context)
-        val className = launcherComponents.first { it.first == currentName }.second
-        return component(context, className)
-    }
+    /** The app itself; launcher entries only forward to it. */
+    fun currentLauncherComponent(context: Context): ComponentName =
+        ComponentName(context.packageName, "com.nuvio.app.MainActivity")
 
     private fun currentIconName(context: Context): String? {
         val packageManager = context.packageManager
@@ -157,15 +155,8 @@ internal actual object AppIconPlatform {
             pendingClass = null
             return true
         }
-        val inUse = androidx.lifecycle.ProcessLifecycleOwner.get().lifecycle.currentState
-            .isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)
-        if (!inUse) {
-            pendingClass = null
-            return applyIcon(appContext, selectedClass)
-        }
-        // Switched when the app goes to the background, so the app stays open.
-        pendingClass = selectedClass
-        return true
+        pendingClass = null
+        return applyIcon(appContext, selectedClass)
     }
 
     private fun component(context: Context, className: String): ComponentName =

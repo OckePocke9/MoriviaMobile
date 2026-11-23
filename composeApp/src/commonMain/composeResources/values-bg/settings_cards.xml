@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Гледайте заедно синхронно и чатете с приятели</string>
+    <string name="settings_appearance_card_description">Цвят на темата, икона на приложението, език и оформление</string>
+    <string name="settings_theme_card_title">Тема</string>
+    <string name="profile_initial_colour">Цвят на инициала</string>
+    <string name="profile_background_colour">Цвят на фона</string>
+    <string name="profile_background_black">Черно</string>
+</resources>

@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">Filmleri ve dizileri puanlayın. Simkl listelerinizde olmayan bir yapımı puanlamak onu listelere ekler.</string>
     <string name="settings_tracking_ratings_mdblist_description">Filmleri, dizileri ve bölümleri puanlayın.</string>
     <string name="addons_tracking_consent_title">Takip eklentisi</string>
-    <string name="addons_tracking_consent_body">%1$s bir takip eklentisidir. Morivia ona etkinliğinizi gönderir: oynattığınız, duraklattığınız ve durdurduğunuz içerikler ile oynatma konumu, kütüphanenize eklediğiniz veya çıkardığınız içerikler ve izlendi ya da izlenmedi olarak işaretledikleriniz. Bu veriler Morivia'dan çıkar ve eklentinin geliştiricisi ile bağlandığı hizmet tarafından işlenir.</string>
+    <string name="addons_tracking_consent_body">%1$s bir takip eklentisidir. Norivia ona etkinliğinizi gönderir: oynattığınız, duraklattığınız ve durdurduğunuz içerikler ile oynatma konumu, kütüphanenize eklediğiniz veya çıkardığınız içerikler ve izlendi ya da izlenmedi olarak işaretledikleriniz. Bu veriler Norivia'dan çıkar ve eklentinin geliştiricisi ile bağlandığı hizmet tarafından işlenir.</string>
     <string name="addons_tracking_consent_checkbox">İzleme etkinliğimi ve kütüphanemi bu eklentiyle paylaşmayı kabul ediyorum</string>
 </resources>

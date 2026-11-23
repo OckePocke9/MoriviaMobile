@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Arkadaşlarınla senkronize izleyin ve sohbet edin</string>
+    <string name="settings_appearance_card_description">Tema rengi, uygulama simgesi, dil ve düzen</string>
+    <string name="settings_theme_card_title">Tema</string>
+    <string name="profile_initial_colour">Baş harf rengi</string>
+    <string name="profile_background_colour">Arka plan rengi</string>
+    <string name="profile_background_black">Siyah</string>
+</resources>

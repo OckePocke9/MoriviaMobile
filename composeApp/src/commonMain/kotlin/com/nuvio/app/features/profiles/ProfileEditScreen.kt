@@ -1,6 +1,8 @@
 package com.nuvio.app.features.profiles
 
 import com.nuvio.app.features.settings.collapsedPresets
+import androidx.compose.material.icons.rounded.TextFields
+import androidx.compose.material.icons.rounded.Wallpaper
 import com.nuvio.app.features.settings.CustomThemeEditor
 import com.nuvio.app.features.settings.PresetExpansionArrow
 import com.nuvio.app.features.settings.ThemeActions
@@ -95,17 +97,11 @@ fun ProfileEditScreen(
     val appTheme by ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
     val customThemeColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
     val amoled by ThemeSettingsRepository.amoledEnabled.collectAsStateWithLifecycle()
-    NuvioTheme(appTheme = appTheme, amoled = amoled, customThemeColors = customThemeColors) {
-        // The background of the earlier Morivia app (the same as the profile picker) behind black cards.
-        val tokens = com.nuvio.app.core.ui.LocalNuvioThemeTokens.current
-        Box(modifier = Modifier.fillMaxSize().earlierMoriviaBackground()) {
-            androidx.compose.runtime.CompositionLocalProvider(
-                com.nuvio.app.core.ui.LocalNuvioThemeTokens provides tokens.copy(colors = tokens.colors.copy(background = Color.Transparent)),
-            ) {
-                ProvideMoriviaHeaderBackdrop {
-                    ProfileEditContent(profile = profile, onBack = onBack, onSaved = onSaved, modifier = modifier)
-                }
-            }
+    // Like Settings (owner, 2026-11-23): grey cards on a black background (pure black with AMOLED
+    // Black), and the theme colour on switches, rings, PIN and buttons.
+    com.nuvio.app.features.settings.SettingsBackground(modifier = Modifier.fillMaxSize()) {
+        com.nuvio.app.features.settings.ThemedAccent {
+            ProfileEditContent(profile = profile, onBack = onBack, onSaved = onSaved, modifier = modifier)
         }
     }
 }
@@ -127,6 +123,8 @@ private fun ProfileEditContent(
     }
     // The fallback colour behind the initials, as on nuvio.tv ("Use initials").
     var fallbackColorHex by rememberSaveable { mutableStateOf(currentProfile?.avatarColorHex ?: PROFILE_COLORS.first()) }
+    var initialColourOpen by rememberSaveable { mutableStateOf(false) }
+    var backgroundColourOpen by rememberSaveable { mutableStateOf(false) }
 
     var name by rememberSaveable { mutableStateOf(currentProfile?.name ?: "") }
     var selectedAvatarId by rememberSaveable { mutableStateOf(currentProfile?.avatarId) }
@@ -175,6 +173,10 @@ private fun ProfileEditContent(
         parseHexColor(visibleAvatarItem?.bgColor ?: fallbackColorHex)
     }
 
+    // With initials the profile's own colour is used instead of the Appearance theme; with a
+    // picture, Appearance decides (owner, 2026-11-23).
+    val profileAccentOverride = if (useInitials && customAvatarUrl == null) parseHexColor(fallbackColorHex) else null
+    com.nuvio.app.features.settings.ThemedAccent(accentOverride = profileAccentOverride) {
     NuvioScreen(modifier = modifier) {
         stickyHeader {
             NuvioScreenHeader(
@@ -292,11 +294,34 @@ private fun ProfileEditContent(
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
-                    FallbackColourPicker(
-                        initial = profileInitial(name),
-                        selectedHex = fallbackColorHex,
-                        onSelected = { fallbackColorHex = it },
-                    )
+                    // A card that opens the colour picker for the initial (owner, 2026-11-23).
+                    ExpandableColourCard(
+                        title = stringResource(Res.string.profile_initial_colour),
+                        description = initialsColourLabel(fallbackColorHex),
+                        icon = androidx.compose.material.icons.Icons.Rounded.TextFields,
+                        open = initialColourOpen,
+                        onToggle = { initialColourOpen = !initialColourOpen },
+                    ) {
+                        FallbackColourPicker(
+                            initial = profileInitial(name),
+                            selectedHex = fallbackColorHex,
+                            onSelected = { fallbackColorHex = it },
+                        )
+                    }
+                    // The same for the profile view background: Original, Black or a theme colour.
+                    val profileViewBackground by ThemeSettingsRepository.profileViewBackground.collectAsStateWithLifecycle()
+                    ExpandableColourCard(
+                        title = stringResource(Res.string.profile_background_colour),
+                        description = profileBackgroundLabel(profileViewBackground),
+                        icon = androidx.compose.material.icons.Icons.Rounded.Wallpaper,
+                        open = backgroundColourOpen,
+                        onToggle = { backgroundColourOpen = !backgroundColourOpen },
+                    ) {
+                        ProfileBackgroundColourPicker(
+                            selected = profileViewBackground,
+                            onSelected = ThemeSettingsRepository::setProfileViewBackground,
+                        )
+                    }
                     UseInitialsOption(
                         initial = profileInitial(name),
                         colour = parseHexColor(fallbackColorHex),
@@ -499,6 +524,7 @@ private fun ProfileEditContent(
                 showPinClear = false
             },
         )
+    }
     }
 }
 
@@ -725,13 +751,12 @@ private fun FallbackColourPicker(
         val palette = ThemeColors.getColorPalette(theme)
         InitialsColorOption(palette.nativeAccentHex, theme.labelRes, palette)
     }.map { option ->
-        option to stringResource(option.label).lowercase()
+        option to com.nuvio.app.features.settings.alphabeticalKey(stringResource(option.label))
     }.sortedBy { it.second }.map { it.first }
     val selectedPreset = alphabetic.firstOrNull { it.hex.equals(selectedHex, ignoreCase = true) }
     val visible = when {
         expanded -> alphabetic
-        selectedPreset == null -> alphabetic.take(INITIALS_COLLAPSED_COUNT)
-        else -> alphabetic.collapsedPresets(selectedPreset, INITIALS_COLLAPSED_COUNT)
+        else -> alphabetic.take(INITIALS_COLLAPSED_COUNT)
     }
     val spacing = 12.dp
     androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -976,4 +1001,40 @@ private fun NewPinWithConfirmDialog(
         },
         onDismiss = onDismiss,
     )
+}
+
+/** The name of the initial's colour: its theme name, or Custom. */
+@Composable
+private fun initialsColourLabel(hex: String): String {
+    val theme = APPEARANCE_PRESETS.firstOrNull {
+        ThemeColors.getColorPalette(it).nativeAccentHex.equals(hex, ignoreCase = true)
+    }
+    return stringResource(theme?.labelRes ?: com.nuvio.app.core.ui.AppTheme.CUSTOM.labelRes)
+}
+
+/** A card like Theme in Appearance: tapping it opens [content] right under it. */
+@Composable
+private fun ExpandableColourCard(
+    title: String,
+    description: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    open: Boolean,
+    onToggle: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    Column {
+        com.nuvio.app.features.settings.SettingsGroup(isTablet = false) {
+            com.nuvio.app.features.settings.ConnectionsSectionHeader(
+                title = title,
+                description = description,
+                icon = icon,
+                expanded = open,
+                isTablet = false,
+                onToggle = onToggle,
+            )
+        }
+        androidx.compose.animation.AnimatedVisibility(visible = open) {
+            Box(Modifier.padding(top = 14.dp)) { content() }
+        }
+    }
 }

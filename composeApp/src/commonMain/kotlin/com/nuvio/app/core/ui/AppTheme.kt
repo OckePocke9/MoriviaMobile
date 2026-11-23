@@ -68,14 +68,10 @@ enum class AppTheme {
 }
 
 internal val APPEARANCE_PRESETS = listOf(
-    AppTheme.AMETHYST, AppTheme.APRICOT, AppTheme.AUBERGINE, AppTheme.AZURE,
-    AppTheme.BASIL, AppTheme.BERRY, AppTheme.BLUSH, AppTheme.CERULEAN,
-    AppTheme.CHERRY, AppTheme.COBALT, AppTheme.CORAL, AppTheme.DENIM,
-    AppTheme.FERN, AppTheme.GLACIER, AppTheme.GRAPE, AppTheme.HEATHER,
-    AppTheme.INDIGO, AppTheme.LAGOON, AppTheme.LAVENDER, AppTheme.LEMON,
-    AppTheme.LILAC, AppTheme.LIME, AppTheme.MANGO, AppTheme.MINT,
-    AppTheme.MOSS, AppTheme.ORCHID, AppTheme.PEACH, AppTheme.PERIWINKLE,
-    AppTheme.PINE, AppTheme.SAFFRON, AppTheme.TEAL,
+    // 18 clear, popular colours around the colour wheel (owner, 2026-11-23).
+    AppTheme.CHERRY, AppTheme.CORAL, AppTheme.MANGO, AppTheme.AMBER, AppTheme.LEMON, AppTheme.LIME,
+    AppTheme.EMERALD, AppTheme.MINT, AppTheme.TEAL, AppTheme.CERULEAN, AppTheme.AZURE, AppTheme.COBALT,
+    AppTheme.INDIGO, AppTheme.GRAPE, AppTheme.ORCHID, AppTheme.BERRY, AppTheme.COPPER, AppTheme.ORIGINAL,
 )
 
 val AppTheme.labelRes: StringResource

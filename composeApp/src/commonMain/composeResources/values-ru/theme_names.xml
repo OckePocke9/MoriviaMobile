@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Вишня</string>
+    <string name="theme_coral">Коралл</string>
+    <string name="theme_mango">Манго</string>
+    <string name="theme_lemon">Лимон</string>
+    <string name="theme_lime">Лайм</string>
+    <string name="theme_mint">Мята</string>
+    <string name="theme_teal">Бирюзовый</string>
+    <string name="theme_cerulean">Лазурно-голубой</string>
+    <string name="theme_azure">Лазурь</string>
+    <string name="theme_cobalt">Кобальт</string>
+    <string name="theme_indigo">Индиго</string>
+    <string name="theme_grape">Виноград</string>
+    <string name="theme_orchid">Орхидея</string>
+    <string name="theme_berry">Ягода</string>
+</resources>

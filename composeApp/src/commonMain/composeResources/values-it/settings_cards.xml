@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Guardate insieme in sincrono e chatta con gli amici</string>
+    <string name="settings_appearance_card_description">Colore del tema, icona dell’app, lingua e layout</string>
+    <string name="settings_theme_card_title">Tema</string>
+    <string name="profile_initial_colour">Colore dell’iniziale</string>
+    <string name="profile_background_colour">Colore di sfondo</string>
+    <string name="profile_background_black">Nero</string>
+</resources>

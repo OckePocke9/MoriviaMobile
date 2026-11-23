@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">كرزي</string>
+    <string name="theme_coral">مرجاني</string>
+    <string name="theme_mango">مانجو</string>
+    <string name="theme_lemon">ليموني</string>
+    <string name="theme_lime">ليموني أخضر</string>
+    <string name="theme_mint">نعناعي</string>
+    <string name="theme_teal">أزرق مخضر</string>
+    <string name="theme_cerulean">سماوي</string>
+    <string name="theme_azure">لازوردي</string>
+    <string name="theme_cobalt">كوبالت</string>
+    <string name="theme_indigo">نيلي</string>
+    <string name="theme_grape">عنبي</string>
+    <string name="theme_orchid">أوركيد</string>
+    <string name="theme_berry">توتي</string>
+</resources>

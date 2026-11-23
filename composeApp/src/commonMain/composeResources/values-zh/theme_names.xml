@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">樱桃红</string>
+    <string name="theme_coral">珊瑚</string>
+    <string name="theme_mango">芒果</string>
+    <string name="theme_lemon">柠檬</string>
+    <string name="theme_lime">青柠</string>
+    <string name="theme_mint">薄荷</string>
+    <string name="theme_teal">水鸭蓝</string>
+    <string name="theme_cerulean">天蓝</string>
+    <string name="theme_azure">蔚蓝</string>
+    <string name="theme_cobalt">钴蓝</string>
+    <string name="theme_indigo">靛蓝</string>
+    <string name="theme_grape">葡萄紫</string>
+    <string name="theme_orchid">兰花紫</string>
+    <string name="theme_berry">莓果</string>
+</resources>

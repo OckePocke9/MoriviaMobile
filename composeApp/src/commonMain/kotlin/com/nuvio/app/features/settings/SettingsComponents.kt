@@ -244,6 +244,7 @@ internal fun SettingsNavigationRow(
     onClick: () -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
+    val themeAccent = rememberThemeAccent()
     val iconSize = if (isTablet) 42.dp else 36.dp
     val verticalPadding = if (isTablet) 16.dp else 14.dp
     val horizontalPadding = if (isTablet) 20.dp else 16.dp
@@ -267,7 +268,7 @@ internal fun SettingsNavigationRow(
             if (icon != null || iconPainter != null) {
                 Surface(
                     modifier = Modifier.size(iconSize),
-                    color = tokens.colors.accent.copy(alpha = tokens.opacity.pressed),
+                    color = themeAccent.accent.copy(alpha = 0.16f),
                     shape = tokens.shapes.compactCard,
                 ) {
                     Row(
@@ -286,7 +287,7 @@ internal fun SettingsNavigationRow(
                             Icon(
                                 imageVector = icon,
                                 contentDescription = null,
-                                tint = tokens.colors.accent,
+                                tint = themeAccent.accent,
                             )
                         }
                     }
@@ -326,6 +327,7 @@ internal fun SettingsSwitchRow(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
+    val themeAccent = rememberThemeAccent()
     val verticalPadding = if (isTablet) 16.dp else 14.dp
 
     Row(
@@ -364,8 +366,8 @@ internal fun SettingsSwitchRow(
             enabled = enabled,
             modifier = Modifier.padding(start = 4.dp),
             colors = SwitchDefaults.colors(
-                checkedThumbColor = tokens.colors.onAccent,
-                checkedTrackColor = tokens.colors.accent,
+                checkedThumbColor = themeAccent.onAccent,
+                checkedTrackColor = themeAccent.accent,
                 uncheckedThumbColor = tokens.colors.textMuted,
                 uncheckedTrackColor = tokens.colors.borderDefault,
             ),
@@ -512,8 +514,8 @@ internal fun HomescreenCatalogRow(
                     checked = item.enabled,
                     onCheckedChange = onEnabledChange,
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = tokens.colors.onAccent,
-                        checkedTrackColor = tokens.colors.accent,
+                        checkedThumbColor = rememberThemeAccent().onAccent,
+                        checkedTrackColor = rememberThemeAccent().accent,
                         uncheckedThumbColor = tokens.colors.textMuted,
                         uncheckedTrackColor = tokens.colors.borderDefault,
                     ),

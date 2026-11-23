@@ -99,7 +99,8 @@ internal fun AppEnvironment(content: @Composable () -> Unit) {
 
     val customThemeColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
 
-    NuvioTheme(appTheme = selectedTheme, amoled = amoledEnabled, customThemeColors = customThemeColors) {
+    // The theme colour only touches Settings card icons, switches and a few buttons (owner, 2026-11-23).
+    NuvioTheme(appTheme = com.nuvio.app.core.ui.AppTheme.ORIGINAL, amoled = amoledEnabled) {
         content()
     }
 }

@@ -69,7 +69,7 @@ internal fun LazyListScope.expandableLayoutSettingsContent(
                 open = layoutOpen,
                 header = {
                     ConnectionsSectionHeader(
-                        title = stringResource(Res.string.morivia_android_layout_title),
+                        title = stringResource(Res.string.compose_settings_page_layout),
                         description = stringResource(Res.string.compose_settings_root_layout_description),
                         icon = SettingsPage.Layout.icon,
                         expanded = layoutOpen,

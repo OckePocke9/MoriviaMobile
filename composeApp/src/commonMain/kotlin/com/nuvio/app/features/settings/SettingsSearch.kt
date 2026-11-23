@@ -1,6 +1,9 @@
 package com.nuvio.app.features.settings
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -1174,16 +1177,16 @@ private fun SettingsSearchRevealItem(
     AnimatedVisibility(
         visibleState = visibleState,
         enter = expandVertically(
-            animationSpec = tween(durationMillis = NuvioTokens.Motion.normalMillis),
+            animationSpec = tween(durationMillis = 340, easing = FastOutSlowInEasing),
             expandFrom = Alignment.Top,
         ) + fadeIn(
-            animationSpec = tween(durationMillis = NuvioTokens.Motion.fastMillis),
+            animationSpec = tween(durationMillis = 260, delayMillis = 60, easing = LinearOutSlowInEasing),
         ),
         exit = shrinkVertically(
-            animationSpec = tween(durationMillis = NuvioTokens.Motion.normalMillis),
+            animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
             shrinkTowards = Alignment.Top,
         ) + fadeOut(
-            animationSpec = tween(durationMillis = NuvioTokens.Motion.fastMillis),
+            animationSpec = tween(durationMillis = 180, easing = FastOutLinearInEasing),
         ),
     ) {
         content()

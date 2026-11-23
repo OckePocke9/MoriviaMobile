@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Икона на приложението · %1$s</string>
     <string name="morivia_appearance_preview_text">Текст и фон</string>
     <string name="morivia_appearance_preview_button">Бутон</string>
-    <string name="updates_repository_access">Morivia не успя да достигне страницата си за актуализации в GitHub. Проверете интернет връзката и опитайте отново или отворете GitHub, за да изтеглите най-новата версия.</string>
+    <string name="updates_repository_access">Norivia не успя да достигне страницата си за актуализации в GitHub. Проверете интернет връзката и опитайте отново или отворете GitHub, за да изтеглите най-новата версия.</string>
     <string name="updates_open_github">Отваряне на GitHub</string>
     <string name="profile_save_failed">Профилът не можа да бъде запазен. Опитайте отново.</string>
     <string name="library_filter_genre">Жанр</string>

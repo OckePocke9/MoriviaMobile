@@ -108,8 +108,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -123,8 +125,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher_arctic_blue"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash.ArcticBlue">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -138,8 +142,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher_emerald"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash.Emerald">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -153,8 +159,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher_rose_gold"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash.RoseGold">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -168,8 +176,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher_copper"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash.Copper">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -183,8 +193,10 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher_graphite"
             android:label="@string/app_name"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Nuvio.Splash.Graphite">
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -218,273 +230,273 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_gold" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Gold">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconJade"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_jade" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Jade">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconCrimson"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_crimson" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Crimson">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconOcean"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_ocean" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Ocean">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconViolet"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_violet" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Violet">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconAmber"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_amber" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Amber">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconRose"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_rose" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Rose">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconWhite"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_white" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.White">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconAmethyst"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_amethyst" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Amethyst">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconApricot"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_apricot" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Apricot">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconAubergine"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_aubergine" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Aubergine">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconAzure"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_azure" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Azure">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconBasil"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_basil" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Basil">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconBerry"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_berry" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Berry">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconBlush"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_blush" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Blush">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconCerulean"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_cerulean" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Cerulean">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconCherry"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_cherry" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Cherry">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconCobalt"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_cobalt" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Cobalt">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconCoral"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_coral" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Coral">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconDenim"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_denim" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Denim">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconFern"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_fern" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Fern">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconGlacier"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_glacier" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Glacier">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconGrape"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_grape" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Grape">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconHeather"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_heather" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Heather">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconIndigo"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_indigo" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Indigo">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconLagoon"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_lagoon" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Lagoon">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconLavender"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_lavender" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Lavender">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconLemon"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_lemon" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Lemon">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconLilac"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_lilac" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Lilac">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconLime"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_lime" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Lime">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconMango"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_mango" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Mango">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconMint"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_mint" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Mint">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconMoss"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_moss" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Moss">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconOrchid"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_orchid" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Orchid">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconPeach"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_peach" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Peach">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconPeriwinkle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_periwinkle" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Periwinkle">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconPine"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_pine" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Pine">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconSaffron"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_saffron" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Saffron">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <activity android:name="com.nuvio.app.launcher.AppIconTeal"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:enabled="false" android:exported="true"
             android:icon="@mipmap/ic_launcher_teal" android:label="@string/app_name"
-            android:supportsPictureInPicture="true" android:theme="@style/Theme.Nuvio.Splash.Teal">
+            android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
     </application>

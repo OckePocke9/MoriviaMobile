@@ -831,7 +831,7 @@ object PartyRepository {
 
     private const val MAX_PARTY_VIEWERS = 6
     private const val START_LEAD_MS = 900L
-    private const val DEFAULT_NAME = "Morivia"
+    private const val DEFAULT_NAME = "Norivia"
     private val COLOR_PATTERN = Regex("^#[0-9A-Fa-f]{6}$")
     private val HEARTBEAT_INTERVAL = 2.minutes
     private val PERSIST_DELAY = 1.5.seconds

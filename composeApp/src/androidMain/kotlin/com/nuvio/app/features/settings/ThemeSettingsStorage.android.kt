@@ -140,6 +140,14 @@ actual object ThemeSettingsStorage {
         }
     }
 
+    // The profile view background (owner, 2026-11-23): device-wide, so the profile picker shows it too.
+    actual fun loadProfileViewBackground(): String? =
+        preferences?.getString("profile_view_background", null)
+
+    actual fun saveProfileViewBackground(value: String) {
+        preferences?.edit()?.putString("profile_view_background", value)?.apply()
+    }
+
     actual fun loadNavBarStyle(): String? =
         preferences?.getString(ProfileScopedKey.of(NAV_BAR_STYLE_KEY), null)
 

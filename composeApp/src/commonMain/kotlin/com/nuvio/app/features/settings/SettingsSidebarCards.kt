@@ -41,7 +41,7 @@ internal fun SettingsSidebarList(
     liquidGlassNativeTabBarSupported: Boolean,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
-    var searchVisible by rememberSaveable { mutableStateOf(isIos) }
+    var searchVisible by rememberSaveable { mutableStateOf(true) }
     val searchVisibility = rememberSettingsSearchVisibility(searchVisible)
     val listState = rememberLazyListState()
     val searchScroll = rememberSettingsSearchScrollConnection(listState, searchVisible, enabled = !isIos) {

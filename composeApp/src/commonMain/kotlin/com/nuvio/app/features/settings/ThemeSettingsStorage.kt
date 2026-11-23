@@ -22,6 +22,8 @@ internal expect object ThemeSettingsStorage {
     fun saveMatchAppIconToTheme(enabled: Boolean)
     fun loadMatchThemeToAppIcon(): Boolean
     fun saveMatchThemeToAppIcon(enabled: Boolean)
+    fun loadProfileViewBackground(): String?
+    fun saveProfileViewBackground(value: String)
     fun exportToSyncPayload(): JsonObject
     fun replaceFromSyncPayload(payload: JsonObject)
 }

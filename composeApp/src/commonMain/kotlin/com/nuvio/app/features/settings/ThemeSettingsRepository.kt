@@ -46,11 +46,22 @@ object ThemeSettingsRepository {
     val navBarGlowEnabled: StateFlow<Boolean> = _navBarGlowEnabled.asStateFlow()
 
     // Morivia: the app icon follows the theme unless the user turns this off (like the earlier app).
-    private val _matchAppIconToTheme = MutableStateFlow(true)
+    private val _matchAppIconToTheme = MutableStateFlow(false)
     val matchAppIconToTheme: StateFlow<Boolean> = _matchAppIconToTheme.asStateFlow()
 
     private val _matchThemeToAppIcon = MutableStateFlow(false)
     val matchThemeToAppIcon: StateFlow<Boolean> = _matchThemeToAppIcon.asStateFlow()
+
+    // The profile view background (profile picker, editor and Profile page): "ORIGINAL", "BLACK"
+    // or a theme name. Device-wide, and separate from the theme colour (owner, 2026-11-23).
+    private val _profileViewBackground = MutableStateFlow(PROFILE_BACKGROUND_ORIGINAL)
+    val profileViewBackground: StateFlow<String> = _profileViewBackground.asStateFlow()
+
+    fun setProfileViewBackground(value: String) {
+        if (_profileViewBackground.value == value) return
+        _profileViewBackground.value = value
+        ThemeSettingsStorage.saveProfileViewBackground(value)
+    }
 
     private var hasLoaded = false
     private var observesMembership = false
@@ -78,7 +89,7 @@ object ThemeSettingsRepository {
         _selectedAppLanguage.value = AppLanguage.DEVICE
         _navBarGlowEnabled.value = true
         _navBarStyle.value = NavBarStyle.ADAPTIVE
-        _matchAppIconToTheme.value = true
+        _matchAppIconToTheme.value = false
         _matchThemeToAppIcon.value = false
         // Without an account (signed out) the app shows the Original theme and app icon.
         scope.launch(Dispatchers.Main) { AppIconRepository.select(AppIconOption.ORIGINAL) }
@@ -86,6 +97,7 @@ object ThemeSettingsRepository {
 
     private fun loadFromDisk() {
         hasLoaded = true
+        _profileViewBackground.value = ThemeSettingsStorage.loadProfileViewBackground() ?: PROFILE_BACKGROUND_ORIGINAL
         val stored = ThemeSettingsStorage.loadSelectedTheme()
         val theme = if (stored != null) {
             try {
@@ -98,13 +110,9 @@ object ThemeSettingsRepository {
         }
         _selectedThemePreference.value = theme
         _customThemePreference.value = CustomThemeColors.decode(ThemeSettingsStorage.loadCustomThemeColors())
-        _matchThemeToAppIcon.value = ThemeSettingsStorage.loadMatchThemeToAppIcon()
-        _matchAppIconToTheme.value = !_matchThemeToAppIcon.value &&
-            (ThemeSettingsStorage.loadMatchAppIconToTheme() ?: true)
-        if (_matchThemeToAppIcon.value) {
-            AppIconRepository.ensureLoaded()
-            applyIconTheme(AppIconRepository.state.value.selected)
-        } else applyEffectiveTheme()
+        _matchThemeToAppIcon.value = false
+        _matchAppIconToTheme.value = false
+        applyEffectiveTheme()
         _amoledEnabled.value = ThemeSettingsStorage.loadAmoledEnabled() ?: true
         val liquidGlassEnabled = ThemeSettingsStorage.loadLiquidGlassNativeTabBarEnabled() ?: false
         _liquidGlassNativeTabBarEnabled.value = liquidGlassEnabled
@@ -120,8 +128,6 @@ object ThemeSettingsRepository {
         ensureLoaded()
         val access = MemberAccessRepository.access.value
         if (theme !in availableAppThemes(access.entitlements)) return
-        setMatchAppIconToTheme(false)
-        setMatchThemeToAppIcon(false)
         saveTheme(theme)
     }
 
@@ -135,8 +141,6 @@ object ThemeSettingsRepository {
 
     fun setCustomTheme(colors: CustomThemeColors) {
         ensureLoaded()
-        setMatchAppIconToTheme(false)
-        setMatchThemeToAppIcon(false)
         saveCustomTheme(colors)
     }
 
@@ -176,9 +180,7 @@ object ThemeSettingsRepository {
 
     internal suspend fun selectAppIcon(icon: AppIconOption) {
         ensureLoaded()
-        setMatchAppIconToTheme(false)
         AppIconRepository.select(icon)
-        if (_matchThemeToAppIcon.value && AppIconRepository.state.value.selected == icon) applyIconTheme(icon)
     }
 
     private fun applyIconTheme(icon: AppIconOption) {
@@ -251,8 +253,9 @@ object ThemeSettingsRepository {
             val icon = iconForTheme(effective, _customThemeColors.value)
             scope.launch(Dispatchers.Main) { AppIconRepository.select(icon) }
         }
-        NativeTabBridge.publishAccentColor(
-            ThemeColors.getColorPalette(effective, _customThemeColors.value).nativeAccentHex,
-        )
+        NativeTabBridge.publishAccentColor(ThemeColors.Original.nativeAccentHex)
     }
 }
+
+internal const val PROFILE_BACKGROUND_ORIGINAL = "ORIGINAL"
+internal const val PROFILE_BACKGROUND_BLACK = "BLACK"

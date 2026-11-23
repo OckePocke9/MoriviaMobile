@@ -117,7 +117,6 @@ private fun ProfileScreenContent(
                     )
                 }
             }
-            settingsFooterContent(isTablet = isTablet)
         }
     }
 }

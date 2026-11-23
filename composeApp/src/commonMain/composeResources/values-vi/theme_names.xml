@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Anh đào</string>
+    <string name="theme_coral">San hô</string>
+    <string name="theme_mango">Xoài</string>
+    <string name="theme_lemon">Chanh vàng</string>
+    <string name="theme_lime">Chanh xanh</string>
+    <string name="theme_mint">Bạc hà</string>
+    <string name="theme_teal">Xanh mòng két</string>
+    <string name="theme_cerulean">Xanh da trời</string>
+    <string name="theme_azure">Thiên thanh</string>
+    <string name="theme_cobalt">Coban</string>
+    <string name="theme_indigo">Chàm</string>
+    <string name="theme_grape">Nho</string>
+    <string name="theme_orchid">Lan</string>
+    <string name="theme_berry">Quả mọng</string>
+</resources>

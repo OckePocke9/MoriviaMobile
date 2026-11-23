@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">நண்பர்களுடன் ஒத்திசைவாக சேர்ந்து பார்த்து அரட்டையடியுங்கள்</string>
+    <string name="settings_appearance_card_description">தீம் நிறம், ஆப் ஐகான், மொழி மற்றும் தளவமைப்பு</string>
+    <string name="settings_theme_card_title">தீம்</string>
+    <string name="profile_initial_colour">முதலெழுத்து நிறம்</string>
+    <string name="profile_background_colour">பின்னணி நிறம்</string>
+    <string name="profile_background_black">கருப்பு</string>
+</resources>

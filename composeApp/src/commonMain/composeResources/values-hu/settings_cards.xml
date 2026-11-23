@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Nézzétek együtt szinkronban, és csevegj a barátaiddal</string>
+    <string name="settings_appearance_card_description">Témaszín, alkalmazásikon, nyelv és elrendezés</string>
+    <string name="settings_theme_card_title">Téma</string>
+    <string name="profile_initial_colour">Kezdőbetű színe</string>
+    <string name="profile_background_colour">Háttérszín</string>
+    <string name="profile_background_black">Fekete</string>
+</resources>

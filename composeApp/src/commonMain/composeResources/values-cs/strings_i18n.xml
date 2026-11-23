@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Ikona aplikace · %1$s</string>
     <string name="morivia_appearance_preview_text">Text a pozadí</string>
     <string name="morivia_appearance_preview_button">Tlačítko</string>
-    <string name="updates_repository_access">Morivia se nemohla připojit ke své stránce s aktualizacemi na GitHubu. Zkontrolujte připojení k internetu a zkuste to znovu, nebo otevřete GitHub a stáhněte nejnovější verzi.</string>
+    <string name="updates_repository_access">Norivia se nemohla připojit ke své stránce s aktualizacemi na GitHubu. Zkontrolujte připojení k internetu a zkuste to znovu, nebo otevřete GitHub a stáhněte nejnovější verzi.</string>
     <string name="updates_open_github">Otevřít GitHub</string>
     <string name="profile_save_failed">Profil se nepodařilo uložit. Zkuste to znovu.</string>
     <string name="library_filter_genre">Žánr</string>
@@ -200,12 +200,12 @@
     <string name="party_start_title">Sledujte společně</string>
     <string name="party_start_description">Pozvěte přátele. Každý přehrává ze svých zdrojů a všichni zůstávají synchronizovaní.</string>
     <string name="party_start_action">Zahájit společné sledování</string>
-    <string name="party_sign_in_required">Pro společné sledování se přihlaste k účtu Morivia.</string>
+    <string name="party_sign_in_required">Pro společné sledování se přihlaste k účtu Norivia.</string>
     <string name="party_unavailable">Společné sledování teď není dostupné.</string>
     <string name="party_code_label">Kód sledování</string>
     <string name="party_copy_invite">Kopírovat pozvánku</string>
     <string name="party_invite_copied">Pozvánka zkopírována</string>
-    <string name="party_invite_message">Připoj se k mému společnému sledování v Morivia s kódem %1$s\n%2$s</string>
+    <string name="party_invite_message">Připoj se k mému společnému sledování v Norivia s kódem %1$s\n%2$s</string>
     <string name="party_seats">%1$d z %2$d míst</string>
     <string name="party_host">Hostitel</string>
     <string name="party_you">Vy</string>

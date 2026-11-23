@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">Ocjenjujte filmove i serije. Ocjena naslova koji nije na vašim Simkl popisima dodaje ga na njih.</string>
     <string name="settings_tracking_ratings_mdblist_description">Ocjenjujte filmove, serije i epizode.</string>
     <string name="addons_tracking_consent_title">Dodatak za praćenje</string>
-    <string name="addons_tracking_consent_body">%1$s je dodatak za praćenje. Morivia će mu slati vašu aktivnost: što reproducirate, pauzirate i zaustavljate s položajem reprodukcije, što dodajete u knjižnicu ili uklanjate iz nje te što označavate kao pogledano ili nepogledano. Ti podaci napuštaju Moriviju i obrađuju ih razvijatelj dodatka i usluga s kojom se povezuje.</string>
+    <string name="addons_tracking_consent_body">%1$s je dodatak za praćenje. Norivia će mu slati vašu aktivnost: što reproducirate, pauzirate i zaustavljate s položajem reprodukcije, što dodajete u knjižnicu ili uklanjate iz nje te što označavate kao pogledano ili nepogledano. Ti podaci napuštaju Moriviju i obrađuju ih razvijatelj dodatka i usluga s kojom se povezuje.</string>
     <string name="addons_tracking_consent_checkbox">Slažem se s dijeljenjem svoje aktivnosti i knjižnice s ovim dodatkom</string>
 </resources>

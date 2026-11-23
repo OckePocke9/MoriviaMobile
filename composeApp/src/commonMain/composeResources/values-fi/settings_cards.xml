@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Katsokaa yhdessä samassa tahdissa ja keskustele ystävien kanssa</string>
+    <string name="settings_appearance_card_description">Teeman väri, sovelluksen kuvake, kieli ja asettelu</string>
+    <string name="settings_theme_card_title">Teema</string>
+    <string name="profile_initial_colour">Nimikirjaimen väri</string>
+    <string name="profile_background_colour">Taustaväri</string>
+    <string name="profile_background_black">Musta</string>
+</resources>

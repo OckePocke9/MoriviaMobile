@@ -133,6 +133,14 @@ internal actual object ThemeSettingsStorage {
         NSUserDefaults.standardUserDefaults.synchronize()
     }
 
+    // The profile view background (owner, 2026-11-23): device-wide, so the profile picker shows it too.
+    actual fun loadProfileViewBackground(): String? =
+        NSUserDefaults.standardUserDefaults.stringForKey("profile_view_background")
+
+    actual fun saveProfileViewBackground(value: String) {
+        NSUserDefaults.standardUserDefaults.setObject(value, forKey = "profile_view_background")
+    }
+
     actual fun loadNavBarStyle(): String? =
         NSUserDefaults.standardUserDefaults.stringForKey(ProfileScopedKey.of(navBarStyleKey))
 

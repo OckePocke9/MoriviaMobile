@@ -104,33 +104,3 @@ internal fun LazyListScope.aboutSettingsContent(
     }
 }
 
-// The Morivia icon, name and version appear only on the Profile tab, under its Settings card.
-internal fun LazyListScope.settingsFooterContent(isTablet: Boolean) {
-    item {
-        androidx.compose.foundation.layout.Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = if (isTablet) 20.dp else 16.dp),
-        ) {
-            // The wordmark (logo with the name on its right), as large as on the profile selection screen.
-            MemberBrandWordmark(
-                height = if (isTablet) 48.dp else 40.dp,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
-            androidx.compose.foundation.layout.Spacer(
-                modifier = Modifier.height(if (isTablet) 10.dp else 8.dp),
-            )
-            Text(
-                text = stringResource(
-                    Res.string.compose_about_version_format,
-                    AppVersionConfig.VERSION_NAME,
-                    AppVersionConfig.VERSION_CODE,
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
-        }
-    }
-}

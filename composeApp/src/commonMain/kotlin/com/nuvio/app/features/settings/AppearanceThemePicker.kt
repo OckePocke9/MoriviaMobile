@@ -30,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -79,8 +81,8 @@ internal fun AppearanceThemePicker(
     // Like the earlier Morivia app: nine themes first, the rest behind the arrow; Custom has its own button.
     var expanded by rememberSaveable { mutableStateOf(false) }
     val gridThemes = APPEARANCE_PRESETS
-    val alphabetic = gridThemes.map { it to stringResource(it.labelRes).lowercase() }.sortedBy { it.second }.map { it.first }
-    val themes = if (expanded) alphabetic else alphabetic.collapsedPresets(selectedTheme, COLLAPSED_THEME_COUNT)
+    val alphabetic = gridThemes.map { it to alphabeticalKey(stringResource(it.labelRes)) }.sortedBy { it.second }.map { it.first }
+    val themes = if (expanded) alphabetic else alphabetic.take(COLLAPSED_THEME_COUNT)
     val themeSpacing = if (isTablet) NuvioTokens.Space.s16 else NuvioTokens.Space.s12
     BoxWithConstraints(
         modifier = Modifier
@@ -176,6 +178,7 @@ private fun ThemeActionButton(
     selectedBorder: androidx.compose.ui.graphics.Color? = null,
 ) {
     val tokens = MaterialTheme.nuvio
+    val accent = rememberThemeAccent().accent
     val shape = androidx.compose.foundation.shape.RoundedCornerShape(50)
     Box(
         modifier = modifier
@@ -183,7 +186,7 @@ private fun ThemeActionButton(
             .clip(shape)
             .border(
                 if (selectedBorder != null) 2.dp else 1.dp,
-                selectedBorder ?: tokens.colors.textSecondary.copy(alpha = 0.35f),
+                selectedBorder ?: accent,
                 shape,
             )
             .clickable(onClick = onClick)
@@ -237,7 +240,7 @@ private fun ThemeChip(
                         contentDescription = stringResource(
                             if (isSelected) Res.string.cd_selected else Res.string.custom_theme_edit,
                         ),
-                        tint = palette.onSecondary,
+                        tint = if (palette.secondary.luminance() > 0.6f) Color(0xFF111111) else Color.White,
                         modifier = Modifier.size(NuvioTokens.Space.s22),
                     )
                 }

@@ -3,6 +3,6 @@
     <string name="morivia_appearance_match_theme">Adapter le thème à l’icône de l’app</string>
     <string name="morivia_appearance_match_theme_description">Utiliser le thème qui correspond à l’icône de l’app choisie.</string>
     <string name="addons_tracking_consent_title">Add-on de suivi</string>
-    <string name="addons_tracking_consent_body">%1$s est un add-on de suivi. Morivia lui enverra votre activité : ce que vous lisez, mettez en pause et arrêtez avec la position de lecture, ce que vous ajoutez à votre bibliothèque ou en retirez, et ce que vous marquez comme vu ou non vu. Ces données quittent Morivia et sont traitées par le développeur de l’add-on et le service auquel il se connecte.</string>
+    <string name="addons_tracking_consent_body">%1$s est un add-on de suivi. Norivia lui enverra votre activité : ce que vous lisez, mettez en pause et arrêtez avec la position de lecture, ce que vous ajoutez à votre bibliothèque ou en retirez, et ce que vous marquez comme vu ou non vu. Ces données quittent Norivia et sont traitées par le développeur de l’add-on et le service auquel il se connecte.</string>
     <string name="addons_tracking_consent_checkbox">J’accepte de partager mon activité de visionnage et ma bibliothèque avec cet add-on</string>
 </resources>

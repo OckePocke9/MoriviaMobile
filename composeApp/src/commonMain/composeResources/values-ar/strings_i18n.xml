@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">أيقونة التطبيق · %1$s</string>
     <string name="morivia_appearance_preview_text">النص والخلفية</string>
     <string name="morivia_appearance_preview_button">زر</string>
-    <string name="updates_repository_access">تعذّر على Morivia الوصول إلى صفحة التحديثات على GitHub. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى، أو افتح GitHub لتنزيل أحدث إصدار.</string>
+    <string name="updates_repository_access">تعذّر على Norivia الوصول إلى صفحة التحديثات على GitHub. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى، أو افتح GitHub لتنزيل أحدث إصدار.</string>
     <string name="updates_open_github">فتح GitHub</string>
     <string name="profile_save_failed">تعذّر حفظ الملف الشخصي. حاول مرة أخرى.</string>
     <string name="library_filter_genre">النوع</string>

@@ -90,9 +90,7 @@ fun ProfileBackgroundBackdrop(
  */
 @Composable
 internal fun Modifier.earlierMoriviaBackground(): Modifier {
-    val theme = com.nuvio.app.core.ui.LocalAppTheme.current
-    val palette = com.nuvio.app.core.ui.LocalThemePalette.current
-    val (leftGlow, rightGlow) = remember(theme, palette) { profileGlowColors(theme, palette) }
+    val (leftGlow, rightGlow) = rememberProfileViewGlowColors()
     return earlierMoriviaBackground(leftGlow, rightGlow)
 }
 
@@ -134,10 +132,10 @@ internal fun profileGlowColors(
     palette: com.nuvio.app.core.ui.ThemeColorPalette,
 ): Pair<Color, Color> {
     if (theme == com.nuvio.app.core.ui.AppTheme.ORIGINAL) return Color(0xFF2F0451) to Color(0xFF004051)
-    val left = palette.secondary
-    val right = if (palette.accentGradient.size > 1) palette.accentGradient.last() else palette.secondaryVariant
-    return androidx.compose.ui.graphics.lerp(Color.Black, left, 0.32f) to
-        androidx.compose.ui.graphics.lerp(Color.Black, right, 0.32f)
+    // The theme's colour made a little greyer, so the clear colour of the profile picture stands
+    // out against it (owner, 2026-11-23).
+    val glow = androidx.compose.ui.graphics.lerp(palette.secondary, Color(0xFF2A2A2A), 0.45f)
+    return glow to glow
 }
 
 internal fun Modifier.earlierMoriviaBackground(leftGlow: Color, rightGlow: Color): Modifier = drawBehind {
@@ -150,9 +148,7 @@ internal fun Modifier.earlierMoriviaBackground(leftGlow: Color, rightGlow: Color
  */
 @Composable
 internal fun ProvideMoriviaHeaderBackdrop(content: @Composable () -> Unit) {
-    val theme = com.nuvio.app.core.ui.LocalAppTheme.current
-    val palette = com.nuvio.app.core.ui.LocalThemePalette.current
-    val (leftGlow, rightGlow) = remember(theme, palette) { profileGlowColors(theme, palette) }
+    val (leftGlow, rightGlow) = rememberProfileViewGlowColors()
     val backdrop: androidx.compose.ui.graphics.drawscope.DrawScope.(Size) -> Unit = remember(leftGlow, rightGlow) {
         { screenSize -> drawMoriviaGlow(screenSize, leftGlow, rightGlow) }
     }
@@ -170,6 +166,19 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawMoriviaGlow(
     val w = canvas.width
     val h = canvas.height
     drawRect(Color.Black, size = canvas)
+    if (rightGlow.alpha < 1f) {
+        // A theme colour (owner, 2026-11-23): the dark base, with the colour faintly behind the
+        // logo at the top, fading out downwards.
+        drawRect(leftGlow, size = canvas)
+        ellipticalGlow(
+            center = Offset(w * 0.5f, h * 0.12f),
+            radiusX = w * 0.95f,
+            radiusY = h * 0.48f,
+            stops = arrayOf(0f to rightGlow, 0.55f to rightGlow.copy(alpha = rightGlow.alpha * 0.35f), 1f to Color.Transparent),
+            canvas = canvas,
+        )
+        return
+    }
     // Bottom layer: right glow at 95 % / 15 %, ellipse 90 % x 65 %, fading to black at 75 %.
     ellipticalGlow(
         center = Offset(w * 0.95f, h * 0.15f),
@@ -203,5 +212,39 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.ellipticalGlow(
             topLeft = Offset(-canvas.width, center.y - canvas.height * 2f / squash),
             size = Size(canvas.width * 3f, canvas.height * 4f / squash),
         )
+    }
+}
+
+/**
+ * The glows of the profile view background chosen under Edit Profile (owner, 2026-11-23):
+ * Original, Black (no glow) or one of the theme colours.
+ */
+@Composable
+internal fun rememberProfileViewGlowColors(): Pair<Color, Color> {
+    val choice by remember {
+        com.nuvio.app.features.settings.ThemeSettingsRepository.ensureLoaded()
+        com.nuvio.app.features.settings.ThemeSettingsRepository.profileViewBackground
+    }.collectAsStateWithLifecycle()
+    // A profile with a Nuvio picture follows the Appearance theme; a profile with initials keeps the
+    // Background colour chosen in Edit Profile (owner, 2026-11-23).
+    val profileState by ProfileRepository.state.collectAsStateWithLifecycle()
+    val appearanceTheme by com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
+    val usesPicture = profileState.activeProfile?.let { it.initialsAccentOrNull() == null } == true
+    val effective = if (usesPicture) appearanceTheme.name else choice
+    // Settings' dark base (pure black with AMOLED Black) with a faint glow of the colour behind the
+    // logo, fading out downwards (owner, 2026-11-23).
+    val base = com.nuvio.app.features.settings.settingsBackgroundColor()
+    return remember(effective, base) {
+        if (effective == com.nuvio.app.features.settings.PROFILE_BACKGROUND_BLACK) {
+            Color.Black to Color.Black
+        } else {
+            val theme = com.nuvio.app.core.ui.AppTheme.entries.firstOrNull { it.name == effective }
+                ?: com.nuvio.app.core.ui.AppTheme.ORIGINAL
+            if (theme == com.nuvio.app.core.ui.AppTheme.ORIGINAL) {
+                profileGlowColors(theme, com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme))
+            } else {
+                base to com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme).secondary.copy(alpha = 0.72f)
+            }
+        }
     }
 }

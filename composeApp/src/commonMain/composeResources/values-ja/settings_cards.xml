@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">友だちと同期して一緒に視聴し、チャットできます</string>
+    <string name="settings_appearance_card_description">テーマカラー、アプリアイコン、言語、レイアウト</string>
+    <string name="settings_theme_card_title">テーマ</string>
+    <string name="profile_initial_colour">イニシャルの色</string>
+    <string name="profile_background_colour">背景色</string>
+    <string name="profile_background_black">ブラック</string>
+</resources>

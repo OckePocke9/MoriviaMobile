@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Subtitles
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.SyncAlt
 import androidx.compose.material.icons.filled.VideoSettings
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
@@ -41,7 +42,7 @@ import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 
 internal val appearanceSettingsDescriptionRes: StringResource
-    get() = if (isIos) Res.string.settings_appearance_description else Res.string.morivia_appearance_layout_description
+    get() = if (isIos) Res.string.settings_appearance_description else Res.string.settings_appearance_card_description
 
 internal fun SettingsPage.isLegacyLayoutPage(): Boolean = when (this) {
     SettingsPage.Layout, SettingsPage.MoriviaHomeLayout, SettingsPage.Homescreen,
@@ -162,12 +163,12 @@ internal enum class SettingsPage(
         parentPage = Playback,
     ),
     Appearance(
-        titleRes = if (isIos) Res.string.settings_appearance_title else Res.string.morivia_android_layout_title,
+        titleRes = if (isIos) Res.string.settings_appearance_title else Res.string.compose_settings_page_layout,
         category = SettingsCategory.Look,
         parentPage = Root,
     ),
     MoriviaAppearance(
-        titleRes = Res.string.morivia_appearance_title,
+        titleRes = Res.string.settings_appearance_title,
         category = SettingsCategory.Look,
         parentPage = Appearance,
     ),
@@ -309,7 +310,8 @@ internal val SettingsPage.icon: ImageVector
         SettingsPage.SupportersContributors -> Icons.Default.Favorite
         SettingsPage.LicensesAttributions -> Icons.Default.Info
         SettingsPage.BrowsePlayback, SettingsPage.Playback -> Icons.Rounded.PlayArrow
-        SettingsPage.Appearance, SettingsPage.MoriviaAppearance -> Icons.Default.Palette
+        SettingsPage.Appearance -> Icons.Rounded.AutoAwesome
+        SettingsPage.MoriviaAppearance -> Icons.Default.Palette
         SettingsPage.Layout -> Icons.Default.GridView
         SettingsPage.About -> Icons.Default.Info
         SettingsPage.Streams -> Icons.AutoMirrored.Filled.ViewList

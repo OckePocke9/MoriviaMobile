@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">চেরি</string>
+    <string name="theme_coral">প্রবাল</string>
+    <string name="theme_mango">আম</string>
+    <string name="theme_lemon">লেবু</string>
+    <string name="theme_lime">লাইম</string>
+    <string name="theme_mint">পুদিনা</string>
+    <string name="theme_teal">টিল</string>
+    <string name="theme_cerulean">আকাশি</string>
+    <string name="theme_azure">নীলাভ</string>
+    <string name="theme_cobalt">কোবাল্ট</string>
+    <string name="theme_indigo">নীল</string>
+    <string name="theme_grape">আঙুর</string>
+    <string name="theme_orchid">অর্কিড</string>
+    <string name="theme_berry">বেরি</string>
+</resources>

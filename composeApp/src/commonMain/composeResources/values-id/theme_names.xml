@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Ceri</string>
+    <string name="theme_coral">Koral</string>
+    <string name="theme_mango">Mangga</string>
+    <string name="theme_lemon">Lemon</string>
+    <string name="theme_lime">Limau</string>
+    <string name="theme_mint">Mint</string>
+    <string name="theme_teal">Hijau kebiruan</string>
+    <string name="theme_cerulean">Biru langit</string>
+    <string name="theme_azure">Azure</string>
+    <string name="theme_cobalt">Kobalt</string>
+    <string name="theme_indigo">Nila</string>
+    <string name="theme_grape">Anggur</string>
+    <string name="theme_orchid">Anggrek</string>
+    <string name="theme_berry">Beri</string>
+</resources>

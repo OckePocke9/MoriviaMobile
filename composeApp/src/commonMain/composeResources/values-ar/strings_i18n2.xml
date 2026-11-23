@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">قيّم الأفلام والمسلسلات. تقييم عنوان غير موجود في قوائمك على Simkl يضيفه إليها.</string>
     <string name="settings_tracking_ratings_mdblist_description">قيّم الأفلام والمسلسلات والحلقات.</string>
     <string name="addons_tracking_consent_title">إضافة تتبّع</string>
-    <string name="addons_tracking_consent_body">%1$s إضافة تتبّع. سيرسل Morivia إليها نشاطك: ما تشغّله وتوقفه مؤقتًا وتوقفه مع موضع التشغيل، وما تضيفه إلى مكتبتك أو تزيله منها، وما تضع عليه علامة شوهد أو لم يُشاهد. تغادر هذه البيانات Morivia ويتعامل معها مطوّر الإضافة والخدمة التي تتصل بها.</string>
+    <string name="addons_tracking_consent_body">%1$s إضافة تتبّع. سيرسل Norivia إليها نشاطك: ما تشغّله وتوقفه مؤقتًا وتوقفه مع موضع التشغيل، وما تضيفه إلى مكتبتك أو تزيله منها، وما تضع عليه علامة شوهد أو لم يُشاهد. تغادر هذه البيانات Norivia ويتعامل معها مطوّر الإضافة والخدمة التي تتصل بها.</string>
     <string name="addons_tracking_consent_checkbox">أوافق على مشاركة نشاط المشاهدة ومكتبتي مع هذه الإضافة</string>
 </resources>

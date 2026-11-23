@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Cireașă</string>
+    <string name="theme_coral">Coral</string>
+    <string name="theme_mango">Mango</string>
+    <string name="theme_lemon">Lămâie</string>
+    <string name="theme_lime">Lime</string>
+    <string name="theme_mint">Mentă</string>
+    <string name="theme_teal">Albastru-verzui</string>
+    <string name="theme_cerulean">Bleu</string>
+    <string name="theme_azure">Azuriu</string>
+    <string name="theme_cobalt">Cobalt</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_grape">Strugure</string>
+    <string name="theme_orchid">Orhidee</string>
+    <string name="theme_berry">Fructe de pădure</string>
+</resources>

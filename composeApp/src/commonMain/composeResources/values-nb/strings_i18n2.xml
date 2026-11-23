@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">Vurder filmer og serier. Å vurdere en tittel som ikke er i Simkl-listene dine, legger den til der.</string>
     <string name="settings_tracking_ratings_mdblist_description">Vurder filmer, serier og episoder.</string>
     <string name="addons_tracking_consent_title">Sporingstillegg</string>
-    <string name="addons_tracking_consent_body">%1$s er et sporingstillegg. Morivia sender aktiviteten din til det: hva du spiller av, setter på pause og stopper med avspillingsposisjonen, hva du legger til i eller fjerner fra biblioteket og hva du markerer som sett eller usett. Dataene forlater Morivia og håndteres av utvikleren av tillegget og tjenesten det kobler til.</string>
+    <string name="addons_tracking_consent_body">%1$s er et sporingstillegg. Norivia sender aktiviteten din til det: hva du spiller av, setter på pause og stopper med avspillingsposisjonen, hva du legger til i eller fjerner fra biblioteket og hva du markerer som sett eller usett. Dataene forlater Norivia og håndteres av utvikleren av tillegget og tjenesten det kobler til.</string>
     <string name="addons_tracking_consent_checkbox">Jeg godtar å dele seeraktiviteten og biblioteket mitt med dette tillegget</string>
     <string name="settings_mdb_show_on_hero">Bruk vurderinger i toppbanneret</string>
     <string name="settings_mdb_show_on_hero_description">Vis vurderinger fra MDBList i toppbanneret på Hjem</string>

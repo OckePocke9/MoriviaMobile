@@ -64,6 +64,7 @@ import com.nuvio.app.core.ui.NuvioToastHost
 import com.nuvio.app.core.ui.LocalVerticalBarPadding
 import com.nuvio.app.features.membership.CosmeticEntitlement
 import com.nuvio.app.features.settings.MemberBrandWordmark
+import com.nuvio.app.features.settings.noriviaLogoResource
 import com.nuvio.app.features.settings.brandSymbolResource
 import com.nuvio.app.features.settings.iconForTheme
 import androidx.compose.foundation.combinedClickable
@@ -184,13 +185,16 @@ fun ProfileSelectionScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
+                    // The new Norivia logo in the theme colour (owner, 2026-11-23).
+                    val logoTheme by com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
                     androidx.compose.foundation.Image(
-                        painter = org.jetbrains.compose.resources.painterResource(rememberThemedBrandSymbol()),
+                        painter = org.jetbrains.compose.resources.painterResource(logoTheme.noriviaLogoResource()),
                         contentDescription = null,
-                        modifier = Modifier.width(34.dp).height(28.dp),
+                        modifier = Modifier.height(34.dp),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Fit,
                     )
                     Text(
-                        text = "Morivia",
+                        text = "Norivia",
                         style = MaterialTheme.typography.headlineLarge.copy(fontSize = 25.sp, letterSpacing = 0.25.sp, fontFamily = earlierMoriviaFont(800)),
                         color = Color.White,
                         fontWeight = FontWeight(800),
@@ -214,7 +218,9 @@ fun ProfileSelectionScreen(
                     },
                 )
 
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 28.dp else 48.dp))
+                // 6 dp less than below the profiles, because each profile tile has its own 8 dp top
+                // padding: the gaps above and below the profiles now look the same (owner, 2026-11-23).
+                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 42.dp))
 
                 val profiles = profileState.profiles
                 // Add Profile shows while Manage Profiles is open, or when there are no profiles yet.
@@ -310,10 +316,11 @@ fun ProfileSelectionScreen(
                     modifier = Modifier
                         .graphicsLayer { alpha = manageAlpha.value }
                         .clip(RoundedCornerShape(24.dp))
-                        .background(if (isEditMode) Color(0xFF262729) else Color.Transparent)
+                        // Always in the Done button's design (owner, 2026-11-23).
+                        .background(Color(0xFF262729))
                         .border(
                             width = 1.dp,
-                            color = if (isEditMode) Color(0xFF808080) else Color(0xFF303030),
+                            color = Color(0xFF808080),
                             shape = RoundedCornerShape(24.dp),
                         )
                         .clickable(enabled = interactionEnabled) { isEditMode = !isEditMode }
@@ -326,7 +333,7 @@ fun ProfileSelectionScreen(
                             stringResource(Res.string.profile_manage_profiles)
                         },
                         style = profileActionStyle(),
-                        color = profileActionColor(isEditMode),
+                        color = profileActionColor(true),
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
@@ -354,6 +361,8 @@ fun ProfileSelectionScreen(
     }
 
     pinDialogProfile?.let { profile ->
+        // The PIN lock in the profile's initial colour, or the Appearance theme for a picture.
+        com.nuvio.app.features.settings.ThemedAccent(accentOverride = profile.initialsAccentOrNull()) {
         PinEntryDialog(
             profileName = profile.name,
             onVerify = { pin -> ProfileRepository.verifyPin(profile.profileIndex, pin) },
@@ -371,6 +380,7 @@ fun ProfileSelectionScreen(
                 pinForEdit = false
             },
         )
+        }
     }
 }
 
@@ -484,13 +494,19 @@ private fun ProfileAvatarCard(
                 }
             }
 
+            val pencilInitials = profile.initialsAccentOrNull()
+            val pencilTheme = com.nuvio.app.features.settings.rememberThemeAccent()
+            val pencilBrush = pencilInitials?.let(::initialsBrush) ?: androidx.compose.ui.graphics.SolidColor(pencilTheme.accent)
+            val pencilTint = pencilInitials?.let(::initialsTextColor) ?: pencilTheme.onAccent
             if (isEditMode) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .size(34.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primary)
+                        // The pencil in the profile's initial colour, or the Appearance theme colour when the
+                        // profile has a picture (owner, 2026-11-23).
+                        .background(pencilBrush)
                         .clickable(enabled = enabled, onClick = onClick)
                         .border(2.dp, Color.Black, CircleShape),
                     contentAlignment = Alignment.Center,
@@ -498,7 +514,7 @@ private fun ProfileAvatarCard(
                     Icon(
                         imageVector = Icons.Rounded.Edit,
                         contentDescription = stringResource(Res.string.profile_manage_profiles) + " " + profile.name,
-                        tint = MaterialTheme.colorScheme.onPrimary,
+                        tint = pencilTint,
                         modifier = Modifier.size(16.dp),
                     )
                 }
@@ -559,7 +575,8 @@ private fun AddProfileCard(
         launch { animOffset.animateTo(0f, tween(500, easing = FastOutSlowInEasing)) }
     }
 
-    val labelColor = profileActionColor(isEditMode)
+    // Add Profile in the Done button's design (owner, 2026-11-23).
+    val labelColor = profileActionColor(true)
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val pressScale = if (isPressed) 0.95f else 1f
@@ -586,8 +603,8 @@ private fun AddProfileCard(
         Box(Modifier.size(104.dp), contentAlignment = Alignment.Center) {
             Box(
                 Modifier.size(100.dp).clip(CircleShape)
-                    .background(if (isEditMode) Color(0xFF262729) else Color.Transparent)
-                    .border(2.dp, if (isEditMode) Color(0xFF808080) else Color(0xFF303030), CircleShape),
+                    .background(Color(0xFF262729))
+                    .border(2.dp, Color(0xFF808080), CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(Icons.Rounded.Add, null, tint = labelColor, modifier = Modifier.size(36.dp))
@@ -623,3 +640,7 @@ private fun profileActionColor(editing: Boolean) = if (editing) Color.White else
 
 @Composable
 private fun profileActionStyle() = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp, lineHeight = 20.sp)
+
+/** The profile's initial colour when it shows initials (no picture), otherwise null. */
+internal fun NuvioProfile.initialsAccentOrNull(): Color? =
+    if (avatarId == null && normalizedAvatarUrl(avatarUrl) == null) parseHexColor(avatarColorHex) else null

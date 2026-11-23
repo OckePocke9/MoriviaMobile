@@ -3,7 +3,7 @@ package com.nuvio.app.features.settings
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.rounded.Groups
+import androidx.compose.material.icons.rounded.Diversity3
 import androidx.compose.runtime.Composable
 import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.*
@@ -25,8 +25,8 @@ internal fun LazyListScope.settingsRootContent(
                         if (onWatchPartyClick != null) {
                             SettingsNavigationRow(
                                 title = stringResource(Res.string.party_title),
-                                description = stringResource(Res.string.party_settings_description),
-                                icon = Icons.Rounded.Groups,
+                                description = stringResource(Res.string.settings_watch_party_card_description),
+                                icon = Icons.Rounded.Diversity3,
                                 isTablet = isTablet,
                                 onClick = onWatchPartyClick,
                             )
@@ -95,6 +95,10 @@ internal fun LazyListScope.settingsRootContent(
                 }
             }
         }
+    }
+    // Norivia's logo, name and version, right under the System card (owner, 2026-11-23).
+    if (category == null || category == SettingsCategory.System) {
+        noriviaBrandFooter(isTablet = isTablet)
     }
 }
 

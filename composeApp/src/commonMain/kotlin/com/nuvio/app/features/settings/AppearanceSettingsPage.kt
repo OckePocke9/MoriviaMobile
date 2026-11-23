@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.rounded.Widgets
+import androidx.compose.material.icons.rounded.InvertColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +31,7 @@ import com.nuvio.app.core.ui.NuvioBottomSheetActionRow
 import com.nuvio.app.core.ui.NuvioModalBottomSheet
 import com.nuvio.app.core.ui.NuvioStatusModal
 import com.nuvio.app.core.ui.dismissNuvioBottomSheet
+import com.nuvio.app.core.ui.labelRes
 import com.nuvio.app.isIos
 import kotlinx.coroutines.launch
 import nuvio.composeapp.generated.resources.Res
@@ -42,10 +45,7 @@ import nuvio.composeapp.generated.resources.settings_appearance_app_language_res
 import nuvio.composeapp.generated.resources.settings_appearance_app_language_sheet_title
 import nuvio.composeapp.generated.resources.settings_appearance_section_display
 import nuvio.composeapp.generated.resources.settings_appearance_section_theme
-import nuvio.composeapp.generated.resources.morivia_appearance_match_theme
-import nuvio.composeapp.generated.resources.morivia_appearance_match_theme_description
-import nuvio.composeapp.generated.resources.morivia_appearance_match_icon
-import nuvio.composeapp.generated.resources.morivia_appearance_match_icon_description
+import nuvio.composeapp.generated.resources.settings_theme_card_title
 import nuvio.composeapp.generated.resources.morivia_appearance_preview_button
 import nuvio.composeapp.generated.resources.morivia_appearance_preview_icon
 import nuvio.composeapp.generated.resources.morivia_appearance_preview_text
@@ -56,6 +56,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nuvio.app.core.ui.nuvio
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+
+/** Which Appearance cards are open; kept while the app runs. */
+internal object AppearanceSections {
+    var themeOpen by mutableStateOf(false)
+    var appIconOpen by mutableStateOf(false)
+}
 
 internal fun LazyListScope.appearanceSettingsContent(
     isTablet: Boolean,
@@ -69,38 +75,67 @@ internal fun LazyListScope.appearanceSettingsContent(
     selectedAppLanguage: AppLanguage,
     onAppLanguageSelected: (AppLanguage) -> Unit,
 ) {
-    item {
-        SettingsSection(
-            title = stringResource(Res.string.settings_appearance_section_theme),
-            isTablet = isTablet,
-        ) {
-            SettingsGroup(isTablet = isTablet) {
-                AppearanceThemePicker(
-                    isTablet = isTablet,
-                    selectedTheme = selectedTheme,
-                    onThemeSelected = onThemeSelected,
-                )
-            }
-        }
-    }
-    item {
-        // The app icons, picked the same way as the themes above.
-        SettingsSection(
-            title = stringResource(Res.string.settings_appearance_app_icon),
-            isTablet = isTablet,
-        ) {
-            SettingsGroup(isTablet = isTablet) {
-                AppIconGridPicker(
-                    isTablet = isTablet,
-                    state = appIconState,
-                    onSelected = { icon ->
-                        onAppIconFailureDismissed()
-                        onAppIconSelected(icon)
-                    },
-                )
-            }
-        }
-    }
+    // Theme and App icon are their own cards; tapping one opens its picker right here (owner, 2026-11-23).
+    val themeOpen = AppearanceSections.themeOpen
+    val iconOpen = AppearanceSections.appIconOpen
+    expandableSettingsSections(
+        isTablet = isTablet,
+        sections = listOf(
+            ExpandableSettingsSection(
+                key = "appearance_theme",
+                open = themeOpen,
+                header = {
+                    ConnectionsSectionHeader(
+                        title = stringResource(Res.string.settings_theme_card_title),
+                        description = stringResource(selectedTheme.labelRes),
+                        icon = Icons.Rounded.InvertColors,
+                        expanded = themeOpen,
+                        isTablet = isTablet,
+                        onToggle = { AppearanceSections.themeOpen = !AppearanceSections.themeOpen },
+                    )
+                },
+                content = {
+                    item(key = "appearance_theme_picker") {
+                        SettingsGroup(isTablet = isTablet) {
+                            AppearanceThemePicker(
+                                isTablet = isTablet,
+                                selectedTheme = selectedTheme,
+                                onThemeSelected = onThemeSelected,
+                            )
+                        }
+                    }
+                },
+            ),
+            ExpandableSettingsSection(
+                key = "appearance_app_icon",
+                open = iconOpen,
+                header = {
+                    ConnectionsSectionHeader(
+                        title = stringResource(Res.string.settings_appearance_app_icon),
+                        description = stringResource(appIconState.selected.labelResource),
+                        icon = Icons.Rounded.Widgets,
+                        expanded = iconOpen,
+                        isTablet = isTablet,
+                        onToggle = { AppearanceSections.appIconOpen = !AppearanceSections.appIconOpen },
+                    )
+                },
+                content = {
+                    item(key = "appearance_app_icon_picker") {
+                        SettingsGroup(isTablet = isTablet) {
+                            AppIconGridPicker(
+                                isTablet = isTablet,
+                                state = appIconState,
+                                onSelected = { icon ->
+                                    onAppIconFailureDismissed()
+                                    onAppIconSelected(icon)
+                                },
+                            )
+                        }
+                    }
+                },
+            ),
+        ),
+    )
     item {
         var showLanguageSheet by remember { mutableStateOf(false) }
         var showLanguageRestartDialog by remember { mutableStateOf(false) }
@@ -110,24 +145,6 @@ internal fun LazyListScope.appearanceSettingsContent(
             isTablet = isTablet,
         ) {
             SettingsGroup(isTablet = isTablet) {
-                val matchAppIcon by ThemeSettingsRepository.matchAppIconToTheme.collectAsStateWithLifecycle()
-                SettingsSwitchRow(
-                    title = stringResource(Res.string.morivia_appearance_match_icon),
-                    description = stringResource(Res.string.morivia_appearance_match_icon_description),
-                    checked = matchAppIcon,
-                    isTablet = isTablet,
-                    onCheckedChange = ThemeSettingsRepository::setMatchAppIconToTheme,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
-                val matchTheme by ThemeSettingsRepository.matchThemeToAppIcon.collectAsStateWithLifecycle()
-                SettingsSwitchRow(
-                    title = stringResource(Res.string.morivia_appearance_match_theme),
-                    description = stringResource(Res.string.morivia_appearance_match_theme_description),
-                    checked = matchTheme,
-                    isTablet = isTablet,
-                    onCheckedChange = ThemeSettingsRepository::setMatchThemeToAppIcon,
-                )
-                SettingsGroupDivider(isTablet = isTablet)
                 SettingsSwitchRow(
                     title = stringResource(Res.string.settings_appearance_amoled_black),
                     description = stringResource(Res.string.settings_appearance_amoled_description),
@@ -194,7 +211,7 @@ private fun AppearanceThemePreview(isTablet: Boolean, icon: AppIconOption) {
             AppIconThumbnail(icon = icon, modifier = Modifier.size(44.dp), cornerRadius = 11.dp)
             androidx.compose.foundation.layout.Column {
                 Text(
-                    text = "Morivia",
+                    text = "Norivia",
                     style = MaterialTheme.typography.titleMedium,
                     color = tokens.colors.textPrimary,
                     fontWeight = FontWeight.Bold,
@@ -214,13 +231,13 @@ private fun AppearanceThemePreview(isTablet: Boolean, icon: AppIconOption) {
         androidx.compose.foundation.layout.Box(
             modifier = Modifier
                 .clip(androidx.compose.foundation.shape.RoundedCornerShape(50))
-                .background(MaterialTheme.colorScheme.primary)
+                .background(rememberThemeAccent().accent)
                 .padding(horizontal = 22.dp, vertical = 10.dp),
         ) {
             Text(
                 text = stringResource(Res.string.morivia_appearance_preview_button),
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = rememberThemeAccent().onAccent,
                 fontWeight = FontWeight.SemiBold,
             )
         }

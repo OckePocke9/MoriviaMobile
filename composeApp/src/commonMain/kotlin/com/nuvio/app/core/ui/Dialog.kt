@@ -130,14 +130,20 @@ fun DialogButton(
     style: DialogButtonStyle = DialogButtonStyle.Secondary,
     enabled: Boolean = true,
     loading: Boolean = false,
+    primaryColor: androidx.compose.ui.graphics.Color? = null,
+    onPrimaryColor: androidx.compose.ui.graphics.Color? = null,
 ) {
     val tokens = MaterialTheme.nuvio
     val containerColor = when (style) {
-        DialogButtonStyle.Primary -> tokens.colors.accent
+        DialogButtonStyle.Primary -> (primaryColor ?: tokens.colors.accent)
         DialogButtonStyle.Secondary -> tokens.colors.textPrimary.copy(alpha = tokens.opacity.hover)
         DialogButtonStyle.Destructive -> tokens.colors.danger
     }
-    val contentColor = if (style == DialogButtonStyle.Secondary) tokens.colors.textPrimary else tokens.colors.onAccent
+    val contentColor = when {
+        style == DialogButtonStyle.Secondary -> tokens.colors.textPrimary
+        style == DialogButtonStyle.Primary && onPrimaryColor != null -> onPrimaryColor
+        else -> tokens.colors.onAccent
+    }
     Button(
         onClick = onClick,
         modifier = modifier.heightIn(min = NuvioTokens.Space.s48),

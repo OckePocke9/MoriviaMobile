@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_cherry">Körsbär</string>
+    <string name="theme_coral">Korall</string>
+    <string name="theme_mango">Mango</string>
+    <string name="theme_lemon">Citron</string>
+    <string name="theme_lime">Lime</string>
+    <string name="theme_mint">Mint</string>
+    <string name="theme_teal">Blågrön</string>
+    <string name="theme_cerulean">Himmelsblå</string>
+    <string name="theme_azure">Azur</string>
+    <string name="theme_cobalt">Kobolt</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_grape">Druva</string>
+    <string name="theme_orchid">Orkidé</string>
+    <string name="theme_berry">Bär</string>
+</resources>

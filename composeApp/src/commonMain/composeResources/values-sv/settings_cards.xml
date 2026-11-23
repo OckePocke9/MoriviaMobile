@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_watch_party_card_description">Titta tillsammans i synk och chatta med vänner</string>
+    <string name="settings_appearance_card_description">Temafärg, appikon, språk och layout</string>
+    <string name="settings_theme_card_title">Tema</string>
+    <string name="profile_initial_colour">Initialfärg</string>
+    <string name="profile_background_colour">Bakgrundsfärg</string>
+    <string name="profile_background_black">Svart</string>
+</resources>
