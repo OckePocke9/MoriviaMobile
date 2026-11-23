@@ -133,7 +133,7 @@ fun ProfileSelectionScreen(
         launch { titleAlpha.animateTo(1f, tween(600, easing = FastOutSlowInEasing)) }
         launch { titleOffset.animateTo(0f, tween(600, easing = FastOutSlowInEasing)) }
         delay(300)
-        manageAlpha.animateTo(1f, tween(500))
+        manageAlpha.animateTo(1f, tween(500, easing = FastOutSlowInEasing))
     }
 
     val statusBarTop = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
@@ -151,8 +151,8 @@ fun ProfileSelectionScreen(
 
         AnimatedVisibility(
             visible = contentVisible,
-            enter = fadeIn(tween(180)),
-            exit = fadeOut(tween(180)),
+            enter = fadeIn(tween(260, easing = androidx.compose.animation.core.LinearOutSlowInEasing)),
+            exit = fadeOut(tween(200, easing = androidx.compose.animation.core.FastOutLinearInEasing)),
             modifier = Modifier.fillMaxSize(),
         ) {
             // Nuvio's layout on a phone: the content starts at the top (60 dp below the status bar) and
@@ -190,7 +190,9 @@ fun ProfileSelectionScreen(
                         com.nuvio.app.features.settings.AppIconRepository.ensureLoaded()
                         com.nuvio.app.features.settings.AppIconRepository.state
                     }.collectAsStateWithLifecycle()
-                    val logoTheme = appIconState.selected.theme ?: com.nuvio.app.core.ui.AppTheme.ORIGINAL
+                    val previewOriginal by com.nuvio.app.features.settings.ThemeSettingsRepository.pickerPreviewOriginal.collectAsStateWithLifecycle()
+                    val logoTheme = if (previewOriginal) com.nuvio.app.core.ui.AppTheme.ORIGINAL
+                        else appIconState.selected.theme ?: com.nuvio.app.core.ui.AppTheme.ORIGINAL
                     androidx.compose.animation.Crossfade(
                         targetState = logoTheme,
                         animationSpec = androidx.compose.animation.core.tween(600),
@@ -662,7 +664,11 @@ internal fun rememberThemeInitialsColour(): Color {
         com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme
     }.collectAsStateWithLifecycle()
     val custom by com.nuvio.app.features.settings.ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
-    val target = remember(theme, custom) { com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme, custom).secondary }
+    val previewOriginal by com.nuvio.app.features.settings.ThemeSettingsRepository.pickerPreviewOriginal.collectAsStateWithLifecycle()
+    val target = remember(theme, custom, previewOriginal) {
+        if (previewOriginal) com.nuvio.app.core.ui.ThemeColors.Original.secondary
+        else com.nuvio.app.core.ui.ThemeColors.getColorPalette(theme, custom).secondary
+    }
     val colour by androidx.compose.animation.animateColorAsState(target, androidx.compose.animation.core.tween(600), label = "themeInitials")
     return colour
 }

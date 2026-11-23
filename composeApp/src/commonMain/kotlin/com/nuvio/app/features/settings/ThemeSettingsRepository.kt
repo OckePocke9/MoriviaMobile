@@ -63,6 +63,15 @@ object ThemeSettingsRepository {
         ThemeSettingsStorage.saveProfileViewBackground(value)
     }
 
+    // Right after a new profile is created the profile picker shows Original (that profile's theme)
+    // until a profile is entered (owner, 2026-11-23).
+    private val _pickerPreviewOriginal = MutableStateFlow(false)
+    val pickerPreviewOriginal: StateFlow<Boolean> = _pickerPreviewOriginal.asStateFlow()
+
+    fun setPickerPreviewOriginal(enabled: Boolean) {
+        _pickerPreviewOriginal.value = enabled
+    }
+
     private var hasLoaded = false
     private var observesMembership = false
 
@@ -97,6 +106,7 @@ object ThemeSettingsRepository {
 
     private fun loadFromDisk() {
         hasLoaded = true
+        _pickerPreviewOriginal.value = false
         _profileViewBackground.value = ThemeSettingsStorage.loadProfileViewBackground() ?: PROFILE_BACKGROUND_ORIGINAL
         applyProfileAppIcon()
         val stored = ThemeSettingsStorage.loadSelectedTheme()

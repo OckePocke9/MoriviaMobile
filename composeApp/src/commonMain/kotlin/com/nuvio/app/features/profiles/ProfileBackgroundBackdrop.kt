@@ -236,7 +236,8 @@ internal fun rememberProfileViewGlowColors(): Pair<Color, Color> {
         com.nuvio.app.features.settings.ThemeSettingsRepository.ensureLoaded()
         com.nuvio.app.features.settings.ThemeSettingsRepository.selectedTheme
     }.collectAsStateWithLifecycle()
-    val effective = appearanceTheme.name
+    val previewOriginal by com.nuvio.app.features.settings.ThemeSettingsRepository.pickerPreviewOriginal.collectAsStateWithLifecycle()
+    val effective = if (previewOriginal) com.nuvio.app.core.ui.AppTheme.ORIGINAL.name else appearanceTheme.name
     // Settings' dark base (pure black with AMOLED Black) with a faint glow of the colour behind the
     // logo, fading out downwards (owner, 2026-11-23).
     val base = com.nuvio.app.features.settings.settingsBackgroundColor()

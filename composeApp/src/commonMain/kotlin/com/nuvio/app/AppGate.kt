@@ -150,6 +150,10 @@ internal fun AppGate(
     var gateScreen by rememberSaveable { mutableStateOf(AppGateScreen.Loading.name) }
     var editingProfile by remember { mutableStateOf<NuvioProfile?>(null) }
     var autoSkipProfileSelection by rememberSaveable { mutableStateOf(false) }
+    // True only when the profile picker was opened from inside the app (Switch Profile): then the
+    // current profile is marked and Back returns to it. After signing in, at start or after deleting
+    // a profile, any profile can be opened (owner, 2026-11-23).
+    var profilePickerOpenedFromApp by rememberSaveable { mutableStateOf(false) }
     var profileSelectionLoading by rememberSaveable { mutableStateOf(false) }
     var profileSelectionTransitionActive by rememberSaveable { mutableStateOf(false) }
     var skipProfileSelectionEnterAnimation by remember { mutableStateOf(false) }
@@ -194,6 +198,8 @@ internal fun AppGate(
         if (renderMainContent) return@LaunchedEffect
         appGateController?.profileSelectionRequests?.collect {
             autoSkipProfileSelection = false
+            profilePickerOpenedFromApp = true
+            com.nuvio.app.features.settings.ThemeSettingsRepository.setPickerPreviewOriginal(false)
             profileSelectionLoading = false
             profileSelectionTransitionActive = false
             skipProfileSelectionEnterAnimation = true
@@ -261,6 +267,7 @@ internal fun AppGate(
     }
 
     fun selectProfile(profile: NuvioProfile, sync: Boolean) {
+        com.nuvio.app.features.settings.ThemeSettingsRepository.setPickerPreviewOriginal(false)
         if (!renderMainContent) {
             appGateController?.beginContentReload()
         }
@@ -271,10 +278,11 @@ internal fun AppGate(
     }
 
     fun enterProfileGate(profiles: List<NuvioProfile>, syncOnEnter: Boolean) {
+        profilePickerOpenedFromApp = false
         profileSelectionLoading = false
         profileSelectionTransitionActive = false
         if (profiles.isEmpty()) {
-            autoSkipProfileSelection = true
+            autoSkipProfileSelection = false
             gateScreen = AppGateScreen.ProfileSelection.name
             return
         }
@@ -286,19 +294,10 @@ internal fun AppGate(
             return
         }
 
-        autoSkipProfileSelection = true
-        if (profiles.size == 1) {
-            val onlyProfile = profiles.first()
-            if (onlyProfile.pinEnabled) {
-                gateScreen = AppGateScreen.ProfileSelection.name
-                return
-            }
-            selectProfile(onlyProfile, sync = syncOnEnter)
-            gateScreen = AppGateScreen.Main.name
-            autoSkipProfileSelection = false
-        } else {
-            gateScreen = AppGateScreen.ProfileSelection.name
-        }
+        // Always the profile picker, even with one profile (owner, 2026-11-23); only Remember Last
+        // Profile, when turned on, skips it.
+        autoSkipProfileSelection = ProfileRepository.state.value.rememberLastProfileEnabled
+        gateScreen = AppGateScreen.ProfileSelection.name
     }
 
     LaunchedEffect(authState, networkStatusUiState.condition, profileState.profiles) {
@@ -334,7 +333,15 @@ internal fun AppGate(
             is AuthState.Authenticated -> {
                 val authenticatedState = authState as AuthState.Authenticated
                 ProfileRepository.ensureLoaded(authenticatedState.userId)
-                if (gateScreen == AppGateScreen.Loading.name || gateScreen == AppGateScreen.Auth.name) {
+                if (gateScreen == AppGateScreen.Auth.name) {
+                    // Right after signing in, always choose a profile, even when there is only one
+                    // (owner, 2026-11-23).
+                    profileSelectionLoading = false
+                    profileSelectionTransitionActive = false
+                    profilePickerOpenedFromApp = false
+                    autoSkipProfileSelection = false
+                    gateScreen = AppGateScreen.ProfileSelection.name
+                } else if (gateScreen == AppGateScreen.Loading.name) {
                     enterProfileGate(ProfileRepository.state.value.profiles, syncOnEnter = true)
                 }
             }
@@ -368,14 +375,6 @@ internal fun AppGate(
                 return@LaunchedEffect
             }
 
-            if (profileState.profiles.size != 1) return@LaunchedEffect
-
-            val onlyProfile = profileState.profiles.first()
-            if (onlyProfile.pinEnabled) return@LaunchedEffect
-
-            selectProfile(onlyProfile, sync = true)
-            gateScreen = AppGateScreen.Main.name
-            autoSkipProfileSelection = false
         }
     }
 
@@ -423,9 +422,13 @@ internal fun AppGate(
         AnimatedContent(
             targetState = gateScreen,
             label = "app_gate",
+            // Fade-through (owner, 2026-11-23): the old screen fades out first, then the new one fades
+            // in with a slight zoom, so two screens never blur into each other.
             transitionSpec = {
-                (fadeIn(tween(400)) + scaleIn(tween(400), initialScale = 0.94f))
-                    .togetherWith(fadeOut(tween(250)))
+                (
+                    fadeIn(tween(320, delayMillis = 110, easing = androidx.compose.animation.core.LinearOutSlowInEasing)) +
+                        scaleIn(tween(380, delayMillis = 110, easing = androidx.compose.animation.core.FastOutSlowInEasing), initialScale = 0.97f)
+                    ).togetherWith(fadeOut(tween(140, easing = androidx.compose.animation.core.FastOutLinearInEasing)))
             },
         ) { currentGate ->
             when (currentGate) {
@@ -456,12 +459,24 @@ internal fun AppGate(
                 }
                 AppGateScreen.ProfileEdit.name -> {
                     PlatformBackHandler(enabled = gateScreen == AppGateScreen.ProfileEdit.name) {
+                        autoSkipProfileSelection = false
                         gateScreen = AppGateScreen.ProfileSelection.name
                     }
                     ProfileEditScreen(
                         profile = editingProfile,
-                        onBack = { gateScreen = AppGateScreen.ProfileSelection.name },
-                        onSaved = { gateScreen = AppGateScreen.ProfileSelection.name },
+                        // Back (also after deleting a profile) stays on the profile picker, even with one
+                        // profile left (owner, 2026-11-23).
+                        onBack = {
+                            autoSkipProfileSelection = false
+                            gateScreen = AppGateScreen.ProfileSelection.name
+                        },
+                        onSaved = {
+                            autoSkipProfileSelection = false
+                            if (editingProfile == null) {
+                                com.nuvio.app.features.settings.ThemeSettingsRepository.setPickerPreviewOriginal(true)
+                            }
+                            gateScreen = AppGateScreen.ProfileSelection.name
+                        },
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -504,8 +519,8 @@ internal fun AppGate(
 
         androidx.compose.animation.AnimatedVisibility(
             visibleState = launchOverlayState,
-            enter = fadeIn(tween(400)),
-            exit = fadeOut(tween(400)),
+            enter = fadeIn(tween(320, easing = androidx.compose.animation.core.LinearOutSlowInEasing)),
+            exit = fadeOut(tween(360, easing = androidx.compose.animation.core.FastOutSlowInEasing)),
             modifier = Modifier.fillMaxSize(),
         ) {
             AppLaunchOverlay(
@@ -519,15 +534,15 @@ internal fun AppGate(
             enter = if (skipProfileSelectionEnterAnimation) {
                 androidx.compose.animation.EnterTransition.None
             } else {
-                fadeIn(tween(400))
+                fadeIn(tween(320, easing = androidx.compose.animation.core.LinearOutSlowInEasing))
             },
-            exit = fadeOut(tween(400)),
+            exit = fadeOut(tween(360, easing = androidx.compose.animation.core.FastOutSlowInEasing)),
             modifier = Modifier
                 .fillMaxSize()
                 .zIndex(NuvioTokens.Z.dialog),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                val onBack: (() -> Unit)? = if (!autoSkipProfileSelection) {
+                val onBack: (() -> Unit)? = if (profilePickerOpenedFromApp) {
                     {
                         skipProfileSelectionEnterAnimation = false
                         gateScreen = AppGateScreen.Main.name
@@ -544,7 +559,7 @@ internal fun AppGate(
                     onProfileSelected = { profile ->
                         if (
                             !profileSelectionLoading &&
-                            (autoSkipProfileSelection || profile.profileIndex != ProfileRepository.state.value.activeProfile?.profileIndex)
+                            (!profilePickerOpenedFromApp || profile.profileIndex != ProfileRepository.state.value.activeProfile?.profileIndex)
                         ) {
                             profileSelectionLoading = true
                             profileSelectionTransitionActive = true
@@ -571,14 +586,14 @@ internal fun AppGate(
                     },
                     interactionEnabled = !profileSelectionLoading,
                     onBack = onBack,
-                    activeProfileIndex = if (autoSkipProfileSelection) null else profileState.activeProfile?.profileIndex,
+                    activeProfileIndex = if (profilePickerOpenedFromApp) profileState.activeProfile?.profileIndex else null,
                     contentVisible = !profileSelectionTransitionActive,
                     modifier = Modifier.fillMaxSize(),
                 )
                 androidx.compose.animation.AnimatedVisibility(
                     visible = profileSelectionTransitionActive,
-                    enter = fadeIn(tween(180)),
-                    exit = fadeOut(tween(180)),
+                    enter = fadeIn(tween(240, delayMillis = 120, easing = androidx.compose.animation.core.LinearOutSlowInEasing)),
+                    exit = fadeOut(tween(240, easing = androidx.compose.animation.core.FastOutSlowInEasing)),
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     AppLoadingContent(modifier = Modifier.fillMaxSize())

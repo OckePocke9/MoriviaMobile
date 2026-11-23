@@ -124,7 +124,10 @@ private fun ProfileEditContent(
     }
     // The fallback colour behind the initials, as on nuvio.tv ("Use initials").
     // The initials colour comes from the Appearance theme (owner, 2026-11-23).
-    val fallbackColorHex = com.nuvio.app.core.ui.formatHexColor(rememberThemeInitialsColour().toArgb() and 0xFFFFFF)
+    // A new profile starts on Original, so Add Profile shows Original's colours (owner, 2026-11-23).
+    val themeInitials = rememberThemeInitialsColour()
+    val initialsColour = if (isNew) com.nuvio.app.core.ui.ThemeColors.Original.secondary else themeInitials
+    val fallbackColorHex = com.nuvio.app.core.ui.formatHexColor(initialsColour.toArgb() and 0xFFFFFF)
 
     var name by rememberSaveable { mutableStateOf(currentProfile?.name ?: "") }
     var selectedAvatarId by rememberSaveable { mutableStateOf(currentProfile?.avatarId) }
@@ -175,8 +178,11 @@ private fun ProfileEditContent(
         parseHexColor(visibleAvatarItem?.bgColor ?: fallbackColorHex)
     }
 
-    // Switches, PIN lock and Save changes in the Appearance theme colour (owner, 2026-11-23).
-    com.nuvio.app.features.settings.ThemedAccent {
+    // Switches, PIN lock and Save changes in the Appearance theme colour; Original on Add Profile
+    // (owner, 2026-11-23).
+    com.nuvio.app.features.settings.ThemedAccent(
+        accentOverride = if (isNew) androidx.compose.ui.graphics.Color(0xFF7A2BFF) else null,
+    ) {
     NuvioScreen(modifier = modifier) {
         stickyHeader {
             NuvioScreenHeader(
