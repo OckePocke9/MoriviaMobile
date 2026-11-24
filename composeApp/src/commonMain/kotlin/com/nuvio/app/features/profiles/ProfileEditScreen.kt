@@ -2,6 +2,7 @@ package com.nuvio.app.features.profiles
 
 import com.nuvio.app.features.settings.collapsedPresets
 import androidx.compose.material.icons.rounded.TextFields
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material.icons.rounded.Wallpaper
 import com.nuvio.app.features.settings.CustomThemeEditor
@@ -102,7 +103,20 @@ fun ProfileEditScreen(
     // Black), and the theme colour on switches, rings, PIN and buttons.
     com.nuvio.app.features.settings.SettingsBackground(modifier = Modifier.fillMaxSize()) {
         com.nuvio.app.features.settings.ThemedAccent {
-            ProfileEditContent(profile = profile, onBack = onBack, onSaved = onSaved, modifier = modifier)
+            // In landscape (and on wide screens) the page is a centred column instead of stretching
+            // across the screen (owner, 2026-11-24).
+            androidx.compose.foundation.layout.BoxWithConstraints(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.TopCenter,
+            ) {
+                val wide = maxWidth > 720.dp
+                ProfileEditContent(
+                    profile = profile,
+                    onBack = onBack,
+                    onSaved = onSaved,
+                    modifier = if (wide) modifier.widthIn(max = 640.dp) else modifier,
+                )
+            }
         }
     }
 }

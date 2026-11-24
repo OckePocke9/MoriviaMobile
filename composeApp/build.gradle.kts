@@ -465,6 +465,8 @@ kotlin {
                 implementation("androidx.work:work-testing:${libs.versions.androidx.work.get()}")
                 implementation("com.squareup.okhttp3:mockwebserver:5.3.2")
                 implementation("com.squareup.okhttp3:okhttp-tls:5.3.2")
+                // Only used by tests, to read back the QR codes Norivia draws.
+                implementation("com.google.zxing:core:3.5.3")
             }
             if (androidDistribution == "full") {
                 kotlin.srcDir(project.file("src/androidFullHostTest/kotlin"))

@@ -29,6 +29,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -273,11 +276,16 @@ private fun AuthScreenContent(
                 }
             },
     ) {
+        var authShortLandscape by remember { mutableStateOf(false) }
         BoxWithConstraints(
             modifier = Modifier.fillMaxSize(),
         ) {
             val screenWidth = maxWidth
-            val largeScreen = screenWidth >= 900.dp
+            val screenHeight = maxHeight
+            // A phone on its side uses the side-by-side layout in a compact form (owner, 2026-11-24).
+            val shortLandscape = maxWidth > maxHeight && maxHeight < 600.dp
+            val largeScreen = screenWidth >= 900.dp || shortLandscape
+            androidx.compose.runtime.SideEffect { authShortLandscape = largeScreen }
             val compactLargeScreen = screenWidth < 1100.dp
 
             Box(
@@ -286,11 +294,23 @@ private fun AuthScreenContent(
                     .authGradientBackground(largeScreen = largeScreen),
             ) {
                 if (largeScreen) {
-                    val largeScale = largeAuthScale(screenWidth)
+                    // Tablets and iPad show the phone-on-its-side design, enlarged evenly so the whole
+                    // form fits (owner, 2026-11-24).
+                    val uiScale = if (shortLandscape) 1f
+                        else minOf(screenHeight.value / 780f, screenWidth.value / 900f).coerceAtLeast(1f)
+                    val scaledWidth = screenWidth / uiScale
+                    val baseDensity = androidx.compose.ui.platform.LocalDensity.current
+                    androidx.compose.runtime.CompositionLocalProvider(
+                        androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(
+                            baseDensity.density * uiScale,
+                            baseDensity.fontScale,
+                        ),
+                    ) {
+                    val largeScale = 1f
                     val formPaneWidth = (screenWidth * 0.30f).coerceIn(460.dp * largeScale, 720.dp * largeScale)
                     val brandHorizontalPadding = (screenWidth * 0.055f).coerceIn(56.dp * largeScale, 128.dp * largeScale)
                     val formHorizontalPadding = (formPaneWidth * 0.14f).coerceIn(48.dp, 96.dp)
-                    val formMetrics = largeAuthFormMetrics(largeScale)
+                    val formMetrics = largeAuthFormMetrics(1f)
 
                     AuthLargeLayout(
                         modifier = Modifier.fillMaxSize(),
@@ -302,7 +322,28 @@ private fun AuthScreenContent(
                         authError = authError,
                         deviceLinkAuthState = deviceLinkAuthState,
                         deviceLinkEnabled = serverConnectionState.activeServer.capabilities.tvLogin,
-                        formPaneWidth = if (compactLargeScreen) 460.dp else formPaneWidth,
+                        formPaneWidth = (scaledWidth * 0.5f).coerceAtMost(460.dp),
+                        shortLandscape = true,
+                        // iPad and tablets: a large QR code under the tagline (owner, 2026-11-24).
+                        showQr = uiScale > 1f && serverConnectionState.activeServer.capabilities.tvLogin,
+                        brandStartPadding = if (uiScale > 1f) 72.dp else 32.dp,
+                        brandMenu = if (AppFeaturePolicy.customServerConnectionsEnabled) {
+                            {
+                                ServerConnectionMenu(
+                                    activeServer = serverConnectionState.activeServer,
+                                    onUseOfficial = {
+                                        ServerConnectionController.resetDiscovery()
+                                        showOfficialServerDialog = true
+                                    },
+                                    onConnectCustom = {
+                                        ServerConnectionController.resetDiscovery()
+                                        showServerSheet = true
+                                    },
+                                )
+                            }
+                        } else {
+                            null
+                        },
                         brandHorizontalPadding = brandHorizontalPadding,
                         formHorizontalPadding = formHorizontalPadding,
                         formMetrics = formMetrics,
@@ -328,6 +369,7 @@ private fun AuthScreenContent(
                         onEmailBoundsChange = { emailFieldBounds = it },
                         onPasswordBoundsChange = { passwordFieldBounds = it },
                     )
+                    }
                 } else {
                     AuthMobileLayout(
                         isSignUp = isSignUp,
@@ -364,7 +406,7 @@ private fun AuthScreenContent(
             }
         }
 
-        if (AppFeaturePolicy.customServerConnectionsEnabled) {
+        if (AppFeaturePolicy.customServerConnectionsEnabled && !authShortLandscape) {
             ServerConnectionMenu(
                 activeServer = serverConnectionState.activeServer,
                 onUseOfficial = {
@@ -525,6 +567,10 @@ private fun AuthLargeLayout(
     deviceLinkEnabled: Boolean,
     formPaneWidth: Dp,
     brandHorizontalPadding: Dp,
+    shortLandscape: Boolean = false,
+    brandMenu: (@Composable () -> Unit)? = null,
+    showQr: Boolean = false,
+    brandStartPadding: Dp = 32.dp,
     formHorizontalPadding: Dp,
     formMetrics: AuthFormMetrics,
     scale: Float,
@@ -539,34 +585,51 @@ private fun AuthLargeLayout(
     onEmailBoundsChange: (Rect) -> Unit,
     onPasswordBoundsChange: (Rect) -> Unit,
 ) {
+    var cardLinkOpen by remember { mutableStateOf(false) }
     Row(
-        modifier = modifier,
+        modifier = modifier.windowInsetsPadding(androidx.compose.foundation.layout.WindowInsets.safeDrawing),
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .padding(horizontal = brandHorizontalPadding),
-            verticalArrangement = Arrangement.Center,
+                .padding(
+                    start = if (shortLandscape) brandStartPadding else brandHorizontalPadding,
+                    end = if (shortLandscape) 32.dp else brandHorizontalPadding,
+                )
+                // The Nuvio logo sits level with "Welcome Back" in the card (8 dp card margin + 20 dp
+                // card padding, centred on the heading) (owner, 2026-11-24).
+                .padding(top = 28.dp),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
-            Image(
-            painter = painterResource(Res.drawable.nuvio_auth_wordmark),
-                contentDescription = null,
-                modifier = Modifier.height(60.dp * scale),
-            )
-            Spacer(modifier = Modifier.height(32.dp * scale))
+            Box {
+                Image(
+                    painter = painterResource(Res.drawable.nuvio_auth_wordmark),
+                    contentDescription = null,
+                    modifier = Modifier.height(if (shortLandscape) 40.dp else 60.dp * scale),
+                )
+                // The server menu at the logo's height, left of it (owner, 2026-11-24).
+                if (brandMenu != null) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .offset(x = (-52).dp),
+                    ) { brandMenu() }
+                }
+            }
+            Spacer(modifier = Modifier.height(if (shortLandscape) 16.dp else 32.dp * scale))
             Text(
                 text = stringResource(Res.string.compose_auth_tagline),
                 modifier = Modifier.widthIn(max = 440.dp * scale),
                 style = MaterialTheme.typography.displayLarge.copy(
                     color = AuthTextPrimary,
-                    fontSize = (40f * scale).sp,
-                    lineHeight = (45f * scale).sp,
+                    fontSize = if (shortLandscape) 28.sp else (40f * scale).sp,
+                    lineHeight = if (shortLandscape) 32.sp else (45f * scale).sp,
                     fontWeight = FontWeight.SemiBold,
                 ),
             )
-            Spacer(modifier = Modifier.height(18.dp * scale))
+            Spacer(modifier = Modifier.height(if (shortLandscape) 10.dp else 18.dp * scale))
             Text(
                 text = stringResource(Res.string.compose_auth_sign_up_subtitle),
                 modifier = Modifier.widthIn(max = 400.dp * scale),
@@ -577,27 +640,42 @@ private fun AuthLargeLayout(
                     fontWeight = FontWeight.Normal,
                 ),
             )
+            // Tablets and iPad: sign in by scanning a QR code with the phone (owner, 2026-11-24).
+            if (showQr) {
+                Spacer(modifier = Modifier.height(32.dp))
+                AuthQrPanel(
+                    state = deviceLinkAuthState,
+                    scale = scale,
+                    onCancel = onCancelDeviceLink,
+                    qrSize = 220.dp,
+                    onStart = onStartDeviceLink,
+                )
+            }
         }
 
         Box(
             modifier = Modifier
                 .width(formPaneWidth)
                 .fillMaxHeight()
+                // The form is a card with round corners on tablets, iPad and phones on their side
+                // (owner, 2026-11-24).
+                .padding(top = 8.dp, bottom = 8.dp, end = 8.dp)
+                .clip(RoundedCornerShape(28.dp))
                 .background(AuthPaneBackground)
-                .drawBehind {
-                    drawLine(
-                        color = AuthPaneBorder,
-                        start = Offset(0f, 0f),
-                        end = Offset(0f, size.height),
-                        strokeWidth = 1.dp.toPx(),
-                    )
-                },
-            contentAlignment = Alignment.Center,
+                .border(1.dp, AuthPaneBorder, RoundedCornerShape(28.dp)),
+            contentAlignment = Alignment.TopCenter,
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = formHorizontalPadding),
+                    .then(
+                        if (shortLandscape) {
+                            Modifier.verticalScroll(rememberScrollState()).padding(vertical = 20.dp)
+                        } else {
+                            Modifier
+                        },
+                    )
+                    .padding(horizontal = if (shortLandscape) 32.dp else formHorizontalPadding),
             ) {
                 AuthHeading(
                     isSignUp = isSignUp,
@@ -624,7 +702,10 @@ private fun AuthLargeLayout(
                     passwordVisible = passwordVisible,
                     isLoading = isLoading,
                     authError = authError,
-                    deviceLinkAuthState = deviceLinkAuthState,
+                    // With the QR code always on, the card's link sign-in still stays closed until tapped,
+                    // and Cancel only closes it here (owner, 2026-11-24).
+                    deviceLinkAuthState = if (showQr && !cardLinkOpen) DeviceLinkAuthState.Idle else deviceLinkAuthState,
+                    // The card is exactly the phone version, link sign-in included (owner, 2026-11-24).
                     deviceLinkEnabled = deviceLinkEnabled,
                     metrics = formMetrics,
                     scale = scale,
@@ -634,8 +715,14 @@ private fun AuthLargeLayout(
                     onSubmit = onSubmit,
                     onToggleAuthMode = onToggleAuthMode,
                     onContinueWithoutAccount = onContinueWithoutAccount,
-                    onStartDeviceLink = onStartDeviceLink,
-                    onCancelDeviceLink = onCancelDeviceLink,
+                    onStartDeviceLink = {
+                        cardLinkOpen = true
+                        if (!showQr || deviceLinkAuthState !is DeviceLinkAuthState.Waiting) onStartDeviceLink()
+                    },
+                    onCancelDeviceLink = {
+                        cardLinkOpen = false
+                        if (!showQr) onCancelDeviceLink()
+                    },
                     onEmailBoundsChange = onEmailBoundsChange,
                     onPasswordBoundsChange = onPasswordBoundsChange,
                 )

@@ -71,6 +71,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -144,6 +145,9 @@ fun ProfileSelectionScreen(
             .fillMaxSize(),
     ) {
         val isTabletLayout = maxWidth >= 768.dp
+        // A phone on its side is as wide as a tablet but low: tighter gaps so everything fits on one
+        // screen, Manage Profiles included (owner, 2026-11-24).
+        val isCompactLandscape = isTabletLayout && maxHeight < 600.dp
         ProfileBackgroundBackdrop(
             profile = backgroundProfile,
             modifier = Modifier.fillMaxSize(),
@@ -161,6 +165,17 @@ fun ProfileSelectionScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = statusBarTop)
+                    // In landscape the content sits between the status bar and the gesture bar.
+                    .then(
+                        if (isCompactLandscape) {
+                            Modifier.windowInsetsPadding(
+                                androidx.compose.foundation.layout.WindowInsets.navigationBars
+                                    .only(androidx.compose.foundation.layout.WindowInsetsSides.Bottom),
+                            )
+                        } else {
+                            Modifier
+                        },
+                    )
                     .then(
                         if (isTabletLayout) {
                             Modifier
@@ -213,7 +228,7 @@ fun ProfileSelectionScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 12.dp))
+                Spacer(modifier = Modifier.height(if (isCompactLandscape) 6.dp else if (isTabletLayout) 22.dp else 12.dp))
 
                 Text(
                     text = stringResource(Res.string.profile_who_is_watching),
@@ -232,7 +247,7 @@ fun ProfileSelectionScreen(
 
                 // 6 dp less than below the profiles, because each profile tile has its own 8 dp top
                 // padding: the gaps above and below the profiles now look the same (owner, 2026-11-23).
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 22.dp else 42.dp))
+                Spacer(modifier = Modifier.height(if (isCompactLandscape) 12.dp else if (isTabletLayout) 22.dp else 42.dp))
 
                 val profiles = profileState.profiles
                 // Add Profile shows while Manage Profiles is open, or when there are no profiles yet.
@@ -320,7 +335,7 @@ fun ProfileSelectionScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 28.dp else 48.dp))
+                Spacer(modifier = Modifier.height(if (isCompactLandscape) 12.dp else if (isTabletLayout) 28.dp else 48.dp))
 
                 // Colours and text of the earlier Morivia app's Manage Profiles / Done button. It opens
                 // and closes managing (pencils and Add Profile); with no profiles only Add Profile shows.
@@ -350,7 +365,7 @@ fun ProfileSelectionScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(if (isTabletLayout) 0.dp else 32.dp))
+                Spacer(modifier = Modifier.height(if (isCompactLandscape) 12.dp else if (isTabletLayout) 0.dp else 32.dp))
             }
         }
 
