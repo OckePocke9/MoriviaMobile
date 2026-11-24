@@ -26,18 +26,29 @@ class AuthTabletSnapshotTest {
     val compose = createComposeRule()
 
     @Test
-    fun ipadLandscape() {
+    fun ipadLandscape() = render("norivia-ipad-sign-in")
+
+    @Test
+    @Config(sdk = [34], application = Application::class, qualifiers = "w1024dp-h1366dp-xhdpi")
+    fun ipadPortrait() = render("norivia-ipad-portrait-sign-in", withCode = false)
+
+    @Test
+    @Config(sdk = [34], application = Application::class, qualifiers = "w800dp-h1280dp-xhdpi")
+    fun androidTabletPortrait() = render("norivia-android-tablet-sign-in", withCode = false)
+
+    private fun render(name: String, withCode: Boolean = true) {
         @Suppress("UNCHECKED_CAST")
         val field = DeviceLinkAuthRepository::class.java.getDeclaredField("_state").apply { isAccessible = true }
         compose.setContent { AuthScreen() }
         compose.waitForIdle()
         compose.mainClock.advanceTimeBy(500)
-        save("norivia-ipad-sign-in-closed.png")
-        (field.get(DeviceLinkAuthRepository) as MutableStateFlow<DeviceLinkAuthState>).value =
-            DeviceLinkAuthState.Waiting(code = "K7Q4-M2XP", verificationUrl = "https://nuvio.tv/link?code=K7Q4-M2XP")
+        if (withCode) {
+            (field.get(DeviceLinkAuthRepository) as MutableStateFlow<DeviceLinkAuthState>).value =
+                DeviceLinkAuthState.Waiting(code = "K7Q4-M2XP", verificationUrl = "https://nuvio.tv/link?code=K7Q4-M2XP")
+        }
         compose.waitForIdle()
         compose.mainClock.advanceTimeBy(1000)
-        save("norivia-ipad-sign-in.png")
+        save("$name.png")
     }
 
     private fun save(name: String) {

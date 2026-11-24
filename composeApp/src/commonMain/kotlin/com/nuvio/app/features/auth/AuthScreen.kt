@@ -284,7 +284,13 @@ private fun AuthScreenContent(
             val screenHeight = maxHeight
             // A phone on its side uses the side-by-side layout in a compact form (owner, 2026-11-24).
             val shortLandscape = maxWidth > maxHeight && maxHeight < 600.dp
-            val largeScreen = screenWidth >= 900.dp || shortLandscape
+            // Every Android tablet and iPad (shortest side 600 dp or more), in both orientations, gets
+            // the tablet design (owner, 2026-11-24).
+            val isTablet = minOf(screenWidth, screenHeight) >= 600.dp
+            // Tablets standing up look exactly like the phone, enlarged to fill the screen, with no QR
+            // code (owner, 2026-11-24).
+            val portraitTablet = isTablet && screenWidth < screenHeight
+            val largeScreen = !portraitTablet && (screenWidth >= 900.dp || shortLandscape || isTablet)
             androidx.compose.runtime.SideEffect { authShortLandscape = largeScreen }
             val compactLargeScreen = screenWidth < 1100.dp
 
@@ -325,8 +331,9 @@ private fun AuthScreenContent(
                         formPaneWidth = (scaledWidth * 0.5f).coerceAtMost(460.dp),
                         shortLandscape = true,
                         // iPad and tablets: a large QR code under the tagline (owner, 2026-11-24).
-                        showQr = uiScale > 1f && serverConnectionState.activeServer.capabilities.tvLogin,
-                        brandStartPadding = if (uiScale > 1f) 72.dp else 32.dp,
+                        showQr = isTablet && serverConnectionState.activeServer.capabilities.tvLogin,
+                        qrSize = if (screenWidth < screenHeight) 150.dp else 220.dp,
+                        brandStartPadding = if (isTablet) 72.dp else 32.dp,
                         brandMenu = if (AppFeaturePolicy.customServerConnectionsEnabled) {
                             {
                                 ServerConnectionMenu(
@@ -371,6 +378,18 @@ private fun AuthScreenContent(
                     )
                     }
                 } else {
+                    val phoneScale = if (portraitTablet) {
+                        minOf(screenWidth.value / 411f, screenHeight.value / 891f).coerceAtLeast(1f)
+                    } else {
+                        1f
+                    }
+                    val baseDensity = androidx.compose.ui.platform.LocalDensity.current
+                    androidx.compose.runtime.CompositionLocalProvider(
+                        androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(
+                            baseDensity.density * phoneScale,
+                            baseDensity.fontScale,
+                        ),
+                    ) {
                     AuthMobileLayout(
                         isSignUp = isSignUp,
                         email = email,
@@ -380,7 +399,7 @@ private fun AuthScreenContent(
                         authError = authError,
                         deviceLinkAuthState = deviceLinkAuthState,
                         deviceLinkEnabled = serverConnectionState.activeServer.capabilities.tvLogin,
-                        statusBarTop = statusBarTop,
+                        statusBarTop = statusBarTop / phoneScale,
                         onEmailChange = {
                             email = it
                             AuthRepository.clearError()
@@ -402,6 +421,7 @@ private fun AuthScreenContent(
                         onEmailBoundsChange = { emailFieldBounds = it },
                         onPasswordBoundsChange = { passwordFieldBounds = it },
                     )
+                    }
                 }
             }
         }
@@ -570,6 +590,7 @@ private fun AuthLargeLayout(
     shortLandscape: Boolean = false,
     brandMenu: (@Composable () -> Unit)? = null,
     showQr: Boolean = false,
+    qrSize: Dp = 220.dp,
     brandStartPadding: Dp = 32.dp,
     formHorizontalPadding: Dp,
     formMetrics: AuthFormMetrics,
@@ -647,7 +668,7 @@ private fun AuthLargeLayout(
                     state = deviceLinkAuthState,
                     scale = scale,
                     onCancel = onCancelDeviceLink,
-                    qrSize = 220.dp,
+                    qrSize = qrSize,
                     onStart = onStartDeviceLink,
                 )
             }
