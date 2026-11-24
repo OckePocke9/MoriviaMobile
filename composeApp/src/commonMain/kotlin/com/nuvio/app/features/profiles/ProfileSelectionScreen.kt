@@ -91,6 +91,33 @@ fun ProfileSelectionScreen(
     contentVisible: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
+    // Tablets and iPads show the phone's profile picker, enlarged evenly to fill the screen: the
+    // portrait design standing up, the compact landscape design on their side (owner, 2026-11-24).
+    PhoneScaledOnTablet(modifier = modifier) {
+        ProfileSelectionScreenContent(
+            onProfileSelected = onProfileSelected,
+            onEditProfile = onEditProfile,
+            onAddProfile = onAddProfile,
+            onBack = onBack,
+            interactionEnabled = interactionEnabled,
+            activeProfileIndex = activeProfileIndex,
+            contentVisible = contentVisible,
+            modifier = Modifier.fillMaxSize(),
+        )
+    }
+}
+
+@Composable
+private fun ProfileSelectionScreenContent(
+    onProfileSelected: (NuvioProfile) -> Unit,
+    onEditProfile: (NuvioProfile) -> Unit,
+    onAddProfile: () -> Unit,
+    onBack: (() -> Unit)? = null,
+    interactionEnabled: Boolean = true,
+    activeProfileIndex: Int? = null,
+    contentVisible: Boolean = true,
+    modifier: Modifier = Modifier,
+) {
     val profileState by ProfileRepository.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     var pinDialogProfile by remember { mutableStateOf<NuvioProfile?>(null) }
@@ -147,7 +174,7 @@ fun ProfileSelectionScreen(
         val isTabletLayout = maxWidth >= 768.dp
         // A phone on its side is as wide as a tablet but low: tighter gaps so everything fits on one
         // screen, Manage Profiles included (owner, 2026-11-24).
-        val isCompactLandscape = isTabletLayout && maxHeight < 600.dp
+        val isCompactLandscape = isTabletLayout && maxHeight < 700.dp
         ProfileBackgroundBackdrop(
             profile = backgroundProfile,
             modifier = Modifier.fillMaxSize(),
@@ -686,4 +713,27 @@ internal fun rememberThemeInitialsColour(): Color {
     }
     val colour by androidx.compose.animation.animateColorAsState(target, androidx.compose.animation.core.tween(600), label = "themeInitials")
     return colour
+}
+
+/**
+ * Shows [content] at phone size on tablets and iPads (shortest side 600 dp or more), enlarged
+ * evenly so it fills the screen: like a phone standing up (411 x 891 dp) or on its side
+ * (891 x 411 dp). Phones are left as they are (owner, 2026-11-24).
+ */
+@Composable
+internal fun PhoneScaledOnTablet(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+        val tablet = minOf(maxWidth, maxHeight) >= 600.dp
+        val scale = when {
+            !tablet -> 1f
+            maxWidth < maxHeight -> minOf(maxWidth.value / 411f, maxHeight.value / 891f)
+            else -> minOf(maxWidth.value / 891f, maxHeight.value / 411f)
+        }.coerceAtLeast(1f)
+        val base = androidx.compose.ui.platform.LocalDensity.current
+        androidx.compose.runtime.CompositionLocalProvider(
+            androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(base.density * scale, base.fontScale),
+        ) {
+            content()
+        }
+    }
 }
