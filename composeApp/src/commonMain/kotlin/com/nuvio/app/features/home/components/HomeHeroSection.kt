@@ -683,36 +683,22 @@ private fun HeroContentBlock(
             .animateContentSize(),
         horizontalAlignment = Alignment.Start,
     ) {
-        if (logoUrl != null && !logoLoadError) {
-            AsyncImage(
-                model = logoUrl,
-                contentDescription = item.name,
-                modifier = Modifier
-                    .fillMaxWidth(layout.logoWidthFraction)
-                    .aspectRatio(2.6f)
-                    .clickable(enabled = onItemClick != null) {
-                        onItemClick?.invoke(item)
-                    },
-                alignment = Alignment.CenterStart,
-                contentScale = ContentScale.Fit,
-                onError = { logoLoadError = true },
-            )
-        } else {
-            Text(
-                text = item.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(enabled = onItemClick != null) {
-                        onItemClick?.invoke(item)
-                    },
-                style = MaterialTheme.typography.displaySmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                fontWeight = FontWeight.Black,
-                textAlign = TextAlign.Start,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        // Every title as text in one style, never a logo picture, so all titles look the same
+        // (owner, 2026-11-25).
+        Text(
+            text = item.name,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(enabled = onItemClick != null) {
+                    onItemClick?.invoke(item)
+                },
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
         // The badge: the first genre, or "Featured".
