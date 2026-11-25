@@ -205,12 +205,12 @@ internal enum class SettingsPage(
     ContinueWatching(
         titleRes = Res.string.compose_settings_page_continue_watching,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     PosterCustomization(
-        titleRes = if (isIos) Res.string.compose_settings_page_poster_customization else Res.string.morivia_catalog_card_style,
+        titleRes = Res.string.compose_settings_page_poster_customization,
         category = SettingsCategory.Look,
-        parentPage = if (isIos) Layout else MoriviaHomeCatalogs,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     ContentDiscovery(
         titleRes = Res.string.compose_settings_page_content_discovery,
@@ -243,9 +243,9 @@ internal enum class SettingsPage(
         parentPage = Layout,
     ),
     MoriviaHomeLayout(
-        titleRes = Res.string.morivia_hl_title,
+        titleRes = if (isIos) Res.string.morivia_hl_title else Res.string.morivia_android_home_layout_title,
         category = SettingsCategory.Look,
-        parentPage = Layout,
+        parentPage = if (isIos) Layout else Appearance,
     ),
     MoriviaSearch(
         titleRes = Res.string.morivia_search_settings_title,

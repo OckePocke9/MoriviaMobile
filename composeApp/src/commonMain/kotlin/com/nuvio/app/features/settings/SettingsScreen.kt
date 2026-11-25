@@ -723,6 +723,7 @@ private fun MobileSettingsScreen(
                                 onMetaScreenClick = { onPageChange(SettingsPage.MetaScreen) },
                                 onStreamsClick = { onPageChange(SettingsPage.Streams) },
                                 onCollectionsClick = onCollectionsClick,
+                                onContinueWatchingClick = { onPageChange(SettingsPage.ContinueWatching) },
                                 onPosterCustomizationClick = { onPageChange(SettingsPage.PosterCustomization) },
                                 onMoriviaPageClick = { onPageChange(it) },
                             )
@@ -741,7 +742,6 @@ private fun MobileSettingsScreen(
                 SettingsPage.Layout -> layoutSettingsContent(
                     isTablet = false,
                     liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
-                    onHomescreenClick = onHomescreenClick,
                     onMetaScreenClick = onMetaScreenClick,
                     onStreamsClick = { onPageChange(SettingsPage.Streams) },
                     onCollectionsClick = onCollectionsClick,
@@ -1094,6 +1094,7 @@ private fun TabletSettingsScreen(
                                     onMetaScreenClick = { openInlinePage(SettingsPage.MetaScreen) },
                                     onStreamsClick = { openInlinePage(SettingsPage.Streams) },
                                     onCollectionsClick = onCollectionsClick,
+                                    onContinueWatchingClick = { openInlinePage(SettingsPage.ContinueWatching) },
                                     onPosterCustomizationClick = { openInlinePage(SettingsPage.PosterCustomization) },
                                     onMoriviaPageClick = { openInlinePage(it) },
                                 )
@@ -1112,7 +1113,6 @@ private fun TabletSettingsScreen(
                     SettingsPage.Layout -> layoutSettingsContent(
                         isTablet = true,
                         liquidGlassNativeTabBarSupported = liquidGlassNativeTabBarSupported,
-                        onHomescreenClick = { openInlinePage(SettingsPage.Homescreen) },
                         onMetaScreenClick = { openInlinePage(SettingsPage.MetaScreen) },
                         onStreamsClick = { openInlinePage(SettingsPage.Streams) },
                         onCollectionsClick = onCollectionsClick,

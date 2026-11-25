@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
-import com.nuvio.app.isIos
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Tune
@@ -71,7 +70,6 @@ import com.nuvio.app.core.ui.PosterCardStyleRepository
 import com.nuvio.app.core.ui.PosterCardStyleUiState
 import com.nuvio.app.core.ui.cardDepthVisual
 import nuvio.composeapp.generated.resources.Res
-import nuvio.composeapp.generated.resources.morivia_catalog_card_style
 import nuvio.composeapp.generated.resources.action_reset
 import nuvio.composeapp.generated.resources.settings_card_depth_apply_to
 import nuvio.composeapp.generated.resources.settings_card_depth_description
@@ -153,7 +151,7 @@ internal fun LazyListScope.posterCustomizationSettingsContent(
     }
     item {
         SettingsSection(
-            title = stringResource(if (isIos) Res.string.settings_poster_card_style else Res.string.morivia_catalog_card_style),
+            title = stringResource(Res.string.settings_poster_card_style),
             isTablet = isTablet,
             actions = {
                 NuvioActionLabel(

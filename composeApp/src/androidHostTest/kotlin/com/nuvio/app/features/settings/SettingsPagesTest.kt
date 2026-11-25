@@ -220,7 +220,8 @@ class SettingsPagesTest {
                             liquidGlassNativeTabBarSupported = false,
                             onMetaScreenClick = { opened = "details" },
                             onStreamsClick = { opened = "streams" },
-                            onPosterCustomizationClick = { opened = "catalog-style" },
+                            onContinueWatchingClick = { opened = "continue-watching" },
+                            onPosterCustomizationClick = { opened = "poster-style" },
                             onCollectionsClick = { opened = "collections" },
                             onMoriviaPageClick = { opened = it.name },
                         )
@@ -233,10 +234,13 @@ class SettingsPagesTest {
         compose.onNode(hasText("Appearance", substring = false) and hasClickAction()).performClick()
         compose.onNode(hasText("Layout", substring = false) and hasClickAction()).performClick()
         compose.onNodeWithText("Appearance options").assertIsDisplayed()
-        // The Home layout and catalog settings were removed (owner, 2026-11-25).
         compose.onNodeWithText("Hero").assertDoesNotExist()
         compose.onNodeWithText("Home Catalogs").assertDoesNotExist()
         mapOf(
+            "Home Layout" to "MoriviaHomeLayout",
+            "Collections" to "collections",
+            "Continue Watching" to "continue-watching",
+            "Poster Card Style" to "poster-style",
             "Streams" to "streams",
             "Search" to "MoriviaSearch",
             "Library" to "MoriviaLibrary",

@@ -470,7 +470,7 @@ internal fun settingsSearchEntries(
         page = SettingsPage.PosterCustomization,
         key = "poster-card-style",
         title = posterStylePage,
-        description = stringResource(if (isIos) Res.string.settings_appearance_poster_customization_description else Res.string.morivia_catalog_card_style_description),
+        description = stringResource(Res.string.settings_appearance_poster_customization_description),
     )
 
     addPage(

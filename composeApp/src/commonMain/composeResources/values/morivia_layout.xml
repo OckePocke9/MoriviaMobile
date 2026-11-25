@@ -108,6 +108,8 @@
     <string name="morivia_series_by_genres">Series Based on Your Genres</string>
     <string name="morivia_series_by_genres_sub">Series with the genres of the series you watched last</string>
     <string name="morivia_android_layout_title">Layout</string>
+    <string name="morivia_android_home_layout_title">Home Layout</string>
+    <string name="morivia_android_home_layout_description">Adjust home layout, content visibility, and poster behavior</string>
     <string name="morivia_catalog_card_style">Catalog Card Style</string>
     <string name="morivia_catalog_card_style_description">Order Home catalogs and customize their cards</string>
     <string name="morivia_home_catalogs">Home Catalogs</string>

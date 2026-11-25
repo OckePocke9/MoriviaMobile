@@ -12,7 +12,6 @@ import com.nuvio.app.isIos
 import nuvio.composeapp.generated.resources.Res
 import nuvio.composeapp.generated.resources.collections_header
 import nuvio.composeapp.generated.resources.compose_settings_page_continue_watching
-import nuvio.composeapp.generated.resources.compose_settings_page_homescreen
 import nuvio.composeapp.generated.resources.compose_settings_page_meta_screen
 import nuvio.composeapp.generated.resources.compose_settings_page_poster_customization
 import nuvio.composeapp.generated.resources.compose_settings_page_streams
@@ -26,7 +25,6 @@ import nuvio.composeapp.generated.resources.settings_appearance_section_detail_p
 import nuvio.composeapp.generated.resources.settings_appearance_section_home
 import nuvio.composeapp.generated.resources.settings_appearance_section_streams
 import nuvio.composeapp.generated.resources.settings_content_discovery_collections_description
-import nuvio.composeapp.generated.resources.settings_content_discovery_homescreen_description
 import nuvio.composeapp.generated.resources.settings_content_discovery_meta_screen_description
 import nuvio.composeapp.generated.resources.settings_nav_bar_glow_off
 import nuvio.composeapp.generated.resources.settings_nav_bar_glow_on
@@ -86,7 +84,6 @@ internal fun LazyListScope.expandableLayoutSettingsContent(
 internal fun LazyListScope.layoutSettingsContent(
     isTablet: Boolean,
     liquidGlassNativeTabBarSupported: Boolean,
-    onHomescreenClick: () -> Unit = {},
     onMetaScreenClick: () -> Unit,
     onStreamsClick: () -> Unit,
     onCollectionsClick: () -> Unit,
@@ -94,28 +91,18 @@ internal fun LazyListScope.layoutSettingsContent(
     onPosterCustomizationClick: () -> Unit = {},
     onMoriviaPageClick: (SettingsPage) -> Unit = {},
 ) {
-    // The Home layout and catalog settings are gone (owner, 2026-11-25): Home always has the fixed
-    // design (Hero, Continue Watching, Top Row, Catalogs, Live TV, Collections) with its defaults.
-    if (false && isIos) {
+    if (!isIos) {
         item {
             SettingsSection(
                 title = stringResource(Res.string.settings_appearance_section_home),
                 isTablet = isTablet,
             ) {
                 SettingsGroup(isTablet = isTablet) {
-                    // The earlier Morivia app's Home & Layout page, first in Home.
                     SettingsNavigationRow(
-                        title = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_title),
-                        description = stringResource(nuvio.composeapp.generated.resources.Res.string.morivia_hl_description),
+                        title = stringResource(SettingsPage.MoriviaHomeLayout.titleRes),
+                        description = stringResource(Res.string.morivia_android_home_layout_description),
                         isTablet = isTablet,
                         onClick = { onMoriviaPageClick(SettingsPage.MoriviaHomeLayout) },
-                    )
-                    SettingsGroupDivider(isTablet = isTablet)
-                    SettingsNavigationRow(
-                        title = stringResource(Res.string.compose_settings_page_homescreen),
-                        description = stringResource(Res.string.settings_content_discovery_homescreen_description),
-                        isTablet = isTablet,
-                        onClick = onHomescreenClick,
                     )
                     SettingsGroupDivider(isTablet = isTablet)
                     SettingsNavigationRow(
@@ -137,24 +124,6 @@ internal fun LazyListScope.layoutSettingsContent(
                         description = stringResource(Res.string.settings_appearance_poster_customization_description),
                         isTablet = isTablet,
                         onClick = onPosterCustomizationClick,
-                    )
-                }
-            }
-        }
-    } else if (false) {
-        listOf(
-            SettingsPage.MoriviaHero to Res.string.morivia_hero_settings_description,
-            SettingsPage.MoriviaHomeCatalogs to Res.string.morivia_catalog_card_style_description,
-            SettingsPage.MoriviaHome to Res.string.morivia_home_settings_description,
-        ).forEach { (page, description) ->
-            item {
-                SettingsGroup(isTablet = isTablet) {
-                    SettingsNavigationRow(
-                        title = stringResource(page.titleRes),
-                        description = stringResource(description),
-                        icon = page.icon,
-                        isTablet = isTablet,
-                        onClick = { onMoriviaPageClick(page) },
                     )
                 }
             }
