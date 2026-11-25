@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Filmek a legutóbbi műfajod alapján</string>
     <string name="home_series_based_on_recent">Sorozatok a legutóbbi műfajod alapján</string>
-    <string name="home_movies_airing_today">Ma megjelenő filmek</string>
-    <string name="home_series_airing_today">Ma futó sorozatok</string>
+    <string name="home_movies_airing_today">Ma megjelent filmek</string>
+    <string name="home_series_airing_today">Ma leadott sorozatok</string>
 </resources>

@@ -85,8 +85,17 @@ fun <T> NuvioShelfSection(
     itemContent: @Composable (T) -> Unit,
 ) {
     val tokens = MaterialTheme.nuvio
+    // Every row always starts at its first title (owner, 2026-11-25): when it comes into view, when
+    // its first title changes, and when the screen is left, so it is at the start on return.
     ScreenActivityEffect(state) { active ->
-        if (!active) state.stopScroll()
+        if (!active) {
+            state.stopScroll()
+            state.scrollToItem(0)
+        }
+    }
+    val firstEntryKey = entries.firstOrNull()?.let { first -> key?.invoke(first) ?: first }
+    androidx.compose.runtime.LaunchedEffect(state, firstEntryKey) {
+        if (state.firstVisibleItemIndex != 0 || state.firstVisibleItemScrollOffset != 0) state.scrollToItem(0)
     }
     Column(
         modifier = modifier.fillMaxWidth(),

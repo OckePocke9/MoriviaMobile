@@ -143,27 +143,73 @@ object TraktPublicListSourceResolver {
         }
 
     /**
-     * Movies released and series with an episode airing on [date] (yyyy-MM-dd), from Trakt's
-     * calendar, the most watched first (owner, 2026-11-25). Needs no TMDB key.
+     * Today in the phone's own time zone (owner, 2026-11-25): series with an episode that has
+     * already aired today, in the order they aired, and movies released today. Nothing that airs
+     * later today is shown until it has aired. Needs no TMDB key.
      */
-    suspend fun airingOn(date: String, isSeries: Boolean): List<MetaPreview> = withContext(Dispatchers.Default) {
-        val kind = if (isSeries) "shows" else "movies"
+    suspend fun airingToday(isSeries: Boolean): List<MetaPreview> = withContext(Dispatchers.Default) {
+        val today = com.nuvio.app.features.player.skip.currentDateComponents()
+            .let { "${it.year}-${it.month.toString().padStart(2, '0')}-${it.day.toString().padStart(2, '0')}" }
+        val now = kotlin.time.Clock.System.now().toEpochMilliseconds()
+        val localMidnight = com.nuvio.app.features.watchprogress.parseReleaseDateToEpochMs("${today}T00:00:00") ?: return@withContext emptyList()
+        if (isSeries) {
+            // Trakt's calendar days are UTC days; two of them cover the whole local day.
+            val startUtc = com.nuvio.app.features.tmdb.utcDateString(localMidnight)
+            calendar("shows", startUtc, days = 2)
+                .mapNotNull { item ->
+                    val airedAt = com.nuvio.app.features.watchprogress.parseReleaseDateToEpochMs(item.firstAired) ?: return@mapNotNull null
+                    if (airedAt < localMidnight || airedAt > now) return@mapNotNull null
+                    val preview = item.show?.toPreview()?.takeIf { !it.poster.isNullOrBlank() } ?: return@mapNotNull null
+                    Triple(preview, airedAt, item.show?.votes ?: 0)
+                }
+                .sortedWith(compareBy<Triple<MetaPreview, Long, Int>> { it.second }.thenByDescending { it.third })
+                .map { it.first }
+                .distinctBy { it.id }
+        } else {
+            calendar("movies", today, days = 1)
+                .filter { it.released == today }
+                .mapNotNull { item ->
+                    val preview = item.movie?.toPreview()?.takeIf { !it.poster.isNullOrBlank() } ?: return@mapNotNull null
+                    preview to (item.movie?.votes ?: 0)
+                }
+                // Movies have a release date but no time; the most watched come first.
+                .sortedByDescending { it.second }
+                .map { it.first }
+                .distinctBy { it.id }
+        }
+    }
+
+    private suspend fun calendar(kind: String, startDate: String, days: Int): List<PublicTraktListItemDto> =
         runCatching {
             requestJson<List<PublicTraktListItemDto>>(
-                endpoint = "calendars/all/$kind/$date/1",
+                endpoint = "calendars/all/$kind/$startDate/$days",
                 query = mapOf("extended" to "full,images"),
             )
-        }.onFailure { error -> log.w(error) { "Trakt calendar failed for $kind on $date" } }
+        }.onFailure { error -> log.w(error) { "Trakt calendar failed for $kind from $startDate" } }
             .getOrNull()
             .orEmpty()
-            .mapNotNull { item ->
-                val votes = (if (isSeries) item.show?.votes else item.movie?.votes) ?: 0
-                val preview = if (isSeries) item.show?.toPreview() else item.movie?.toPreview()
-                preview?.takeIf { !it.poster.isNullOrBlank() }?.let { it to votes }
-            }
-            .sortedByDescending { (_, votes) -> votes }
-            .map { (preview, _) -> preview }
+
+    /**
+     * Featured: the week's most watched movies and series on Trakt, taken in turn, [limit] in all
+     * (owner, 2026-11-25). Needs no TMDB key.
+     */
+    suspend fun trendingThisWeek(limit: Int): List<MetaPreview> = withContext(Dispatchers.Default) {
+        suspend fun list(kind: String): List<MetaPreview> = runCatching {
+            requestJson<List<PublicTraktListItemDto>>(
+                endpoint = "$kind/watched/weekly",
+                query = mapOf("extended" to "full,images", "limit" to limit.toString()),
+            )
+        }.onFailure { error -> log.w(error) { "Trakt weekly $kind failed" } }
+            .getOrNull()
+            .orEmpty()
+            .mapNotNull { item -> item.movie?.toPreview() ?: item.show?.toPreview() }
+            .filter { !it.poster.isNullOrBlank() }
+        val movies = list("movies")
+        val shows = list("shows")
+        (0 until maxOf(movies.size, shows.size))
+            .flatMap { index -> listOfNotNull(movies.getOrNull(index), shows.getOrNull(index)) }
             .distinctBy { it.id }
+            .take(limit)
     }
 
     private suspend inline fun <reified T> requestJson(
@@ -392,6 +438,8 @@ private data class PublicTraktUserDto(
 @Serializable
 private data class PublicTraktListItemDto(
     val rank: Int? = null,
+    @SerialName("first_aired") val firstAired: String? = null,
+    val released: String? = null,
     val id: Long? = null,
     @SerialName("listed_at") val listedAt: String? = null,
     val type: String? = null,

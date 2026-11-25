@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Filmer baserat på din senaste genre</string>
     <string name="home_series_based_on_recent">Serier baserat på din senaste genre</string>
-    <string name="home_movies_airing_today">Filmer som har premiär i dag</string>
-    <string name="home_series_airing_today">Serier som sänds i dag</string>
+    <string name="home_movies_airing_today">Filmer som hade premiär i dag</string>
+    <string name="home_series_airing_today">Serier som sändes i dag</string>
 </resources>

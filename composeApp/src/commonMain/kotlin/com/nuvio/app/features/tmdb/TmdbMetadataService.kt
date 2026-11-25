@@ -1203,6 +1203,7 @@ object TmdbMetadataService {
             // Leaving a screen cancels its requests; that is not a TMDB failure.
             throw error
         } catch (error: Exception) {
+            if (TmdbSettingsRepository.isRejection(error)) TmdbSettingsRepository.markApiKeyRejected(apiKey)
             log.w { "TMDB request failed for $endpoint: ${error.message}" }
             null
         }

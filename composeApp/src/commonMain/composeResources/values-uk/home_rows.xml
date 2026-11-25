@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Фільми на основі вашого останнього жанру</string>
     <string name="home_series_based_on_recent">Серіали на основі вашого останнього жанру</string>
-    <string name="home_movies_airing_today">Фільми, що виходять сьогодні</string>
-    <string name="home_series_airing_today">Серіали, що виходять сьогодні</string>
+    <string name="home_movies_airing_today">Фільми, що вийшли сьогодні</string>
+    <string name="home_series_airing_today">Серіали, що вийшли сьогодні</string>
 </resources>

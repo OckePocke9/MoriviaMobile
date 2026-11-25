@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Elokuvia viimeisimmän lajityyppisi perusteella</string>
     <string name="home_series_based_on_recent">Sarjoja viimeisimmän lajityyppisi perusteella</string>
-    <string name="home_movies_airing_today">Tänään ilmestyvät elokuvat</string>
-    <string name="home_series_airing_today">Tänään esitettävät sarjat</string>
+    <string name="home_movies_airing_today">Tänään ilmestyneet elokuvat</string>
+    <string name="home_series_airing_today">Tänään esitetyt sarjat</string>
 </resources>

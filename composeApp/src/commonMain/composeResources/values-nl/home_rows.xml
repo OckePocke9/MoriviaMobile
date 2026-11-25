@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Films op basis van je laatste genre</string>
     <string name="home_series_based_on_recent">Series op basis van je laatste genre</string>
-    <string name="home_movies_airing_today">Films die vandaag uitkomen</string>
-    <string name="home_series_airing_today">Series die vandaag worden uitgezonden</string>
+    <string name="home_movies_airing_today">Films die vandaag zijn uitgekomen</string>
+    <string name="home_series_airing_today">Series die vandaag zijn uitgezonden</string>
 </resources>

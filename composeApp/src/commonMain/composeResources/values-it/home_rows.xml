@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Film basati sul tuo ultimo genere</string>
     <string name="home_series_based_on_recent">Serie basate sul tuo ultimo genere</string>
-    <string name="home_movies_airing_today">Film in uscita oggi</string>
-    <string name="home_series_airing_today">Serie in onda oggi</string>
+    <string name="home_movies_airing_today">Film usciti oggi</string>
+    <string name="home_series_airing_today">Serie andate in onda oggi</string>
 </resources>

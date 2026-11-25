@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">Filmy podle vašeho posledního žánru</string>
     <string name="home_series_based_on_recent">Seriály podle vašeho posledního žánru</string>
-    <string name="home_movies_airing_today">Filmy s premiérou dnes</string>
-    <string name="home_series_airing_today">Seriály vysílané dnes</string>
+    <string name="home_movies_airing_today">Filmy, které dnes vyšly</string>
+    <string name="home_series_airing_today">Seriály, které dnes běžely</string>
 </resources>

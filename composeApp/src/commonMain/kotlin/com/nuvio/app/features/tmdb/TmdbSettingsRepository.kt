@@ -42,7 +42,20 @@ object TmdbSettingsRepository {
         return _uiState.value
     }
 
-    fun effectiveApiKey(): String = snapshot().apiKey.ifBlank { TmdbConfig.API_KEY }
+    // A key TMDB has turned down (HTTP 401) is not used again until another key is set, so one bad key
+    // does not send hundreds of failing requests (owner, 2026-11-25).
+    @kotlin.concurrent.Volatile
+    private var rejectedApiKey: String? = null
+
+    fun effectiveApiKey(): String =
+        snapshot().apiKey.ifBlank { TmdbConfig.API_KEY }.takeIf { it != rejectedApiKey }.orEmpty()
+
+    /** Called when TMDB answers 401 for [apiKey]. */
+    fun markApiKeyRejected(apiKey: String) {
+        if (apiKey.isNotBlank()) rejectedApiKey = apiKey
+    }
+
+    internal fun isRejection(error: Throwable): Boolean = error.message?.contains("HTTP 401") == true
 
     fun setEnabled(value: Boolean) {
         ensureLoaded()

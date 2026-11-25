@@ -2,6 +2,6 @@
 <resources>
     <string name="home_movies_based_on_recent">根据你最近看的类型推荐电影</string>
     <string name="home_series_based_on_recent">根据你最近看的类型推荐剧集</string>
-    <string name="home_movies_airing_today">今日上映的电影</string>
-    <string name="home_series_airing_today">今日播出的剧集</string>
+    <string name="home_movies_airing_today">今日已上映的电影</string>
+    <string name="home_series_airing_today">今日已播出的剧集</string>
 </resources>

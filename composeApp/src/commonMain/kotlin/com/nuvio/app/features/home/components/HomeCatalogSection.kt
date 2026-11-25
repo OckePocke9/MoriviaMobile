@@ -66,6 +66,8 @@ fun HomeCatalogRowSection(
     useHomePill: Boolean = false,
     // The Home-pill style Show All with the theme-coloured arrow (owner, 2026-11-25).
     accentShowAll: Boolean = false,
+    // Titles glide into place when the row's list changes (owner, 2026-11-25).
+    animateItems: Boolean = false,
 ) {
     if (sectionPadding != null) {
         HomeCatalogRowSectionContent(
@@ -83,6 +85,7 @@ fun HomeCatalogRowSection(
             landscapeOverride = landscapeOverride,
             useHomePill = useHomePill,
             accentShowAll = accentShowAll,
+            animateItems = animateItems,
         )
     } else {
         BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -101,6 +104,7 @@ fun HomeCatalogRowSection(
                 landscapeOverride = landscapeOverride,
                 useHomePill = useHomePill,
                 accentShowAll = accentShowAll,
+                animateItems = animateItems,
             )
         }
     }
@@ -122,6 +126,7 @@ private fun HomeCatalogRowSectionContent(
     landscapeOverride: Boolean?,
     useHomePill: Boolean,
     accentShowAll: Boolean = false,
+    animateItems: Boolean = false,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
 
@@ -139,6 +144,7 @@ private fun HomeCatalogRowSectionContent(
             else -> NuvioViewAllPillSize.Compact
         },
         titleMaxLines = Int.MAX_VALUE, // the whole name, on as many lines as it needs (owner, 2026-11-25)
+        animatePlacement = animateItems,
         key = { item -> item.stableKey() },
     ) { item ->
         HomePosterCard(

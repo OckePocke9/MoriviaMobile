@@ -102,6 +102,7 @@ object TmdbService {
         apiKey: String,
         query: Map<String, String> = emptyMap(),
     ): T? {
+        if (apiKey.isBlank()) return null
         val url = buildTmdbUrl(endpoint = endpoint, apiKey = apiKey, query = query)
         return try {
             json.decodeFromString<T>(httpGetText(url))
@@ -109,6 +110,7 @@ object TmdbService {
             // Leaving a screen cancels its requests; that is not a TMDB failure.
             throw error
         } catch (error: Exception) {
+            if (TmdbSettingsRepository.isRejection(error)) TmdbSettingsRepository.markApiKeyRejected(apiKey)
             log.w { "TMDB request failed for $endpoint: ${error.message}" }
             null
         }

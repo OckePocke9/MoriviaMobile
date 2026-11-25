@@ -3,5 +3,5 @@
     <string name="home_movies_based_on_recent">Филми според последния ви жанр</string>
     <string name="home_series_based_on_recent">Сериали според последния ви жанр</string>
     <string name="home_movies_airing_today">Филми с премиера днес</string>
-    <string name="home_series_airing_today">Сериали, излъчвани днес</string>
+    <string name="home_series_airing_today">Сериали, излъчени днес</string>
 </resources>
