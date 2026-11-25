@@ -51,7 +51,14 @@ class HomeHeroPagerTest {
         swipeRight()
         assertWrapFrames(expectedIndex = 7)
 
-        compose.mainClock.advanceTimeBy(6_000L)
+        // The trailer always tries first (owner, 2026-11-24): the hero moves on once it has none
+        // (8 s) or it did not start in time (20 s), so step until the first title comes back.
+        val intermediate = (1..6).map { hasText("Hero $it") }.reduce { a, b -> a or b }
+        for (second in 0 until 25) {
+            if (compose.onAllNodes(hasText("Hero 0")).fetchSemanticsNodes().isNotEmpty()) break
+            compose.mainClock.advanceTimeBy(1_000L)
+            compose.onAllNodes(intermediate).assertCountEquals(0)
+        }
         assertWrapFrames(expectedIndex = 0)
     }
 

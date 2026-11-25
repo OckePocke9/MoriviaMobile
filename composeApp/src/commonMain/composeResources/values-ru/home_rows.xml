@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">Фильмы на основе вашего последнего фильма</string>
+    <string name="home_series_based_on_recent">Сериалы на основе вашего последнего сериала</string>
+    <string name="home_movies_airing_today">Фильмы, выходящие сегодня</string>
+    <string name="home_series_airing_today">Сериалы, которые идут сегодня</string>
+</resources>

@@ -1208,6 +1208,72 @@ object TmdbMetadataService {
         }
     }
 
+    private val homeListCache = mutableMapOf<String, List<MetaPreview>>()
+
+    /**
+     * Home rows from TMDB (owner, 2026-11-24): movies released today, series airing today and the
+     * week's trending titles. Cached per day and language while the app runs.
+     */
+    suspend fun fetchHomeList(list: TmdbHomeList, limit: Int): List<MetaPreview> = withContext(Dispatchers.Default) {
+        val language = normalizeTmdbLanguage(TmdbSettingsRepository.snapshot().language)
+        val today = utcDateString(kotlin.time.Clock.System.now().toEpochMilliseconds())
+        val cacheKey = "${list.name}:$language:$today:$limit"
+        homeListCache[cacheKey]?.let { return@withContext it }
+
+        suspend fun page(endpoint: String, number: Int, extra: Map<String, String> = emptyMap()): List<TmdbRecommendationItem> =
+            fetch<TmdbRecommendationResponse>(
+                endpoint = endpoint,
+                query = mapOf("language" to language, "page" to number.toString()) + extra,
+            )?.results.orEmpty()
+
+        val raw: List<Pair<TmdbRecommendationItem, String>> = when (list) {
+            TmdbHomeList.SERIES_AIRING_TODAY ->
+                (page("tv/airing_today", 1) + page("tv/airing_today", 2)).map { it to "series" }
+            TmdbHomeList.MOVIES_AIRING_TODAY -> {
+                val todayFilter = mapOf(
+                    "release_date.gte" to today,
+                    "release_date.lte" to today,
+                    "sort_by" to "popularity.desc",
+                )
+                val released = page("discover/movie", 1, todayFilter) + page("discover/movie", 2, todayFilter)
+                // Few releases on some days: fill up with what is in cinemas now.
+                val filled = if (released.size >= limit) released else released + page("movie/now_playing", 1) + page("movie/now_playing", 2)
+                filled.map { it to "movie" }
+            }
+            TmdbHomeList.TRENDING ->
+                page("trending/all/week", 1)
+                    .filter { it.mediaType == "movie" || it.mediaType == "tv" }
+                    .map { it to if (it.mediaType == "tv") "series" else "movie" }
+        }
+        val items = raw
+            .filter { (item, _) -> item.id > 0 && item.posterPath != null }
+            .distinctBy { (item, _) -> item.id }
+            .mapNotNull { (item, type) -> mapHomeListItem(item, type) }
+            .take(limit)
+        if (items.isNotEmpty()) homeListCache[cacheKey] = items
+        items
+    }
+
+    private fun mapHomeListItem(item: TmdbRecommendationItem, type: String): MetaPreview? {
+        val title = item.title?.trim()?.takeIf(String::isNotBlank)
+            ?: item.name?.trim()?.takeIf(String::isNotBlank)
+            ?: item.originalTitle?.trim()?.takeIf(String::isNotBlank)
+            ?: item.originalName?.trim()?.takeIf(String::isNotBlank)
+            ?: return null
+        return MetaPreview(
+            id = "tmdb:${item.id}",
+            type = type,
+            name = title,
+            poster = buildImageUrl(item.posterPath, "w500") ?: buildImageUrl(item.backdropPath, "w780"),
+            banner = buildImageUrl(item.backdropPath, "w1280"),
+            posterShape = PosterShape.Poster,
+            description = item.overview?.trim()?.takeIf(String::isNotBlank),
+            releaseInfo = (item.releaseDate ?: item.firstAirDate)?.take(4),
+            rawReleaseDate = item.releaseDate ?: item.firstAirDate,
+            imdbRating = item.voteAverage?.formatRating(),
+        )
+    }
+
     private suspend fun fetchMoreLikeThis(
         tmdbId: Int,
         mediaType: String,
@@ -2254,3 +2320,21 @@ internal data class TmdbDiscoverResult(
     @SerialName("vote_average") val voteAverage: Double? = null,
     @SerialName("vote_count") val voteCount: Int? = null,
 )
+
+enum class TmdbHomeList { MOVIES_AIRING_TODAY, SERIES_AIRING_TODAY, TRENDING }
+
+/** yyyy-MM-dd (UTC) for the given time, without a date library. */
+internal fun utcDateString(epochMillis: Long): String {
+    val days = epochMillis.floorDiv(86_400_000L)
+    // Civil-from-days (Howard Hinnant).
+    val z = days + 719_468
+    val era = z.floorDiv(146_097L)
+    val doe = z - era * 146_097
+    val yoe = (doe - doe / 1_460 + doe / 36_524 - doe / 146_096) / 365
+    val doy = doe - (365 * yoe + yoe / 4 - yoe / 100)
+    val mp = (5 * doy + 2) / 153
+    val day = doy - (153 * mp + 2) / 5 + 1
+    val month = if (mp < 10) mp + 3 else mp - 9
+    val year = yoe + era * 400 + if (month <= 2) 1 else 0
+    return "${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}"
+}

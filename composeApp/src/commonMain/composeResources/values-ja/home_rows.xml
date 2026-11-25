@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">最近見た映画に基づく映画</string>
+    <string name="home_series_based_on_recent">最近見たシリーズに基づくシリーズ</string>
+    <string name="home_movies_airing_today">今日公開の映画</string>
+    <string name="home_series_airing_today">今日放送のシリーズ</string>
+</resources>

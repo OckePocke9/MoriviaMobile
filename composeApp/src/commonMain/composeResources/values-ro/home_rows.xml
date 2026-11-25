@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">Filme pe baza ultimului tău film</string>
+    <string name="home_series_based_on_recent">Seriale pe baza ultimului tău serial</string>
+    <string name="home_movies_airing_today">Filme care apar azi</string>
+    <string name="home_series_airing_today">Seriale difuzate azi</string>
+</resources>

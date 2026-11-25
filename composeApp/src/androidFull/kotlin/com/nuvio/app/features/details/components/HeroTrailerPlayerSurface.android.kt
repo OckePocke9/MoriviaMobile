@@ -5,7 +5,7 @@ import android.graphics.Matrix
 import android.view.TextureView
 import android.widget.FrameLayout
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -88,12 +88,12 @@ actual fun HeroTrailerPlayerSurface(
             }
     }
     var hasRenderedFirstFrame by remember(exoPlayer) { mutableStateOf(false) }
-    var letterboxZoom by remember(exoPlayer) { mutableFloatStateOf(1f) }
-    val letterboxZoomState = animateFloatAsState(
-        targetValue = letterboxZoom,
-        animationSpec = tween(durationMillis = 400),
-        label = "heroTrailerLetterboxZoom",
-    )
+    val letterboxZoom = remember(exoPlayer) { Animatable(1f) }
+    // The trailer is shown only once it plays and its black bars are zoomed away, so it starts
+    // filling the hero (owner, 2026-11-25).
+    var playerReady by remember(exoPlayer) { mutableStateOf(false) }
+    var framed by remember(exoPlayer) { mutableStateOf(false) }
+    var readyReported by remember(exoPlayer) { mutableStateOf(false) }
 
     DisposableEffect(exoPlayer, lifecycleOwner) {
         fun detachVideoSurface() {
@@ -102,16 +102,12 @@ actual fun HeroTrailerPlayerSurface(
         }
 
         val listener = object : Player.Listener {
-            private var readyReported = false
             private var endedReported = false
 
             override fun onPlaybackStateChanged(playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_READY -> {
-                        if (!readyReported) {
-                            readyReported = true
-                            latestOnReady.value()
-                        }
+                        playerReady = true
                     }
                     Player.STATE_ENDED -> {
                         if (!endedReported) {
@@ -182,22 +178,47 @@ actual fun HeroTrailerPlayerSurface(
         exoPlayer.volume = if (muted) 0f else 1f
     }
 
+    LaunchedEffect(playerReady, framed) {
+        if (playerReady && framed && !readyReported) {
+            readyReported = true
+            latestOnReady.value()
+        }
+    }
+
     LaunchedEffect(exoPlayer, hasRenderedFirstFrame) {
-        letterboxZoom = 1f
         if (!hasRenderedFirstFrame) return@LaunchedEffect
-        val tracker = LetterboxTracker()
         val sampler = LetterboxSampler()
         try {
+            // A quick look at the first frames, before the trailer shows: two matching samples set
+            // the zoom at once. Dark opening frames give no sample; after about 1.5 s it shows anyway.
+            var previous: Float? = null
+            for (attempt in 0 until FRAMING_SAMPLES) {
+                delay(FRAMING_INTERVAL_MS)
+                val textureView = playerContainer?.textureView ?: continue
+                val bar = sampler.sample(textureView) ?: continue
+                val last = previous
+                if (last != null && kotlin.math.abs(bar - last) <= FRAMING_TOLERANCE) {
+                    letterboxZoom.snapTo(LetterboxDetector.zoomFor(minOf(bar, last)))
+                    break
+                }
+                previous = bar
+            }
+            framed = true
+            if (letterboxZoom.value > 1f) return@LaunchedEffect
+            // No bars found yet: keep watching the first part, as before, and zoom smoothly.
+            val tracker = LetterboxTracker()
             while (true) {
                 delay(LetterboxDetector.SAMPLE_INTERVAL_MS)
                 if (LetterboxDetector.isSampleWindowOver(exoPlayer.currentPosition, exoPlayer.duration)) break
                 if (!exoPlayer.isPlaying) continue
                 val textureView = playerContainer?.textureView ?: continue
                 val bar = sampler.sample(textureView) ?: continue
-                letterboxZoom = tracker.onSample(bar) ?: continue
+                val zoom = tracker.onSample(bar) ?: continue
+                letterboxZoom.animateTo(zoom, tween(durationMillis = 400))
                 break
             }
         } finally {
+            framed = true
             sampler.release()
         }
     }
@@ -206,8 +227,8 @@ actual fun HeroTrailerPlayerSurface(
         modifier = modifier
             .clipToBounds()
             .graphicsLayer {
-                scaleX = letterboxZoomState.value
-                scaleY = letterboxZoomState.value
+                scaleX = letterboxZoom.value
+                scaleY = letterboxZoom.value
             },
         factory = { viewContext ->
             HeroTrailerTextureContainer(viewContext).apply {
@@ -224,6 +245,10 @@ actual fun HeroTrailerPlayerSurface(
         },
     )
 }
+
+private const val FRAMING_SAMPLES = 12
+private const val FRAMING_INTERVAL_MS = 120L
+private const val FRAMING_TOLERANCE = 0.015f
 
 private class HeroTrailerTextureContainer(
     context: Context,

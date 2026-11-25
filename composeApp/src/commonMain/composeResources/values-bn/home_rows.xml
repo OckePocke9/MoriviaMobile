@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">আপনার সাম্প্রতিক সিনেমার ভিত্তিতে সিনেমা</string>
+    <string name="home_series_based_on_recent">আপনার সাম্প্রতিক সিরিজের ভিত্তিতে সিরিজ</string>
+    <string name="home_movies_airing_today">আজ মুক্তি পাওয়া সিনেমা</string>
+    <string name="home_series_airing_today">আজ সম্প্রচারিত সিরিজ</string>
+</resources>

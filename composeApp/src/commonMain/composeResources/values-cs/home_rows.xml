@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">Filmy podle vašeho posledního filmu</string>
+    <string name="home_series_based_on_recent">Seriály podle vašeho posledního seriálu</string>
+    <string name="home_movies_airing_today">Filmy s premiérou dnes</string>
+    <string name="home_series_airing_today">Seriály vysílané dnes</string>
+</resources>

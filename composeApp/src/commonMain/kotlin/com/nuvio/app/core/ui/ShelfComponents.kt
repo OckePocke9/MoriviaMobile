@@ -2,6 +2,8 @@ package com.nuvio.app.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -305,6 +307,10 @@ private fun NuvioShelfSectionHeader(
     viewAllPillSize: NuvioViewAllPillSize = NuvioViewAllPillSize.Default,
 ) {
     val tokens = MaterialTheme.nuvio
+    // A cut title ends in "…"; tapping it shows the whole name, tapping again shortens it (owner,
+    // 2026-11-24).
+    var showFullTitle by androidx.compose.runtime.saveable.rememberSaveable(title) { androidx.compose.runtime.mutableStateOf(false) }
+    var titleCut by androidx.compose.runtime.remember(title) { androidx.compose.runtime.mutableStateOf(false) }
     Column(
         modifier = modifier.fillMaxWidth(),
     ) {
@@ -317,11 +323,18 @@ private fun NuvioShelfSectionHeader(
                 text = title,
                 modifier = Modifier.weight(1f).then(
                     if (viewAllPillSize == NuvioViewAllPillSize.Home) Modifier.alignByBaseline() else Modifier,
+                ).then(
+                    if (titleCut || showFullTitle) {
+                        Modifier.clickable { showFullTitle = !showFullTitle }
+                    } else {
+                        Modifier
+                    },
                 ),
                 style = MaterialTheme.typography.titleLarge,
                 color = tokens.colors.textPrimary,
-                maxLines = titleMaxLines,
-                overflow = if (titleMaxLines == Int.MAX_VALUE) TextOverflow.Clip else TextOverflow.Ellipsis,
+                maxLines = if (showFullTitle) Int.MAX_VALUE else titleMaxLines,
+                overflow = if (showFullTitle || titleMaxLines == Int.MAX_VALUE) TextOverflow.Clip else TextOverflow.Ellipsis,
+                onTextLayout = { result -> if (!showFullTitle) titleCut = result.hasVisualOverflow },
             )
             val viewAllPlaceholderModifier = if (onViewAllClick == null) {
                 Modifier

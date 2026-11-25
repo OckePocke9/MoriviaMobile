@@ -129,7 +129,7 @@ private fun HomeCatalogRowSectionContent(
         itemSpacing = HomePosterSpacing,
         onViewAllClick = onViewAllClick,
         viewAllPillSize = if (useHomePill) NuvioViewAllPillSize.Home else NuvioViewAllPillSize.Compact,
-        titleMaxLines = if (useHomePill) 2 else 1,
+        titleMaxLines = 1, // one line; a cut title shows "…" and opens on tap (owner, 2026-11-24)
         key = { item -> item.stableKey() },
     ) { item ->
         HomePosterCard(

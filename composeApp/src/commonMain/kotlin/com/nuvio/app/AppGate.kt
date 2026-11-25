@@ -559,6 +559,14 @@ internal fun AppGate(
                     onProfileSelected = { profile ->
                         if (
                             !profileSelectionLoading &&
+                            profilePickerOpenedFromApp &&
+                            profile.profileIndex == ProfileRepository.state.value.activeProfile?.profileIndex
+                        ) {
+                            // Tapping the profile you are already in takes you back into it.
+                            skipProfileSelectionEnterAnimation = false
+                            gateScreen = AppGateScreen.Main.name
+                        } else if (
+                            !profileSelectionLoading &&
                             (!profilePickerOpenedFromApp || profile.profileIndex != ProfileRepository.state.value.activeProfile?.profileIndex)
                         ) {
                             profileSelectionLoading = true

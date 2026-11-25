@@ -998,14 +998,14 @@ private fun HomeScreenWithCatalogs(
     }
     val genreSnapshot = genresById.toMap()
     val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.moviesByGenres) {
-        if (moriviaLayout.moviesByGenres) {
+        if (true) {
             buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
         } else {
             null
         }
     }
     val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.seriesByGenres) {
-        if (moriviaLayout.seriesByGenres) {
+        if (true) {
             buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
         } else {
             null
@@ -1060,6 +1060,22 @@ private fun HomeScreenWithCatalogs(
         picked
     }
 
+
+    // Rows from TMDB (owner, 2026-11-24): movies and series airing today (30 each) and the
+    // week's ten trending titles for Featured.
+    val moviesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
+        value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.MOVIES_AIRING_TODAY, HOME_CATALOG_PREVIEW_LIMIT)
+    }
+    val seriesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
+        value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.SERIES_AIRING_TODAY, HOME_CATALOG_PREVIEW_LIMIT)
+    }
+    val trendingFeatured by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
+        value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.TRENDING, HOME_FEATURED_LIMIT)
+    }
+    androidx.compose.runtime.SideEffect {
+        if (moviesAiringToday.isNotEmpty()) com.nuvio.app.features.catalog.FixedCatalogStore.put("morivia_movies_airing_today", moviesAiringToday)
+        if (seriesAiringToday.isNotEmpty()) com.nuvio.app.features.catalog.FixedCatalogStore.put("morivia_series_airing_today", seriesAiringToday)
+    }
 
     // Auto-refresh Home: reloads the rows on the chosen schedule.
     LaunchedEffect(moriviaLayout.autoRefreshMinutes) {
@@ -1345,7 +1361,7 @@ private fun HomeScreenWithCatalogs(
                             val section = HomeCatalogSection(
                                 key = recommendation.key,
                                 title = stringResource(
-                                    if (recommendation.isSeries) Res.string.morivia_series_by_genres else Res.string.morivia_movies_by_genres,
+                                    if (recommendation.isSeries) Res.string.home_series_based_on_recent else Res.string.home_movies_based_on_recent,
                                 ),
                                 subtitle = recommendation.source.name,
                                 addonName = "",
@@ -1370,7 +1386,43 @@ private fun HomeScreenWithCatalogs(
                         }
                     }
 
-                    if (mainFeaturedItems.isNotEmpty()) {
+                    // Movies and series airing today, 30 each (owner, 2026-11-24).
+                    listOf(
+                        Triple("morivia_movies_airing_today", false, moviesAiringToday),
+                        Triple("morivia_series_airing_today", true, seriesAiringToday),
+                    ).forEach { (rowKey, isSeries, rowItems) ->
+                        if (rowItems.isEmpty()) return@forEach
+                        item(key = rowKey, contentType = "catalog") {
+                            val section = HomeCatalogSection(
+                                key = rowKey,
+                                title = stringResource(
+                                    if (isSeries) Res.string.home_series_airing_today else Res.string.home_movies_airing_today,
+                                ),
+                                subtitle = "",
+                                addonName = "",
+                                target = com.nuvio.app.features.catalog.CatalogTarget.Fixed(
+                                    key = rowKey,
+                                    contentType = if (isSeries) "series" else "movie",
+                                ),
+                                items = rowItems,
+                            )
+                            HomeCatalogRowSection(
+                                section = section,
+                                entries = rowItems.take(HOME_CATALOG_PREVIEW_LIMIT),
+                                modifier = Modifier.padding(bottom = 12.dp),
+                                sectionPadding = homeSectionPadding,
+                                onViewAllClick = onCatalogClick?.let { { it(section) } },
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = homePosterSize,
+                            )
+                        }
+                    }
+
+                    // Featured: the week's five trending titles, posters twice the usual size.
+                    if (trendingFeatured.isNotEmpty()) {
                         item(key = "morivia_main_featured", contentType = "featured") {
                             HomeCatalogRowSection(
                                 section = HomeCatalogSection(
@@ -1378,20 +1430,21 @@ private fun HomeScreenWithCatalogs(
                                     title = stringResource(Res.string.morivia_hero_featured),
                                     subtitle = "",
                                     addonName = "",
-                                    target = (featuredMovies ?: featuredSeries ?: popularMovies ?: popularSeries)!!.target,
-                                    items = mainFeaturedItems,
+                                    target = com.nuvio.app.features.catalog.CatalogTarget.Fixed(
+                                        key = "morivia_main_featured",
+                                        contentType = "movie",
+                                    ),
+                                    items = trendingFeatured,
                                 ),
-                                entries = mainFeaturedItems,
+                                entries = trendingFeatured.take(HOME_FEATURED_LIMIT),
                                 modifier = Modifier.padding(bottom = 12.dp),
                                 sectionPadding = homeSectionPadding,
-                                // No Show all on the main Featured row.
                                 onViewAllClick = null,
                                 watchedKeys = watchedUiState.watchedKeys,
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
-                                posterWidth = homeFeaturedCardWidth(maxWidth, homeSectionPadding),
-                                landscape = true,
+                                posterWidth = homePosterSize * 2,
                             )
                         }
                     }
@@ -1530,6 +1583,8 @@ private fun LazyListScope.homeContinueWatchingSections(
 
 private const val HOME_CATALOG_PREVIEW_LIMIT = 30
 private const val FEATURED_ROW_LIMIT = 5
+// Featured on Home: the week's ten trending titles (owner, 2026-11-24).
+private const val HOME_FEATURED_LIMIT = 10
 private const val MAIN_FEATURED_LIMIT = 5
 private const val HOME_CONTINUE_WATCHING_SECTION_KEY = "home_continue_watching"
 private const val HOME_UPCOMING_SECTION_KEY = "home_upcoming"

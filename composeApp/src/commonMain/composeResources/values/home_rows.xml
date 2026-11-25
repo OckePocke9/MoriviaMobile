@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_movies_based_on_recent">Movies Based on Your Recent Movie</string>
+    <string name="home_series_based_on_recent">Series Based on Your Recent Series</string>
+    <string name="home_movies_airing_today">Movies That Air Today</string>
+    <string name="home_series_airing_today">Series That Air Today</string>
+</resources>

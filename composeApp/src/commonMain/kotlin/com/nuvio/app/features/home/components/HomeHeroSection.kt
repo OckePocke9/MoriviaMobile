@@ -34,6 +34,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.asPaddingValues
@@ -86,6 +87,18 @@ import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 
+// One calm curve for every hero page change: the automatic step, the arrows and the dots; a swipe
+// that is let go finishes on the same curve, a little quicker (owner, 2026-11-25).
+private val HeroPageEasing = androidx.compose.animation.core.CubicBezierEasing(0.33f, 0f, 0.15f, 1f)
+private val HeroPageSpec = androidx.compose.animation.core.tween<Float>(durationMillis = 720, easing = HeroPageEasing)
+private val HeroReleaseSpec = androidx.compose.animation.core.tween<Float>(durationMillis = 460, easing = HeroPageEasing)
+
+/** Smoothstep: soft at both ends, so fades start and finish gently. */
+private fun heroEase(x: Float): Float = x.coerceIn(0f, 1f).let { it * it * (3f - 2f * it) }
+
+/** The outgoing text fades out in the first half of a change and the new text in the second half. */
+private fun heroContentAlpha(visibility: Float): Float = heroEase((visibility - 0.5f) * 2f)
+
 private const val HERO_BACKGROUND_PARALLAX = 0.055f
 private const val HERO_BACKGROUND_SCALE = 1.14f
 private const val HERO_CONTENT_PARALLAX = 0.18f
@@ -102,11 +115,14 @@ private const val HERO_TRAILER_START_TIMEOUT_MS = 20_000L
 private enum class HeroTrailerStatus { Loading, Playing, Ended, Unavailable }
 
 /**
- * The gap from View Details to the dots. The hero ends [HERO_BOTTOM_PADDING] below the dots and
- * Home's list adds 12 dp before Continue Watching, so the dots are the same distance from both.
+ * The gap from View Details to the dots. The hero ends right below the dots; with Home's list gap
+ * and the heading's own line spacing the dots are then 24 dp from Continue Watching too (measured on
+ * the phone, owner 2026-11-25).
  */
-private val HERO_DOTS_GAP = 20.dp
-private val HERO_BOTTOM_PADDING = 8.dp
+// The same 24 dp above the dots, below them to Continue Watching and above every row heading
+// (owner, 2026-11-24).
+private val HERO_DOTS_GAP = 24.dp
+private val HERO_BOTTOM_PADDING = 0.dp
 private const val MOBILE_HERO_VIEWPORT_RATIO = 0.82f
 private const val MOBILE_HERO_MIN_HEIGHT_DP = 360f
 private const val MOBILE_HERO_MAX_HEIGHT_DP = 760f
@@ -170,7 +186,8 @@ fun HomeHeroSection(
             if (scrolling && !autoScrolling) userSwiped = true
         }
     }
-    val trailerEnabled = moriviaLayout.heroVideo &&
+    // The trailer always starts and fills the whole hero (owner, 2026-11-24).
+    val trailerEnabled = true &&
         com.nuvio.app.core.build.AppFeaturePolicy.heroTrailerPlaybackSupported &&
         com.nuvio.app.core.build.AppFeaturePolicy.trailerPlaybackMode == com.nuvio.app.core.build.TrailerPlaybackMode.IN_APP
     val trailerItem = items[autoScrollPage % items.size]
@@ -207,7 +224,7 @@ fun HomeHeroSection(
         val nextPage = autoScrollPage + 1
         autoScrolling = true
         try {
-            pagerState.animateScrollToPage(nextPage)
+            pagerState.animateScrollToPage(nextPage, animationSpec = HeroPageSpec)
         } finally {
             autoScrolling = false
         }
@@ -289,7 +306,10 @@ fun HomeHeroSection(
                         .height(layout.heroHeight)
                         .heroStretchZoom(stretchPx),
                 ) {
-                    visiblePages.forEach { layer ->
+                    // The settled title stays underneath at full strength while the next one fades in over it, so
+                    // the hero never darkens half-way through a change (owner, 2026-11-25).
+                    val settledItem = pagerState.settledPage % items.size
+                    visiblePages.sortedBy { it.itemIndex != settledItem }.forEach { layer ->
                         key(layer.itemIndex) {
                             val layerImageUrl = items[layer.itemIndex].banner ?: items[layer.itemIndex].poster
                             val backdropFocus = rememberBackdropFocusState(layerImageUrl)
@@ -301,7 +321,7 @@ fun HomeHeroSection(
                                     .graphicsLayer {
                                         val offset = scrollOffsetPx
                                         val scrollScale = heroBackgroundScrollScale(offset)
-                                        alpha = layer.visibility * backdropFocus.revealAlpha
+                                        alpha = (if (layer.itemIndex == settledItem) 1f else heroEase(layer.visibility)) * backdropFocus.revealAlpha
                                         translationX = -layer.offset * heroWidthPx * HERO_BACKGROUND_PARALLAX
                                         translationY = heroBackgroundScrollTranslationY(offset)
                                         scaleX = HERO_BACKGROUND_SCALE * scrollScale
@@ -321,6 +341,7 @@ fun HomeHeroSection(
                         key(autoScrollPage, trailerItem.id, trailerItem.type) {
                             HomeHeroTrailer(
                                 item = trailerItem,
+                                visibility = { heroEase(1f - abs(heroPageOffset(pagerState, autoScrollPage))) },
                                 muted = !moriviaLayout.trailerSound,
                                 onStatusChange = { trailerStatus.value = it },
                             )
@@ -378,7 +399,7 @@ fun HomeHeroSection(
                             key(item.stableKey()) {
                                 Box(
                                     modifier = Modifier.graphicsLayer {
-                                        alpha = layer.visibility
+                                        alpha = heroContentAlpha(layer.visibility)
                                         translationX = -layer.offset * heroWidthPx * HERO_CONTENT_PARALLAX
                                     },
                                 ) {
@@ -400,7 +421,6 @@ fun HomeHeroSection(
                         Spacer(modifier = Modifier.height(18.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
                             Surface(
                                 modifier = Modifier
@@ -419,19 +439,28 @@ fun HomeHeroSection(
                                     fontWeight = FontWeight.Bold,
                                 )
                             }
-                            Box(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .clip(CircleShape)
-                                    .background(Color.White.copy(alpha = 0.22f))
-                                    .clickable(enabled = onItemClick != null) { onItemClick?.invoke(currentItem) },
-                                contentAlignment = Alignment.Center,
+                            // No information button; a back arrow shows on every title except the first
+                            // (owner, 2026-11-24) and slides in and out softly (owner, 2026-11-25).
+                            androidx.compose.animation.AnimatedVisibility(
+                                visible = items.size > 1 && pagerState.targetPage % items.size != 0,
+                                enter = androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(320, easing = HeroPageEasing)) +
+                                    androidx.compose.animation.expandHorizontally(androidx.compose.animation.core.tween(320, easing = HeroPageEasing)),
+                                exit = androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(240, easing = HeroPageEasing)) +
+                                    androidx.compose.animation.shrinkHorizontally(androidx.compose.animation.core.tween(320, easing = HeroPageEasing)),
                             ) {
                                 Icon(
-                                    imageVector = Icons.Rounded.Info,
-                                    contentDescription = stringResource(Res.string.home_view_details),
+                                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                                    contentDescription = null,
                                     tint = Color.White,
-                                    modifier = Modifier.size(26.dp),
+                                    modifier = Modifier
+                                        .padding(start = 10.dp)
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .clickable {
+                                            coroutineScope.launch {
+                                                pagerState.animateScrollToPage(pagerState.targetPage - 1, animationSpec = HeroPageSpec)
+                                            }
+                                        },
                                 )
                             }
                             if (items.size > 1) {
@@ -440,17 +469,20 @@ fun HomeHeroSection(
                                     contentDescription = null,
                                     tint = Color.White,
                                     modifier = Modifier
+                                        .padding(start = 10.dp)
                                         .size(40.dp)
                                         .clip(CircleShape)
                                         .clickable {
                                             coroutineScope.launch {
-                                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                                pagerState.animateScrollToPage(pagerState.targetPage + 1, animationSpec = HeroPageSpec)
                                             }
                                         },
                                 )
                             }
                         }
                     }
+
+                    val themeAccent = com.nuvio.app.features.settings.rememberThemeAccent().accent
 
                     if (items.size > 1) {
                         // The same gap above the dots as from the dots to Continue Watching.
@@ -464,19 +496,26 @@ fun HomeHeroSection(
                                 val activeFraction = visiblePages
                                     .firstOrNull { it.itemIndex == index }
                                     ?.visibility ?: 0f
+                                // The current title's dot in the theme colour (owner, 2026-11-24).
+                                val dotColour = androidx.compose.ui.graphics.lerp(
+                                    MaterialTheme.colorScheme.onBackground,
+                                    themeAccent,
+                                    activeFraction,
+                                )
                                 Box(
                                     modifier = Modifier
                                         .clickable {
                                             coroutineScope.launch {
                                                 pagerState.animateScrollToPage(
                                                     heroPageForItem(pagerState.currentPage, index, items.size),
+                                                    animationSpec = HeroPageSpec,
                                                 )
                                             }
                                         }
                                         .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.onBackground)
+                                        .background(dotColour)
                                         .graphicsLayer {
-                                            alpha = 0.35f + (0.57f * activeFraction)
+                                            alpha = 0.35f + (0.65f * activeFraction)
                                         }
                                         .width(8.dp + (24.dp * activeFraction))
                                         .height(8.dp),
@@ -491,15 +530,20 @@ fun HomeHeroSection(
                 if (!layout.isTablet) {
                     val statusBarTop = androidx.compose.foundation.layout.WindowInsets.statusBars
                         .asPaddingValues().calculateTopPadding()
-                    com.nuvio.app.core.ui.MoriviaPagePill(
-                        label = stringResource(Res.string.compose_nav_home),
-                        icon = Icons.Rounded.Home,
-                        compact = !isIos,
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(PaddingValues(start = if (isIos) layout.contentHorizontalPadding else 12.dp).withVerticalBar())
-                            .padding(top = statusBarTop + 12.dp),
-                    )
+                    // The Home icon in the theme colour; the pill stays where it was (owner, 2026-11-24).
+                    // 8 dp from the left edge and as far below the clock (the clock ends about 10 dp above the
+                    // bottom of the status bar; measured on the phone, owner 2026-11-25).
+                    com.nuvio.app.features.settings.ThemedAccent {
+                        com.nuvio.app.core.ui.MoriviaPagePill(
+                            label = stringResource(Res.string.compose_nav_home),
+                            icon = Icons.Rounded.Home,
+                            compact = !isIos,
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .padding(PaddingValues(start = if (isIos) layout.contentHorizontalPadding else 8.dp).withVerticalBar())
+                                .padding(top = (statusBarTop - 2.dp).coerceAtLeast(0.dp)),
+                        )
+                    }
                 }
             }
         }
@@ -513,6 +557,7 @@ fun HomeHeroSection(
 @Composable
 private fun HomeHeroTrailer(
     item: MetaPreview,
+    visibility: () -> Float = { 1f },
     muted: Boolean,
     onStatusChange: (HeroTrailerStatus) -> Unit,
 ) {
@@ -553,7 +598,7 @@ private fun HomeHeroTrailer(
         modifier = Modifier
             .fillMaxSize()
             .graphicsLayer {
-                this.alpha = alpha
+                this.alpha = alpha * visibility()
                 scaleX = 1.08f
                 scaleY = 1.08f
             },
@@ -667,7 +712,7 @@ private fun HeroContentBlock(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         // The badge: the first genre, or "Featured".
         Text(
             text = item.genres.firstOrNull { it.isNotBlank() } ?: stringResource(Res.string.morivia_hero_featured),
@@ -763,7 +808,7 @@ internal fun homeHeroLayout(
             contentHorizontalPadding = 16.dp,
             contentVerticalPadding = HERO_BOTTOM_PADDING,
             bottomFadeHeight = 220.dp,
-            logoWidthFraction = 0.62f,
+            logoWidthFraction = 0.46f,
         )
     }
 
@@ -847,7 +892,7 @@ private fun Modifier.homeHeroPagerGesture(
                             widthPx = widthPx,
                         )
                         coroutineScope.launch {
-                            pagerState.animateScrollToPage(targetPage)
+                            pagerState.animateScrollToPage(targetPage, animationSpec = HeroReleaseSpec)
                         }
                     }
                     break
