@@ -1532,7 +1532,7 @@ private fun HomeScreenWithCatalogs(
                         }
                     }
 
-                    // Featured: the week's five trending titles, posters twice the usual size.
+                    // Featured: the week's ten most watched titles, five movies and five series, twice the usual size.
                     if (trendingFeatured.isNotEmpty()) {
                         item(key = "morivia_main_featured", contentType = "featured") {
                             HomeCatalogRowSection(
@@ -1766,7 +1766,7 @@ private const val HOME_CATALOG_PREVIEW_LIMIT = 30
 private const val AIRING_REFRESH_MS = 10 * 60 * 1000L
 private const val FEATURED_ROW_LIMIT = 5
 // Featured on Home: the week's ten trending titles (owner, 2026-11-24).
-private const val HOME_FEATURED_LIMIT = 5
+private const val HOME_FEATURED_LIMIT = 10
 private const val MAIN_FEATURED_LIMIT = 5
 private const val HOME_CONTINUE_WATCHING_SECTION_KEY = "home_continue_watching"
 private const val HOME_UPCOMING_SECTION_KEY = "home_upcoming"

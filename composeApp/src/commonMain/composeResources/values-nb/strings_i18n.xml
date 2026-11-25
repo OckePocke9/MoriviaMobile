@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Appikon · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst og bakgrunn</string>
     <string name="morivia_appearance_preview_button">Knapp</string>
-    <string name="updates_repository_access">Norivia kom ikke til oppdateringssiden sin på GitHub. Sjekk internettforbindelsen og prøv igjen, eller åpne GitHub for å laste ned nyeste versjon.</string>
+    <string name="updates_repository_access">Morivia kom ikke til oppdateringssiden sin på GitHub. Sjekk internettforbindelsen og prøv igjen, eller åpne GitHub for å laste ned nyeste versjon.</string>
     <string name="updates_open_github">Åpne GitHub</string>
     <string name="profile_save_failed">Kunne ikke lagre profilen. Prøv igjen.</string>
     <string name="library_filter_genre">Sjanger</string>
@@ -200,12 +200,12 @@
     <string name="party_start_title">Se sammen</string>
     <string name="party_start_description">Inviter vennene dine. Alle spiller av fra sine egne kilder og holder seg synkronisert.</string>
     <string name="party_start_action">Start seefest</string>
-    <string name="party_sign_in_required">Logg inn på Norivia-kontoen din for å bruke seefester.</string>
+    <string name="party_sign_in_required">Logg inn på Morivia-kontoen din for å bruke seefester.</string>
     <string name="party_unavailable">Seefester er ikke tilgjengelige akkurat nå.</string>
     <string name="party_code_label">Festkode</string>
     <string name="party_copy_invite">Kopier invitasjon</string>
     <string name="party_invite_copied">Invitasjonen er kopiert</string>
-    <string name="party_invite_message">Bli med på seefesten min i Norivia med koden %1$s\n%2$s</string>
+    <string name="party_invite_message">Bli med på seefesten min i Morivia med koden %1$s\n%2$s</string>
     <string name="party_seats">%1$d av %2$d plasser</string>
     <string name="party_host">Vert</string>
     <string name="party_you">Deg</string>

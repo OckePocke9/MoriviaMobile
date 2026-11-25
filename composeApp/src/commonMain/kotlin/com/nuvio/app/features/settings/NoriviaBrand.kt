@@ -35,9 +35,9 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /** The app's name (owner, 2026-11-23). */
-internal const val NoriviaName = "Norivia"
+internal const val MoriviaName = "Morivia"
 
-/** The Norivia logo in the colours of the selected theme (Original for themes without one). */
+/** The Morivia logo in the colours of the selected theme (Original for themes without one). */
 internal fun AppTheme.noriviaLogoResource(): DrawableResource = when (this) {
     AppTheme.CHERRY -> Res.drawable.norivia_logo_cherry
     AppTheme.CORAL -> Res.drawable.norivia_logo_coral
@@ -61,16 +61,16 @@ internal fun AppTheme.noriviaLogoResource(): DrawableResource = when (this) {
 }
 
 /**
- * Logo and "Norivia" in the profile picker's lettering: a 28 dp logo, 8 dp gap and the name in
+ * Logo and "Morivia" in the profile picker's lettering: a 28 dp logo, 8 dp gap and the name in
  * white Plus Jakarta Sans ExtraBold at 25 sp, all scaled to [height].
  */
 @Composable
-internal fun NoriviaWordmark(height: Dp, modifier: Modifier = Modifier) {
+internal fun MoriviaWordmark(height: Dp, modifier: Modifier = Modifier) {
     val theme by remember {
         ThemeSettingsRepository.ensureLoaded()
         ThemeSettingsRepository.selectedTheme
     }.collectAsStateWithLifecycle()
-    NoriviaNameRow(height = height, modifier = modifier) {
+    MoriviaNameRow(height = height, modifier = modifier) {
         Image(
             painter = painterResource(theme.noriviaLogoResource()),
             contentDescription = null,
@@ -80,9 +80,9 @@ internal fun NoriviaWordmark(height: Dp, modifier: Modifier = Modifier) {
     }
 }
 
-/** A logo followed by "Norivia" in the profile picker's lettering, scaled to the logo's [height]. */
+/** A logo followed by "Morivia" in the profile picker's lettering, scaled to the logo's [height]. */
 @Composable
-internal fun NoriviaNameRow(
+internal fun MoriviaNameRow(
     height: Dp,
     modifier: Modifier = Modifier,
     fontRatio: Float = 25f / 28f,
@@ -97,7 +97,7 @@ internal fun NoriviaNameRow(
         logo()
         Spacer(Modifier.width(height * gapRatio))
         Text(
-            text = NoriviaName,
+            text = MoriviaName,
             style = TextStyle(
                 color = Color.White,
                 fontSize = (height.value * fontRatio).sp,
@@ -110,7 +110,7 @@ internal fun NoriviaNameRow(
     }
 }
 
-/** Norivia's logo, name and version, at the bottom of the System page. */
+/** Morivia's logo, name and version, at the bottom of the System page. */
 internal fun LazyListScope.noriviaBrandFooter(isTablet: Boolean) {
     item(key = "norivia_brand_footer") {
         Column(
@@ -122,7 +122,7 @@ internal fun LazyListScope.noriviaBrandFooter(isTablet: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(if (isTablet) 10.dp else 8.dp),
         ) {
-            NoriviaWordmark(height = if (isTablet) 32.dp else 28.dp)
+            MoriviaWordmark(height = if (isTablet) 32.dp else 28.dp)
             Text(
                 text = stringResource(
                     Res.string.compose_about_version_format,

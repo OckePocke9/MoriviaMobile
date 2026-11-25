@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">App-icoon · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst en achtergrond</string>
     <string name="morivia_appearance_preview_button">Knop</string>
-    <string name="updates_repository_access">Norivia kon de updatepagina op GitHub niet bereiken. Controleer je internetverbinding en probeer het opnieuw, of open GitHub om de nieuwste versie te downloaden.</string>
+    <string name="updates_repository_access">Morivia kon de updatepagina op GitHub niet bereiken. Controleer je internetverbinding en probeer het opnieuw, of open GitHub om de nieuwste versie te downloaden.</string>
     <string name="updates_open_github">GitHub openen</string>
     <string name="profile_save_failed">Kan het profiel niet opslaan. Probeer het opnieuw.</string>
     <string name="library_filter_genre">Genre</string>

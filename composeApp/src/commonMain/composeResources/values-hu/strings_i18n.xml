@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Alkalmazásikon · %1$s</string>
     <string name="morivia_appearance_preview_text">Szöveg és háttér</string>
     <string name="morivia_appearance_preview_button">Gomb</string>
-    <string name="updates_repository_access">A Norivia nem érte el a frissítési oldalát a GitHubon. Ellenőrizd az internetkapcsolatot, és próbáld újra, vagy nyisd meg a GitHubot a legújabb verzió letöltéséhez.</string>
+    <string name="updates_repository_access">A Morivia nem érte el a frissítési oldalát a GitHubon. Ellenőrizd az internetkapcsolatot, és próbáld újra, vagy nyisd meg a GitHubot a legújabb verzió letöltéséhez.</string>
     <string name="updates_open_github">GitHub megnyitása</string>
     <string name="profile_save_failed">A profilt nem sikerült menteni. Próbáld újra.</string>
     <string name="library_filter_genre">Műfaj</string>

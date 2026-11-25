@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Значок приложения · %1$s</string>
     <string name="morivia_appearance_preview_text">Текст и фон</string>
     <string name="morivia_appearance_preview_button">Кнопка</string>
-    <string name="updates_repository_access">Norivia не удалось открыть страницу обновлений на GitHub. Проверьте подключение к интернету и повторите попытку или откройте GitHub, чтобы скачать последнюю версию.</string>
+    <string name="updates_repository_access">Morivia не удалось открыть страницу обновлений на GitHub. Проверьте подключение к интернету и повторите попытку или откройте GitHub, чтобы скачать последнюю версию.</string>
     <string name="updates_open_github">Открыть GitHub</string>
     <string name="profile_save_failed">Не удалось сохранить профиль. Попробуйте ещё раз.</string>
     <string name="library_filter_genre">Жанр</string>
@@ -201,12 +201,12 @@
     <string name="party_start_title">Смотрите вместе</string>
     <string name="party_start_description">Пригласите друзей. Каждый воспроизводит из своих источников, и все остаются синхронизированными.</string>
     <string name="party_start_action">Начать совместный просмотр</string>
-    <string name="party_sign_in_required">Войдите в аккаунт Norivia, чтобы пользоваться совместным просмотром.</string>
+    <string name="party_sign_in_required">Войдите в аккаунт Morivia, чтобы пользоваться совместным просмотром.</string>
     <string name="party_unavailable">Совместный просмотр сейчас недоступен.</string>
     <string name="party_code_label">Код просмотра</string>
     <string name="party_copy_invite">Копировать приглашение</string>
     <string name="party_invite_copied">Приглашение скопировано</string>
-    <string name="party_invite_message">Присоединяйся к моему совместному просмотру в Norivia с кодом %1$s\n%2$s</string>
+    <string name="party_invite_message">Присоединяйся к моему совместному просмотру в Morivia с кодом %1$s\n%2$s</string>
     <string name="party_seats">%1$d из %2$d мест</string>
     <string name="party_host">Организатор</string>
     <string name="party_you">Вы</string>

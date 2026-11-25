@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">Оцінюйте фільми й серіали. Оцінка тайтлу, якого немає у ваших списках Simkl, додає його туди.</string>
     <string name="settings_tracking_ratings_mdblist_description">Оцінюйте фільми, серіали та епізоди.</string>
     <string name="addons_tracking_consent_title">Доповнення відстеження</string>
-    <string name="addons_tracking_consent_body">%1$s — доповнення відстеження. Norivia надсилатиме йому вашу активність: що ви відтворюєте, ставите на паузу та зупиняєте разом із позицією, що додаєте до бібліотеки чи видаляєте з неї та що позначаєте як переглянуте чи непереглянуте. Ці дані залишають Norivia й обробляються розробником доповнення та сервісом, до якого воно підключається.</string>
+    <string name="addons_tracking_consent_body">%1$s — доповнення відстеження. Morivia надсилатиме йому вашу активність: що ви відтворюєте, ставите на паузу та зупиняєте разом із позицією, що додаєте до бібліотеки чи видаляєте з неї та що позначаєте як переглянуте чи непереглянуте. Ці дані залишають Morivia й обробляються розробником доповнення та сервісом, до якого воно підключається.</string>
     <string name="addons_tracking_consent_checkbox">Я погоджуюся ділитися своєю активністю та бібліотекою з цим доповненням</string>
     <string name="settings_mdb_ratings_credentials_required">Підключіть MDBList у Відстеженні або введіть API-ключ, щоб отримувати оцінки.</string>
     <string name="settings_mdb_ratings_key_override_description">API-ключ замінює підключений обліковий запис для оцінок. Очистьте його й збережіть, щоб знову використовувати обліковий запис.</string>

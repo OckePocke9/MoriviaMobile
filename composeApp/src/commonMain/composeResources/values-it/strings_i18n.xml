@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Icona dell’app · %1$s</string>
     <string name="morivia_appearance_preview_text">Testo e sfondo</string>
     <string name="morivia_appearance_preview_button">Pulsante</string>
-    <string name="updates_repository_access">Norivia non è riuscita a raggiungere la sua pagina degli aggiornamenti su GitHub. Controlla la connessione a Internet e riprova, oppure apri GitHub per scaricare l’ultima versione.</string>
+    <string name="updates_repository_access">Morivia non è riuscita a raggiungere la sua pagina degli aggiornamenti su GitHub. Controlla la connessione a Internet e riprova, oppure apri GitHub per scaricare l’ultima versione.</string>
     <string name="updates_open_github">Apri GitHub</string>
     <string name="profile_save_failed">Impossibile salvare il profilo. Riprova.</string>
     <string name="library_filter_genre">Genere</string>

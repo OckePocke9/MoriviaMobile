@@ -207,7 +207,7 @@
     <string name="compose_settings_root_check_updates_description">Ladda ner senaste versionen</string>
     <string name="compose_settings_root_check_updates_title">Sök efter uppdateringar</string>
     <string name="compose_settings_root_content_discovery_description">Hantera tillägg och innehållskällor.</string>
-    <string name="compose_settings_root_content_discovery_description_appstore">Hantera tillägg och välj vad som visas i Norivia.</string>
+    <string name="compose_settings_root_content_discovery_description_appstore">Hantera tillägg och välj vad som visas i Morivia.</string>
     <string name="compose_settings_root_downloads_description">Hantera dina nedladdade filmer och avsnitt.</string>
     <string name="compose_settings_root_downloads_description_appstore">Hantera det du sparat på enheten.</string>
     <string name="compose_settings_root_downloads_title">Nedladdningar</string>
@@ -219,7 +219,7 @@
     <string name="settings_connections_tracking_description">Synka din tittarhistorik och dina framsteg med Trakt, Simkl och MDBList</string>
     <string name="settings_connections_description">Trakt, Simkl, MDBList, TMDB och dina molntjänster</string>
     <string name="compose_settings_root_notifications_description">Hantera aviseringar om nya avsnitt och skicka en testavisering.</string>
-    <string name="compose_settings_root_privacy_policy_description">Läs hur Norivia hanterar dina uppgifter</string>
+    <string name="compose_settings_root_privacy_policy_description">Läs hur Morivia hanterar dina uppgifter</string>
     <string name="compose_settings_root_streams_description">Visning av strömresultat och regler för märkesadresser.</string>
     <string name="compose_settings_root_switch_profile_description">Byt till en annan profil.</string>
     <string name="compose_settings_root_switch_profile_title">Byt profil</string>
@@ -237,7 +237,7 @@
     <string name="settings_appearance_amoled_description">Använd helt svarta bakgrunder på OLED-skärmar.</string>
     <string name="settings_appearance_app_icon">Appikon</string>
     <string name="settings_appearance_app_icon_arctic_blue">Arktisk blå</string>
-    <string name="settings_appearance_app_icon_android_confirmation_message">Norivia stängs när du byter till %1$s. Tryck på OK för att fortsätta.</string>
+    <string name="settings_appearance_app_icon_android_confirmation_message">Morivia stängs när du byter till %1$s. Tryck på OK för att fortsätta.</string>
     <string name="settings_appearance_app_icon_android_confirmation_title">Byta appikon?</string>
     <string name="settings_appearance_app_icon_change_failed">Ikonen kunde inte ändras. Försök igen.</string>
     <string name="settings_appearance_app_icon_copper">Koppar</string>
@@ -384,7 +384,7 @@
     <string name="resume_prompt_action">Fortsätt</string>
     <string name="streams_episode_fallback_title">Avsnitt</string>
     <string name="updates_check_failed">Kunde inte söka efter uppdateringar</string>
-    <string name="updates_repository_access">Norivia kunde inte nå sin uppdateringssida på GitHub. Kontrollera internetanslutningen och försök igen, eller öppna GitHub och ladda ner den senaste versionen.</string>
+    <string name="updates_repository_access">Morivia kunde inte nå sin uppdateringssida på GitHub. Kontrollera internetanslutningen och försök igen, eller öppna GitHub och ladda ner den senaste versionen.</string>
     <string name="updates_open_github">Öppna GitHub</string>
     <string name="updates_download_failed">Nedladdningen misslyckades</string>
     <string name="updates_download_empty_body">Nedladdningen är tom</string>
@@ -395,7 +395,7 @@
     <string name="updates_debug_test_title">Testa uppdateringsbannern</string>
     <string name="updates_install_failed">Kunde inte starta installationen</string>
     <string name="updates_latest_version">Du använder den senaste versionen.</string>
-    <string name="updates_message_allow_installs">Tillåt att Norivia installerar appar och kom sedan tillbaka för att fortsätta.</string>
+    <string name="updates_message_allow_installs">Tillåt att Morivia installerar appar och kom sedan tillbaka för att fortsätta.</string>
     <string name="updates_message_downloading">Laddar ner uppdatering…</string>
     <string name="updates_message_no_updates">Inga uppdateringar hittades.</string>
     <string name="updates_message_ready">En ny version är klar att installeras.</string>

@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">Filmek és sorozatok értékelése. Ha olyan címet értékelsz, amely nincs a Simkl-listáidon, felkerül rájuk.</string>
     <string name="settings_tracking_ratings_mdblist_description">Filmek, sorozatok és epizódok értékelése.</string>
     <string name="addons_tracking_consent_title">Követő kiegészítő</string>
-    <string name="addons_tracking_consent_body">%1$s egy követő kiegészítő. A Norivia elküldi neki a tevékenységedet: mit játszol le, szüneteltetsz és állítasz le a lejátszási pozícióval, mit adsz a könyvtáradhoz vagy távolítasz el belőle, és mit jelölsz megnézettnek vagy meg nem nézettnek. Ezek az adatok elhagyják a Moriviát, és a kiegészítő fejlesztője, valamint a kapcsolódó szolgáltatás kezeli őket.</string>
+    <string name="addons_tracking_consent_body">%1$s egy követő kiegészítő. A Morivia elküldi neki a tevékenységedet: mit játszol le, szüneteltetsz és állítasz le a lejátszási pozícióval, mit adsz a könyvtáradhoz vagy távolítasz el belőle, és mit jelölsz megnézettnek vagy meg nem nézettnek. Ezek az adatok elhagyják a Moriviát, és a kiegészítő fejlesztője, valamint a kapcsolódó szolgáltatás kezeli őket.</string>
     <string name="addons_tracking_consent_checkbox">Hozzájárulok, hogy a megtekintési tevékenységemet és a könyvtáramat megosszam ezzel a kiegészítővel</string>
     <string name="settings_mdb_show_on_hero">Értékelések a kiemelt részben</string>
     <string name="settings_mdb_show_on_hero_description">MDBList-értékelések megjelenítése a kezdőlap kiemelt részében</string>

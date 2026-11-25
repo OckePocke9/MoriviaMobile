@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">Hodnoťte filmy a seriály. Ohodnocení titulu, který není ve vašich seznamech Simkl, ho do nich přidá.</string>
     <string name="settings_tracking_ratings_mdblist_description">Hodnoťte filmy, seriály a epizody.</string>
     <string name="addons_tracking_consent_title">Sledovací doplněk</string>
-    <string name="addons_tracking_consent_body">%1$s je sledovací doplněk. Norivia mu bude posílat vaši aktivitu: co přehráváte, pozastavujete a zastavujete i s pozicí přehrávání, co přidáváte do knihovny nebo z ní odebíráte a co označujete jako zhlédnuté či nezhlédnuté. Tato data opouštějí Morivii a zpracovává je vývojář doplňku a služba, ke které se připojuje.</string>
+    <string name="addons_tracking_consent_body">%1$s je sledovací doplněk. Morivia mu bude posílat vaši aktivitu: co přehráváte, pozastavujete a zastavujete i s pozicí přehrávání, co přidáváte do knihovny nebo z ní odebíráte a co označujete jako zhlédnuté či nezhlédnuté. Tato data opouštějí Morivii a zpracovává je vývojář doplňku a služba, ke které se připojuje.</string>
     <string name="addons_tracking_consent_checkbox">Souhlasím se sdílením své aktivity a knihovny s tímto doplňkem</string>
     <string name="settings_mdb_show_on_hero">Hodnocení v banneru</string>
     <string name="settings_mdb_show_on_hero_description">Zobrazit hodnocení z MDBList v banneru na stránce Domů</string>

@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">Avalie filmes e séries. Avaliar um título que não está nas suas listas do Simkl o adiciona a elas.</string>
     <string name="settings_tracking_ratings_mdblist_description">Avalie filmes, séries e episódios.</string>
     <string name="addons_tracking_consent_title">Complemento de acompanhamento</string>
-    <string name="addons_tracking_consent_body">%1$s é um complemento de acompanhamento. O Norivia enviará sua atividade a ele: o que você reproduz, pausa e para com a posição de reprodução, o que adiciona ou remove da biblioteca e o que marca como assistido ou não assistido. Esses dados saem do Norivia e são tratados pelo desenvolvedor do complemento e pelo serviço ao qual ele se conecta.</string>
+    <string name="addons_tracking_consent_body">%1$s é um complemento de acompanhamento. O Morivia enviará sua atividade a ele: o que você reproduz, pausa e para com a posição de reprodução, o que adiciona ou remove da biblioteca e o que marca como assistido ou não assistido. Esses dados saem do Morivia e são tratados pelo desenvolvedor do complemento e pelo serviço ao qual ele se conecta.</string>
     <string name="addons_tracking_consent_checkbox">Concordo em compartilhar minha atividade e minha biblioteca com este complemento</string>
 </resources>

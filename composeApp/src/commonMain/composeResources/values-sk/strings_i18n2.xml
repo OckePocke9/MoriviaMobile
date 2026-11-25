@@ -3,6 +3,6 @@
     <string name="morivia_appearance_match_theme">Prispôsobiť tému ikone aplikácie</string>
     <string name="morivia_appearance_match_theme_description">Použiť tému, ktorá zodpovedá vybranej ikone aplikácie.</string>
     <string name="addons_tracking_consent_title">Sledovací doplnok</string>
-    <string name="addons_tracking_consent_body">%1$s je sledovací doplnok. Norivia mu bude posielať vašu aktivitu: čo prehrávate, pozastavujete a zastavujete aj s pozíciou prehrávania, čo pridávate do knižnice alebo z nej odoberáte a čo označujete ako pozreté či nepozreté. Tieto údaje opúšťajú Moriviu a spracúva ich vývojár doplnku a služba, ku ktorej sa pripája.</string>
+    <string name="addons_tracking_consent_body">%1$s je sledovací doplnok. Morivia mu bude posielať vašu aktivitu: čo prehrávate, pozastavujete a zastavujete aj s pozíciou prehrávania, čo pridávate do knižnice alebo z nej odoberáte a čo označujete ako pozreté či nepozreté. Tieto údaje opúšťajú Moriviu a spracúva ich vývojár doplnku a služba, ku ktorej sa pripája.</string>
     <string name="addons_tracking_consent_checkbox">Súhlasím so zdieľaním svojej aktivity a knižnice s týmto doplnkom</string>
 </resources>

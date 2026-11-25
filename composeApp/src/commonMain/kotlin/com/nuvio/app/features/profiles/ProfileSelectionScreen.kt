@@ -227,7 +227,7 @@ private fun ProfileSelectionScreenContent(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    // The Norivia logo in the colour of the app icon chosen in Appearance (owner, 2026-11-23).
+                    // The Morivia logo in the colour of the app icon chosen in Appearance (owner, 2026-11-23).
                     val appIconState by remember {
                         com.nuvio.app.features.settings.AppIconRepository.ensureLoaded()
                         com.nuvio.app.features.settings.AppIconRepository.state
@@ -248,7 +248,7 @@ private fun ProfileSelectionScreenContent(
                         )
                     }
                     Text(
-                        text = "Norivia",
+                        text = "Morivia",
                         style = MaterialTheme.typography.headlineLarge.copy(fontSize = 25.sp, letterSpacing = 0.25.sp, fontFamily = earlierMoriviaFont(800)),
                         color = Color.White,
                         fontWeight = FontWeight(800),

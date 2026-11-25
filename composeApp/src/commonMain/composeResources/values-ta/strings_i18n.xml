@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">ஆப் ஐகான் · %1$s</string>
     <string name="morivia_appearance_preview_text">உரை மற்றும் பின்னணி</string>
     <string name="morivia_appearance_preview_button">பொத்தான்</string>
-    <string name="updates_repository_access">GitHub இல் உள்ள புதுப்பிப்புப் பக்கத்தை Norivia அடைய முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும், அல்லது சமீபத்திய பதிப்பைப் பதிவிறக்க GitHub ஐத் திறக்கவும்.</string>
+    <string name="updates_repository_access">GitHub இல் உள்ள புதுப்பிப்புப் பக்கத்தை Morivia அடைய முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும், அல்லது சமீபத்திய பதிப்பைப் பதிவிறக்க GitHub ஐத் திறக்கவும்.</string>
     <string name="updates_open_github">GitHub ஐத் திற</string>
     <string name="profile_save_failed">சுயவிவரத்தைச் சேமிக்க முடியவில்லை. மீண்டும் முயலவும்.</string>
     <string name="library_filter_genre">வகை</string>

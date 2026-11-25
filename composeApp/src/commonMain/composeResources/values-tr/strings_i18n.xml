@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Uygulama simgesi · %1$s</string>
     <string name="morivia_appearance_preview_text">Metin ve arka plan</string>
     <string name="morivia_appearance_preview_button">Düğme</string>
-    <string name="updates_repository_access">Norivia, GitHub'daki güncelleme sayfasına ulaşamadı. İnternet bağlantınızı kontrol edip tekrar deneyin veya en son sürümü indirmek için GitHub'ı açın.</string>
+    <string name="updates_repository_access">Morivia, GitHub'daki güncelleme sayfasına ulaşamadı. İnternet bağlantınızı kontrol edip tekrar deneyin veya en son sürümü indirmek için GitHub'ı açın.</string>
     <string name="updates_open_github">GitHub'ı aç</string>
     <string name="profile_save_failed">Profil kaydedilemedi. Tekrar deneyin.</string>
     <string name="library_filter_genre">Tür</string>

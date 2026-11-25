@@ -3,6 +3,6 @@
     <string name="morivia_appearance_match_theme">התאמת ערכת הנושא לסמל האפליקציה</string>
     <string name="morivia_appearance_match_theme_description">שימוש בערכת הנושא שתואמת את סמל האפליקציה שנבחר.</string>
     <string name="addons_tracking_consent_title">תוסף מעקב</string>
-    <string name="addons_tracking_consent_body">%1$s הוא תוסף מעקב. Norivia ישלח אליו את הפעילות שלך: מה אתה מפעיל, משהה ועוצר יחד עם מיקום ההפעלה, מה אתה מוסיף לספרייה או מסיר ממנה ומה אתה מסמן כנצפה או כלא נצפה. הנתונים יוצאים מ-Norivia ומטופלים על ידי מפתח התוסף והשירות שאליו הוא מתחבר.</string>
+    <string name="addons_tracking_consent_body">%1$s הוא תוסף מעקב. Morivia ישלח אליו את הפעילות שלך: מה אתה מפעיל, משהה ועוצר יחד עם מיקום ההפעלה, מה אתה מוסיף לספרייה או מסיר ממנה ומה אתה מסמן כנצפה או כלא נצפה. הנתונים יוצאים מ-Morivia ומטופלים על ידי מפתח התוסף והשירות שאליו הוא מתחבר.</string>
     <string name="addons_tracking_consent_checkbox">אני מסכים לשתף את פעילות הצפייה והספרייה שלי עם התוסף הזה</string>
 </resources>

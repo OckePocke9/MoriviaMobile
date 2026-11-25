@@ -9,6 +9,6 @@
     <string name="settings_tracking_ratings_simkl_description">为电影和剧集评分。为不在您 Simkl 列表中的影片评分会将其加入列表。</string>
     <string name="settings_tracking_ratings_mdblist_description">为电影、剧集和单集评分。</string>
     <string name="addons_tracking_consent_title">追踪插件</string>
-    <string name="addons_tracking_consent_body">%1$s 是追踪插件。Norivia 会将您的活动发送给它：您播放、暂停和停止的内容及播放位置，您添加到片库或从中移除的内容，以及您标记为已看或未看的内容。这些数据会离开 Norivia，由插件开发者及其连接的服务处理。</string>
+    <string name="addons_tracking_consent_body">%1$s 是追踪插件。Morivia 会将您的活动发送给它：您播放、暂停和停止的内容及播放位置，您添加到片库或从中移除的内容，以及您标记为已看或未看的内容。这些数据会离开 Morivia，由插件开发者及其连接的服务处理。</string>
     <string name="addons_tracking_consent_checkbox">我同意与此插件分享我的观看活动和片库</string>
 </resources>

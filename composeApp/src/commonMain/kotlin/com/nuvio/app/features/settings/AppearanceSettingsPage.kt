@@ -211,7 +211,7 @@ private fun AppearanceThemePreview(isTablet: Boolean, icon: AppIconOption) {
             AppIconThumbnail(icon = icon, modifier = Modifier.size(44.dp), cornerRadius = 11.dp)
             androidx.compose.foundation.layout.Column {
                 Text(
-                    text = "Norivia",
+                    text = "Morivia",
                     style = MaterialTheme.typography.titleMedium,
                     color = tokens.colors.textPrimary,
                     fontWeight = FontWeight.Bold,

@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Ikona aplikacije · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst i pozadina</string>
     <string name="morivia_appearance_preview_button">Gumb</string>
-    <string name="updates_repository_access">Norivia nije mogla doći do svoje stranice s ažuriranjima na GitHubu. Provjerite internetsku vezu i pokušajte ponovno ili otvorite GitHub i preuzmite najnoviju verziju.</string>
+    <string name="updates_repository_access">Morivia nije mogla doći do svoje stranice s ažuriranjima na GitHubu. Provjerite internetsku vezu i pokušajte ponovno ili otvorite GitHub i preuzmite najnoviju verziju.</string>
     <string name="updates_open_github">Otvori GitHub</string>
     <string name="profile_save_failed">Profil nije moguće spremiti. Pokušajte ponovno.</string>
     <string name="library_filter_genre">Žanr</string>

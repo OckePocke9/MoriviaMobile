@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">映画と番組を評価します。Simkl のリストにない作品を評価するとリストに追加されます。</string>
     <string name="settings_tracking_ratings_mdblist_description">映画、番組、エピソードを評価します。</string>
     <string name="addons_tracking_consent_title">トラッキングアドオン</string>
-    <string name="addons_tracking_consent_body">%1$s はトラッキングアドオンです。Norivia はあなたのアクティビティを送信します: 再生位置を含めて何を再生・一時停止・停止したか、ライブラリに何を追加・削除したか、何を視聴済み・未視聴にしたか。このデータは Norivia の外に送られ、アドオンの開発者と接続先のサービスによって扱われます。</string>
+    <string name="addons_tracking_consent_body">%1$s はトラッキングアドオンです。Morivia はあなたのアクティビティを送信します: 再生位置を含めて何を再生・一時停止・停止したか、ライブラリに何を追加・削除したか、何を視聴済み・未視聴にしたか。このデータは Morivia の外に送られ、アドオンの開発者と接続先のサービスによって扱われます。</string>
     <string name="addons_tracking_consent_checkbox">視聴アクティビティとライブラリをこのアドオンと共有することに同意します</string>
     <string name="settings_mdb_ratings_credentials_required">評価を取得するには、トラッキングで MDBList を接続するか API キーを入力してください。</string>
     <string name="settings_mdb_ratings_key_override_description">評価には接続済みアカウントより API キーが優先されます。接続済みアカウントに戻すにはキーを消去して保存します。</string>

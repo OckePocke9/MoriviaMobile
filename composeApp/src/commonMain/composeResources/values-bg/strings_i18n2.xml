@@ -9,7 +9,7 @@
     <string name="settings_tracking_ratings_simkl_description">Оценявайте филми и сериали. Оценяването на заглавие, което не е в списъците ви в Simkl, го добавя към тях.</string>
     <string name="settings_tracking_ratings_mdblist_description">Оценявайте филми, сериали и епизоди.</string>
     <string name="addons_tracking_consent_title">Добавка за проследяване</string>
-    <string name="addons_tracking_consent_body">%1$s е добавка за проследяване. Norivia ще ѝ изпраща активността ви: какво пускате, паузирате и спирате заедно с позицията, какво добавяте или премахвате от библиотеката си и какво отбелязвате като гледано или негледано. Тези данни напускат Norivia и се обработват от разработчика на добавката и услугата, към която се свързва.</string>
+    <string name="addons_tracking_consent_body">%1$s е добавка за проследяване. Morivia ще ѝ изпраща активността ви: какво пускате, паузирате и спирате заедно с позицията, какво добавяте или премахвате от библиотеката си и какво отбелязвате като гледано или негледано. Тези данни напускат Morivia и се обработват от разработчика на добавката и услугата, към която се свързва.</string>
     <string name="addons_tracking_consent_checkbox">Съгласен съм да споделям активността и библиотеката си с тази добавка</string>
     <string name="settings_mdb_show_on_hero">Оценки в банера</string>
     <string name="settings_mdb_show_on_hero_description">Показване на оценките от MDBList в банера на Начало</string>

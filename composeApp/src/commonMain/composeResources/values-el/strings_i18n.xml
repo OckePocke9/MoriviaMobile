@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">Εικονίδιο εφαρμογής · %1$s</string>
     <string name="morivia_appearance_preview_text">Κείμενο και φόντο</string>
     <string name="morivia_appearance_preview_button">Κουμπί</string>
-    <string name="updates_repository_access">Το Norivia δεν μπόρεσε να φτάσει στη σελίδα ενημερώσεών του στο GitHub. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και δοκιμάστε ξανά ή ανοίξτε το GitHub για να κατεβάσετε την πιο πρόσφατη έκδοση.</string>
+    <string name="updates_repository_access">Το Morivia δεν μπόρεσε να φτάσει στη σελίδα ενημερώσεών του στο GitHub. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και δοκιμάστε ξανά ή ανοίξτε το GitHub για να κατεβάσετε την πιο πρόσφατη έκδοση.</string>
     <string name="updates_open_github">Άνοιγμα GitHub</string>
     <string name="profile_save_failed">Δεν ήταν δυνατή η αποθήκευση του προφίλ. Δοκιμάστε ξανά.</string>
     <string name="library_filter_genre">Είδος</string>

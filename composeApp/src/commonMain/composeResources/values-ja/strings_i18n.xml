@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">アプリアイコン · %1$s</string>
     <string name="morivia_appearance_preview_text">テキストと背景</string>
     <string name="morivia_appearance_preview_button">ボタン</string>
-    <string name="updates_repository_access">Norivia が GitHub の更新ページにアクセスできませんでした。インターネット接続を確認してもう一度お試しいただくか、GitHub を開いて最新バージョンをダウンロードしてください。</string>
+    <string name="updates_repository_access">Morivia が GitHub の更新ページにアクセスできませんでした。インターネット接続を確認してもう一度お試しいただくか、GitHub を開いて最新バージョンをダウンロードしてください。</string>
     <string name="updates_open_github">GitHub を開く</string>
     <string name="profile_save_failed">プロフィールを保存できませんでした。もう一度お試しください。</string>
     <string name="library_filter_genre">ジャンル</string>
@@ -188,12 +188,12 @@
     <string name="party_start_title">一緒に見る</string>
     <string name="party_start_description">友達を招待しましょう。各自が自分のソースから再生し、同期を保ちます。</string>
     <string name="party_start_action">ウォッチパーティーを開始</string>
-    <string name="party_sign_in_required">ウォッチパーティーを使うには Norivia アカウントにサインインしてください。</string>
+    <string name="party_sign_in_required">ウォッチパーティーを使うには Morivia アカウントにサインインしてください。</string>
     <string name="party_unavailable">ウォッチパーティーは現在利用できません。</string>
     <string name="party_code_label">パーティーコード</string>
     <string name="party_copy_invite">招待をコピー</string>
     <string name="party_invite_copied">招待をコピーしました</string>
-    <string name="party_invite_message">コード %1$s で私の Norivia ウォッチパーティーに参加してください\n%2$s</string>
+    <string name="party_invite_message">コード %1$s で私の Morivia ウォッチパーティーに参加してください\n%2$s</string>
     <string name="party_seats">%1$d / %2$d 席</string>
     <string name="party_host">ホスト</string>
     <string name="party_you">あなた</string>

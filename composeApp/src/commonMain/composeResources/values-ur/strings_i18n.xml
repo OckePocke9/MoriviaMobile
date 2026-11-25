@@ -112,7 +112,7 @@
     <string name="morivia_appearance_preview_icon">ایپ آئیکن · %1$s</string>
     <string name="morivia_appearance_preview_text">متن اور پس منظر</string>
     <string name="morivia_appearance_preview_button">بٹن</string>
-    <string name="updates_repository_access">Norivia گٹ ہب پر اپنے اپ ڈیٹ صفحے تک نہیں پہنچ سکی۔ اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں، یا تازہ ترین ورژن ڈاؤن لوڈ کرنے کے لیے GitHub کھولیں۔</string>
+    <string name="updates_repository_access">Morivia گٹ ہب پر اپنے اپ ڈیٹ صفحے تک نہیں پہنچ سکی۔ اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں، یا تازہ ترین ورژن ڈاؤن لوڈ کرنے کے لیے GitHub کھولیں۔</string>
     <string name="updates_open_github">GitHub کھولیں</string>
     <string name="profile_save_failed">پروفائل محفوظ نہیں ہو سکی۔ دوبارہ کوشش کریں۔</string>
     <string name="library_filter_genre">صنف</string>
@@ -178,12 +178,12 @@
     <string name="party_start_title">ساتھ مل کر دیکھیں</string>
     <string name="party_start_description">اپنے دوستوں کو مدعو کریں۔ ہر کوئی اپنے ماخذ سے چلاتا ہے اور سب ہم آہنگ رہتے ہیں۔</string>
     <string name="party_start_action">واچ پارٹی شروع کریں</string>
-    <string name="party_sign_in_required">واچ پارٹیز استعمال کرنے کے لیے اپنے Norivia اکاؤنٹ میں سائن ان کریں۔</string>
+    <string name="party_sign_in_required">واچ پارٹیز استعمال کرنے کے لیے اپنے Morivia اکاؤنٹ میں سائن ان کریں۔</string>
     <string name="party_unavailable">واچ پارٹیز ابھی دستیاب نہیں ہیں۔</string>
     <string name="party_code_label">پارٹی کوڈ</string>
     <string name="party_copy_invite">دعوت کاپی کریں</string>
     <string name="party_invite_copied">دعوت کاپی ہو گئی</string>
-    <string name="party_invite_message">کوڈ %1$s کے ساتھ میری Norivia واچ پارٹی میں شامل ہوں\n%2$s</string>
+    <string name="party_invite_message">کوڈ %1$s کے ساتھ میری Morivia واچ پارٹی میں شامل ہوں\n%2$s</string>
     <string name="party_seats">%2$d میں سے %1$d نشستیں</string>
     <string name="party_host">میزبان</string>
     <string name="party_you">آپ</string>
