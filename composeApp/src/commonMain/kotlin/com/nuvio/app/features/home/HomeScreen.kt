@@ -1519,9 +1519,8 @@ private fun HomeScreenWithCatalogs(
                                 modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
                                 // Show All only when there are more than the 30 on Home (owner, 2026-11-25).
-                                onViewAllClick = onCatalogClick
-                                    ?.takeIf { rowItems.size > HOME_CATALOG_PREVIEW_LIMIT }
-                                    ?.let { { it(section) } },
+                                // Show All always on Aired Today (owner, 2026-11-25).
+                                onViewAllClick = onCatalogClick?.let { { it(section) } },
                                 watchedKeys = watchedUiState.watchedKeys,
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
@@ -1593,7 +1592,7 @@ private fun HomeScreenWithCatalogs(
                                 onPosterLongClick = onPosterLongClick,
                                 posterWidth = if (isIos) homePosterSize else homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, useLandscape),
                                 landscapeOverride = useLandscape.takeUnless { isIos },
-                                useHomePill = !isIos,
+                                accentShowAll = true, // Show All as the Home pill with the arrow (owner, 2026-11-25)
                             )
                         }
                     }
@@ -1636,6 +1635,7 @@ private fun HomeScreenWithCatalogs(
                                         onPosterClick = onPosterClick,
                                         onPosterLongClick = onPosterLongClick,
                                         posterWidth = homePosterSize,
+                                        accentShowAll = true, // Show All as the Home pill with the arrow (owner, 2026-11-25)
                                     )
                                 }
                             }
@@ -1766,7 +1766,7 @@ private const val HOME_CATALOG_PREVIEW_LIMIT = 30
 private const val AIRING_REFRESH_MS = 10 * 60 * 1000L
 private const val FEATURED_ROW_LIMIT = 5
 // Featured on Home: the week's ten trending titles (owner, 2026-11-24).
-private const val HOME_FEATURED_LIMIT = 10
+private const val HOME_FEATURED_LIMIT = 5
 private const val MAIN_FEATURED_LIMIT = 5
 private const val HOME_CONTINUE_WATCHING_SECTION_KEY = "home_continue_watching"
 private const val HOME_UPCOMING_SECTION_KEY = "home_upcoming"
