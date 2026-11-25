@@ -1428,8 +1428,15 @@ private fun HomeScreenWithCatalogs(
                     // Featured, addon catalogs), Live TV, then Nuvio collections last.
                     val homePosterSize = homePosterWidth(maxWidth, homeSectionPadding)
                     val catalogOrder = if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()
-                    catalogOrder.forEach { row ->
-                        val section = pinnedSections[row] ?: return@forEach
+                    // Top Row also has Cinemeta's New movies and series (owner, 2026-11-25).
+                    val newCatalogs = listOf(false, true).mapNotNull { series ->
+                        sectionsMap.values.firstOrNull { section ->
+                            val target = section.target as? com.nuvio.app.features.catalog.CatalogTarget.Addon
+                            target?.catalogId == "year" && section.items.isNotEmpty() &&
+                                section.target.contentType.isSeriesLikeType() == series
+                        }
+                    }
+                    (catalogOrder.mapNotNull { pinnedSections[it] } + newCatalogs).forEach { section ->
                         // Top Row (owner, 2026-11-25): Popular and Featured, movies and series, with rank numbers,
                         // as many as chosen in Settings (10 to 50, or all); same design as the genre rows.
                         val limit = moriviaLayout.topRowCount.takeIf { it > 0 } ?: section.items.size
