@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Κορυφαία σειρά</string>
+    <string name="morivia_top_row_sub">Αριθμημένα ράφια Δημοφιλή και Προτεινόμενα κάτω από τη Συνέχεια παρακολούθησης</string>
+    <string name="morivia_top_row_all">Όλα</string>
+</resources>

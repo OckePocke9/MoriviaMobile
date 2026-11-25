@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Fila principal</string>
+    <string name="morivia_top_row_sub">Estantes numerados de Populares y Destacados bajo Seguir viendo</string>
+    <string name="morivia_top_row_all">Todos</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Kärkirivi</string>
+    <string name="morivia_top_row_sub">Numeroidut Suositut- ja Esittelyssä-hyllyt Jatka katselua -kohdan alla</string>
+    <string name="morivia_top_row_all">Kaikki</string>
+</resources>

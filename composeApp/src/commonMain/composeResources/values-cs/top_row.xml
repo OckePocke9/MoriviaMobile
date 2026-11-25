@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Top řada</string>
+    <string name="morivia_top_row_sub">Seřazené police Populární a Doporučené pod Pokračovat ve sledování</string>
+    <string name="morivia_top_row_all">Vše</string>
+</resources>

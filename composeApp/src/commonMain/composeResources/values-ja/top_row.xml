@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">トップ列</string>
+    <string name="morivia_top_row_sub">視聴を続けるの下にランキング付きの人気・注目の棚</string>
+    <string name="morivia_top_row_all">すべて</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Górny rząd</string>
+    <string name="morivia_top_row_sub">Numerowane półki Popularne i Polecane pod Kontynuuj oglądanie</string>
+    <string name="morivia_top_row_all">Wszystkie</string>
+</resources>

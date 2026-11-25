@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">置顶行</string>
+    <string name="morivia_top_row_sub">在继续观看下方显示带排名的热门和精选</string>
+    <string name="morivia_top_row_all">全部</string>
+</resources>

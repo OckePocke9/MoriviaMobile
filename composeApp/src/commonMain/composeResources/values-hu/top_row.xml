@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Toplista sor</string>
+    <string name="morivia_top_row_sub">Sorszámozott Népszerű és Kiemelt polcok a Folytatás alatt</string>
+    <string name="morivia_top_row_all">Mind</string>
+</resources>

@@ -3,6 +3,9 @@ package com.nuvio.app.features.home.components
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -68,6 +71,8 @@ fun HomeCatalogRowSection(
     accentShowAll: Boolean = false,
     // Titles glide into place when the row's list changes (owner, 2026-11-25).
     animateItems: Boolean = false,
+    // Top Row: a large rank number beside every poster (owner, 2026-11-25).
+    ranked: Boolean = false,
 ) {
     if (sectionPadding != null) {
         HomeCatalogRowSectionContent(
@@ -86,6 +91,7 @@ fun HomeCatalogRowSection(
             useHomePill = useHomePill,
             accentShowAll = accentShowAll,
             animateItems = animateItems,
+            ranked = ranked,
         )
     } else {
         BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -105,6 +111,7 @@ fun HomeCatalogRowSection(
                 useHomePill = useHomePill,
                 accentShowAll = accentShowAll,
                 animateItems = animateItems,
+                ranked = ranked,
             )
         }
     }
@@ -127,6 +134,7 @@ private fun HomeCatalogRowSectionContent(
     useHomePill: Boolean,
     accentShowAll: Boolean = false,
     animateItems: Boolean = false,
+    ranked: Boolean = false,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
 
@@ -147,7 +155,8 @@ private fun HomeCatalogRowSectionContent(
         animatePlacement = animateItems,
         key = { item -> item.stableKey() },
     ) { item ->
-        HomePosterCard(
+        val card: @Composable () -> Unit = {
+            HomePosterCard(
             item = item,
             useLandscapeBackdropMode = landscape || posterCardStyle.catalogLandscapeModeEnabled,
             landscapeOverride = landscapeOverride,
@@ -160,5 +169,35 @@ private fun HomeCatalogRowSectionContent(
             onLongClick = onPosterLongClick?.let { { it(item) } },
             width = posterWidth,
         )
+        }
+        if (ranked) {
+            androidx.compose.foundation.layout.Row(verticalAlignment = androidx.compose.ui.Alignment.Bottom) {
+                RankNumber(rank = entries.indexOf(item) + 1)
+                card()
+            }
+        } else {
+            card()
+        }
     }
+}
+
+/** The rank beside a Top Row poster: a large outlined number the poster slightly overlaps. */
+@Composable
+private fun RankNumber(rank: Int) {
+    androidx.compose.material3.Text(
+        text = rank.toString(),
+        modifier = Modifier
+            // Level with the poster picture, above the title and year under it.
+            .padding(bottom = 46.dp)
+            .offset(x = 12.dp),
+        style = androidx.compose.ui.text.TextStyle(
+            fontSize = 84.sp,
+            lineHeight = 84.sp,
+            fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
+            letterSpacing = (-4).sp,
+            color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.92f),
+            drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(width = 5f),
+        ),
+        maxLines = 1,
+    )
 }

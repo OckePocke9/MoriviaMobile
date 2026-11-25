@@ -1424,9 +1424,39 @@ private fun HomeScreenWithCatalogs(
                         onShowAll = onCatalogClick,
                     )
 
-                    // Morivia's order: the genre rows, the main Featured row, Popular – Movies,
-                    // Popular – Series, Featured – Movies, Featured – Series, then every other row.
+                    // Home's order (owner, 2026-11-25): Continue Watching, Top Row, Catalogs (genre rows, Aired Today,
+                    // Featured, addon catalogs), Live TV, then Nuvio collections last.
                     val homePosterSize = homePosterWidth(maxWidth, homeSectionPadding)
+                    val catalogOrder = if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()
+                    catalogOrder.forEach { row ->
+                        val section = pinnedSections[row] ?: return@forEach
+                        // Top Row (owner, 2026-11-25): Popular and Featured, movies and series, with rank numbers,
+                        // as many as chosen in Settings (10 to 50, or all); same design as the genre rows.
+                        val limit = moriviaLayout.topRowCount.takeIf { it > 0 } ?: section.items.size
+                        item(key = "morivia_pinned_${section.key}", contentType = "catalog") {
+                            HomeCatalogRowSection(
+                                section = section,
+                                entries = section.items.take(limit),
+                                modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
+                                sectionPadding = homeSectionPadding,
+                                onViewAllClick = if (section.canOpenCatalog(limit)) {
+                                    onCatalogClick?.let { { it(section) } }
+                                } else {
+                                    null
+                                },
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = homePosterSize,
+                                landscapeOverride = false,
+                                accentShowAll = true,
+                                animateItems = true,
+                                ranked = true,
+                            )
+                        }
+                    }
+
                     listOfNotNull(movieRecommendation, seriesRecommendation).forEach { recommendation ->
                         item(key = recommendation.key, contentType = "catalog") {
                             val section = HomeCatalogSection(
@@ -1537,41 +1567,11 @@ private fun HomeScreenWithCatalogs(
                         }
                     }
 
-                    val catalogOrder = if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()
-                    catalogOrder.forEach { row ->
-                        val section = pinnedSections[row] ?: return@forEach
-                        val limit = if (isIos && row.titleMatch == "featured") FEATURED_ROW_LIMIT else HOME_CATALOG_PREVIEW_LIMIT
-                        val useLandscape = moriviaLayout.usesLandscapeCards(row)
-                        val cardWidth = if (isIos) {
-                            homePosterSize
-                        } else {
-                            homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, useLandscape)
-                        }
-                        item(key = "morivia_pinned_${section.key}", contentType = "catalog") {
-                            HomeCatalogRowSection(
-                                section = section,
-                                entries = section.items.take(limit),
-                                modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
-                                sectionPadding = homeSectionPadding,
-                                onViewAllClick = if (!isIos || section.canOpenCatalog(limit)) {
-                                    onCatalogClick?.let { { it(section) } }
-                                } else {
-                                    null
-                                },
-                                watchedKeys = watchedUiState.watchedKeys,
-                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
-                                onPosterClick = onPosterClick,
-                                onPosterLongClick = onPosterLongClick,
-                                posterWidth = cardWidth,
-                                landscapeOverride = useLandscape.takeUnless { isIos },
-                                useHomePill = !isIos,
-                            )
-                        }
-                    }
-
+                    listOf(HomeRowPhase.CATALOGS, HomeRowPhase.LIVE_TV, HomeRowPhase.COLLECTIONS).forEach { phase ->
                     keyedEnabledHomeItems.forEach { keyedSettingsItem ->
                         val settingsItem = keyedSettingsItem.value
                         if (settingsItem.isCollection) {
+                            if (phase != HomeRowPhase.COLLECTIONS) return@forEach
                             val collection = collectionsMap[settingsItem.key]
                             if (collection != null) {
                                 item(key = keyedSettingsItem.lazyKey, contentType = "collection") {
@@ -1586,6 +1586,8 @@ private fun HomeScreenWithCatalogs(
                             }
                         } else {
                             val section = sectionsMap[settingsItem.key]
+                            val isLive = section?.target?.contentType?.lowercase() in LIVE_TV_TYPES
+                            if (phase != (if (isLive) HomeRowPhase.LIVE_TV else HomeRowPhase.CATALOGS)) return@forEach
                             if (section != null && section.items.isNotEmpty() && section.key !in pinnedSectionKeys) {
                                 item(key = keyedSettingsItem.lazyKey, contentType = "catalog") {
                                     HomeCatalogRowSection(
@@ -1607,6 +1609,7 @@ private fun HomeScreenWithCatalogs(
                                 }
                             }
                         }
+                    }
                     }
                 }
             }
@@ -1722,6 +1725,11 @@ private fun androidx.compose.foundation.lazy.LazyItemScope.homeRowAnimation(): M
     placementSpec = if (HomeRowMotion.heroStretching) null else androidx.compose.animation.core.tween(durationMillis = 520, easing = HomeRowEasing),
     fadeOutSpec = androidx.compose.animation.core.tween(durationMillis = 220, easing = HomeRowEasing),
 )
+
+private enum class HomeRowPhase { CATALOGS, LIVE_TV, COLLECTIONS }
+
+// Addon catalogs of these types make up Live TV, after the other catalogs (owner, 2026-11-25).
+private val LIVE_TV_TYPES = setOf("tv", "channel", "channels", "live", "events")
 
 private const val HOME_CATALOG_PREVIEW_LIMIT = 30
 private const val AIRING_REFRESH_MS = 10 * 60 * 1000L

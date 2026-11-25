@@ -23,8 +23,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 
 /**
- * "Movies/Series That Aired Today" (owner, 2026-11-25): only titles the stream addons already have,
- * ordered by the best resolution they have it in: 4K first, then 2K (1440p), 1080p, 720p and last
+ * "Movies/Series That Aired Today" (owner, 2026-11-25): every title out today, the ones the stream
+ * addons already have first, ordered by the best resolution they have it in: 4K first, then 2K (1440p), 1080p, 720p and last
  * any other. Within a resolution the order from Trakt stays (series in the order they aired).
  * Without any stream addon the list is left as it is.
  */
@@ -92,9 +92,12 @@ internal object AiredTodayAvailability {
         // Only titles that are out are remembered; one that is missing is asked again on the next refresh.
         cacheLock.withLock { available.forEach { (title, best) -> bestResolution[title.streamId] = best } }
         log.i { "aired today: ${titles.size} titles, ${candidates.size} checked, ${available.size} available" }
-        available
+        // Every title out today (owner, 2026-11-25): those the addons have come first, best resolution
+        // first, then the rest in Trakt's order.
+        val playable = available
             .sortedBy { (_, best) -> tierOf(best) }
             .map { (title, _) -> title.preview }
+        (playable + titles.map { it.preview }).distinctBy { it.id }
     }
 
     private const val NOT_AVAILABLE = -1

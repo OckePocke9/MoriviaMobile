@@ -62,6 +62,8 @@ data class MoriviaLayoutSettings(
     val collectionGifs: MoriviaCollectionGifs = MoriviaCollectionGifs.ANIMATED,
     /** Minutes between automatic Home reloads; 0 is off. */
     val autoRefreshMinutes: Int = 0,
+    /** How many titles each Top Row shelf shows: 10 to 50, or 0 for all (owner, 2026-11-25). */
+    val topRowCount: Int = 10,
     // Search
     val searchTrending: Boolean = true,
     val searchBrowse: Boolean = true,

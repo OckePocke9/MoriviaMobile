@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Üst sıra</string>
+    <string name="morivia_top_row_sub">İzlemeye devam et altında numaralı Popüler ve Öne çıkan rafları</string>
+    <string name="morivia_top_row_all">Tümü</string>
+</resources>

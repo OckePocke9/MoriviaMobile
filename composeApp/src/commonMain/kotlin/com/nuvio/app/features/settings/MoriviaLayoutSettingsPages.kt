@@ -279,6 +279,20 @@ internal fun LazyListScope.moriviaHomeLayoutContent(
                         )
                     }
                 }
+                SettingsGroupDivider(isTablet = isTablet)
+                SettingsChipRow(
+                    title = stringResource(Res.string.morivia_top_row),
+                    description = stringResource(Res.string.morivia_top_row_sub),
+                    isTablet = isTablet,
+                ) {
+                    listOf(10, 20, 30, 40, 50, 0).forEach { count ->
+                        Chip(
+                            label = if (count == 0) stringResource(Res.string.morivia_top_row_all) else count.toString(),
+                            selected = layout.topRowCount == count,
+                            onClick = { MoriviaLayoutSettingsRepository.update { it.copy(topRowCount = count) } },
+                        )
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="morivia_top_row">Топ-ряд</string>
+    <string name="morivia_top_row_sub">Пронумеровані полиці «Популярне» та «Рекомендоване» під «Продовжити перегляд»</string>
+    <string name="morivia_top_row_all">Усі</string>
+</resources>
