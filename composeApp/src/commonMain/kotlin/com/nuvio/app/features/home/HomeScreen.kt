@@ -1439,17 +1439,14 @@ private fun HomeScreenWithCatalogs(
                                 entries = section.items.take(limit),
                                 modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
-                                onViewAllClick = if (section.canOpenCatalog(limit)) {
-                                    onCatalogClick?.let { { it(section) } }
-                                } else {
-                                    null
-                                },
+                                onViewAllClick = null, // no Show All on Top Row (owner, 2026-11-25)
                                 watchedKeys = watchedUiState.watchedKeys,
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
-                                posterWidth = homePosterSize,
-                                landscapeOverride = false,
+                                // Top Row cards are always landscape (owner, 2026-11-25).
+                                posterWidth = homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, landscape = true),
+                                landscapeOverride = true,
                                 accentShowAll = true,
                                 animateItems = true,
                                 ranked = true,
@@ -1563,6 +1560,33 @@ private fun HomeScreenWithCatalogs(
                                         homePosterSize
                                     } * 2
                                 ).coerceAtMost(maxWidth - homeSectionPadding * 2),
+                            )
+                        }
+                    }
+
+                    // The same Popular and Featured rows again under Featured, without rank numbers, so there is
+                    // a ranked and a plain one of each (owner, 2026-11-25).
+                    (if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()).forEach { row ->
+                        val section = pinnedSections[row] ?: return@forEach
+                        val useLandscape = moriviaLayout.usesLandscapeCards(row) && row.titleMatch != "featured" // bottom Featured rows as posters (owner, 2026-11-25)
+                        item(key = "morivia_plain_${section.key}", contentType = "catalog") {
+                            HomeCatalogRowSection(
+                                section = section,
+                                entries = section.items.take(HOME_CATALOG_PREVIEW_LIMIT),
+                                modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
+                                sectionPadding = homeSectionPadding,
+                                onViewAllClick = if (section.canOpenCatalog(HOME_CATALOG_PREVIEW_LIMIT)) {
+                                    onCatalogClick?.let { { it(section) } }
+                                } else {
+                                    null
+                                },
+                                watchedKeys = watchedUiState.watchedKeys,
+                                fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                                onPosterClick = onPosterClick,
+                                onPosterLongClick = onPosterLongClick,
+                                posterWidth = if (isIos) homePosterSize else homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, useLandscape),
+                                landscapeOverride = useLandscape.takeUnless { isIos },
+                                useHomePill = !isIos,
                             )
                         }
                     }

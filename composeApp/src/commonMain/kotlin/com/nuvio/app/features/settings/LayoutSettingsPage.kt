@@ -94,7 +94,9 @@ internal fun LazyListScope.layoutSettingsContent(
     onPosterCustomizationClick: () -> Unit = {},
     onMoriviaPageClick: (SettingsPage) -> Unit = {},
 ) {
-    if (isIos) {
+    // The Home layout and catalog settings are gone (owner, 2026-11-25): Home always has the fixed
+    // design (Hero, Continue Watching, Top Row, Catalogs, Live TV, Collections) with its defaults.
+    if (false && isIos) {
         item {
             SettingsSection(
                 title = stringResource(Res.string.settings_appearance_section_home),
@@ -139,7 +141,7 @@ internal fun LazyListScope.layoutSettingsContent(
                 }
             }
         }
-    } else {
+    } else if (false) {
         listOf(
             SettingsPage.MoriviaHero to Res.string.morivia_hero_settings_description,
             SettingsPage.MoriviaHomeCatalogs to Res.string.morivia_catalog_card_style_description,

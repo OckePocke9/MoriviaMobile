@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.layout.layout
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
@@ -171,33 +174,101 @@ private fun HomeCatalogRowSectionContent(
         )
         }
         if (ranked) {
-            androidx.compose.foundation.layout.Row(verticalAlignment = androidx.compose.ui.Alignment.Bottom) {
-                RankNumber(rank = entries.indexOf(item) + 1)
-                card()
-            }
+            RankedCard(
+                item = item,
+                rank = entries.indexOf(item) + 1,
+                width = posterWidth,
+                isWatched = WatchingState.isPosterWatched(
+                    watchedKeys = watchedKeys,
+                    item = item,
+                    fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
+                ),
+                onClick = onPosterClick?.let { { it(item) } },
+                onLongClick = onPosterLongClick?.let { { it(item) } },
+            )
         } else {
             card()
         }
     }
 }
 
-/** The rank beside a Top Row poster: a large outlined number the poster slightly overlaps. */
+/**
+ * A Top Row card (owner, 2026-11-25): always landscape, and under the picture the rank on the left
+ * with the name and "genre · year" to its right; the number is no taller than those two lines.
+ */
 @Composable
-private fun RankNumber(rank: Int) {
-    androidx.compose.material3.Text(
-        text = rank.toString(),
-        modifier = Modifier
-            // Level with the poster picture, above the title and year under it.
-            .padding(bottom = 46.dp)
-            .offset(x = 12.dp),
-        style = androidx.compose.ui.text.TextStyle(
-            fontSize = 84.sp,
-            lineHeight = 84.sp,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Black,
-            letterSpacing = (-4).sp,
-            color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.92f),
-            drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(width = 5f),
-        ),
-        maxLines = 1,
-    )
+private fun RankedCard(
+    item: MetaPreview,
+    rank: Int,
+    width: Dp?,
+    isWatched: Boolean,
+    onClick: (() -> Unit)?,
+    onLongClick: (() -> Unit)?,
+) {
+    androidx.compose.foundation.layout.Column(
+        modifier = (if (width != null) Modifier.width(width) else Modifier)
+            // The rank line is taller than its text; 1.5 dp less keeps the 97 px to the next heading,
+            // measured on the phone (owner, 2026-11-25).
+            .then(
+                Modifier.layout { measurable, constraints ->
+                    val placeable = measurable.measure(constraints)
+                    val trimmed = (placeable.height - 1.5.dp.roundToPx()).coerceAtLeast(0)
+                    layout(placeable.width, trimmed) { placeable.place(0, 0) }
+                },
+            ),
+    ) {
+        HomePosterCard(
+            item = item,
+            isWatched = isWatched,
+            onClick = onClick,
+            onLongClick = onLongClick,
+            showLandscapeOverlay = false,
+            width = width,
+            landscapeOverride = true,
+            showTitle = false,
+        )
+        androidx.compose.foundation.layout.Spacer(Modifier.height(com.nuvio.app.core.ui.NuvioTokens.Space.s6))
+        androidx.compose.foundation.layout.Row(
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp),
+        ) {
+            androidx.compose.material3.Text(
+                text = rank.toString(),
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 44.sp,
+                    lineHeight = 44.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                    color = androidx.compose.ui.graphics.Color.White,
+                    platformStyle = androidx.compose.ui.text.PlatformTextStyle(includeFontPadding = false),
+                    lineHeightStyle = androidx.compose.ui.text.style.LineHeightStyle(
+                        alignment = androidx.compose.ui.text.style.LineHeightStyle.Alignment.Center,
+                        trim = androidx.compose.ui.text.style.LineHeightStyle.Trim.Both,
+                    ),
+                ),
+                maxLines = 1,
+            )
+            androidx.compose.foundation.layout.Column(modifier = Modifier.weight(1f)) {
+                androidx.compose.material3.Text(
+                    text = item.name,
+                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold),
+                    color = androidx.compose.ui.graphics.Color.White,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
+                val detail = listOfNotNull(
+                    item.genres.firstOrNull()?.takeIf { it.isNotBlank() },
+                    item.releaseInfo?.take(4)?.takeIf { it.isNotBlank() },
+                ).joinToString(" · ")
+                if (detail.isNotEmpty()) {
+                    androidx.compose.material3.Text(
+                        text = detail,
+                        style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
+                        color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
+    }
 }

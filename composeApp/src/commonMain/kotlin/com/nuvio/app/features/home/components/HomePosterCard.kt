@@ -22,6 +22,8 @@ fun HomePosterCard(
     showLandscapeOverlay: Boolean = true,
     width: androidx.compose.ui.unit.Dp? = null,
     landscapeOverride: Boolean? = null,
+    // Off for Top Row cards, which show the name beside the rank instead (owner, 2026-11-25).
+    showTitle: Boolean = true,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
     val isLandscapeMode = landscapeOverride ?: (useLandscapeBackdropMode || posterCardStyle.catalogLandscapeModeEnabled)
@@ -47,7 +49,7 @@ fun HomePosterCard(
             else -> item.posterShape.toNuvioPosterShape()
         },
         detailLine = if (isLandscapeMode || posterCardStyle.hideLabelsEnabled) null else item.releaseInfo?.let { formatReleaseDateForDisplay(it) },
-        showTitleBelow = !posterCardStyle.hideLabelsEnabled,
+        showTitleBelow = showTitle && !posterCardStyle.hideLabelsEnabled,
         bottomLeftLogoUrl = if (isLandscapeMode && showLandscapeOverlay && effectiveLandscapePoster.isNullOrBlank()) item.logo else null,
         bottomLeftText = if (isLandscapeMode && showLandscapeOverlay && effectiveLandscapePoster.isNullOrBlank() && item.logo.isNullOrBlank() && !posterCardStyle.hideLabelsEnabled) item.name else null,
         isWatched = isWatched,
