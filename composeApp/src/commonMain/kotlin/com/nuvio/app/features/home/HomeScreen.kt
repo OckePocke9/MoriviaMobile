@@ -1202,9 +1202,12 @@ private fun HomeScreenWithCatalogs(
         }
 
         val heroStretchState = rememberHeroStretchState(homeListState)
-        // The hero moves with the list like every other row: no stretch when pulled down at the top
-        // (owner, 2026-11-25).
-        val heroStretchModifier = if (false && showHeroSlot) {
+        LaunchedEffect(heroStretchState) {
+            androidx.compose.runtime.snapshotFlow { heroStretchState.stretchPx > 0.5f }
+                .collect { HomeRowMotion.heroStretching = it }
+        }
+        // Pulling down at the top stretches the hero (owner, 2026-11-25); scrolling moves it with the list.
+        val heroStretchModifier = if (showHeroSlot) {
             Modifier.nestedScroll(heroStretchState.nestedScrollConnection)
         } else {
             Modifier
@@ -1241,7 +1244,7 @@ private fun HomeScreenWithCatalogs(
                                 viewportHeight = maxHeight,
                                 mobileBelowSectionHeightHint = mobileHeroBelowSectionHeightHint,
                                 listState = homeListState,
-                                stretchPx = { 0f },
+                                stretchPx = { heroStretchState.stretchPx },
                                 showImdbRating = homeHeroState.showImdbRating,
                                 showMdbListRatings = homeHeroState.showMdbListRatings,
                                 onItemClick = onPosterClick,
@@ -1679,9 +1682,15 @@ private val HOME_ROW_BOTTOM_PADDING = 1.dp
 // hero's calm curve (owner, 2026-11-25).
 private val HomeRowEasing = androidx.compose.animation.core.CubicBezierEasing(0.33f, 0f, 0.15f, 1f)
 
+// While the hero is pulled down the rows follow it directly; gliding would let them lag behind and
+// shrink the gap under the dots (owner, 2026-11-25).
+private object HomeRowMotion {
+    var heroStretching by androidx.compose.runtime.mutableStateOf(false)
+}
+
 private fun androidx.compose.foundation.lazy.LazyItemScope.homeRowAnimation(): Modifier = Modifier.animateItem(
     fadeInSpec = androidx.compose.animation.core.tween(durationMillis = 420, easing = HomeRowEasing),
-    placementSpec = androidx.compose.animation.core.tween(durationMillis = 520, easing = HomeRowEasing),
+    placementSpec = if (HomeRowMotion.heroStretching) null else androidx.compose.animation.core.tween(durationMillis = 520, easing = HomeRowEasing),
     fadeOutSpec = androidx.compose.animation.core.tween(durationMillis = 220, easing = HomeRowEasing),
 )
 
