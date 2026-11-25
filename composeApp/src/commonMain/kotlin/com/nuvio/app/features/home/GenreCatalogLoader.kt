@@ -62,9 +62,14 @@ internal object GenreCatalogLoader {
         val found = linkedMapOf<String, Pair<MetaPreview, MutableSet<String>>>()
         var row: List<MetaPreview>? = null
 
+        // Titles sharing the most of the recent title's genres first (owner, 2026-11-25): the genres an
+        // addon lists for the title and the genre catalogs it was found in both count.
         fun ranked(): List<MetaPreview> =
             found.values.toList()
-                .sortedByDescending { (_, inGenres) -> inGenres.size }
+                .sortedByDescending { (item, inGenres) ->
+                    val listed = item.genres.map { it.trim().lowercase() }.filter { it in wanted }.toSet()
+                    (listed + inGenres).size
+                }
                 .map { (item, _) -> item }
 
         suspend fun add(source: Source, items: List<MetaPreview>): Int = lock.withLock {

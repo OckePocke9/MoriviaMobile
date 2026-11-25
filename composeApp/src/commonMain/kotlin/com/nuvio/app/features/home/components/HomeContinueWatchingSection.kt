@@ -812,25 +812,36 @@ private fun ContinueWatchingCard(
                 )
             }
         }
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(cardMetrics.badgeInset)
-                .clip(ContinueWatchingStatusBadgeShape)
-                .background(badgeBackground)
-                .padding(
-                    horizontal = cardMetrics.badgeHorizontalPadding,
-                    vertical = cardMetrics.badgeVerticalPadding,
-                ),
-        ) {
-            Text(
-                text = badgeText,
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontSize = cardMetrics.badgeTextSize,
-                    fontWeight = FontWeight.SemiBold,
-                ),
-                color = Color.White,
-                maxLines = 1,
+        if (item.isReleaseAlert) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(cardMetrics.badgeInset)
+                    .clip(ContinueWatchingStatusBadgeShape)
+                    .background(badgeBackground)
+                    .padding(
+                        horizontal = cardMetrics.badgeHorizontalPadding,
+                        vertical = cardMetrics.badgeVerticalPadding,
+                    ),
+            ) {
+                Text(
+                    text = badgeText,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = cardMetrics.badgeTextSize,
+                        fontWeight = FontWeight.SemiBold,
+                    ),
+                    color = Color.White,
+                    maxLines = 1,
+                )
+            }
+        } else {
+            // Time left (and Up next) in the Home pill's design, without an icon (owner, 2026-11-25).
+            com.nuvio.app.core.ui.MoriviaPagePill(
+                label = badgeText,
+                compact = true,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(cardMetrics.badgeInset),
             )
         }
         if (item.progressFraction > 0f) {

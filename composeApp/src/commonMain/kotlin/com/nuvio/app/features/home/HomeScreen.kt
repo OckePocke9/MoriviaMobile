@@ -1089,13 +1089,13 @@ private fun HomeScreenWithCatalogs(
     val moviesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
         // Refreshed every ten minutes, so an episode shows up once it has aired.
         while (true) {
-            value = com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = false)
+            value = AiredTodayAvailability.order(com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = false))
             kotlinx.coroutines.delay(AIRING_REFRESH_MS)
         }
     }
     val seriesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
         while (true) {
-            value = com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = true)
+            value = AiredTodayAvailability.order(com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = true))
             kotlinx.coroutines.delay(AIRING_REFRESH_MS)
         }
     }
@@ -1450,7 +1450,10 @@ private fun HomeScreenWithCatalogs(
                                 entries = rowItems.take(HOME_CATALOG_PREVIEW_LIMIT),
                                 modifier = homeRowAnimation().padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
-                                onViewAllClick = onCatalogClick?.let { { it(section) } },
+                                // Show All only when there are more than the 30 on Home (owner, 2026-11-25).
+                                onViewAllClick = onCatalogClick
+                                    ?.takeIf { rowItems.size > HOME_CATALOG_PREVIEW_LIMIT }
+                                    ?.let { { it(section) } },
                                 watchedKeys = watchedUiState.watchedKeys,
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
@@ -1485,7 +1488,17 @@ private fun HomeScreenWithCatalogs(
                                 fullyWatchedSeriesKeys = fullyWatchedSeriesKeys,
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
-                                posterWidth = homePosterSize * 2,
+                                // Same heading as the rows above (no Show All), so it sits 97 px below them (owner, 2026-11-25).
+                                accentShowAll = true,
+                                // Twice a normal card, portrait or landscape as the poster style is, never wider than
+                                // the screen (owner, 2026-11-25).
+                                posterWidth = (
+                                    if (posterCardStyle.catalogLandscapeModeEnabled) {
+                                        homeCatalogCardWidth(maxWidth, homeSectionPadding, posterCardStyle.widthDp, landscape = true)
+                                    } else {
+                                        homePosterSize
+                                    } * 2
+                                ).coerceAtMost(maxWidth - homeSectionPadding * 2),
                             )
                         }
                     }
@@ -1587,21 +1600,24 @@ private fun LazyListScope.homeContinueWatchingSections(
         item(key = HOME_CONTINUE_WATCHING_SECTION_KEY, contentType = "continue_watching") {
             val showAllTitle = stringResource(Res.string.compose_settings_page_continue_watching)
             HomeContinueWatchingSection(
-                items = continueWatchingItems,
+                // 30 on Home; Show All only when there are more than 30 (owner, 2026-11-25).
+                items = continueWatchingItems.take(HOME_CATALOG_PREVIEW_LIMIT),
                 dataSourceKey = dataSourceKey,
                 style = preferences.style,
                 useEpisodeThumbnails = preferences.useEpisodeThumbnails,
                 blurNextUp = preferences.blurNextUp,
                 // 24 dp from the dots above and to the next row heading below, measured on the
                 // phone with the Show All pill (owner, 2026-11-25).
-                modifier = homeRowAnimation().padding(top = 5.dp, bottom = 3.dp),
+                modifier = homeRowAnimation().padding(top = 5.dp, bottom = 0.5.dp),
                 sectionPadding = sectionPadding,
                 layout = layout,
                 listState = continueWatchingListState,
                 onItemClick = onItemClick,
                 onItemLongPress = onItemLongPress,
                 disintegrationRequest = disintegrationRequest,
-                onViewAllClick = onShowAll?.let { open -> { open(continueWatchingShowAllSection(continueWatchingItems, showAllTitle)) } },
+                onViewAllClick = onShowAll
+                    ?.takeIf { continueWatchingItems.size > HOME_CATALOG_PREVIEW_LIMIT }
+                    ?.let { open -> { open(continueWatchingShowAllSection(continueWatchingItems, showAllTitle)) } },
             )
         }
     }

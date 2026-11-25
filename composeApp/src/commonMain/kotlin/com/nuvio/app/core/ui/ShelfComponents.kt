@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -322,18 +323,25 @@ private fun NuvioShelfSectionHeader(
     // 2026-11-24).
     var showFullTitle by androidx.compose.runtime.saveable.rememberSaveable(title) { androidx.compose.runtime.mutableStateOf(false) }
     var titleCut by androidx.compose.runtime.remember(title) { androidx.compose.runtime.mutableStateOf(false) }
+    // A name on several lines has Show All centred on the whole name (owner, 2026-11-25); a one-line
+    // name keeps the pill on its baseline.
+    var titleLines by androidx.compose.runtime.remember(title) { androidx.compose.runtime.mutableStateOf(1) }
+    val baselinePill = (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent) && titleLines <= 1
     Column(
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                // A centred heading on several lines sits 13 px (3.25 dp) lower so the gap above it stays
+                // 97 px, as with one-line headings; measured on the phone (owner, 2026-11-25).
+                .padding(top = if (!baselinePill && (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent)) 3.25.dp else 0.dp),
             horizontalArrangement = Arrangement.spacedBy(tokens.spacing.controlGap),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = title,
                 modifier = Modifier.weight(1f).then(
-                    if (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent) Modifier.alignByBaseline() else Modifier,
+                    if (baselinePill) Modifier.alignByBaseline() else Modifier,
                 ).then(
                     if (titleCut || showFullTitle) {
                         Modifier.clickable { showFullTitle = !showFullTitle }
@@ -345,7 +353,10 @@ private fun NuvioShelfSectionHeader(
                 color = tokens.colors.textPrimary,
                 maxLines = if (showFullTitle) Int.MAX_VALUE else titleMaxLines,
                 overflow = if (showFullTitle || titleMaxLines == Int.MAX_VALUE) TextOverflow.Clip else TextOverflow.Ellipsis,
-                onTextLayout = { result -> if (!showFullTitle) titleCut = result.hasVisualOverflow },
+                onTextLayout = { result ->
+                    if (!showFullTitle) titleCut = result.hasVisualOverflow
+                    titleLines = result.lineCount
+                },
             )
             val viewAllPlaceholderModifier = if (onViewAllClick == null) {
                 Modifier
@@ -358,7 +369,7 @@ private fun NuvioShelfSectionHeader(
                 onClick = onViewAllClick,
                 size = viewAllPillSize,
                 modifier = viewAllPlaceholderModifier.then(
-                    if (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent) Modifier.alignByBaseline() else Modifier,
+                    if (baselinePill) Modifier.alignByBaseline() else Modifier,
                 ),
             )
         }
@@ -377,17 +388,20 @@ private fun NuvioViewAllPill(
     val compact = size == NuvioViewAllPillSize.Compact
     val showAllText = stringResource(Res.string.morivia_show_all)
     if (size == NuvioViewAllPillSize.Accent) {
-        if (onClick != null) {
-            com.nuvio.app.features.settings.ThemedAccent {
-                MoriviaPagePill(
-                    label = stringResource(Res.string.morivia_catalog_show_all),
-                    icon = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                    iconAtEnd = true,
-                    modifier = modifier,
-                    compact = true,
-                    onClick = onClick,
-                )
-            }
+        // Without Show All the pill is still laid out, invisible, so the heading keeps its height and
+        // the gaps around the row stay the same (owner, 2026-11-25).
+        com.nuvio.app.features.settings.ThemedAccent {
+            MoriviaPagePill(
+                label = stringResource(Res.string.morivia_catalog_show_all),
+                icon = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                iconAtEnd = true,
+                modifier = modifier
+                    // The arrow circle, the part one sees, ends as far from the right edge as the heading
+                    // starts from the left (70 px); the faint outline goes a little past it (owner, 2026-11-25).
+                    .offset(x = 3.5.dp),
+                compact = true,
+                onClick = onClick,
+            )
         }
         return
     }

@@ -50,6 +50,9 @@ data class TraktPublicListSearchResult(
     val sortHow: String? = null,
 )
 
+/** A title out today and the id its streams are looked up by (an episode for series). */
+internal data class AiredTodayTitle(val preview: MetaPreview, val streamType: String, val streamId: String)
+
 object TraktPublicListSourceResolver {
     const val PAGE_LIMIT = 50
 
@@ -147,7 +150,7 @@ object TraktPublicListSourceResolver {
      * already aired today, in the order they aired, and movies released today. Nothing that airs
      * later today is shown until it has aired. Needs no TMDB key.
      */
-    suspend fun airingToday(isSeries: Boolean): List<MetaPreview> = withContext(Dispatchers.Default) {
+    internal suspend fun airingToday(isSeries: Boolean): List<AiredTodayTitle> = withContext(Dispatchers.Default) {
         val today = com.nuvio.app.features.player.skip.currentDateComponents()
             .let { "${it.year}-${it.month.toString().padStart(2, '0')}-${it.day.toString().padStart(2, '0')}" }
         val now = kotlin.time.Clock.System.now().toEpochMilliseconds()
@@ -160,22 +163,25 @@ object TraktPublicListSourceResolver {
                     val airedAt = com.nuvio.app.features.watchprogress.parseReleaseDateToEpochMs(item.firstAired) ?: return@mapNotNull null
                     if (airedAt < localMidnight || airedAt > now) return@mapNotNull null
                     val preview = item.show?.toPreview()?.takeIf { !it.poster.isNullOrBlank() } ?: return@mapNotNull null
-                    Triple(preview, airedAt, item.show?.votes ?: 0)
+                    val season = item.episode?.season
+                    val number = item.episode?.number
+                    val streamId = if (season != null && number != null) "${preview.id}:$season:$number" else preview.id
+                    Triple(AiredTodayTitle(preview, "series", streamId), airedAt, item.show?.votes ?: 0)
                 }
-                .sortedWith(compareBy<Triple<MetaPreview, Long, Int>> { it.second }.thenByDescending { it.third })
+                .sortedWith(compareBy<Triple<AiredTodayTitle, Long, Int>> { it.second }.thenByDescending { it.third })
                 .map { it.first }
-                .distinctBy { it.id }
+                .distinctBy { it.preview.id }
         } else {
             calendar("movies", today, days = 1)
                 .filter { it.released == today }
                 .mapNotNull { item ->
                     val preview = item.movie?.toPreview()?.takeIf { !it.poster.isNullOrBlank() } ?: return@mapNotNull null
-                    preview to (item.movie?.votes ?: 0)
+                    AiredTodayTitle(preview, "movie", preview.id) to (item.movie?.votes ?: 0)
                 }
                 // Movies have a release date but no time; the most watched come first.
                 .sortedByDescending { it.second }
                 .map { it.first }
-                .distinctBy { it.id }
+                .distinctBy { it.preview.id }
         }
     }
 
@@ -204,10 +210,15 @@ object TraktPublicListSourceResolver {
             .orEmpty()
             .mapNotNull { item -> item.movie?.toPreview() ?: item.show?.toPreview() }
             .filter { !it.poster.isNullOrBlank() }
+        // Half movies and half series (5 + 5 for ten), taken in turn; the other kind fills in only if one
+        // has too few.
+        val half = limit / 2
         val movies = list("movies")
         val shows = list("shows")
-        (0 until maxOf(movies.size, shows.size))
-            .flatMap { index -> listOfNotNull(movies.getOrNull(index), shows.getOrNull(index)) }
+        val pickedMovies = movies.take(maxOf(half, limit - shows.size.coerceAtMost(limit - half)))
+        val pickedShows = shows.take(limit - pickedMovies.size)
+        (0 until maxOf(pickedMovies.size, pickedShows.size))
+            .flatMap { index -> listOfNotNull(pickedMovies.getOrNull(index), pickedShows.getOrNull(index)) }
             .distinctBy { it.id }
             .take(limit)
     }
@@ -440,11 +451,18 @@ private data class PublicTraktListItemDto(
     val rank: Int? = null,
     @SerialName("first_aired") val firstAired: String? = null,
     val released: String? = null,
+    val episode: PublicTraktCalendarEpisodeDto? = null,
     val id: Long? = null,
     @SerialName("listed_at") val listedAt: String? = null,
     val type: String? = null,
     val movie: PublicTraktMovieDto? = null,
     val show: PublicTraktShowDto? = null,
+)
+
+@Serializable
+private data class PublicTraktCalendarEpisodeDto(
+    val season: Int? = null,
+    val number: Int? = null,
 )
 
 @Serializable
