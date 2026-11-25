@@ -102,9 +102,11 @@ private fun heroContentAlpha(visibility: Float): Float = heroEase((visibility - 
 private const val HERO_BACKGROUND_PARALLAX = 0.055f
 private const val HERO_BACKGROUND_SCALE = 1.14f
 private const val HERO_CONTENT_PARALLAX = 0.18f
-private const val HERO_SCROLL_PARALLAX = 0.3f
-private const val HERO_SCROLL_DOWN_SCALE_MULTIPLIER = 0.0001f
-private const val HERO_SCROLL_UP_SCALE_MULTIPLIER = 0.002f
+// No scroll parallax or zoom: the hero picture moves exactly with the list, so its rounded bottom
+// edge never shows as a dark mark above Continue Watching (owner, 2026-11-25).
+private const val HERO_SCROLL_PARALLAX = 0f
+private const val HERO_SCROLL_DOWN_SCALE_MULTIPLIER = 0f
+private const val HERO_SCROLL_UP_SCALE_MULTIPLIER = 0f
 private const val HERO_SCROLL_MAX_SCALE = 1.3f
 private const val HERO_SWIPE_THRESHOLD_FRACTION = 0.16f
 private const val HERO_SWIPE_VELOCITY_THRESHOLD = 300f

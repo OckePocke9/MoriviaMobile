@@ -1202,7 +1202,9 @@ private fun HomeScreenWithCatalogs(
         }
 
         val heroStretchState = rememberHeroStretchState(homeListState)
-        val heroStretchModifier = if (showHeroSlot) {
+        // The hero moves with the list like every other row: no stretch when pulled down at the top
+        // (owner, 2026-11-25).
+        val heroStretchModifier = if (false && showHeroSlot) {
             Modifier.nestedScroll(heroStretchState.nestedScrollConnection)
         } else {
             Modifier
@@ -1239,7 +1241,7 @@ private fun HomeScreenWithCatalogs(
                                 viewportHeight = maxHeight,
                                 mobileBelowSectionHeightHint = mobileHeroBelowSectionHeightHint,
                                 listState = homeListState,
-                                stretchPx = { heroStretchState.stretchPx },
+                                stretchPx = { 0f },
                                 showImdbRating = homeHeroState.showImdbRating,
                                 showMdbListRatings = homeHeroState.showMdbListRatings,
                                 onItemClick = onPosterClick,
