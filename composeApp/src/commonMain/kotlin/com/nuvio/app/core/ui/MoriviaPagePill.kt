@@ -36,6 +36,8 @@ fun MoriviaPagePill(
     modifier: Modifier = Modifier,
     compact: Boolean = false,
     onClick: (() -> Unit)? = null,
+    // The icon after the text, for a pill in the right corner such as Show All (owner, 2026-11-25).
+    iconAtEnd: Boolean = false,
 ) {
     val shape = RoundedCornerShape(50)
     Row(
@@ -47,16 +49,20 @@ fun MoriviaPagePill(
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
             .padding(
                 start = when {
-                    icon == null -> if (compact) 10.dp else 16.dp
+                    icon == null || iconAtEnd -> if (compact) 10.dp else 16.dp
                     compact -> 5.dp
                     else -> 7.dp
                 },
-                end = if (compact) 10.dp else 16.dp,
+                end = when {
+                    icon != null && iconAtEnd -> if (compact) 5.dp else 7.dp
+                    else -> if (compact) 10.dp else 16.dp
+                },
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(if (compact) 6.dp else 10.dp),
     ) {
-        if (icon != null) {
+        val iconCircle: @Composable () -> Unit = {
+            if (icon != null) {
             Box(
                 modifier = Modifier
                     .size(if (compact) 20.dp else 30.dp)
@@ -72,6 +78,8 @@ fun MoriviaPagePill(
                 )
             }
         }
+    }
+        if (!iconAtEnd) iconCircle()
         Text(
             text = label,
             style = if (compact) MaterialTheme.typography.labelLarge else MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
@@ -79,5 +87,6 @@ fun MoriviaPagePill(
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
         )
+        if (iconAtEnd) iconCircle()
     }
 }

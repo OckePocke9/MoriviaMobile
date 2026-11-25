@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_movies_based_on_recent">آپ کی حالیہ فلم کی بنیاد پر فلمیں</string>
-    <string name="home_series_based_on_recent">آپ کی حالیہ سیریز کی بنیاد پر سیریز</string>
+    <string name="home_movies_based_on_recent">آپ کی حالیہ صنف کی بنیاد پر فلمیں</string>
+    <string name="home_series_based_on_recent">آپ کی حالیہ صنف کی بنیاد پر سیریز</string>
     <string name="home_movies_airing_today">آج ریلیز ہونے والی فلمیں</string>
     <string name="home_series_airing_today">آج نشر ہونے والی سیریز</string>
 </resources>

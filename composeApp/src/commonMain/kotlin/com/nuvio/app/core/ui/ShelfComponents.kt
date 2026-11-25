@@ -63,6 +63,8 @@ enum class NuvioViewAllPillSize {
     Default,
     Compact,
     Home,
+    /** Like the Home pill: a small dark pill with the arrow in a theme-coloured circle (owner, 2026-11-25). */
+    Accent,
 }
 
 @Composable
@@ -289,9 +291,9 @@ fun NuvioPosterCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-            } else {
-                Box(modifier = Modifier.height(NuvioTokens.Space.none))
             }
+            // No empty line when there is no year, so every row ends the same distance above the
+            // next heading (owner, 2026-11-25).
         } else {
             Box(modifier = Modifier.height(NuvioTokens.Space.none))
         }
@@ -322,7 +324,7 @@ private fun NuvioShelfSectionHeader(
             Text(
                 text = title,
                 modifier = Modifier.weight(1f).then(
-                    if (viewAllPillSize == NuvioViewAllPillSize.Home) Modifier.alignByBaseline() else Modifier,
+                    if (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent) Modifier.alignByBaseline() else Modifier,
                 ).then(
                     if (titleCut || showFullTitle) {
                         Modifier.clickable { showFullTitle = !showFullTitle }
@@ -347,7 +349,7 @@ private fun NuvioShelfSectionHeader(
                 onClick = onViewAllClick,
                 size = viewAllPillSize,
                 modifier = viewAllPlaceholderModifier.then(
-                    if (viewAllPillSize == NuvioViewAllPillSize.Home) Modifier.alignByBaseline() else Modifier,
+                    if (viewAllPillSize == NuvioViewAllPillSize.Home || viewAllPillSize == NuvioViewAllPillSize.Accent) Modifier.alignByBaseline() else Modifier,
                 ),
             )
         }
@@ -365,6 +367,21 @@ private fun NuvioViewAllPill(
     val tokens = MaterialTheme.nuvio
     val compact = size == NuvioViewAllPillSize.Compact
     val showAllText = stringResource(Res.string.morivia_show_all)
+    if (size == NuvioViewAllPillSize.Accent) {
+        if (onClick != null) {
+            com.nuvio.app.features.settings.ThemedAccent {
+                MoriviaPagePill(
+                    label = stringResource(Res.string.morivia_catalog_show_all),
+                    icon = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    iconAtEnd = true,
+                    modifier = modifier,
+                    compact = true,
+                    onClick = onClick,
+                )
+            }
+        }
+        return
+    }
     if (size == NuvioViewAllPillSize.Home) {
         if (onClick != null) {
             MoriviaPagePill(

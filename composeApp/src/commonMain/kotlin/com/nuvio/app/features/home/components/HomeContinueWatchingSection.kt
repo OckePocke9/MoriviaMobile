@@ -281,6 +281,7 @@ internal fun HomeContinueWatchingSection(
     onItemClick: ((ContinueWatchingItem) -> Unit)? = null,
     onItemLongPress: ((ContinueWatchingItem) -> Unit)? = null,
     disintegrationRequest: DisintegrationRequest<String>? = null,
+    onViewAllClick: (() -> Unit)? = null,
 ) {
     if (items.isEmpty()) return
 
@@ -299,6 +300,7 @@ internal fun HomeContinueWatchingSection(
             onItemClick = onItemClick,
             onItemLongPress = onItemLongPress,
             disintegrationRequest = disintegrationRequest,
+            onViewAllClick = onViewAllClick,
         )
     } else {
         BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -316,6 +318,7 @@ internal fun HomeContinueWatchingSection(
                 onItemClick = onItemClick,
                 onItemLongPress = onItemLongPress,
                 disintegrationRequest = disintegrationRequest,
+                onViewAllClick = onViewAllClick,
             )
         }
     }
@@ -336,6 +339,7 @@ private fun HomeContinueWatchingSectionContent(
     onItemClick: ((ContinueWatchingItem) -> Unit)?,
     onItemLongPress: ((ContinueWatchingItem) -> Unit)?,
     disintegrationRequest: DisintegrationRequest<String>?,
+    onViewAllClick: (() -> Unit)? = null,
 ) {
     key(dataSourceKey) {
         val disintegration = remember {
@@ -355,6 +359,11 @@ private fun HomeContinueWatchingSectionContent(
             key = { entry -> entry.key },
             animatePlacement = true,
             state = listState,
+            // Show All, as on the other rows, and the whole name on as many lines as it needs
+            // (owner, 2026-11-25).
+            onViewAllClick = onViewAllClick,
+            viewAllPillSize = com.nuvio.app.core.ui.NuvioViewAllPillSize.Accent,
+            titleMaxLines = Int.MAX_VALUE,
         ) { entry ->
             val item = entry.item
             val onClick = if (entry.exiting) null else onItemClick?.let { { it(item) } }

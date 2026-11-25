@@ -1208,6 +1208,8 @@ object TmdbMetadataService {
         }
     }
 
+    private const val HOME_LIST_MAX_PAGES = 20
+
     private val homeListCache = mutableMapOf<String, List<MetaPreview>>()
 
     /**
@@ -1220,28 +1222,42 @@ object TmdbMetadataService {
         val cacheKey = "${list.name}:$language:$today:$limit"
         homeListCache[cacheKey]?.let { return@withContext it }
 
-        suspend fun page(endpoint: String, number: Int, extra: Map<String, String> = emptyMap()): List<TmdbRecommendationItem> =
+        suspend fun page(endpoint: String, number: Int, extra: Map<String, String> = emptyMap()): TmdbRecommendationResponse? =
             fetch<TmdbRecommendationResponse>(
                 endpoint = endpoint,
                 query = mapOf("language" to language, "page" to number.toString()) + extra,
-            )?.results.orEmpty()
+            )
+
+        // Every page TMDB has (up to [HOME_LIST_MAX_PAGES]) until [limit] titles are found, so Show All
+        // can list them all (owner, 2026-11-25).
+        suspend fun pages(endpoint: String, extra: Map<String, String> = emptyMap(), have: Int = 0): List<TmdbRecommendationItem> {
+            val out = mutableListOf<TmdbRecommendationItem>()
+            var number = 1
+            while (number <= HOME_LIST_MAX_PAGES && have + out.size < limit) {
+                val response = page(endpoint, number, extra) ?: break
+                if (response.results.isEmpty()) break
+                out += response.results
+                if (number >= (response.totalPages ?: number)) break
+                number++
+            }
+            return out
+        }
 
         val raw: List<Pair<TmdbRecommendationItem, String>> = when (list) {
             TmdbHomeList.SERIES_AIRING_TODAY ->
-                (page("tv/airing_today", 1) + page("tv/airing_today", 2)).map { it to "series" }
+                pages("tv/airing_today").map { it to "series" }
             TmdbHomeList.MOVIES_AIRING_TODAY -> {
                 val todayFilter = mapOf(
                     "release_date.gte" to today,
                     "release_date.lte" to today,
                     "sort_by" to "popularity.desc",
                 )
-                val released = page("discover/movie", 1, todayFilter) + page("discover/movie", 2, todayFilter)
-                // Few releases on some days: fill up with what is in cinemas now.
-                val filled = if (released.size >= limit) released else released + page("movie/now_playing", 1) + page("movie/now_playing", 2)
-                filled.map { it to "movie" }
+                val released = pages("discover/movie", todayFilter)
+                // Only movies released today, nothing else added (owner, 2026-11-25).
+                released.map { it to "movie" }
             }
             TmdbHomeList.TRENDING ->
-                page("trending/all/week", 1)
+                (page("trending/all/week", 1)?.results.orEmpty())
                     .filter { it.mediaType == "movie" || it.mediaType == "tv" }
                     .map { it to if (it.mediaType == "tv") "series" else "movie" }
         }
@@ -2111,6 +2127,7 @@ private data class TmdbCollectionRef(
 @Serializable
 private data class TmdbRecommendationResponse(
     val results: List<TmdbRecommendationItem> = emptyList(),
+    @SerialName("total_pages") val totalPages: Int? = null,
 )
 
 @Serializable

@@ -64,6 +64,8 @@ fun HomeCatalogRowSection(
     landscape: Boolean = false,
     landscapeOverride: Boolean? = null,
     useHomePill: Boolean = false,
+    // The Home-pill style Show All with the theme-coloured arrow (owner, 2026-11-25).
+    accentShowAll: Boolean = false,
 ) {
     if (sectionPadding != null) {
         HomeCatalogRowSectionContent(
@@ -80,6 +82,7 @@ fun HomeCatalogRowSection(
             landscape = landscape,
             landscapeOverride = landscapeOverride,
             useHomePill = useHomePill,
+            accentShowAll = accentShowAll,
         )
     } else {
         BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -97,6 +100,7 @@ fun HomeCatalogRowSection(
                 landscape = landscape,
                 landscapeOverride = landscapeOverride,
                 useHomePill = useHomePill,
+                accentShowAll = accentShowAll,
             )
         }
     }
@@ -117,6 +121,7 @@ private fun HomeCatalogRowSectionContent(
     landscape: Boolean,
     landscapeOverride: Boolean?,
     useHomePill: Boolean,
+    accentShowAll: Boolean = false,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
 
@@ -128,8 +133,12 @@ private fun HomeCatalogRowSectionContent(
         rowContentPadding = PaddingValues(horizontal = sectionPadding),
         itemSpacing = HomePosterSpacing,
         onViewAllClick = onViewAllClick,
-        viewAllPillSize = if (useHomePill) NuvioViewAllPillSize.Home else NuvioViewAllPillSize.Compact,
-        titleMaxLines = 1, // one line; a cut title shows "…" and opens on tap (owner, 2026-11-24)
+        viewAllPillSize = when {
+            accentShowAll -> NuvioViewAllPillSize.Accent
+            useHomePill -> NuvioViewAllPillSize.Home
+            else -> NuvioViewAllPillSize.Compact
+        },
+        titleMaxLines = Int.MAX_VALUE, // the whole name, on as many lines as it needs (owner, 2026-11-25)
         key = { item -> item.stableKey() },
     ) { item ->
         HomePosterCard(

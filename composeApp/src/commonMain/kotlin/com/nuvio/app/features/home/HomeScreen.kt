@@ -997,16 +997,39 @@ private fun HomeScreenWithCatalogs(
         }
     }
     val genreSnapshot = genresById.toMap()
-    val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.moviesByGenres) {
+    // Every title the addons have in the recent genres (owner, 2026-11-25).
+    val movieGenreLoad by androidx.compose.runtime.produceState<GenreCatalogLoad?>(null, latestMovie?.id, genreSnapshot[latestMovie?.id]) {
+        val title = latestMovie
+        val genres = title?.let { genreSnapshot[it.id] }
+        value = null
+        if (title != null && !genres.isNullOrEmpty()) {
+            GenreCatalogLoader.load(isSeries = false, genres = genres, excludeId = title.id).collect { value = it }
+        }
+    }
+    val seriesGenreLoad by androidx.compose.runtime.produceState<GenreCatalogLoad?>(null, latestSeries?.id, genreSnapshot[latestSeries?.id]) {
+        val title = latestSeries
+        val genres = title?.let { genreSnapshot[it.id] }
+        value = null
+        if (title != null && !genres.isNullOrEmpty()) {
+            GenreCatalogLoader.load(isSeries = true, genres = genres, excludeId = title.id).collect { value = it }
+        }
+    }
+    fun GenreRecommendation.withAddons(load: GenreCatalogLoad?): GenreRecommendation? {
+        val all = ((load?.all ?: emptyList()) + items).distinctBy { it.id }
+        if (all.isEmpty()) return null
+        val row = ((load?.row ?: emptyList()) + all).distinctBy { it.id }.take(GENRE_ROW_HOME_LIMIT)
+        return copy(items = all, rowItems = row)
+    }
+    val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, movieGenreLoad) {
         if (true) {
-            buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+            buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)?.withAddons(movieGenreLoad)
         } else {
             null
         }
     }
-    val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, moriviaLayout.seriesByGenres) {
+    val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, seriesGenreLoad) {
         if (true) {
-            buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+            buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)?.withAddons(seriesGenreLoad)
         } else {
             null
         }
@@ -1063,11 +1086,14 @@ private fun HomeScreenWithCatalogs(
 
     // Rows from TMDB (owner, 2026-11-24): movies and series airing today (30 each) and the
     // week's ten trending titles for Featured.
+    // Airs Today comes from Trakt's calendar, so it works without a TMDB key (owner, 2026-11-25).
+    val airingToday = remember { com.nuvio.app.features.tmdb.utcDateString(kotlin.time.Clock.System.now().toEpochMilliseconds()) }
+
     val moviesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
-        value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.MOVIES_AIRING_TODAY, HOME_CATALOG_PREVIEW_LIMIT)
+        value = com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingOn(airingToday, isSeries = false)
     }
     val seriesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
-        value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.SERIES_AIRING_TODAY, HOME_CATALOG_PREVIEW_LIMIT)
+        value = com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingOn(airingToday, isSeries = true)
     }
     val trendingFeatured by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
         value = com.nuvio.app.features.tmdb.TmdbMetadataService.fetchHomeList(com.nuvio.app.features.tmdb.TmdbHomeList.TRENDING, HOME_FEATURED_LIMIT)
@@ -1235,6 +1261,7 @@ private fun HomeScreenWithCatalogs(
                         onItemClick = onContinueWatchingClick,
                         onItemLongPress = onContinueWatchingLongPress,
                         disintegrationRequest = continueWatchingDisintegrationRequest,
+                        onShowAll = onCatalogClick,
                     )
                     items(
                         count = 3,
@@ -1260,6 +1287,7 @@ private fun HomeScreenWithCatalogs(
                         onItemClick = onContinueWatchingClick,
                         onItemLongPress = onContinueWatchingLongPress,
                         disintegrationRequest = continueWatchingDisintegrationRequest,
+                        onShowAll = onCatalogClick,
                     )
                     item(key = "home_empty", contentType = "empty") {
                         when {
@@ -1351,6 +1379,7 @@ private fun HomeScreenWithCatalogs(
                         onItemClick = onContinueWatchingClick,
                         onItemLongPress = onContinueWatchingLongPress,
                         disintegrationRequest = continueWatchingDisintegrationRequest,
+                        onShowAll = onCatalogClick,
                     )
 
                     // Morivia's order: the genre rows, the main Featured row, Popular – Movies,
@@ -1373,8 +1402,8 @@ private fun HomeScreenWithCatalogs(
                             )
                             HomeCatalogRowSection(
                                 section = section,
-                                entries = recommendation.items.take(GENRE_ROW_HOME_LIMIT),
-                                modifier = Modifier.padding(bottom = 12.dp),
+                                entries = recommendation.rowItems,
+                                modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
                                 onViewAllClick = onCatalogClick?.let { { it(section) } },
                                 watchedKeys = watchedUiState.watchedKeys,
@@ -1382,6 +1411,7 @@ private fun HomeScreenWithCatalogs(
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
                                 posterWidth = homePosterSize,
+                                accentShowAll = true,
                             )
                         }
                     }
@@ -1409,7 +1439,7 @@ private fun HomeScreenWithCatalogs(
                             HomeCatalogRowSection(
                                 section = section,
                                 entries = rowItems.take(HOME_CATALOG_PREVIEW_LIMIT),
-                                modifier = Modifier.padding(bottom = 12.dp),
+                                modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
                                 onViewAllClick = onCatalogClick?.let { { it(section) } },
                                 watchedKeys = watchedUiState.watchedKeys,
@@ -1417,6 +1447,7 @@ private fun HomeScreenWithCatalogs(
                                 onPosterClick = onPosterClick,
                                 onPosterLongClick = onPosterLongClick,
                                 posterWidth = homePosterSize,
+                                accentShowAll = true,
                             )
                         }
                     }
@@ -1437,7 +1468,7 @@ private fun HomeScreenWithCatalogs(
                                     items = trendingFeatured,
                                 ),
                                 entries = trendingFeatured.take(HOME_FEATURED_LIMIT),
-                                modifier = Modifier.padding(bottom = 12.dp),
+                                modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
                                 onViewAllClick = null,
                                 watchedKeys = watchedUiState.watchedKeys,
@@ -1463,7 +1494,7 @@ private fun HomeScreenWithCatalogs(
                             HomeCatalogRowSection(
                                 section = section,
                                 entries = section.items.take(limit),
-                                modifier = Modifier.padding(bottom = 12.dp),
+                                modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                 sectionPadding = homeSectionPadding,
                                 onViewAllClick = if (!isIos || section.canOpenCatalog(limit)) {
                                     onCatalogClick?.let { { it(section) } }
@@ -1489,7 +1520,7 @@ private fun HomeScreenWithCatalogs(
                                 item(key = keyedSettingsItem.lazyKey, contentType = "collection") {
                                     HomeCollectionRowSection(
                                         collection = collection,
-                                        modifier = Modifier.padding(bottom = 12.dp),
+                                        modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                         sectionPadding = homeSectionPadding,
                                         animateGifs = animateCollectionGifsSetting,
                                         onFolderClick = onFolderClick,
@@ -1503,7 +1534,7 @@ private fun HomeScreenWithCatalogs(
                                     HomeCatalogRowSection(
                                         section = section,
                                         entries = section.items.take(HOME_CATALOG_PREVIEW_LIMIT),
-                                        modifier = Modifier.padding(bottom = 12.dp),
+                                        modifier = Modifier.padding(bottom = HOME_ROW_BOTTOM_PADDING),
                                         sectionPadding = homeSectionPadding,
                                         onViewAllClick = if (section.canOpenCatalog(HOME_CATALOG_PREVIEW_LIMIT)) {
                                             onCatalogClick?.let { { it(section) } }
@@ -1538,24 +1569,29 @@ private fun LazyListScope.homeContinueWatchingSections(
     onItemClick: ((ContinueWatchingItem) -> Unit)?,
     onItemLongPress: ((ContinueWatchingItem) -> Unit)?,
     disintegrationRequest: DisintegrationRequest<String>?,
+    onShowAll: ((HomeCatalogSection) -> Unit)? = null,
 ) {
     if (!preferences.isVisible) return
 
     if (continueWatchingItems.isNotEmpty()) {
         item(key = HOME_CONTINUE_WATCHING_SECTION_KEY, contentType = "continue_watching") {
+            val showAllTitle = stringResource(Res.string.compose_settings_page_continue_watching)
             HomeContinueWatchingSection(
                 items = continueWatchingItems,
                 dataSourceKey = dataSourceKey,
                 style = preferences.style,
                 useEpisodeThumbnails = preferences.useEpisodeThumbnails,
                 blurNextUp = preferences.blurNextUp,
-                modifier = Modifier.padding(bottom = HomeContinueWatchingSectionBottomPadding),
+                // 24 dp from the dots above and to the next row heading below, measured on the
+                // phone with the Show All pill (owner, 2026-11-25).
+                modifier = Modifier.padding(top = 5.dp, bottom = 3.dp),
                 sectionPadding = sectionPadding,
                 layout = layout,
                 listState = continueWatchingListState,
                 onItemClick = onItemClick,
                 onItemLongPress = onItemLongPress,
                 disintegrationRequest = disintegrationRequest,
+                onViewAllClick = onShowAll?.let { open -> { open(continueWatchingShowAllSection(continueWatchingItems, showAllTitle)) } },
             )
         }
     }
@@ -1580,6 +1616,36 @@ private fun LazyListScope.homeContinueWatchingSections(
         }
     }
 }
+
+// Show All on Continue Watching opens every title in the usual catalog grid (owner, 2026-11-25).
+private fun continueWatchingShowAllSection(items: List<ContinueWatchingItem>, title: String): HomeCatalogSection {
+    val key = "morivia_continue_watching"
+    val previews = items
+        .distinctBy { it.parentMetaId }
+        .map { item ->
+            MetaPreview(
+                id = item.parentMetaId,
+                type = item.parentMetaType,
+                name = item.title,
+                poster = item.poster ?: item.rawPosterUrl ?: item.imageUrl,
+                banner = item.background ?: item.rawBackgroundUrl,
+                logo = item.logo,
+            )
+        }
+    com.nuvio.app.features.catalog.FixedCatalogStore.put(key, previews)
+    return HomeCatalogSection(
+        key = key,
+        title = title,
+        subtitle = "",
+        addonName = "",
+        target = com.nuvio.app.features.catalog.CatalogTarget.Fixed(key = key, contentType = "movie"),
+        items = previews,
+    )
+}
+
+// 97 px (about 24 dp) from the last line of a row to the next heading, the same as from View Details
+// to the dots; measured on the phone (owner, 2026-11-25).
+private val HOME_ROW_BOTTOM_PADDING = 1.dp
 
 private const val HOME_CATALOG_PREVIEW_LIMIT = 30
 private const val FEATURED_ROW_LIMIT = 5

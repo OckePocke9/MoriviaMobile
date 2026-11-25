@@ -142,6 +142,30 @@ object TraktPublicListSourceResolver {
             }
         }
 
+    /**
+     * Movies released and series with an episode airing on [date] (yyyy-MM-dd), from Trakt's
+     * calendar, the most watched first (owner, 2026-11-25). Needs no TMDB key.
+     */
+    suspend fun airingOn(date: String, isSeries: Boolean): List<MetaPreview> = withContext(Dispatchers.Default) {
+        val kind = if (isSeries) "shows" else "movies"
+        runCatching {
+            requestJson<List<PublicTraktListItemDto>>(
+                endpoint = "calendars/all/$kind/$date/1",
+                query = mapOf("extended" to "full,images"),
+            )
+        }.onFailure { error -> log.w(error) { "Trakt calendar failed for $kind on $date" } }
+            .getOrNull()
+            .orEmpty()
+            .mapNotNull { item ->
+                val votes = (if (isSeries) item.show?.votes else item.movie?.votes) ?: 0
+                val preview = if (isSeries) item.show?.toPreview() else item.movie?.toPreview()
+                preview?.takeIf { !it.poster.isNullOrBlank() }?.let { it to votes }
+            }
+            .sortedByDescending { (_, votes) -> votes }
+            .map { (preview, _) -> preview }
+            .distinctBy { it.id }
+    }
+
     private suspend inline fun <reified T> requestJson(
         endpoint: String,
         query: Map<String, String> = emptyMap(),
@@ -383,6 +407,7 @@ private data class PublicTraktMovieDto(
     val overview: String? = null,
     val released: String? = null,
     val rating: Double? = null,
+    val votes: Int? = null,
     val genres: List<String>? = null,
     val images: TraktImagesDto? = null,
 )
@@ -395,6 +420,7 @@ private data class PublicTraktShowDto(
     val overview: String? = null,
     @SerialName("first_aired") val firstAired: String? = null,
     val rating: Double? = null,
+    val votes: Int? = null,
     val genres: List<String>? = null,
     val images: TraktImagesDto? = null,
 )

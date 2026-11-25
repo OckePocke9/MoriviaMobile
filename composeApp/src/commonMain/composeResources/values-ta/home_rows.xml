@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_movies_based_on_recent">உங்கள் சமீபத்திய திரைப்படத்தின் அடிப்படையில் திரைப்படங்கள்</string>
-    <string name="home_series_based_on_recent">உங்கள் சமீபத்திய தொடரின் அடிப்படையில் தொடர்கள்</string>
+    <string name="home_movies_based_on_recent">உங்கள் சமீபத்திய வகையின் அடிப்படையில் திரைப்படங்கள்</string>
+    <string name="home_series_based_on_recent">உங்கள் சமீபத்திய வகையின் அடிப்படையில் தொடர்கள்</string>
     <string name="home_movies_airing_today">இன்று வெளியாகும் திரைப்படங்கள்</string>
     <string name="home_series_airing_today">இன்று ஒளிபரப்பாகும் தொடர்கள்</string>
 </resources>

@@ -16,8 +16,10 @@ internal data class GenreRecommendation(
     val key: String,
     val isSeries: Boolean,
     val source: WatchedTitle,
-    /** Every match, best first; Home shows the first [GENRE_ROW_HOME_LIMIT]. */
+    /** Every match, best first, for Show All. */
     val items: List<MetaPreview>,
+    /** The row on Home: exactly [GENRE_ROW_HOME_LIMIT] when that many exist (owner, 2026-11-25). */
+    val rowItems: List<MetaPreview> = items.take(GENRE_ROW_HOME_LIMIT),
 )
 
 internal const val GENRE_ROW_HOME_LIMIT = 30
@@ -53,7 +55,6 @@ internal fun buildGenreRecommendation(
         // Titles sharing more genres first; otherwise the catalogs' own order.
         .sortedByDescending { (_, shared) -> shared }
         .map { (item, _) -> item }
-    if (matches.isEmpty()) return null
     return GenreRecommendation(
         key = if (isSeries) "morivia_series_by_genres" else "morivia_movies_by_genres",
         isSeries = isSeries,
