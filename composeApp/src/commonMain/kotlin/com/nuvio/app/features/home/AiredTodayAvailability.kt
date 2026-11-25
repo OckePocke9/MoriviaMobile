@@ -42,7 +42,8 @@ internal object AiredTodayAvailability {
         // Home can open before the addons are loaded; wait for them, or the list would go out unchecked.
         val loaded = withTimeoutOrNull(20_000L) {
             AddonRepository.uiState.first { state ->
-                state.addons.any { it.enabled && it.manifest != null } && !state.addons.hasPendingEnabledManifests()
+                state.addons.any { it.enabled && it.manifest != null } &&
+                    (!state.addons.hasPendingEnabledManifests() || state.addons.filter { it.enabled }.all { it.manifest != null })
             }
         }?.addons ?: AddonRepository.uiState.value.addons
         val addons = loaded.enabledAddons().mapNotNull { addon ->

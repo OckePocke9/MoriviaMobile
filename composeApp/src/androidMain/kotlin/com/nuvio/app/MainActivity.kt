@@ -119,6 +119,7 @@ open class MainActivity : AppCompatActivity() {
         PosterCardStyleStorage.initialize(applicationContext)
         CustomPosterUrlStorage.initialize(applicationContext)
         CardDepthStyleStorage.initialize(applicationContext)
+        com.nuvio.app.features.home.HomeSnapshotStorage.initialize(applicationContext)
         DebridSettingsStorage.initialize(applicationContext)
         TmdbSettingsStorage.initialize(applicationContext)
         MdbListSettingsStorage.initialize(applicationContext)

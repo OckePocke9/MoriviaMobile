@@ -1001,17 +1001,31 @@ private fun HomeScreenWithCatalogs(
     val movieGenreLoad by androidx.compose.runtime.produceState<GenreCatalogLoad?>(null, latestMovie?.id, genreSnapshot[latestMovie?.id]) {
         val title = latestMovie
         val genres = title?.let { genreSnapshot[it.id] }
-        value = null
+        val snapshotKey = "genre_movies_${title?.id}"
+        // The titles saved last time show at once (owner, 2026-11-25), then the addons are asked again.
+        value = title?.let { HomeSnapshot.loadList(snapshotKey) }?.let { saved -> GenreCatalogLoad(saved.take(GENRE_ROW_HOME_LIMIT), saved) }
         if (title != null && !genres.isNullOrEmpty()) {
-            GenreCatalogLoader.load(isSeries = false, genres = genres, excludeId = title.id).collect { value = it }
+            var saved = false
+            GenreCatalogLoader.load(isSeries = false, genres = genres, excludeId = title.id).collect { load ->
+                value = load
+                if (!saved) { HomeSnapshot.saveList(snapshotKey, (load.row + load.all).distinctBy { it.id }); saved = true }
+            }
+            value?.let { HomeSnapshot.saveList(snapshotKey, (it.row + it.all).distinctBy { it.id }) }
         }
     }
     val seriesGenreLoad by androidx.compose.runtime.produceState<GenreCatalogLoad?>(null, latestSeries?.id, genreSnapshot[latestSeries?.id]) {
         val title = latestSeries
         val genres = title?.let { genreSnapshot[it.id] }
-        value = null
+        val snapshotKey = "genre_series_${title?.id}"
+        // The titles saved last time show at once (owner, 2026-11-25), then the addons are asked again.
+        value = title?.let { HomeSnapshot.loadList(snapshotKey) }?.let { saved -> GenreCatalogLoad(saved.take(GENRE_ROW_HOME_LIMIT), saved) }
         if (title != null && !genres.isNullOrEmpty()) {
-            GenreCatalogLoader.load(isSeries = true, genres = genres, excludeId = title.id).collect { value = it }
+            var saved = false
+            GenreCatalogLoader.load(isSeries = true, genres = genres, excludeId = title.id).collect { load ->
+                value = load
+                if (!saved) { HomeSnapshot.saveList(snapshotKey, (load.row + load.all).distinctBy { it.id }); saved = true }
+            }
+            value?.let { HomeSnapshot.saveList(snapshotKey, (it.row + it.all).distinctBy { it.id }) }
         }
     }
     fun GenreRecommendation.withAddons(load: GenreCatalogLoad?): GenreRecommendation? {
@@ -1022,14 +1036,20 @@ private fun HomeScreenWithCatalogs(
     }
     val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, movieGenreLoad) {
         if (true) {
-            buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)?.withAddons(movieGenreLoad)
+            (
+                buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+                    ?: latestMovie?.let { GenreRecommendation(key = if (false) "morivia_series_by_genres" else "morivia_movies_by_genres", isSeries = false, source = it, items = emptyList()) }
+            )?.withAddons(movieGenreLoad)
         } else {
             null
         }
     }
     val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, seriesGenreLoad) {
         if (true) {
-            buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)?.withAddons(seriesGenreLoad)
+            (
+                buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
+                    ?: latestSeries?.let { GenreRecommendation(key = if (true) "morivia_series_by_genres" else "morivia_movies_by_genres", isSeries = true, source = it, items = emptyList()) }
+            )?.withAddons(seriesGenreLoad)
         } else {
             null
         }
@@ -1088,20 +1108,29 @@ private fun HomeScreenWithCatalogs(
     // watched titles for Featured.
     val moviesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
         // Refreshed every ten minutes, so an episode shows up once it has aired.
+        val snapshotKey = "aired_movies_${com.nuvio.app.features.watchprogress.CurrentDateProvider.todayIsoDate()}"
+        HomeSnapshot.loadList(snapshotKey)?.let { value = it }
         while (true) {
             value = AiredTodayAvailability.order(com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = false))
+            HomeSnapshot.saveList(snapshotKey, value)
             kotlinx.coroutines.delay(AIRING_REFRESH_MS)
         }
     }
     val seriesAiringToday by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
+        val snapshotKey = "aired_series_${com.nuvio.app.features.watchprogress.CurrentDateProvider.todayIsoDate()}"
+        HomeSnapshot.loadList(snapshotKey)?.let { value = it }
         while (true) {
             value = AiredTodayAvailability.order(com.nuvio.app.features.trakt.TraktPublicListSourceResolver.airingToday(isSeries = true))
+            HomeSnapshot.saveList(snapshotKey, value)
             kotlinx.coroutines.delay(AIRING_REFRESH_MS)
         }
     }
     val trendingFeatured by androidx.compose.runtime.produceState(emptyList<MetaPreview>()) {
         // From Trakt, so Featured works without a TMDB key (owner, 2026-11-25).
-        value = com.nuvio.app.features.trakt.TraktPublicListSourceResolver.trendingThisWeek(HOME_FEATURED_LIMIT)
+        HomeSnapshot.loadList("featured")?.let { value = it }
+        com.nuvio.app.features.trakt.TraktPublicListSourceResolver.trendingThisWeek(HOME_FEATURED_LIMIT)
+            .takeIf { it.isNotEmpty() }
+            ?.let { fresh -> value = fresh; HomeSnapshot.saveList("featured", fresh) }
     }
     androidx.compose.runtime.SideEffect {
         if (moviesAiringToday.isNotEmpty()) com.nuvio.app.features.catalog.FixedCatalogStore.put("morivia_movies_airing_today", moviesAiringToday)

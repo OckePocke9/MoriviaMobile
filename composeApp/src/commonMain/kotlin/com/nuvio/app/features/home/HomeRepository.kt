@@ -55,6 +55,9 @@ object HomeRepository {
         currentDefinitions = requests
         val requestCacheKeys = requests.mapTo(mutableSetOf(), HomeCatalogDefinition::cacheKey)
         cachedSections = cachedSections.filterKeys(requestCacheKeys::contains)
+        // Nothing on screen yet (a profile was just picked): show the rows saved last time at once and
+        // refresh them quietly (owner, 2026-11-25).
+        val restoredFromSnapshot = cachedSections.isEmpty() && restoreSnapshot(requests)
         val requestKey = requests.joinToString(separator = "|", transform = HomeCatalogDefinition::cacheKey)
         currentRequestKey = requestKey
 
@@ -82,6 +85,9 @@ object HomeRepository {
 
         activeJob?.cancel()
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        if (restoredFromSnapshot) {
+            publishCurrentState(isLoading = true, requestKey = requestKey, heroSourcesResolved = true)
+        }
         activeJob = scope.launch {
             val settingsSnapshot = HomeCatalogSettingsRepository.snapshot()
             val prioritizedRequests = prioritizeDefinitions(
@@ -148,6 +154,7 @@ object HomeRepository {
             cachedSections = loadedSections.toMap()
             lastErrorMessage = firstErrorMessage
             activeRequestKey = null
+            saveSnapshot(loadedSections)
             publishCurrentState(
                 isLoading = false,
                 requestKey = requestKey,
@@ -159,6 +166,43 @@ object HomeRepository {
                 requestKey = requestKey,
             )
         }
+    }
+
+    private fun restoreSnapshot(requests: List<HomeCatalogDefinition>): Boolean {
+        val saved = HomeSnapshot.loadSections()
+        if (saved.isEmpty()) return false
+        val restored = requests
+            .filter { it.serverConnectionId == null }
+            .mapNotNull { definition ->
+                val section = saved[definition.cacheKey] ?: return@mapNotNull null
+                definition.cacheKey to HomeCatalogSection(
+                    key = definition.key,
+                    title = definition.defaultTitle,
+                    subtitle = definition.addonName,
+                    addonName = definition.addonName,
+                    target = CatalogTarget.Addon(
+                        manifestUrl = definition.manifestUrl,
+                        contentType = definition.type,
+                        catalogId = definition.catalogId,
+                        supportsPagination = definition.supportsPagination,
+                    ),
+                    items = section.items,
+                    availableItemCount = section.availableItemCount,
+                    hasMore = section.hasMore,
+                )
+            }
+            .toMap()
+        if (restored.isEmpty()) return false
+        cachedSections = restored
+        return true
+    }
+
+    private fun saveSnapshot(sections: Map<String, HomeCatalogSection>) {
+        HomeSnapshot.saveSections(
+            sections
+                .filterValues { it.target is CatalogTarget.Addon && it.items.isNotEmpty() }
+                .mapValues { (_, section) -> HomeSnapshot.SavedSection(section.items, section.availableItemCount, section.hasMore) },
+        )
     }
 
     fun applyCurrentSettings() {

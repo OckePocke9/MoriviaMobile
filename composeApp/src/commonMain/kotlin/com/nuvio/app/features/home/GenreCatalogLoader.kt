@@ -41,7 +41,8 @@ internal object GenreCatalogLoader {
         // Home can open before the addons are loaded; wait for them so the row is never left short.
         val addons = withTimeoutOrNull(20_000L) {
             AddonRepository.uiState.first { state ->
-                state.addons.any { it.enabled && it.manifest != null } && !state.addons.hasPendingEnabledManifests()
+                state.addons.any { it.enabled && it.manifest != null } &&
+                    (!state.addons.hasPendingEnabledManifests() || state.addons.filter { it.enabled }.all { it.manifest != null })
             }
         }?.addons ?: AddonRepository.uiState.value.addons
         val sources = addons.enabledAddons().flatMap { addon ->

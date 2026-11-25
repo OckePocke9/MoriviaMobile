@@ -81,6 +81,7 @@ object AddonRepository {
                 )
             },
         )
+        applySavedManifests()
 
         storedUrls.forEach { manifestUrl ->
             val existing = existingByUrl[manifestUrl]
@@ -144,6 +145,7 @@ object AddonRepository {
                     )
                 },
             )
+            applySavedManifests()
             persist()
             urls.forEach { url ->
                 val existing = existingByUrl[url]
@@ -156,6 +158,37 @@ object AddonRepository {
             log.i { "pullFromServer() — applied ${urls.size} addons to state" }
         }.onFailure { e ->
             log.e(e) { "pullFromServer() — FAILED" }
+        }
+    }
+
+    // The last manifest of every addon is kept on the device, so a picked profile has its addons
+    // ready at once while they are fetched again (owner, 2026-11-25).
+    private var savedManifests: MutableMap<String, String>? = null
+
+    private fun savedManifestPayloads(): MutableMap<String, String> =
+        savedManifests ?: com.nuvio.app.features.home.HomeSnapshot.loadManifests().toMutableMap().also { savedManifests = it }
+
+    private fun rememberManifest(manifestUrl: String, payload: String) {
+        val saved = savedManifestPayloads()
+        if (saved[manifestUrl] == payload) return
+        saved[manifestUrl] = payload
+        com.nuvio.app.features.home.HomeSnapshot.saveManifests(saved.toMap())
+    }
+
+    private fun applySavedManifests() {
+        val saved = savedManifestPayloads()
+        if (saved.isEmpty()) return
+        _uiState.update { state ->
+            state.copy(
+                addons = state.addons.map { addon ->
+                    if (addon.manifest != null) return@map addon
+                    val payload = saved[addon.manifestUrl] ?: return@map addon
+                    runCatching { AddonManifestParser.parse(manifestUrl = addon.manifestUrl, payload = payload) }
+                        .getOrNull()
+                        ?.let { manifest -> addon.copy(manifest = manifest) }
+                        ?: addon
+                },
+            )
         }
     }
 
@@ -330,7 +363,7 @@ object AddonRepository {
                     AddonManifestParser.parse(
                         manifestUrl = manifestUrl,
                         payload = payload,
-                    )
+                    ).also { rememberManifest(manifestUrl, payload) }
                 }
 
                 _uiState.update { current ->
