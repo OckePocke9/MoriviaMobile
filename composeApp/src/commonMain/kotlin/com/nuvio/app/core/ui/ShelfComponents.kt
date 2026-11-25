@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -271,12 +270,10 @@ fun NuvioPosterCard(
             }
 
             if (showNewBanner) {
-                // "New" in the Home pill's design: a small dark pill with the icon in a theme-coloured
-                // circle (owner, 2026-11-25).
+                // "New" in the Home pill's design, without an icon (owner, 2026-11-25).
                 com.nuvio.app.features.settings.ThemedAccent {
                     MoriviaPagePill(
                         label = stringResource(Res.string.morivia_poster_new),
-                        icon = Icons.Rounded.Star,
                         compact = true,
                         modifier = Modifier
                             .align(Alignment.TopStart)

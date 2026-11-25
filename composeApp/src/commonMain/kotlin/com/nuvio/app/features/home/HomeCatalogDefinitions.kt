@@ -23,6 +23,8 @@ data class HomeCatalogDefinition(
     val supportsPagination: Boolean,
     val descriptorSignature: String,
     val serverConnectionId: String? = null,
+    /** A catalog that needs a genre (Cinemeta's "New" needs a year) is shown with this one. */
+    val genre: String? = null,
 ) {
     val cacheKey: String
         get() = "$key|$descriptorSignature"
@@ -48,9 +50,23 @@ fun buildHomeCatalogDefinitions(addons: List<ManagedAddon>): List<HomeCatalogDef
         addon to manifest
     }.flatMap { (addon, manifest) ->
         manifest.catalogs
-            .filter { catalog -> catalog.extra.none { it.isRequired } }
-            .map { catalog ->
+            // Catalogs whose only required choice is a genre are shown too, with this year when it is one
+            // of the choices (Cinemeta's "New"), otherwise the first choice (owner, 2026-11-25).
+            .mapNotNull { catalog ->
+                val required = catalog.extra.filter { it.isRequired }
+                when {
+                    required.isEmpty() -> catalog to null
+                    required.all { it.name == "genre" && it.options.isNotEmpty() } -> {
+                        val options = required.first().options
+                        val year = com.nuvio.app.features.player.skip.currentDateComponents().year.toString()
+                        catalog to (options.firstOrNull { it == year } ?: options.first())
+                    }
+                    else -> null
+                }
+            }
+            .map { (catalog, genre) ->
                 HomeCatalogDefinition(
+                    genre = genre,
                     key = "${manifest.id}:${catalog.type}:${catalog.id}",
                     defaultTitle = runBlocking {
                         getString(
