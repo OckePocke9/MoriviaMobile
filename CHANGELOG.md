@@ -1,5 +1,37 @@
 # Changelog
 
+## 2.0
+
+Name and look
+- The Morivia name and M logo everywhere: app name, launcher icons, in-app logo, wordmarks, loading screen and Settings footer.
+- 31 colour themes with matching app icons and initials colours; each profile can have its own theme and app icon, and Appearance drives the profile picker.
+
+Sign-in and profiles
+- Smooth animations from sign-in to the profile picker to Home, and a profile is always chosen after signing in.
+- Sign-in side by side on phones held sideways, and on every Android tablet and iPad the same design enlarged, with a QR code for link sign-in.
+- The phone profile picker enlarged evenly on tablets and iPad; landscape layouts are kept on Android and iOS.
+
+Home
+- A full-screen trailer hero with smooth swipes, a back arrow after the first title, a theme-coloured active dot and a pull-down stretch. Tap the description to read all of it and tap again to close it.
+- Continue Watching with time left and Show All above 30 titles; its source is chosen in Settings, Tracking, Watch progress.
+- A Top Row with Cinemeta Popular, Featured and New for movies and series: landscape cards with ranks, ten titles.
+- Rows from the genres you watch across every addon, Movies and Series That Aired Today from Trakt with playable titles first by resolution, Featured with five movies and five series at double size, then the addon catalogs, Live TV and Collections.
+- Show All as a pill with a theme-coloured arrow, even spacing between rows, every row starting at its first title, and rows that fade in and glide.
+- Home shows its saved rows the moment a profile is picked.
+
+Settings
+- One Connections page for Trakt, Simkl, MDBList, TMDB and sources, with matching cards; Premiumize removed.
+- Connections and System cards, landscape Settings, and fixes from a full walk-through of every page.
+
+Devices
+- An APK for every Android phone and tablet: arm64-v8a, armeabi-v7a, x86_64, x86 and a universal APK. The in-app updater picks the right one.
+- iPhone and iPad builds again, made by hand with the free Morivia iPhone and iPad workflow on GitHub Actions. On iPhone and iPad the Supporters page is hidden, as on Android.
+
+Under the hood
+- Morivia's own code, saved data and links use Morivia names (`com.morivia.app`, `morivia://`). The first start after updating moves everyone's saved data to the new names, so profiles, settings, sign-ins, library and downloads are kept. `nuvio://` links still open.
+- Claude is credited as Morivia's developer; the GPL-3.0 license and the original authors' copyright stay.
+- Raise the version to 2.0, build 201.
+
 ## 1.9
 
 - Restore Morivia for iPhone and iPad, including the mpv player and the shared library, profiles and watch progress.

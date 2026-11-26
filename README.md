@@ -3,29 +3,40 @@
 A personal media app for Android phones and tablets, iPhone and iPad.
 Bring your own sources: Morivia turns your addons into a library with artwork, profiles, subtitles and your place saved on every device. Licensed GPLv3, like the project it is built on.
 
-**Version <!-- version -->1.9<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
+**Version <!-- version -->2.0<!-- /version -->** · [Download the latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest) · [Changelog](CHANGELOG.md)
 
-## What's new in 1.9
+## What's new in 2.0
 
-- **iPhone and iPad support.** Install the unsigned iOS package with Sideloadly. The iOS player uses mpv.
-- **Trakt and SIMKL.** Connect through Morivia’s own sign-in links and see the last sync in Settings. Trakt has a manual sync button, and SIMKL can renew expired sessions when a refresh token is available.
+Morivia 2.0 is the biggest update yet, the same on phones, tablets, iPhone and iPad.
+
+- **A new look** – the Morivia name and logo everywhere, 31 colour themes with matching app icons, and each profile can have its own theme and icon.
+- **New sign-in and profiles** – smooth animations from sign-in to the profile picker to Home, sign-in with a QR code on tablets and iPad, and layouts for phones on their side.
+- **A new Home** – a full-screen trailer hero you can swipe (tap the description to read all of it), Continue Watching, a Top Row with ranks, rows from the genres you watch, what aired today, Featured, Live TV and Collections. Home is ready the moment you pick a profile.
+- **Settings** – one Connections page for Trakt, Simkl, MDBList and TMDB, with tidier cards and many fixes.
+- **For every device** – an APK for every Android phone and tablet, and iPhone and iPad builds again.
+- Your profiles, settings, sign-ins, library and downloads move over by themselves when you update.
 
 See the [changelog](CHANGELOG.md) for every change.
 
 ## Get Morivia
 
-- Download `Morivia-Android-X.Y-arm64-v8a.apk` from the [latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest), open it and allow the install. New versions install over the old one and keep your data, and the app shows a banner on Home when one is out. Android 7.0 or newer on a 64-bit ARM device.
+- **Android phones and tablets** (Android 7.0 or newer): download one APK from the [latest release](https://github.com/OckePocke9/MoriviaMobile/releases/latest), open it and allow the install. New versions install over the old one and keep your data, and the app shows a banner on Home when one is out.
+  - `Morivia-Android-X.Y-arm64-v8a.apk` – almost every phone and tablet from about 2017 on. Take this one if unsure.
+  - `Morivia-Android-X.Y-armeabi-v7a.apk` – older or low-cost phones, tablets and TV boxes with 32-bit Android.
+  - `Morivia-Android-X.Y-x86_64.apk` – Chromebooks with Intel or AMD processors and Android emulators.
+  - `Morivia-Android-X.Y-x86.apk` – old Intel tablets and older emulators.
+  - `Morivia-Android-X.Y-universal.apk` – works on all of them, but is larger.
 - **iPhone and iPad:** Download `Morivia-iOS-X.Y-release.ipa` from the same release. Requires iOS or iPadOS 16.1 or newer. Install the unsigned IPA with [Sideloadly](https://sideloadly.io/) on a PC or Mac and sign it with your Apple Account.
 - A fresh install starts signed out: sign in with your Nuvio account or continue as a guest.
 
-The app ID is `com.morivia.app`, so Morivia can be installed next to Nuvio.
+The app ID is `com.morivia.app`.
 
 ## What Morivia does
 
-Morivia is a modified version of [Nuvio Mobile](https://github.com/NuvioMedia/NuvioMobile), a Kotlin Multiplatform and Compose Multiplatform app, with its own look and features:
+Morivia is a Kotlin Multiplatform and Compose Multiplatform app with its own look and features:
 
 - **Addon catalogs** – add any Stremio addon by its `manifest.json` link; its catalogs become rows on Home.
-- **Home** – one hero (with trailers if you like), Continue Watching, rows based on the genres you watch, Featured, Popular and every addon catalog in one page you scroll freely. Settings → Layout → Home & Layout changes the hero, posters and rows.
+- **Home** – a full-screen trailer hero, Continue Watching, a Top Row with ranks, rows from the genres you watch, what aired today, Featured, every addon catalog, Live TV and Collections in one page you scroll freely.
 - **Search** – one "Movies and Shows" field across every search-capable catalog, with Trending, genre tiles and Discover by type, catalog and genre.
 - **Library** – Recently Added, Movies, TV Shows and Continue Watching in a poster grid, sorted by date added, name or recently watched, with Trakt, Simkl or MDBList as the source if you use them.
 - **Profiles** – up to six profiles with their own library, progress, theme, app icon and initials colour, a PIN lock that also protects editing, and a profile picker in the style of the earlier Morivia app.
@@ -47,7 +58,7 @@ git clone https://github.com/OckePocke9/MoriviaMobile.git
 cd MoriviaMobile
 ```
 
-Create an empty `local.properties` in the repository root. Optional keys, such as a TMDB key or another Nuvio backend, go there and never enter the repository.
+Create an empty `local.properties` in the repository root. Optional keys, such as a TMDB key or another sync server, go there and never enter the repository.
 
 Requires Java 21 or newer and the Android SDK (Android Studio is easiest).
 
@@ -55,7 +66,7 @@ Requires Java 21 or newer and the Android SDK (Android Studio is easiest).
 ./gradlew :androidApp:assembleFullRelease -Pmorivia.android.distribution=full
 ```
 
-The APK is written to `androidApp/build/outputs/apk/full/release/`.
+The APKs (one per processor type and a universal one) are written to `androidApp/build/outputs/apk/full/release/`.
 
 ### iPhone and iPad test build
 
@@ -63,7 +74,7 @@ Run the **Morivia iPhone and iPad** workflow by hand in GitHub Actions (Actions,
 
 ### Releases
 
-Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …). The Android APK is built on a PC, and the iOS IPA is built by hand with the **Morivia iPhone and iPad** workflow in GitHub Actions. Attach the matching IPA with `scripts/publish-release.ps1 -IpaPath <file>`. See [AGENTS.md](AGENTS.md) for the full process.
+Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …). The Android APKs are built on a PC, and the iOS IPA is built by hand with the **Morivia iPhone and iPad** workflow in GitHub Actions. Attach the matching IPA with `scripts/publish-release.ps1 -IpaPath <file>`. See [AGENTS.md](AGENTS.md) for the full process.
 
 ## Contributors
 
@@ -72,4 +83,4 @@ Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …)
 
 ## License
 
-[GNU General Public License v3.0](LICENSE). Morivia keeps the original Nuvio authors' copyright and third-party notices. Morivia's own code uses Morivia names (`com.morivia.app`); the `nuvio://` link scheme, Nuvio's servers and saved-data keys stay so sign-in, sync and settings keep working.
+[GNU General Public License v3.0](LICENSE). Morivia is a modified version of the open-source [Nuvio Mobile](https://github.com/NuvioMedia/NuvioMobile) and keeps its authors' copyright and third-party notices, as the license requires. Sign-in and sync use Nuvio's account service.

@@ -38,6 +38,11 @@ $text = [regex]::Replace($text, '(?m)^morivia\.versionName=.*?(\r?)$', "morivia.
 $text = [regex]::Replace($text, '(?m)^morivia\.versionCode=.*?(\r?)$', "morivia.versionCode=$build`$1")
 Write-Text $propertiesPath $text
 
+# iPhone and iPad use the same version.
+Write-Text (Join-Path $root 'iosApp/Configuration/Version.xcconfig') (
+    "// Written by scripts/bump-version.ps1 or bump-version.py from gradle.properties. Do not edit by hand.`n" +
+    "MARKETING_VERSION=$version`nCURRENT_PROJECT_VERSION=$build`n")
+
 # README: the version near the top and a new "What's new" section for this version.
 $readmePath = Join-Path $root 'README.md'
 $readme = Read-Text $readmePath
