@@ -52,7 +52,7 @@ Create an empty `local.properties` in the repository root. Optional keys, such a
 Requires Java 21 or newer and the Android SDK (Android Studio is easiest).
 
 ```bash
-./gradlew :androidApp:assembleFullRelease -Pnuvio.android.distribution=full
+./gradlew :androidApp:assembleFullRelease -Pmorivia.android.distribution=full
 ```
 
 The APK is written to `androidApp/build/outputs/apk/full/release/`.

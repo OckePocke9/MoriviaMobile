@@ -75,10 +75,10 @@
     <string name="settings_simkl_disconnect_description">Akun Simkl dan data Simkl yang di-cache akan dihapus dari profil ini.</string>
     <string name="settings_tracking_source_fallback">%1$s tidak tersedia. Menggunakan %2$s sampai terhubung kembali.</string>
     <string name="settings_tracking_progress_refresh_failed">Sumber sudah berubah, tetapi progres menonton terbaru tidak dapat dimuat ulang.</string>
-    <string name="settings_tracking_nuvio_library_description">Simpan judul tersimpan di perpustakaan Morivia.</string>
+    <string name="settings_tracking_morivia_library_description">Simpan judul tersimpan di perpustakaan Morivia.</string>
     <string name="settings_tracking_trakt_library_description">Gunakan daftar tontonan dan daftar pribadi Trakt.</string>
     <string name="settings_tracking_simkl_library_description">Gunakan daftar Plan to Watch dan status dari Simkl.</string>
-    <string name="settings_tracking_nuvio_progress_description">Lanjutkan dengan progres yang disimpan Morivia Sync.</string>
+    <string name="settings_tracking_morivia_progress_description">Lanjutkan dengan progres yang disimpan Morivia Sync.</string>
     <string name="settings_tracking_trakt_progress_description">Lanjutkan dengan progres pemutaran dari Trakt.</string>
     <string name="settings_tracking_simkl_progress_description">Lanjutkan dengan progres pemutaran dari Simkl.</string>
     <string name="settings_tracking_tmdb_recommendations_description">Gunakan rekomendasi TMDB di halaman detail.</string>

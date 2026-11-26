@@ -3,7 +3,7 @@ import Foundation
 import ActivityKit
 #endif
 
-private let downloadsLiveStatusUpdatedNotification = Notification.Name("NuvioDownloadsLiveStatusUpdated")
+private let downloadsLiveStatusUpdatedNotification = Notification.Name("MoriviaDownloadsLiveStatusUpdated")
 private let downloadsLiveStatusPayloadKey = "nuvio.downloads.live_status.payload"
 
 final class DownloadsLiveActivityManager {

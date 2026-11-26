@@ -75,10 +75,10 @@
     <string name="settings_simkl_disconnect_description">Dadurch werden das Simkl-Konto und zwischengespeicherte Simkl-Daten aus diesem Profil entfernt.</string>
     <string name="settings_tracking_source_fallback">%1$s ist nicht verfügbar. %2$s wird verwendet, bis die Verbindung wiederhergestellt ist.</string>
     <string name="settings_tracking_progress_refresh_failed">Die Quelle wurde geändert, aber der neueste Wiedergabefortschritt konnte nicht aktualisiert werden.</string>
-    <string name="settings_tracking_nuvio_library_description">Gespeicherte Titel in deiner Morivia-Bibliothek behalten.</string>
+    <string name="settings_tracking_morivia_library_description">Gespeicherte Titel in deiner Morivia-Bibliothek behalten.</string>
     <string name="settings_tracking_trakt_library_description">Deine Trakt-Merkliste und persönlichen Listen verwenden.</string>
     <string name="settings_tracking_simkl_library_description">Deine Simkl-Listen „Plan to Watch“ und Status verwenden.</string>
-    <string name="settings_tracking_nuvio_progress_description">Mit dem in Morivia Sync gespeicherten Fortschritt fortsetzen.</string>
+    <string name="settings_tracking_morivia_progress_description">Mit dem in Morivia Sync gespeicherten Fortschritt fortsetzen.</string>
     <string name="settings_tracking_trakt_progress_description">Mit dem Wiedergabefortschritt von Trakt fortsetzen.</string>
     <string name="settings_tracking_simkl_progress_description">Mit dem Wiedergabefortschritt von Simkl fortsetzen.</string>
     <string name="settings_tracking_tmdb_recommendations_description">TMDB-Empfehlungen auf Detailseiten verwenden.</string>
@@ -314,7 +314,7 @@
     <string name="trakt_library_source_subtitle">Wähle, welche Quelle Morivia für deine Bibliothek liest</string>
     <string name="trakt_library_source_dialog_title">Bibliotheksquelle</string>
     <string name="trakt_library_source_dialog_subtitle">Wähle den Dienst, den Morivia für deine Bibliothek liest. Die Wiedergabe wird an jeden verbundenen Dienst gescrobbelt.</string>
-    <string name="trakt_library_source_nuvio">Morivia-Bibliothek</string>
+    <string name="trakt_library_source_morivia">Morivia-Bibliothek</string>
     <string name="trakt_watch_progress_title">Wiedergabefortschritt</string>
     <string name="trakt_watch_progress_subtitle">Wähle, welche Fortschrittsquelle Fortsetzen und Weiterschauen steuert</string>
     <string name="trakt_watch_progress_dialog_title">Wiedergabefortschritt</string>

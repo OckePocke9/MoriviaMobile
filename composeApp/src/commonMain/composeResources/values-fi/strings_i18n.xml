@@ -12,7 +12,7 @@
     <string name="autosync_toast_no_fit">Synkronointi epäonnistui: tekstitykset eivät sovi tähän videon versioon.</string>
     <string name="autosync_label_synced">Synkronoitu automaattisesti</string>
     <string name="profile_choose_background">Valitse profiilin tausta</string>
-    <string name="profile_background_member_note">Omat tausta-URL-osoitteet voi määrittää Nuvion verkkopaneelissa.</string>
+    <string name="profile_background_member_note">Omat tausta-URL-osoitteet voi määrittää Morivian verkkopaneelissa.</string>
     <string name="profile_background_normal">Normaali</string>
     <string name="about_licenses_attributions_subtitle">Tietolähteet, kiitokset ja alustojen lisenssit</string>
     <string name="about_supporters_contributors_subtitle">Avoin tunnustus ja projektin tekijät</string>
@@ -234,8 +234,8 @@
     <string name="settings_licenses_attributions_section_ui">KÄYTTÖLIITTYMÄKIRJASTOT</string>
     <string name="settings_licenses_attributions_haze_body">Käytetään taustan sumennukseen. Tekijä Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Lisensoitu Apache License -lisenssillä, versio 2.0.</string>
-    <string name="settings_licenses_attributions_nuvio_body">Lähdekoodi ja lisenssiehdot löytyvät projektin koodivarastosta.</string>
-    <string name="settings_licenses_attributions_nuvio_license">Lisensoitu GNU General Public License v3.0 -lisenssillä.</string>
+    <string name="settings_licenses_attributions_morivia_body">Lähdekoodi ja lisenssiehdot löytyvät projektin koodivarastosta.</string>
+    <string name="settings_licenses_attributions_morivia_license">Lisensoitu GNU General Public License v3.0 -lisenssillä.</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia käyttää TMDB:n API:a elokuvien ja TV-sarjojen metatietoihin, kuviin, trailereihin, näyttelijöihin, tuotantotietoihin, kokoelmiin ja suosituksiin. Tämä tuote käyttää TMDB:n API:a, mutta TMDB ei ole hyväksynyt tai sertifioinut sitä.</string>
     <string name="settings_licenses_attributions_imdb_title">IMDb:n ei-kaupalliset tietoaineistot</string>
     <string name="settings_licenses_attributions_imdb_body">Morivia käyttää IMDb:n ei-kaupallisia tietoaineistoja, kuten title.ratings.tsv.gz, IMDb-arvosanoihin ja äänimääriin. Tiedot IMDb:n luvalla (https://www.imdb.com). Käytetään luvalla. IMDb-tiedot ovat henkilökohtaiseen ja ei-kaupalliseen käyttöön IMDb:n ehtojen mukaisesti.</string>
@@ -523,7 +523,7 @@
     <string name="settings_notifications_test_requires_saved_show">Tallenna ensin sarja kirjastoosi testataksesi ilmoituksia.</string>
     <string name="settings_notifications_test_title">Testi-ilmoitus</string>
     <string name="community_membership_title">Nuvio Supporter -jäsenyys</string>
-    <string name="community_membership_description">Nuvion tukeminen auttaa kattamaan infrastruktuurin ja jatkuvan kehityksen kustannukset, ja ydinkokemus pysyy ilmaisena kaikille.</string>
+    <string name="community_membership_description">Morivian tukeminen auttaa kattamaan infrastruktuurin ja jatkuvan kehityksen kustannukset, ja ydinkokemus pysyy ilmaisena kaikille.</string>
     <string name="community_view_supporter_membership">Näytä Supporter-jäsenyys</string>
     <string name="community_membership_you_are">Olet</string>
     <string name="community_membership_thank_you">Kiitos.</string>
@@ -969,7 +969,7 @@
     <string name="auth_account_deletion_failed">Tilin poistaminen epäonnistui</string>
     <string name="auth_sign_in_failed">Kirjautuminen epäonnistui</string>
     <string name="auth_sign_out_failed">Uloskirjautuminen epäonnistui</string>
-    <string name="auth_notice_signed_out">Sinut on kirjattu ulos Nuviosta. Kirjaudu uudelleen.</string>
+    <string name="auth_notice_signed_out">Sinut on kirjattu ulos Moriviasta. Kirjaudu uudelleen.</string>
     <string name="auth_sign_up_failed">Rekisteröityminen epäonnistui</string>
     <string name="catalog_load_failed">Katalogin kohteita ei voitu ladata.</string>
     <string name="continue_watching_up_next">Seuraavaksi</string>

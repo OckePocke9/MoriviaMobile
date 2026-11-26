@@ -70,10 +70,10 @@
     <string name="settings_simkl_disconnect_description">Isto remove a conta Simkl e os dados Simkl em cache deste perfil.</string>
     <string name="settings_tracking_source_fallback">%1$s está indisponível. A usar %2$s até voltar a ligar.</string>
     <string name="settings_tracking_progress_refresh_failed">A fonte mudou, mas não foi possível atualizar o progresso mais recente.</string>
-    <string name="settings_tracking_nuvio_library_description">Manter os títulos guardados na biblioteca do Morivia.</string>
+    <string name="settings_tracking_morivia_library_description">Manter os títulos guardados na biblioteca do Morivia.</string>
     <string name="settings_tracking_trakt_library_description">Usar a lista para ver e as listas pessoais do Trakt.</string>
     <string name="settings_tracking_simkl_library_description">Usar as listas «Plan to Watch» e de estado do Simkl.</string>
-    <string name="settings_tracking_nuvio_progress_description">Retomar com o progresso guardado pelo Morivia Sync.</string>
+    <string name="settings_tracking_morivia_progress_description">Retomar com o progresso guardado pelo Morivia Sync.</string>
     <string name="settings_tracking_trakt_progress_description">Retomar com o progresso de reprodução do Trakt.</string>
     <string name="settings_tracking_simkl_progress_description">Retomar com o progresso de reprodução do Simkl.</string>
     <string name="settings_tracking_tmdb_recommendations_description">Usar recomendações do TMDB nas páginas de detalhes.</string>

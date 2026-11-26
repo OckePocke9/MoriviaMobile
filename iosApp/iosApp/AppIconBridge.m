@@ -1,13 +1,13 @@
 #import <UIKit/UIKit.h>
 #include <stdbool.h>
 
-typedef void (*NuvioAppIconCompletion)(bool);
+typedef void (*MoriviaAppIconCompletion)(bool);
 
-bool NuvioSupportsAlternateAppIcons(void) {
+bool MoriviaSupportsAlternateAppIcons(void) {
     return UIApplication.sharedApplication.supportsAlternateIcons;
 }
 
-bool NuvioIsCurrentAlternateAppIcon(const char *name) {
+bool MoriviaIsCurrentAlternateAppIcon(const char *name) {
     NSString *currentName = UIApplication.sharedApplication.alternateIconName;
     if (name == NULL) {
         return currentName == nil;
@@ -15,7 +15,7 @@ bool NuvioIsCurrentAlternateAppIcon(const char *name) {
     return [currentName isEqualToString:[NSString stringWithUTF8String:name]];
 }
 
-void NuvioSetAlternateAppIconName(const char *name, NuvioAppIconCompletion completion) {
+void MoriviaSetAlternateAppIconName(const char *name, MoriviaAppIconCompletion completion) {
     NSString *iconName = name == NULL ? nil : [NSString stringWithUTF8String:name];
     void (^changeIcon)(void) = ^{
         UIApplication *application = UIApplication.sharedApplication;

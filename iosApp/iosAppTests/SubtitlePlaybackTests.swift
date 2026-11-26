@@ -8,7 +8,7 @@ final class SubtitlePlaybackTests: XCTestCase {
     private let factory = RecordingPlayerFactory()
 
     func testTextStylingTracksSeekDelayAndReset() async throws {
-        NuvioPlayerBridgeFactory.shared.registerFactory(creator: factory)
+        MoriviaPlayerBridgeFactory.shared.registerFactory(creator: factory)
         let settings = PlayerSettingsRepository.shared
         settings.ensureLoaded()
         let defaults = UserDefaults.standard
@@ -17,7 +17,7 @@ final class SubtitlePlaybackTests: XCTestCase {
         let fontDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("subtitle-fonts")
         try FileManager.default.createDirectory(at: fontDirectory, withIntermediateDirectories: true)
         let fontFile = fontDirectory.appendingPathComponent(fontId)
-        let bundledFont = Bundle.main.bundleURL.appendingPathComponent("compose-resources/composeResources/nuvio.composeapp.generated.resources/font/jetbrains_sans_regular.ttf")
+        let bundledFont = Bundle.main.bundleURL.appendingPathComponent("compose-resources/composeResources/morivia.composeapp.generated.resources/font/jetbrains_sans_regular.ttf")
         try FileManager.default.copyItem(at: bundledFont, to: fontFile)
         settings.setPreferredSubtitleLanguage(language: "en")
         settings.setSubtitleStyle(style: makeStyle(font: "serif", radius: 16))
@@ -50,7 +50,7 @@ final class SubtitlePlaybackTests: XCTestCase {
             defaults.dictionaryRepresentation().keys.filter { $0.contains("subtitle") }.forEach { defaults.removeObject(forKey: $0) }
             original.forEach { defaults.set($0.value, forKey: $0.key) }
             settings.onProfileChanged()
-            NuvioPlayerRegistration.register()
+            MoriviaPlayerRegistration.register()
             PlayerLaunchStore.shared.remove(launchId: launchId)
             factory.bridge?.destroy()
         }
@@ -129,10 +129,10 @@ final class SubtitlePlaybackTests: XCTestCase {
     }
 }
 
-private final class RecordingPlayerFactory: NSObject, NuvioPlayerBridgeCreator {
+private final class RecordingPlayerFactory: NSObject, MoriviaPlayerBridgeCreator {
     var bridge: MPVPlayerBridgeImpl?
 
-    func createBridge() -> any NuvioPlayerBridge {
+    func createBridge() -> any MoriviaPlayerBridge {
         let bridge = MPVPlayerBridgeImpl()
         self.bridge = bridge
         return bridge

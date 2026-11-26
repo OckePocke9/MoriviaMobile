@@ -35,15 +35,15 @@ swiftpm_module_cache="${SWIFTPM_MODULECACHE_OVERRIDE:-${derived_data}/SwiftPMMod
 cd "${repository_root}"
 build_environment=(
     env
-    NUVIO_IOS_DISTRIBUTION=full
+    MORIVIA_IOS_DISTRIBUTION=full
     CLANG_MODULE_CACHE_PATH="${clang_module_cache}"
     SWIFTPM_MODULECACHE_OVERRIDE="${swiftpm_module_cache}"
 )
-if [[ -n "${NUVIO_GRADLE_JVMARGS:-}" ]]; then
-    build_environment+=("ORG_GRADLE_PROJECT_org.gradle.jvmargs=${NUVIO_GRADLE_JVMARGS}")
+if [[ -n "${MORIVIA_GRADLE_JVMARGS:-}" ]]; then
+    build_environment+=("ORG_GRADLE_PROJECT_org.gradle.jvmargs=${MORIVIA_GRADLE_JVMARGS}")
 fi
-if [[ -n "${NUVIO_KOTLIN_NATIVE_JVMARGS:-}" ]]; then
-    build_environment+=("ORG_GRADLE_PROJECT_kotlin.native.jvmArgs=${NUVIO_KOTLIN_NATIVE_JVMARGS}")
+if [[ -n "${MORIVIA_KOTLIN_NATIVE_JVMARGS:-}" ]]; then
+    build_environment+=("ORG_GRADLE_PROJECT_kotlin.native.jvmArgs=${MORIVIA_KOTLIN_NATIVE_JVMARGS}")
 fi
 # Code for the iOS 27.1 SDK (foldable iPhone hinge, vertical bar) is built only when Xcode has it.
 sdk_version="$(xcrun --sdk iphoneos --show-sdk-version)"

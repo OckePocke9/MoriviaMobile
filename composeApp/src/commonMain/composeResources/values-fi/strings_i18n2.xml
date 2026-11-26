@@ -153,10 +153,10 @@
     <string name="settings_simkl_disconnect_description">Tämä poistaa Simkl-tilin ja välimuistiin tallennetut Simkl-tiedot tästä profiilista.</string>
     <string name="settings_tracking_source_fallback">%1$s ei ole saatavilla. Käytetään palvelua %2$s, kunnes yhteys palaa.</string>
     <string name="settings_tracking_progress_refresh_failed">Lähde vaihtui, mutta uusinta katselun edistymistä ei voitu päivittää.</string>
-    <string name="settings_tracking_nuvio_library_description">Pidä tallennetut nimikkeet Morivia-kirjastossasi.</string>
+    <string name="settings_tracking_morivia_library_description">Pidä tallennetut nimikkeet Morivia-kirjastossasi.</string>
     <string name="settings_tracking_trakt_library_description">Käytä Traktin katselulistaa ja omia listojasi.</string>
     <string name="settings_tracking_simkl_library_description">Käytä Simklin Aion katsoa- ja tilalistoja.</string>
-    <string name="settings_tracking_nuvio_progress_description">Jatka Morivia Syncin tallentamasta edistymisestä.</string>
+    <string name="settings_tracking_morivia_progress_description">Jatka Morivia Syncin tallentamasta edistymisestä.</string>
     <string name="settings_tracking_trakt_progress_description">Jatka Traktin toiston edistymisestä.</string>
     <string name="settings_tracking_trakt_progress_required">Saatavilla, kun Trakt on katselun edistymisen lähde</string>
     <string name="settings_tracking_simkl_progress_description">Jatka Simklin toiston edistymisestä.</string>
@@ -212,7 +212,7 @@
     <string name="trakt_library_source_subtitle">Valitse, mistä lähteestä Morivia lukee kirjastosi</string>
     <string name="trakt_library_source_dialog_title">Kirjaston lähde</string>
     <string name="trakt_library_source_dialog_subtitle">Valitse palvelu, josta Morivia lukee kirjastosi. Toisto scrobblataan kaikkiin yhdistettyihin palveluihin.</string>
-    <string name="trakt_library_source_nuvio">Morivia-kirjasto</string>
+    <string name="trakt_library_source_morivia">Morivia-kirjasto</string>
     <string name="trakt_watch_progress_title">Katselun edistyminen</string>
     <string name="trakt_watch_progress_subtitle">Valitse, mikä lähde ohjaa jatkamista ja Jatka katselua -riviä</string>
     <string name="trakt_watch_progress_dialog_title">Katselun edistyminen</string>

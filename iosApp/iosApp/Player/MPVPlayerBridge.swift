@@ -6,7 +6,7 @@ import ComposeApp
 
 // MARK: - Player Bridge Implementation (Kotlin protocol conformance)
 
-final class MPVPlayerBridgeImpl: NSObject, NuvioPlayerBridge {
+final class MPVPlayerBridgeImpl: NSObject, MoriviaPlayerBridge {
 
     private var playerVC: MPVPlayerViewController?
 
@@ -297,7 +297,7 @@ final class MPVPlayerViewController: UIViewController {
     private var pendingSurfaceLayoutWorkItems: [DispatchWorkItem] = []
     private var pendingLoadRequest: PendingLoadRequest?
     private var startupSubtitles: [PluginSubtitle] = []
-    /// mpv's sub-add needs a loaded file. An add-on subtitle selected before that (Nuvio restores
+    /// mpv's sub-add needs a loaded file. An add-on subtitle selected before that (Morivia restores
     /// the remembered one as soon as add-ons answer, often while the stream still opens) waits here.
     private var pendingSubtitleUrl: String?
     private(set) var isFileLoaded = false
@@ -1535,16 +1535,16 @@ final class MPVPlayerViewController: UIViewController {
 
 // MARK: - Bridge Creator (implements Kotlin protocol)
 
-final class MPVPlayerBridgeCreator: NSObject, NuvioPlayerBridgeCreator {
-    func createBridge() -> any NuvioPlayerBridge {
+final class MPVPlayerBridgeCreator: NSObject, MoriviaPlayerBridgeCreator {
+    func createBridge() -> any MoriviaPlayerBridge {
         return MPVPlayerBridgeImpl()
     }
 }
 
 // MARK: - Registration (called from Swift app startup)
 
-enum NuvioPlayerRegistration {
+enum MoriviaPlayerRegistration {
     static func register() {
-        NuvioPlayerBridgeFactory.shared.registerFactory(creator: MPVPlayerBridgeCreator())
+        MoriviaPlayerBridgeFactory.shared.registerFactory(creator: MPVPlayerBridgeCreator())
     }
 }

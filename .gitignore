@@ -3,8 +3,8 @@
 .kotlin
 .gradle
 **/build/
-!composeApp/src/**/kotlin/com/nuvio/app/core/build/
-!composeApp/src/**/kotlin/com/nuvio/app/core/build/**
+!composeApp/src/**/kotlin/com/morivia/app/core/build/
+!composeApp/src/**/kotlin/com/morivia/app/core/build/**
 !src/**/build/
 local.properties
 captures

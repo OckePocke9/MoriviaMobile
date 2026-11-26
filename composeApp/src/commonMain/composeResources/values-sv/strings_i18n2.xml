@@ -153,10 +153,10 @@
     <string name="settings_simkl_disconnect_description">Detta tar bort Simkl-kontot och cachad Simkl-data från profilen.</string>
     <string name="settings_tracking_source_fallback">%1$s är inte tillgängligt. Använder %2$s tills det är anslutet igen.</string>
     <string name="settings_tracking_progress_refresh_failed">Källan ändrades, men det senaste tittarförloppet kunde inte uppdateras.</string>
-    <string name="settings_tracking_nuvio_library_description">Behåll sparade titlar i ditt Morivia-bibliotek.</string>
+    <string name="settings_tracking_morivia_library_description">Behåll sparade titlar i ditt Morivia-bibliotek.</string>
     <string name="settings_tracking_trakt_library_description">Använd din bevakningslista och dina egna listor på Trakt.</string>
     <string name="settings_tracking_simkl_library_description">Använd dina listor Ska titta och status på Simkl.</string>
-    <string name="settings_tracking_nuvio_progress_description">Fortsätt med förloppet som sparats av Morivia Sync.</string>
+    <string name="settings_tracking_morivia_progress_description">Fortsätt med förloppet som sparats av Morivia Sync.</string>
     <string name="settings_tracking_trakt_progress_description">Fortsätt med uppspelningsförloppet från Trakt.</string>
     <string name="settings_tracking_trakt_progress_required">Tillgängligt när Trakt är källa för tittarförlopp</string>
     <string name="settings_tracking_simkl_progress_description">Fortsätt med uppspelningsförloppet från Simkl.</string>
@@ -212,7 +212,7 @@
     <string name="trakt_library_source_subtitle">Välj vilken källa Morivia läser för ditt bibliotek</string>
     <string name="trakt_library_source_dialog_title">Källa för biblioteket</string>
     <string name="trakt_library_source_dialog_subtitle">Välj tjänsten Morivia läser för ditt bibliotek. Uppspelning scrobblas till alla anslutna tjänster.</string>
-    <string name="trakt_library_source_nuvio">Morivia-bibliotek</string>
+    <string name="trakt_library_source_morivia">Morivia-bibliotek</string>
     <string name="trakt_watch_progress_title">Tittarförlopp</string>
     <string name="trakt_watch_progress_subtitle">Välj vilken källa som styr fortsättning och Fortsätt titta</string>
     <string name="trakt_watch_progress_dialog_title">Tittarförlopp</string>

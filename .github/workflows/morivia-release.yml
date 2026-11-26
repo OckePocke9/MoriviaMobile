@@ -83,13 +83,13 @@ jobs:
       - name: Test Android
         run: >-
           ./gradlew :composeApp:testAndroidHostTest :androidApp:lintFullRelease
-          -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          -Pmorivia.android.distribution=full -PreleaseMinifyEnabled=false
           '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8'
           --max-workers=1 --no-parallel --no-daemon --stacktrace
       - name: Build Android release APK
         run: >-
           ./gradlew :androidApp:assembleFullRelease
-          -Pnuvio.android.distribution=full -PreleaseMinifyEnabled=false
+          -Pmorivia.android.distribution=full -PreleaseMinifyEnabled=false
           '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8'
           --max-workers=1 --no-parallel --no-daemon --stacktrace
       - name: Check APK identity, version and signature

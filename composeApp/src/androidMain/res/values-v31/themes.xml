@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Nuvio" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowBackground">@color/nuvio_background</item>
+    <style name="Theme.Morivia" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/morivia_background</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/nuvio_background</item>
+    <style name="Theme.Morivia.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/morivia_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_original</item>
-        <item name="postSplashScreenTheme">@style/Theme.Nuvio</item>
+        <item name="postSplashScreenTheme">@style/Theme.Morivia</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash.ArcticBlue" parent="@style/Theme.Nuvio.Splash">
+    <style name="Theme.Morivia.Splash.ArcticBlue" parent="@style/Theme.Morivia.Splash">
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_arctic_blue</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash.Emerald" parent="@style/Theme.Nuvio.Splash">
+    <style name="Theme.Morivia.Splash.Emerald" parent="@style/Theme.Morivia.Splash">
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_emerald</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash.RoseGold" parent="@style/Theme.Nuvio.Splash">
+    <style name="Theme.Morivia.Splash.RoseGold" parent="@style/Theme.Morivia.Splash">
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_rose_gold</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash.Copper" parent="@style/Theme.Nuvio.Splash">
+    <style name="Theme.Morivia.Splash.Copper" parent="@style/Theme.Morivia.Splash">
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_copper</item>
     </style>
 
-    <style name="Theme.Nuvio.Splash.Graphite" parent="@style/Theme.Nuvio.Splash">
+    <style name="Theme.Morivia.Splash.Graphite" parent="@style/Theme.Morivia.Splash">
         <item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_graphite</item>
     </style>
-    <style name="Theme.Nuvio.Splash.Gold" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_gold</item></style>
-    <style name="Theme.Nuvio.Splash.Jade" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_jade</item></style>
-    <style name="Theme.Nuvio.Splash.Crimson" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_crimson</item></style>
-    <style name="Theme.Nuvio.Splash.Ocean" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_ocean</item></style>
-    <style name="Theme.Nuvio.Splash.Violet" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_violet</item></style>
-    <style name="Theme.Nuvio.Splash.Amber" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_amber</item></style>
-    <style name="Theme.Nuvio.Splash.Rose" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_rose</item></style>
-    <style name="Theme.Nuvio.Splash.White" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_white</item></style>
-    <style name="Theme.Nuvio.Splash.Amethyst" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_amethyst</item></style>
-    <style name="Theme.Nuvio.Splash.Apricot" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_apricot</item></style>
-    <style name="Theme.Nuvio.Splash.Aubergine" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_aubergine</item></style>
-    <style name="Theme.Nuvio.Splash.Azure" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_azure</item></style>
-    <style name="Theme.Nuvio.Splash.Basil" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_basil</item></style>
-    <style name="Theme.Nuvio.Splash.Berry" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_berry</item></style>
-    <style name="Theme.Nuvio.Splash.Blush" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_blush</item></style>
-    <style name="Theme.Nuvio.Splash.Cerulean" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cerulean</item></style>
-    <style name="Theme.Nuvio.Splash.Cherry" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cherry</item></style>
-    <style name="Theme.Nuvio.Splash.Cobalt" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cobalt</item></style>
-    <style name="Theme.Nuvio.Splash.Coral" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_coral</item></style>
-    <style name="Theme.Nuvio.Splash.Denim" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_denim</item></style>
-    <style name="Theme.Nuvio.Splash.Fern" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_fern</item></style>
-    <style name="Theme.Nuvio.Splash.Glacier" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_glacier</item></style>
-    <style name="Theme.Nuvio.Splash.Grape" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_grape</item></style>
-    <style name="Theme.Nuvio.Splash.Heather" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_heather</item></style>
-    <style name="Theme.Nuvio.Splash.Indigo" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_indigo</item></style>
-    <style name="Theme.Nuvio.Splash.Lagoon" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lagoon</item></style>
-    <style name="Theme.Nuvio.Splash.Lavender" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lavender</item></style>
-    <style name="Theme.Nuvio.Splash.Lemon" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lemon</item></style>
-    <style name="Theme.Nuvio.Splash.Lilac" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lilac</item></style>
-    <style name="Theme.Nuvio.Splash.Lime" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lime</item></style>
-    <style name="Theme.Nuvio.Splash.Mango" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_mango</item></style>
-    <style name="Theme.Nuvio.Splash.Mint" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_mint</item></style>
-    <style name="Theme.Nuvio.Splash.Moss" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_moss</item></style>
-    <style name="Theme.Nuvio.Splash.Orchid" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_orchid</item></style>
-    <style name="Theme.Nuvio.Splash.Peach" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_peach</item></style>
-    <style name="Theme.Nuvio.Splash.Periwinkle" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_periwinkle</item></style>
-    <style name="Theme.Nuvio.Splash.Pine" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_pine</item></style>
-    <style name="Theme.Nuvio.Splash.Saffron" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_saffron</item></style>
-    <style name="Theme.Nuvio.Splash.Teal" parent="@style/Theme.Nuvio.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_teal</item></style>
+    <style name="Theme.Morivia.Splash.Gold" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_gold</item></style>
+    <style name="Theme.Morivia.Splash.Jade" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_jade</item></style>
+    <style name="Theme.Morivia.Splash.Crimson" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_crimson</item></style>
+    <style name="Theme.Morivia.Splash.Ocean" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_ocean</item></style>
+    <style name="Theme.Morivia.Splash.Violet" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_violet</item></style>
+    <style name="Theme.Morivia.Splash.Amber" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_amber</item></style>
+    <style name="Theme.Morivia.Splash.Rose" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_rose</item></style>
+    <style name="Theme.Morivia.Splash.White" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_white</item></style>
+    <style name="Theme.Morivia.Splash.Amethyst" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_amethyst</item></style>
+    <style name="Theme.Morivia.Splash.Apricot" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_apricot</item></style>
+    <style name="Theme.Morivia.Splash.Aubergine" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_aubergine</item></style>
+    <style name="Theme.Morivia.Splash.Azure" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_azure</item></style>
+    <style name="Theme.Morivia.Splash.Basil" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_basil</item></style>
+    <style name="Theme.Morivia.Splash.Berry" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_berry</item></style>
+    <style name="Theme.Morivia.Splash.Blush" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_blush</item></style>
+    <style name="Theme.Morivia.Splash.Cerulean" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cerulean</item></style>
+    <style name="Theme.Morivia.Splash.Cherry" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cherry</item></style>
+    <style name="Theme.Morivia.Splash.Cobalt" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_cobalt</item></style>
+    <style name="Theme.Morivia.Splash.Coral" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_coral</item></style>
+    <style name="Theme.Morivia.Splash.Denim" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_denim</item></style>
+    <style name="Theme.Morivia.Splash.Fern" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_fern</item></style>
+    <style name="Theme.Morivia.Splash.Glacier" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_glacier</item></style>
+    <style name="Theme.Morivia.Splash.Grape" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_grape</item></style>
+    <style name="Theme.Morivia.Splash.Heather" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_heather</item></style>
+    <style name="Theme.Morivia.Splash.Indigo" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_indigo</item></style>
+    <style name="Theme.Morivia.Splash.Lagoon" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lagoon</item></style>
+    <style name="Theme.Morivia.Splash.Lavender" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lavender</item></style>
+    <style name="Theme.Morivia.Splash.Lemon" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lemon</item></style>
+    <style name="Theme.Morivia.Splash.Lilac" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lilac</item></style>
+    <style name="Theme.Morivia.Splash.Lime" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_lime</item></style>
+    <style name="Theme.Morivia.Splash.Mango" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_mango</item></style>
+    <style name="Theme.Morivia.Splash.Mint" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_mint</item></style>
+    <style name="Theme.Morivia.Splash.Moss" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_moss</item></style>
+    <style name="Theme.Morivia.Splash.Orchid" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_orchid</item></style>
+    <style name="Theme.Morivia.Splash.Peach" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_peach</item></style>
+    <style name="Theme.Morivia.Splash.Periwinkle" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_periwinkle</item></style>
+    <style name="Theme.Morivia.Splash.Pine" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_pine</item></style>
+    <style name="Theme.Morivia.Splash.Saffron" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_saffron</item></style>
+    <style name="Theme.Morivia.Splash.Teal" parent="@style/Theme.Morivia.Splash"><item name="windowSplashScreenAnimatedIcon">@drawable/morivia_foreground_teal</item></style>
 </resources>

@@ -32,7 +32,7 @@
     <string name="action_save">Lagre</string>
     <string name="action_saved">Lagret</string>
     <string name="action_saving">Lagrer…</string>
-    <string name="action_support_nuvio">Støtt Morivia</string>
+    <string name="action_support_morivia">Støtt Morivia</string>
     <string name="action_switch">Bytt</string>
     <string name="action_update">Oppdater</string>
     <string name="action_validate">Valider</string>
@@ -1596,9 +1596,9 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_licenses_attributions_mpvkit_body">Brukes for avspilling på iOS.</string>
     <string name="settings_licenses_attributions_mpvkit_license">Lisensiert under LGPL v3.0.</string>
     <string name="settings_licenses_attributions_mpvkit_title">MPVKit</string>
-    <string name="settings_licenses_attributions_nuvio_body">Kildekode og lisensvilkår finnes i prosjektets repository.</string>
-    <string name="settings_licenses_attributions_nuvio_license">Lisensiert under GNU General Public License v3.0.</string>
-    <string name="settings_licenses_attributions_nuvio_title">Morivia Mobile</string>
+    <string name="settings_licenses_attributions_morivia_body">Kildekode og lisensvilkår finnes i prosjektets repository.</string>
+    <string name="settings_licenses_attributions_morivia_license">Lisensiert under GNU General Public License v3.0.</string>
+    <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
     <string name="settings_licenses_attributions_section_app">APP-LISENS</string>
     <string name="settings_licenses_attributions_section_data">DATA &amp; TJENESTER</string>
     <string name="settings_licenses_attributions_section_playback">AVSPILLINGS-LISENS</string>
@@ -2040,8 +2040,8 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_tracking_disconnect_description">Dette fjerner tilkoblingen fra Morivia. Dataene dine på %1$s forblir intakte, og utilgjengelige bibliotek- eller fremdriftskilder faller midlertidig tilbake til Morivia.</string>
     <string name="settings_tracking_disconnect_title">Koble fra %1$s?</string>
     <string name="settings_tracking_features">KILDEPREFERANSER</string>
-    <string name="settings_tracking_nuvio_library_description">Behold lagrede titler i Morivia-biblioteket ditt.</string>
-    <string name="settings_tracking_nuvio_progress_description">Gjenoppta med fremdrift lagret av Morivia Sync.</string>
+    <string name="settings_tracking_morivia_library_description">Behold lagrede titler i Morivia-biblioteket ditt.</string>
+    <string name="settings_tracking_morivia_progress_description">Gjenoppta med fremdrift lagret av Morivia Sync.</string>
     <string name="settings_tracking_progress_refresh_failed">Kilden ble endret, men den nyeste seer-fremdriften kunne ikke oppdateres.</string>
     <string name="settings_tracking_services">Kontoer</string>
     <string name="settings_tracking_simkl_library_description">Bruk Simkl plan-to-watch- og statuslistene dine.</string>
@@ -2205,8 +2205,8 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="trakt_library_load_failed">Kunne ikke laste Trakt-bibliotek</string>
     <string name="trakt_library_source_dialog_subtitle">Velg hvor du vil lagre og administrere bibliotekelementer</string>
     <string name="trakt_library_source_dialog_title">Bibliotekkilde</string>
-    <string name="trakt_library_source_nuvio">Morivia-bibliotek</string>
-    <string name="trakt_library_source_nuvio_selected">Morivia-bibliotek valgt</string>
+    <string name="trakt_library_source_morivia">Morivia-bibliotek</string>
+    <string name="trakt_library_source_morivia_selected">Morivia-bibliotek valgt</string>
     <string name="trakt_library_source_subtitle">Velg hvilket bibliotek som skal brukes for lagring og visning av samlingen din</string>
     <string name="trakt_library_source_title">Bibliotekkilde</string>
     <string name="trakt_library_source_trakt">Trakt</string>
@@ -2237,8 +2237,8 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="trakt_user_fallback">Trakt-bruker</string>
     <string name="trakt_watch_progress_dialog_subtitle">Velg om resume og Fortsett å se skal bruke Trakt eller Morivia Sync mens Trakt scrobbling er aktiv.</string>
     <string name="trakt_watch_progress_dialog_title">Seer-fremdrift</string>
-    <string name="trakt_watch_progress_nuvio_selected">Seer-fremdrift satt til Morivia Sync</string>
-    <string name="trakt_watch_progress_source_nuvio">Morivia Sync</string>
+    <string name="trakt_watch_progress_morivia_selected">Seer-fremdrift satt til Morivia Sync</string>
+    <string name="trakt_watch_progress_source_morivia">Morivia Sync</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
     <string name="trakt_watch_progress_subtitle">Velg hvilken fremdriftskilde som driver resume og Fortsett å se</string>
     <string name="trakt_watch_progress_title">Seer-fremdrift</string>

@@ -149,8 +149,8 @@
     <string name="settings_licenses_attributions_section_app">APP-LIZENZ</string>
     <string name="settings_licenses_attributions_section_data">DATEN &amp; DIENSTE</string>
     <string name="settings_licenses_attributions_section_playback">WIEDERGABELIZENZ</string>
-    <string name="settings_licenses_attributions_nuvio_body">Quellcode und Lizenzbedingungen sind im Projekt-Repository verfügbar.</string>
-    <string name="settings_licenses_attributions_nuvio_license">Lizenziert unter der GNU General Public License v3.0.</string>
+    <string name="settings_licenses_attributions_morivia_body">Quellcode und Lizenzbedingungen sind im Projekt-Repository verfügbar.</string>
+    <string name="settings_licenses_attributions_morivia_license">Lizenziert unter der GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia nutzt die TMDB-API für Metadaten zu Filmen und Serien, Bilder, Trailer, Besetzung, Produktionsdetails, Sammlungen und Empfehlungen. Dieses Produkt nutzt die TMDB-API, ist aber nicht von TMDB unterstützt oder zertifiziert.</string>
     <string name="settings_licenses_attributions_imdb_title">Nichtkommerzielle IMDb-Datensätze</string>
     <string name="settings_licenses_attributions_imdb_body">Morivia nutzt die nichtkommerziellen IMDb-Datensätze, darunter title.ratings.tsv.gz, für IMDb-Bewertungen und Stimmenzahlen. Informationen mit freundlicher Genehmigung von IMDb (https://www.imdb.com). Verwendung mit Genehmigung. IMDb-Daten sind gemäß den IMDb-Bedingungen nur für den persönlichen, nichtkommerziellen Gebrauch.</string>

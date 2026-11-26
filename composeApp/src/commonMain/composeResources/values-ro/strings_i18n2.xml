@@ -75,10 +75,10 @@
     <string name="settings_simkl_disconnect_description">Contul Simkl și datele Simkl din cache sunt eliminate din acest profil.</string>
     <string name="settings_tracking_source_fallback">%1$s nu este disponibil. Se folosește %2$s până la reconectare.</string>
     <string name="settings_tracking_progress_refresh_failed">Sursa s-a schimbat, dar cel mai recent progres nu a putut fi actualizat.</string>
-    <string name="settings_tracking_nuvio_library_description">Păstrează titlurile salvate în biblioteca Morivia.</string>
+    <string name="settings_tracking_morivia_library_description">Păstrează titlurile salvate în biblioteca Morivia.</string>
     <string name="settings_tracking_trakt_library_description">Folosește lista de vizionare și listele personale Trakt.</string>
     <string name="settings_tracking_simkl_library_description">Folosește listele „Plan to Watch” și de stare din Simkl.</string>
-    <string name="settings_tracking_nuvio_progress_description">Reia cu progresul salvat de Morivia Sync.</string>
+    <string name="settings_tracking_morivia_progress_description">Reia cu progresul salvat de Morivia Sync.</string>
     <string name="settings_tracking_trakt_progress_description">Reia cu progresul redării din Trakt.</string>
     <string name="settings_tracking_simkl_progress_description">Reia cu progresul redării din Simkl.</string>
     <string name="settings_tracking_tmdb_recommendations_description">Folosește recomandările TMDB pe paginile de detalii.</string>

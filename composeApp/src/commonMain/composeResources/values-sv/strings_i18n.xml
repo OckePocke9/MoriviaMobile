@@ -12,7 +12,7 @@
     <string name="autosync_toast_no_fit">Synken misslyckades: undertexterna passar inte den här versionen av videon.</string>
     <string name="autosync_label_synced">Automatiskt synkad</string>
     <string name="profile_choose_background">Välj profilbakgrund</string>
-    <string name="profile_background_member_note">Egna bakgrunds-URL:er kan ställas in i Nuvios webbpanel.</string>
+    <string name="profile_background_member_note">Egna bakgrunds-URL:er kan ställas in i Morivias webbpanel.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="about_licenses_attributions_subtitle">Datakällor, erkännanden och plattformslicenser</string>
     <string name="about_supporters_contributors_subtitle">Öppet erkännande och projektets medverkande</string>
@@ -234,8 +234,8 @@
     <string name="settings_licenses_attributions_section_ui">UI-BIBLIOTEK</string>
     <string name="settings_licenses_attributions_haze_body">Används för bakgrundsoskärpa. Skapat av Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Licensierat under Apache License, version 2.0.</string>
-    <string name="settings_licenses_attributions_nuvio_body">Källkod och licensvillkor finns i projektets kodförråd.</string>
-    <string name="settings_licenses_attributions_nuvio_license">Licensierat under GNU General Public License v3.0.</string>
+    <string name="settings_licenses_attributions_morivia_body">Källkod och licensvillkor finns i projektets kodförråd.</string>
+    <string name="settings_licenses_attributions_morivia_license">Licensierat under GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia använder TMDB:s API för metadata om filmer och tv, bilder, trailers, rollista, produktionsuppgifter, samlingar och rekommendationer. Den här produkten använder TMDB:s API men är inte godkänd eller certifierad av TMDB.</string>
     <string name="settings_licenses_attributions_imdb_title">IMDb:s icke-kommersiella dataset</string>
     <string name="settings_licenses_attributions_imdb_body">Morivia använder IMDb:s icke-kommersiella dataset, bland annat title.ratings.tsv.gz, för IMDb-betyg och antal röster. Information med tillstånd från IMDb (https://www.imdb.com). Används med tillstånd. IMDb-data är för personligt och icke-kommersiellt bruk enligt IMDb:s villkor.</string>

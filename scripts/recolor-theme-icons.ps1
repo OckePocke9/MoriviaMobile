@@ -108,7 +108,7 @@ public static class MoriviaRecolor {
 $root = Split-Path -Parent $PSScriptRoot
 $drawable = Join-Path $root 'composeApp/src/commonMain/composeResources/drawable'
 $nodpi = Join-Path $root 'composeApp/src/androidMain/res/drawable-nodpi'
-$themeSource = Get-Content -Raw (Join-Path $root 'composeApp/src/commonMain/kotlin/com/nuvio/app/core/ui/ThemeColors.kt')
+$themeSource = Get-Content -Raw (Join-Path $root 'composeApp/src/commonMain/kotlin/com/morivia/app/core/ui/ThemeColors.kt')
 
 # Theme gradients from ThemeColors.kt (Copper has no theme and keeps its own colours).
 $themes = [ordered]@{

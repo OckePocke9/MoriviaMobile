@@ -104,7 +104,7 @@ if ($ApkPath) {
 } else {
     $tasks = @(':androidApp:assembleFullRelease')
     if (-not $SkipTests) { $tasks = @(':composeApp:testAndroidHostTest') + $tasks }
-    & .\gradlew.bat @tasks '-Pnuvio.android.distribution=full' --console=plain
+    & .\gradlew.bat @tasks '-Pmorivia.android.distribution=full' --console=plain
     if ($LASTEXITCODE -ne 0) { Fail 'The Android build or its tests failed; nothing was published.' }
     $apk = Get-ChildItem 'androidApp/build/outputs/apk/full/release' -Filter '*arm64-v8a-release.apk' | Select-Object -First 1
 }
@@ -120,7 +120,7 @@ if ($LASTEXITCODE -ne 0) { Fail 'The APK signature does not verify.' }
 # local.properties). This is the public SHA-256 fingerprint of its certificate.
 $releaseKeySha256 = 'b7132668066d058409aca81eb0aaa23441b9cf71ad01582e572311d94fa85900'
 if (-not ($signer | Select-String -SimpleMatch "certificate SHA-256 digest: $releaseKeySha256")) {
-    Fail 'The APK is not signed with the Morivia release key. Set NUVIO_RELEASE_* in local.properties.'
+    Fail 'The APK is not signed with the Morivia release key. Set MORIVIA_RELEASE_* in local.properties.'
 }
 
 # 3. Publish
