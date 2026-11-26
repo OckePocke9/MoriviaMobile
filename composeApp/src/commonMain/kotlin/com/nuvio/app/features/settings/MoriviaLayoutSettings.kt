@@ -23,8 +23,8 @@ enum class MoriviaHeroLayout {
 enum class HomeCatalogRow(val titleMatch: String, val series: Boolean, val defaultLandscape: Boolean = false) {
     POPULAR_MOVIES("popular", false),
     POPULAR_SERIES("popular", true),
-    FEATURED_MOVIES("featured", false, defaultLandscape = true),
-    FEATURED_SERIES("featured", true, defaultLandscape = true),
+    FEATURED_MOVIES("featured", false),
+    FEATURED_SERIES("featured", true),
 }
 
 /** How collection covers on Home move. */
@@ -47,7 +47,8 @@ enum class MoriviaLibrarySort { ADDED, NAME, RECENTLY_WATCHED }
 data class MoriviaLayoutSettings(
     // Home: hero
     val heroLayout: MoriviaHeroLayout = MoriviaHeroLayout.ROLLING,
-    val heroVideo: Boolean = false,
+    // On by default: the hero trailer starts by itself (owner, 2026-11-24); the Home Layout switch turns it off.
+    val heroVideo: Boolean = true,
     val trailerSound: Boolean = false,
     // Home: posters
     val posterBanners: Boolean = true,

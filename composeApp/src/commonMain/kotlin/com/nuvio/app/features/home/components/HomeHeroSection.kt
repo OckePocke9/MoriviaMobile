@@ -189,7 +189,8 @@ fun HomeHeroSection(
         }
     }
     // The trailer always starts and fills the whole hero (owner, 2026-11-24).
-    val trailerEnabled = true &&
+    // Play Trailers in Hero (Home Layout), on by default (owner, 2026-11-26).
+    val trailerEnabled = moriviaLayout.heroVideo &&
         com.nuvio.app.core.build.AppFeaturePolicy.heroTrailerPlaybackSupported &&
         com.nuvio.app.core.build.AppFeaturePolicy.trailerPlaybackMode == com.nuvio.app.core.build.TrailerPlaybackMode.IN_APP
     val trailerItem = items[autoScrollPage % items.size]

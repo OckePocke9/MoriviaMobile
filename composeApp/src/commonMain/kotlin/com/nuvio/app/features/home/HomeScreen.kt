@@ -1574,7 +1574,7 @@ private fun HomeScreenWithCatalogs(
                     // a ranked and a plain one of each (owner, 2026-11-25).
                     (if (isIos) HomeCatalogRow.entries else moriviaLayout.orderedHomeCatalogRows()).forEach { row ->
                         val section = pinnedSections[row] ?: return@forEach
-                        val useLandscape = moriviaLayout.usesLandscapeCards(row) && row.titleMatch != "featured" // bottom Featured rows as posters (owner, 2026-11-25)
+                        val useLandscape = moriviaLayout.usesLandscapeCards(row) // Featured rows default to posters (owner, 2026-11-25); Poster Card Style can change it
                         item(key = "morivia_plain_${section.key}", contentType = "catalog") {
                             HomeCatalogRowSection(
                                 section = section,

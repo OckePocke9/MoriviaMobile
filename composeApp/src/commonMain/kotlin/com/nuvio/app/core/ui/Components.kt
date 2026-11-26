@@ -238,12 +238,28 @@ fun NuvioScreenHeader(
                     transitionSpec = { fadeIn() togetherWith fadeOut() },
                     label = "screen_header_title",
                 ) { currentTitle ->
+                    // A long single word ("Collections") gets a little smaller instead of breaking in the
+                    // middle; titles of several words still wrap between words (owner, 2026-11-26).
+                    val baseStyle = MaterialTheme.typography.displayLarge
+                    var titleScale by androidx.compose.runtime.remember(currentTitle) { androidx.compose.runtime.mutableFloatStateOf(1f) }
                     Text(
                         text = currentTitle,
                         modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.displayLarge,
+                        style = baseStyle.copy(
+                            fontSize = baseStyle.fontSize * titleScale,
+                            lineHeight = baseStyle.lineHeight * titleScale,
+                        ),
                         color = tokens.colors.textPrimary,
                         textAlign = TextAlign.Start,
+                        onTextLayout = { layout ->
+                            val brokenWord = (0 until layout.lineCount - 1).any { line ->
+                                val end = layout.getLineEnd(line)
+                                end in 1 until currentTitle.length &&
+                                    !currentTitle[end - 1].isWhitespace() && !currentTitle[end].isWhitespace() &&
+                                    currentTitle[end - 1] != '-'
+                            }
+                            if (brokenWord && titleScale > 0.5f) titleScale *= 0.92f
+                        },
                     )
                 }
             }
