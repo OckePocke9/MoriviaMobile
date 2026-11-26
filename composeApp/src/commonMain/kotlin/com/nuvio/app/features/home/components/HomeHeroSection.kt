@@ -102,6 +102,8 @@ private fun heroContentAlpha(visibility: Float): Float = heroEase((visibility - 
 private const val HERO_BACKGROUND_PARALLAX = 0.055f
 private const val HERO_BACKGROUND_SCALE = 1.14f
 private const val HERO_CONTENT_PARALLAX = 0.18f
+/** The open description stops before it reaches the Home chip at the top. */
+private const val HERO_DESCRIPTION_OPEN_MAX_LINES = 12
 // No scroll parallax or zoom: the hero picture moves exactly with the list, so its rounded bottom
 // edge never shows as a dark mark above Continue Watching (owner, 2026-11-25).
 private const val HERO_SCROLL_PARALLAX = 0f
@@ -166,6 +168,12 @@ fun HomeHeroSection(
     }
     val coroutineScope = rememberCoroutineScope()
     val autoScrollPage = pagerState.settledPage
+    // A tap on the description shows all of it, in the same design, and closes it again (owner,
+    // 2026-11-26). It closes when the hero moves to another title.
+    var descriptionOpen by remember(pagerState) { mutableStateOf(false) }
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.targetPage }.collect { descriptionOpen = false }
+    }
 
     LaunchedEffect(pagerState) {
         pagerState.scrollToPage(pagerState.currentPage)
@@ -214,8 +222,9 @@ fun HomeHeroSection(
             HeroTrailerStatus.Unavailable -> HERO_AUTO_SCROLL_INTERVAL_MS
         }
     }
-    ScreenActivityEffect(autoScrollPage, items.size, rolls, advanceDelay) { active ->
-        if (!active || items.size <= 1 || !rolls || advanceDelay == null) return@ScreenActivityEffect
+    ScreenActivityEffect(autoScrollPage, items.size, rolls, advanceDelay, descriptionOpen) { active ->
+        // The hero waits while the whole description is open.
+        if (!active || items.size <= 1 || !rolls || advanceDelay == null || descriptionOpen) return@ScreenActivityEffect
         delay(advanceDelay)
         while (pagerState.isScrollInProgress) {
             delay(100L)
@@ -397,6 +406,7 @@ fun HomeHeroSection(
                             .widthIn(max = layout.contentMaxWidth),
                         contentAlignment = Alignment.BottomStart,
                     ) {
+                        val settledIndex = pagerState.settledPage % items.size
                         visiblePages.forEach { layer ->
                             val item = items[layer.itemIndex]
                             key(item.stableKey()) {
@@ -412,6 +422,12 @@ fun HomeHeroSection(
                                         showImdbRating = showImdbRating,
                                         showMdbListRatings = showMdbListRatings,
                                         onItemClick = onItemClick,
+                                        descriptionOpen = descriptionOpen && layer.itemIndex == settledIndex,
+                                        onDescriptionClick = if (layer.itemIndex == settledIndex) {
+                                            { descriptionOpen = !descriptionOpen }
+                                        } else {
+                                            null
+                                        },
                                     )
                                 }
                             }
@@ -671,6 +687,8 @@ private fun HeroContentBlock(
     showImdbRating: Boolean,
     showMdbListRatings: Boolean,
     onItemClick: ((MetaPreview) -> Unit)?,
+    descriptionOpen: Boolean = false,
+    onDescriptionClick: (() -> Unit)? = null,
 ) {
     var logoLoadError by remember(item.type, item.id, item.logo) {
         mutableStateOf(false)
@@ -736,13 +754,24 @@ private fun HeroContentBlock(
         val description = item.description?.trim().orEmpty()
         if (description.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
+            // Two lines; a tap on the text itself shows all of it in the same white text over the
+            // trailer, growing upwards, and a second tap closes it (owner, 2026-11-26).
+            var overflows by remember(description) { mutableStateOf(false) }
             Text(
                 text = description,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        enabled = onDescriptionClick != null && (overflows || descriptionOpen),
+                        interactionSource = null,
+                        indication = null,
+                    ) { onDescriptionClick?.invoke() },
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White.copy(alpha = 0.92f),
                 textAlign = TextAlign.Start,
-                maxLines = 2,
+                maxLines = if (descriptionOpen) HERO_DESCRIPTION_OPEN_MAX_LINES else 2,
                 overflow = TextOverflow.Ellipsis,
+                onTextLayout = { result -> if (!descriptionOpen) overflows = result.hasVisualOverflow },
             )
         }
     }
