@@ -72,4 +72,4 @@ Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …)
 
 ## License
 
-[GNU General Public License v3.0](LICENSE). Morivia keeps the original Nuvio authors' copyright and third-party notices. Internal code names such as the `com.nuvio.app` package and the `nuvio://` link scheme stay unchanged so the app keeps working with Nuvio's services.
+[GNU General Public License v3.0](LICENSE). Morivia keeps the original Nuvio authors' copyright and third-party notices. Morivia's own code uses Morivia names (`com.morivia.app`); the `nuvio://` link scheme, Nuvio's servers and saved-data keys stay so sign-in, sync and settings keep working.
