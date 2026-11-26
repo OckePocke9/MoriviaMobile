@@ -325,7 +325,11 @@ internal fun LazyListScope.moriviaSearchSettingsContent(isTablet: Boolean) {
                     description = stringResource(Res.string.morivia_search_history_sub),
                     checked = layout.searchHistory,
                     isTablet = isTablet,
-                    onCheckedChange = { value -> MoriviaLayoutSettingsRepository.update { it.copy(searchHistory = value) } },
+                    // The one Recent searches switch: it both saves and shows them (owner, 2026-11-26).
+                    onCheckedChange = { value ->
+                        MoriviaLayoutSettingsRepository.update { it.copy(searchHistory = value) }
+                        com.nuvio.app.features.search.SearchHistoryRepository.setEnabled(value)
+                    },
                 )
             }
         }

@@ -82,6 +82,8 @@ internal fun CollectionsDestination(
     newCollectionTitle: String,
 ) {
     val onBack = rememberGuardedPopBackStack(navController, route)
+    // The same background and cards as the rest of Settings (owner, 2026-11-26).
+    SettingsBackground(modifier = Modifier.fillMaxSize()) {
     CollectionManagementScreen(
         onBack = onBack,
         onNavigateToEditor = { collectionId ->
@@ -98,6 +100,7 @@ internal fun CollectionsDestination(
             )
         },
     )
+    }
 }
 
 @Composable

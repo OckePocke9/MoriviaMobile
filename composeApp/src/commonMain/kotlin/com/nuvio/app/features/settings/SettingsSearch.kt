@@ -262,14 +262,6 @@ internal fun settingsSearchEntries(
         title = contentDiscoveryPage,
         description = stringResource(Res.string.compose_settings_root_content_discovery_description),
     )
-    addRow(
-        page = SettingsPage.ContentDiscovery,
-        key = "recent-searches",
-        title = stringResource(Res.string.settings_content_discovery_recent_searches),
-        description = stringResource(Res.string.settings_content_discovery_recent_searches_description),
-        pageLabel = contentDiscoveryPage,
-        section = stringResource(Res.string.settings_content_discovery_section_search),
-    )
     addPage(
         page = SettingsPage.Playback,
         key = "playback",
@@ -1032,6 +1024,15 @@ internal fun settingsSearchEntries(
             key = "search-layout",
             title = stringResource(Res.string.morivia_search_settings_title),
             description = stringResource(Res.string.morivia_search_settings_description),
+        )
+        // Recent searches now lives here only (owner, 2026-11-26).
+        addRow(
+            page = SettingsPage.MoriviaSearch,
+            key = "recent-searches",
+            title = stringResource(Res.string.morivia_search_history),
+            description = stringResource(Res.string.morivia_search_history_sub),
+            pageLabel = stringResource(Res.string.morivia_search_settings_title),
+            section = stringResource(Res.string.morivia_search_section),
         )
         addPage(
             page = SettingsPage.MoriviaLibrary,

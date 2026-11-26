@@ -220,7 +220,8 @@ internal fun SettingsSection(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            NuvioSectionLabel(text = title)
+            // Every settings heading in capitals, whatever the string (owner, 2026-11-26).
+            NuvioSectionLabel(text = title.uppercase())
             Row(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
