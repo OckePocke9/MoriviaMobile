@@ -3,13 +3,14 @@
   Builds the Morivia Android APK on this PC and publishes the release "Morivia Android vX.Y" on GitHub.
 
 .DESCRIPTION
-  GitHub Actions is turned off for this repository, so releases are published from a PC.
+  Android releases are built and published from this PC; the iPhone and iPad IPA comes from
+  the manual GitHub Actions workflow morivia-ios.yml.
   The script:
     1. checks that the version, README ("What's new in X.Y") and CHANGELOG ("## X.Y") are
        written, that the work is committed and pushed, and that the version is not published yet;
-    2. runs the Android host tests and builds the signed release APK, then checks its app ID,
-       version, name and signature;
-    3. creates the release vX.Y on the pushed commit with the APK, README.md, CHANGELOG.md, LICENSE
+    2. runs the Android host tests and builds the signed release APKs (one per processor type and a
+       universal one), then checks each one's app ID, version, name and signature;
+    3. creates the release vX.Y on the pushed commit with the APKs, README.md, CHANGELOG.md, LICENSE
        and SHA256SUMS.txt, marked Latest. The app's update banner reads this repository's
        latest release.
   It signs in with the GitHub login Git Credential Manager already has. A published version is
@@ -18,11 +19,11 @@
 .EXAMPLE
   .\scripts\publish-release.ps1
 .EXAMPLE
-  .\scripts\publish-release.ps1 -ApkPath androidApp\build\outputs\apk\full\release\androidApp-full-arm64-v8a-release.apk
+  .\scripts\publish-release.ps1 -ApkPath androidApp\build\outputs\apk\full\release
 #>
 param(
-    # An APK already built in Android Studio (full release variant). It is checked but not
-    # rebuilt. Without it the script runs the tests and builds the APK itself.
+    # A folder with APKs already built (full release variant, every processor type). They are
+    # checked but not rebuilt. Without it the script runs the tests and builds the APKs itself.
     [string]$ApkPath,
     # Matching unsigned device IPA, built and version-checked from the same commit.
     [string]$IpaPath,
@@ -99,36 +100,43 @@ if ($IpaPath) {
 if (-not $env:JAVA_HOME) { $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr' }
 if (-not $env:ANDROID_HOME) { $env:ANDROID_HOME = Join-Path $env:LOCALAPPDATA 'Android\Sdk' }
 if (-not (Test-Path 'local.properties')) { New-Item -ItemType File 'local.properties' | Out-Null }
+# One APK per processor type and a universal one, so Morivia runs on every phone and tablet
+# (owner, 2026-11-26). The in-app updater picks the right one by its name.
+$abis = @('arm64-v8a', 'armeabi-v7a', 'x86_64', 'x86', 'universal')
+$apkDirectory = 'androidApp/build/outputs/apk/full/release'
 if ($ApkPath) {
-    $apk = Get-Item $ApkPath
+    $apkDirectory = $ApkPath
 } else {
     $tasks = @(':androidApp:assembleFullRelease')
     if (-not $SkipTests) { $tasks = @(':composeApp:testAndroidHostTest') + $tasks }
     & .\gradlew.bat @tasks '-Pmorivia.android.distribution=full' --console=plain
     if ($LASTEXITCODE -ne 0) { Fail 'The Android build or its tests failed; nothing was published.' }
-    $apk = Get-ChildItem 'androidApp/build/outputs/apk/full/release' -Filter '*arm64-v8a-release.apk' | Select-Object -First 1
 }
-if (-not $apk) { Fail 'No APK was built.' }
 $tools = Get-ChildItem (Join-Path $env:ANDROID_HOME 'build-tools') | Sort-Object { [version]($_.Name -replace '[^0-9.].*$', '') } | Select-Object -Last 1
-$badging = & (Join-Path $tools.FullName 'aapt.exe') dump badging $apk.FullName
-foreach ($expected in "name='com.morivia.app'", "versionName='$version'", "versionCode='$code'", "application-label:'Morivia'") {
-    if (-not ($badging | Select-String -SimpleMatch $expected)) { Fail "The APK does not contain $expected." }
-}
-$signer = & (Join-Path $tools.FullName 'apksigner.bat') verify --print-certs $apk.FullName
-if ($LASTEXITCODE -ne 0) { Fail 'The APK signature does not verify.' }
 # Since 1.6 releases are signed with Morivia's private release key (kept outside Git, set up in
 # local.properties). This is the public SHA-256 fingerprint of its certificate.
 $releaseKeySha256 = 'b7132668066d058409aca81eb0aaa23441b9cf71ad01582e572311d94fa85900'
-if (-not ($signer | Select-String -SimpleMatch "certificate SHA-256 digest: $releaseKeySha256")) {
-    Fail 'The APK is not signed with the Morivia release key. Set MORIVIA_RELEASE_* in local.properties.'
+$apks = @{}
+foreach ($abi in $abis) {
+    $apk = Get-ChildItem $apkDirectory -Filter "*-$abi-release.apk" | Select-Object -First 1
+    if (-not $apk) { Fail "No $abi APK was built." }
+    $badging = & (Join-Path $tools.FullName 'aapt.exe') dump badging $apk.FullName
+    foreach ($expected in "name='com.morivia.app'", "versionName='$version'", "versionCode='$code'", "application-label:'Morivia'") {
+        if (-not ($badging | Select-String -SimpleMatch $expected)) { Fail "The $abi APK does not contain $expected." }
+    }
+    $signer = & (Join-Path $tools.FullName 'apksigner.bat') verify --print-certs $apk.FullName
+    if ($LASTEXITCODE -ne 0) { Fail "The $abi APK signature does not verify." }
+    if (-not ($signer | Select-String -SimpleMatch "certificate SHA-256 digest: $releaseKeySha256")) {
+        Fail "The $abi APK is not signed with the Morivia release key. Set MORIVIA_RELEASE_* in local.properties."
+    }
+    $apks[$abi] = $apk
 }
 
 # 3. Publish
 $dist = Join-Path $root "build/release-$version"
 if (Test-Path $dist) { $dist = "$dist-" + [guid]::NewGuid().ToString("N") }
 New-Item -ItemType Directory -Force $dist | Out-Null
-$apkName = "Morivia-Android-$version-arm64-v8a.apk"
-Copy-Item $apk.FullName (Join-Path $dist $apkName)
+foreach ($abi in $abis) { Copy-Item $apks[$abi].FullName (Join-Path $dist "Morivia-Android-$version-$abi.apk") }
 if ($ipa) { Copy-Item -LiteralPath $ipa.FullName -Destination (Join-Path $dist $ipa.Name) }
 foreach ($file in 'README.md', 'CHANGELOG.md', 'LICENSE') { Copy-Item $file (Join-Path $dist $file) }
 $sums = Get-ChildItem $dist -Filter 'Morivia-*' | ForEach-Object {
@@ -137,7 +145,13 @@ $sums = Get-ChildItem $dist -Filter 'Morivia-*' | ForEach-Object {
 [System.IO.File]::WriteAllText((Join-Path $dist 'SHA256SUMS.txt'), (($sums -join "`n") + "`n"), $utf8)
 
 $notes = [regex]::Match($changelog, "(?ms)^## $([regex]::Escape($version))\r?\n(.*?)(?=^## |\z)").Groups[1].Value.Trim()
-$download = "`n`n## Download`n`n- **Android phones and tablets with a 64-bit ARM processor and Android 7.0 or newer:** ``$apkName```n"
+$download = "`n`n## Download`n`nAndroid phones and tablets with Android 7.0 or newer:`n`n" +
+    "- ``Morivia-Android-$version-arm64-v8a.apk``: almost every phone and tablet from about 2017 on (Samsung Galaxy, Pixel, OnePlus, Xiaomi and others). Take this one if unsure.`n" +
+    "- ``Morivia-Android-$version-armeabi-v7a.apk``: older or low-cost phones, tablets and TV boxes with 32-bit Android.`n" +
+    "- ``Morivia-Android-$version-x86_64.apk``: Chromebooks with Intel or AMD processors and Android emulators.`n" +
+    "- ``Morivia-Android-$version-x86.apk``: old Intel tablets and older emulators.`n" +
+    "- ``Morivia-Android-$version-universal.apk``: works on all of them, but is larger.`n`n" +
+    "Morivia's in-app updates pick the right file for the device by themselves.`n"
 if ($ipa) {
     $download += "- **iPhone and iPad with iOS or iPadOS 16.1 or newer:** ``$($ipa.Name)``. Install the unsigned IPA with [Sideloadly](https://sideloadly.io/).`n"
 }

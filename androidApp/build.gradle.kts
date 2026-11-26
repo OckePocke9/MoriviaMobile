@@ -107,8 +107,10 @@ android {
         abi {
             isEnable = buildsReleaseApks
             reset()
-            include("arm64-v8a")
-            isUniversalApk = false
+            // Every phone and tablet (owner, 2026-11-26): one APK per processor type, and a universal
+            // APK for anyone unsure which to take. The in-app updater picks the one for the device.
+            include("arm64-v8a", "armeabi-v7a", "x86_64", "x86")
+            isUniversalApk = true
         }
     }
 
