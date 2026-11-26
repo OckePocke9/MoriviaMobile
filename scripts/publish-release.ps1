@@ -62,7 +62,12 @@ $remote = (& $git rev-parse origin/main).Trim()
 if ($head -ne $remote) { Fail 'Push main to GitHub first (HEAD is not origin/main).' }
 
 # GitHub login from Git Credential Manager.
-$credential = "protocol=https`nhost=github.com`npath=$repository.git`n`n" | & $git -c credential.interactive=never credential fill
+# Windows PowerShell pipes text to native programs with a byte-order mark and CRLF, which git
+# rejects; a plain LF file through cmd works in every PowerShell.
+$credentialRequest = [System.IO.Path]::GetTempFileName()
+[System.IO.File]::WriteAllText($credentialRequest, "protocol=https`nhost=github.com`npath=$repository.git`n`n", $utf8)
+$credential = cmd /c "`"$git`" -c credential.interactive=never credential fill < `"$credentialRequest`""
+Remove-Item $credentialRequest -ErrorAction SilentlyContinue
 $token = ($credential | Where-Object { $_ -like 'password=*' }) -replace '^password=', ''
 if (-not $token) { Fail 'No GitHub login found. Sign in once with: git fetch' }
 $headers = @{ Authorization = "Bearer $token"; Accept = 'application/vnd.github+json' }
