@@ -14,7 +14,7 @@ class QrEncoderTest {
     private val samples = listOf(
         "https://nuvio.tv/link?code=ABCD-1234",
         "HELLO",
-        "https://nuvio.tv/link?code=QWERTY-987654&source=norivia-tablet-sign-in",
+        "https://nuvio.tv/link?code=QWERTY-987654&source=morivia-tablet-sign-in",
         "https://example.com/" + "a".repeat(60),
         "x".repeat(150),
         "Räksmörgås ✓ 日本",

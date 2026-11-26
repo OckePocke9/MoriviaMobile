@@ -26,15 +26,15 @@ class AuthTabletSnapshotTest {
     val compose = createComposeRule()
 
     @Test
-    fun ipadLandscape() = render("norivia-ipad-sign-in")
+    fun ipadLandscape() = render("morivia-ipad-sign-in")
 
     @Test
     @Config(sdk = [34], application = Application::class, qualifiers = "w1024dp-h1366dp-xhdpi")
-    fun ipadPortrait() = render("norivia-ipad-portrait-sign-in", withCode = false)
+    fun ipadPortrait() = render("morivia-ipad-portrait-sign-in", withCode = false)
 
     @Test
     @Config(sdk = [34], application = Application::class, qualifiers = "w800dp-h1280dp-xhdpi")
-    fun androidTabletPortrait() = render("norivia-android-tablet-sign-in", withCode = false)
+    fun androidTabletPortrait() = render("morivia-android-tablet-sign-in", withCode = false)
 
     private fun render(name: String, withCode: Boolean = true) {
         @Suppress("UNCHECKED_CAST")
@@ -53,7 +53,7 @@ class AuthTabletSnapshotTest {
 
     private fun save(name: String) {
         val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()
-        val out = File(System.getProperty("norivia.snapshotDir") ?: System.getProperty("java.io.tmpdir"), name)
+        val out = File(System.getProperty("morivia.snapshotDir") ?: System.getProperty("java.io.tmpdir"), name)
         out.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
 }

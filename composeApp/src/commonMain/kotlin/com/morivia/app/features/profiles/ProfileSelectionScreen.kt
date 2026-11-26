@@ -64,7 +64,7 @@ import com.morivia.app.core.ui.MoriviaToastHost
 import com.morivia.app.core.ui.LocalVerticalBarPadding
 import com.morivia.app.features.membership.CosmeticEntitlement
 import com.morivia.app.features.settings.MemberBrandWordmark
-import com.morivia.app.features.settings.noriviaLogoResource
+import com.morivia.app.features.settings.moriviaLogoResource
 import com.morivia.app.features.settings.brandSymbolResource
 import com.morivia.app.features.settings.iconForTheme
 import androidx.compose.foundation.combinedClickable
@@ -241,7 +241,7 @@ private fun ProfileSelectionScreenContent(
                         label = "profileLogo",
                     ) { theme ->
                         androidx.compose.foundation.Image(
-                            painter = org.jetbrains.compose.resources.painterResource(theme.noriviaLogoResource()),
+                            painter = org.jetbrains.compose.resources.painterResource(theme.moriviaLogoResource()),
                             contentDescription = null,
                             modifier = Modifier.height(34.dp),
                             contentScale = androidx.compose.ui.layout.ContentScale.Fit,

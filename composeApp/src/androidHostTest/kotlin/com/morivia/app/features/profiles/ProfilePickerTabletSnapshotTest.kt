@@ -23,11 +23,11 @@ class ProfilePickerTabletSnapshotTest {
     val compose = createComposeRule()
 
     @Test
-    fun ipadLandscape() = render("norivia-ipad-profiles")
+    fun ipadLandscape() = render("morivia-ipad-profiles")
 
     @Test
     @Config(sdk = [34], application = Application::class, qualifiers = "w1024dp-h1366dp-xhdpi")
-    fun ipadPortrait() = render("norivia-ipad-portrait-profiles")
+    fun ipadPortrait() = render("morivia-ipad-portrait-profiles")
 
     private fun render(name: String) {
         // Two profiles with initials, as on the owner's phone, in the app's own theme.

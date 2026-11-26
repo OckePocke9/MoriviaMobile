@@ -2,7 +2,7 @@ package com.morivia.app.core.build
 
 actual object AppFeaturePolicy {
     actual val pluginsEnabled: Boolean = true
-    actual val supportersContributorsPageEnabled: Boolean = true
+    actual val supportersContributorsPageEnabled: Boolean = false // Removed from About in Morivia, as on Android
     actual val donationActionsEnabled: Boolean = true
     actual val donationProgressEnabled: Boolean = false
     actual val accountDeletionEnabled: Boolean = false

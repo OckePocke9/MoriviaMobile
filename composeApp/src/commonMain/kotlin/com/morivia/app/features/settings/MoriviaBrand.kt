@@ -38,26 +38,26 @@ import org.jetbrains.compose.resources.stringResource
 internal const val MoriviaName = "Morivia"
 
 /** The Morivia logo in the colours of the selected theme (Original for themes without one). */
-internal fun AppTheme.noriviaLogoResource(): DrawableResource = when (this) {
-    AppTheme.CHERRY -> Res.drawable.norivia_logo_cherry
-    AppTheme.CORAL -> Res.drawable.norivia_logo_coral
-    AppTheme.MANGO -> Res.drawable.norivia_logo_mango
-    AppTheme.AMBER -> Res.drawable.norivia_logo_amber
-    AppTheme.LEMON -> Res.drawable.norivia_logo_lemon
-    AppTheme.LIME -> Res.drawable.norivia_logo_lime
-    AppTheme.EMERALD -> Res.drawable.norivia_logo_emerald
-    AppTheme.MINT -> Res.drawable.norivia_logo_mint
-    AppTheme.TEAL -> Res.drawable.norivia_logo_teal
-    AppTheme.CERULEAN -> Res.drawable.norivia_logo_cerulean
-    AppTheme.AZURE -> Res.drawable.norivia_logo_azure
-    AppTheme.COBALT -> Res.drawable.norivia_logo_cobalt
-    AppTheme.INDIGO -> Res.drawable.norivia_logo_indigo
-    AppTheme.GRAPE -> Res.drawable.norivia_logo_grape
-    AppTheme.ORCHID -> Res.drawable.norivia_logo_orchid
-    AppTheme.BERRY -> Res.drawable.norivia_logo_berry
-    AppTheme.COPPER -> Res.drawable.norivia_logo_copper
-    AppTheme.WHITE -> Res.drawable.norivia_logo_white
-    else -> Res.drawable.norivia_logo_original
+internal fun AppTheme.moriviaLogoResource(): DrawableResource = when (this) {
+    AppTheme.CHERRY -> Res.drawable.morivia_logo_cherry
+    AppTheme.CORAL -> Res.drawable.morivia_logo_coral
+    AppTheme.MANGO -> Res.drawable.morivia_logo_mango
+    AppTheme.AMBER -> Res.drawable.morivia_logo_amber
+    AppTheme.LEMON -> Res.drawable.morivia_logo_lemon
+    AppTheme.LIME -> Res.drawable.morivia_logo_lime
+    AppTheme.EMERALD -> Res.drawable.morivia_logo_emerald
+    AppTheme.MINT -> Res.drawable.morivia_logo_mint
+    AppTheme.TEAL -> Res.drawable.morivia_logo_teal
+    AppTheme.CERULEAN -> Res.drawable.morivia_logo_cerulean
+    AppTheme.AZURE -> Res.drawable.morivia_logo_azure
+    AppTheme.COBALT -> Res.drawable.morivia_logo_cobalt
+    AppTheme.INDIGO -> Res.drawable.morivia_logo_indigo
+    AppTheme.GRAPE -> Res.drawable.morivia_logo_grape
+    AppTheme.ORCHID -> Res.drawable.morivia_logo_orchid
+    AppTheme.BERRY -> Res.drawable.morivia_logo_berry
+    AppTheme.COPPER -> Res.drawable.morivia_logo_copper
+    AppTheme.WHITE -> Res.drawable.morivia_logo_white
+    else -> Res.drawable.morivia_logo_original
 }
 
 /**
@@ -72,7 +72,7 @@ internal fun MoriviaWordmark(height: Dp, modifier: Modifier = Modifier) {
     }.collectAsStateWithLifecycle()
     MoriviaNameRow(height = height, modifier = modifier) {
         Image(
-            painter = painterResource(theme.noriviaLogoResource()),
+            painter = painterResource(theme.moriviaLogoResource()),
             contentDescription = null,
             modifier = Modifier.height(height),
             contentScale = ContentScale.Fit,
@@ -103,7 +103,7 @@ internal fun MoriviaNameRow(
                 fontSize = (height.value * fontRatio).sp,
                 letterSpacing = (0.25f * scale).sp,
                 fontWeight = FontWeight(800),
-                fontFamily = noriviaWordmarkFont(),
+                fontFamily = moriviaWordmarkFont(),
             ),
             maxLines = 1,
         )
@@ -111,8 +111,8 @@ internal fun MoriviaNameRow(
 }
 
 /** Morivia's logo, name and version, at the bottom of the System page. */
-internal fun LazyListScope.noriviaBrandFooter(isTablet: Boolean) {
-    item(key = "norivia_brand_footer") {
+internal fun LazyListScope.moriviaBrandFooter(isTablet: Boolean) {
+    item(key = "morivia_brand_footer") {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -140,7 +140,7 @@ internal fun LazyListScope.noriviaBrandFooter(isTablet: Boolean) {
 
 @OptIn(androidx.compose.ui.text.ExperimentalTextApi::class)
 @Composable
-private fun noriviaWordmarkFont(): androidx.compose.ui.text.font.FontFamily =
+private fun moriviaWordmarkFont(): androidx.compose.ui.text.font.FontFamily =
     androidx.compose.ui.text.font.FontFamily(
         org.jetbrains.compose.resources.Font(
             resource = Res.font.plus_jakarta_sans,

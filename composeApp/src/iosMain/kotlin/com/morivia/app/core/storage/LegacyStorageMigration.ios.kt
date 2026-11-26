@@ -13,7 +13,7 @@ import platform.Foundation.NSUserDefaults
 internal object LegacyStorageMigration {
     private const val OLD = "nuvio"
     private const val NEW = "morivia"
-    private const val DONE_KEY = "morivia_storage_migration_v1"
+    private const val DONE_KEY = "morivia_storage_migration_v2"
 
     fun run() {
         val defaults = NSUserDefaults.standardUserDefaults
@@ -22,8 +22,8 @@ internal object LegacyStorageMigration {
         // Settings saved under keys that start with the old prefix.
         defaults.dictionaryRepresentation().keys.forEach { key ->
             val name = key as? String ?: return@forEach
-            if (!name.startsWith("${OLD}_")) return@forEach
-            val newName = NEW + name.removePrefix(OLD)
+            val old = listOf(OLD, "norivia").firstOrNull { name.startsWith("${it}_") } ?: return@forEach
+            val newName = NEW + name.removePrefix(old)
             if (defaults.objectForKey(newName) == null) {
                 defaults.setObject(defaults.objectForKey(name), forKey = newName)
             }

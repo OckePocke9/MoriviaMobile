@@ -32,8 +32,9 @@ class LegacyStorageMigrationTest {
 </map>
 """,
         )
+        File(prefsDir, "norivia_home_snapshot.xml").writeText("<map><string name=\"rows\">saved</string></map>")
         File(dataDir, "files/nuvio_plugin_scrapers").mkdirs()
-        File(dataDir, "no_backup/morivia_storage_migration_v1").delete()
+        File(dataDir, "no_backup/morivia_storage_migration_v2").delete()
 
         LegacyStorageMigration.run(context)
 
@@ -44,6 +45,7 @@ class LegacyStorageMigrationTest {
         // Values are never changed, only names.
         assertEquals("nuvio://meta?type=movie", prefs.getString("link", null))
         assertTrue(File(dataDir, "files/morivia_plugin_scrapers").isDirectory)
+        assertEquals("saved", context.getSharedPreferences("morivia_home_snapshot", Context.MODE_PRIVATE).getString("rows", null))
     }
 
     @Test

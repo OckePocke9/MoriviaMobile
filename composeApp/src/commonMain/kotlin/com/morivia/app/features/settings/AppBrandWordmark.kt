@@ -51,7 +51,7 @@ internal fun AppBrandWordmark(
         val logoTheme by ThemeSettingsRepository.selectedTheme.collectAsStateWithLifecycle()
         MoriviaNameRow(height = height, fontRatio = 0.43f, gapRatio = 0.21f) {
             Image(
-                painter = painterResource(logoTheme.noriviaLogoResource()),
+                painter = painterResource(logoTheme.moriviaLogoResource()),
                 contentDescription = contentDescription,
                 modifier = Modifier.height(height),
                 contentScale = ContentScale.Fit,

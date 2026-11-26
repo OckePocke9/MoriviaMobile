@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 internal actual object HomeSnapshotStorage {
-    private const val preferencesName = "norivia_home_snapshot"
+    private const val preferencesName = "morivia_home_snapshot"
 
     private var preferences: SharedPreferences? = null
 

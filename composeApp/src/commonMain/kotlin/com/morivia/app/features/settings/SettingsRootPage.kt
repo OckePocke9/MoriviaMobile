@@ -98,7 +98,7 @@ internal fun LazyListScope.settingsRootContent(
     }
     // Morivia's logo, name and version, right under the System card (owner, 2026-11-23).
     if (category == null || category == SettingsCategory.System) {
-        noriviaBrandFooter(isTablet = isTablet)
+        moriviaBrandFooter(isTablet = isTablet)
     }
 }
 

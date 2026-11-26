@@ -18,7 +18,9 @@ import java.io.File
 internal object LegacyStorageMigration {
     private const val OLD = "nuvio"
     private const val NEW = "morivia"
-    private const val DONE_MARKER = "morivia_storage_migration_v1"
+    /** Earlier names: the original app's, and Norivia, which the app was briefly called (build 199). */
+    private val OLD_NAMES = listOf(OLD, "norivia")
+    private const val DONE_MARKER = "morivia_storage_migration_v2"
 
     fun run(context: Context) {
         val dataDir = File(context.applicationInfo.dataDir)
@@ -59,10 +61,11 @@ internal object LegacyStorageMigration {
         for (file in files) {
             if (!file.isFile || !(file.name.endsWith(".xml") || file.name.endsWith(".xml.bak"))) continue
             val text = file.readText(Charsets.UTF_8)
-            // Keys that start with the old prefix, for example the resume-prompt keys.
-            val renamedKeys = text.replace("name=\"${OLD}_", "name=\"${NEW}_")
-            val target = if (file.name.startsWith("${OLD}_")) {
-                File(directory, NEW + file.name.removePrefix(OLD))
+            // Keys that start with an old prefix, for example the resume-prompt keys.
+            val renamedKeys = OLD_NAMES.fold(text) { content, old -> content.replace("name=\"${old}_", "name=\"${NEW}_") }
+            val oldName = OLD_NAMES.firstOrNull { file.name.startsWith("${it}_") }
+            val target = if (oldName != null) {
+                File(directory, NEW + file.name.removePrefix(oldName))
             } else {
                 file
             }
