@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 internal actual object MetaScreenSettingsStorage {
-    private const val preferencesName = "nuvio_meta_screen_settings"
+    private const val preferencesName = "morivia_meta_screen_settings"
     private const val payloadKey = "meta_screen_settings_payload"
 
     private var preferences: SharedPreferences? = null

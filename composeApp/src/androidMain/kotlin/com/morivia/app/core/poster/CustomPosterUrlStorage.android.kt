@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 actual object CustomPosterUrlStorage {
-    private const val preferencesName = "nuvio_custom_poster_url"
+    private const val preferencesName = "morivia_custom_poster_url"
     private const val patternKey = "custom_poster_url_pattern"
     private const val enabledScreensKey = "custom_poster_enabled_screens"
 

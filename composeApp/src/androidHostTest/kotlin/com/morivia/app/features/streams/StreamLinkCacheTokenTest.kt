@@ -18,7 +18,7 @@ class StreamLinkCacheTokenTest {
     @Before
     fun initialize() {
         val context = RuntimeEnvironment.getApplication()
-        context.getSharedPreferences("nuvio_stream_link_cache", Context.MODE_PRIVATE).edit().clear().commit()
+        context.getSharedPreferences("morivia_stream_link_cache", Context.MODE_PRIVATE).edit().clear().commit()
         StreamLinkCacheStorage.initialize(context)
     }
 

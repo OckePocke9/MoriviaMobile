@@ -87,7 +87,7 @@ import org.jetbrains.compose.resources.stringResource
 
 /**
  * Edit Profile and Add Profile draw the theme background behind cards that follow AMOLED Black:
- * black cards with it on, Nuvio's own card colour with it off.
+ * black cards with it on, the original card colour with it off.
  */
 @Composable
 fun ProfileEditScreen(

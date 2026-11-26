@@ -470,7 +470,7 @@ object WatchedRepository {
         val extraWatchedKeys = adapter.pullExtraWatchedKeys(profileId)
         val source = operation.sourceOperation.source
         log.i {
-            "Watched adapter result source=$source provider=${source.providerId?.storageId ?: "nuvio"} " +
+            "Watched adapter result source=$source provider=${source.providerId?.storageId ?: "morivia"} " +
                 "profile=$profileId serverItems=${serverItems.size} " +
                 "movies=${serverItems.count { it.type == "movie" }} " +
                 "episodes=${serverItems.count { it.season != null && it.episode != null }} " +
@@ -1165,7 +1165,7 @@ object WatchedRepository {
             hasLoadedRemoteItems = hasLoadedRemoteItems,
         )
         log.i {
-            "Watched publish source=$activeSource provider=${activeSource.providerId?.storageId ?: "nuvio"} " +
+            "Watched publish source=$activeSource provider=${activeSource.providerId?.storageId ?: "morivia"} " +
                 "items=${items.size} keys=${watchedKeys.size} fullyWatchedSeries=${fullyWatchedSeriesKeys.size} " +
                 "isLoaded=$isLoaded hasLoadedRemote=$hasLoadedRemoteItems " +
                 "itemKeys=[${diagnosticItemKeySample(items)}] " +

@@ -8,7 +8,7 @@ internal actual object SentrySettingsPlatform {
 }
 
 internal actual object SentrySettingsStorage {
-    private const val preferencesName = "nuvio_sentry_settings"
+    private const val preferencesName = "morivia_sentry_settings"
     private const val enabledKey = "enabled"
 
     private var preferences: SharedPreferences? = null

@@ -111,6 +111,8 @@ private fun moriviaComposeViewController(
     hinge: Hinge = Hinge(),
     content: @androidx.compose.runtime.Composable () -> Unit,
 ): UIViewController {
+    // Before anything reads saved data: move it to its Morivia names once (build 198).
+    com.morivia.app.core.storage.LegacyStorageMigration.run()
     AutoSyncPreferencesIos.initialize()
     return ComposeUIViewController(
         configure = { onFocusBehavior = OnFocusBehavior.DoNothing },

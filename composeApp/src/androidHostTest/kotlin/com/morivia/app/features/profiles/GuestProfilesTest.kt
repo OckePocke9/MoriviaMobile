@@ -21,7 +21,7 @@ class GuestProfilesTest {
     @Before
     fun initialize() {
         val context = RuntimeEnvironment.getApplication()
-        context.getSharedPreferences("nuvio_profile_cache", Context.MODE_PRIVATE).edit().clear().commit()
+        context.getSharedPreferences("morivia_profile_cache", Context.MODE_PRIVATE).edit().clear().commit()
         AuthStorage.initialize(context)
         ProfileStorage.initialize(context)
         ProfilePinCacheStorage.initialize(context)

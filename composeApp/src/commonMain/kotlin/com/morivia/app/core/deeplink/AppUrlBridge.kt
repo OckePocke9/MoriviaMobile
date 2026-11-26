@@ -59,13 +59,13 @@ fun buildMetaDeepLinkUrl(
     type: String,
     id: String,
 ): String = buildString {
-    append("nuvio://meta?type=")
+    append("morivia://meta?type=")
     append(type.trim().encodeURLParameter())
     append("&id=")
     append(id.trim().encodeURLParameter())
 }
 
-fun buildDownloadsDeepLinkUrl(): String = "nuvio://downloads"
+fun buildDownloadsDeepLinkUrl(): String = "morivia://downloads"
 
 internal fun parseAppDeepLink(url: String): AppDeepLink? {
     val parsedUrl = runCatching { Url(url) }.getOrNull() ?: return null
@@ -82,7 +82,8 @@ internal fun parseAppDeepLink(url: String): AppDeepLink? {
     if (scheme == "https") {
         return if (host == "nuvio.tv" && pathSegments.firstOrNull() == "party") partyDeepLink(pathSegments.getOrNull(1)) else null
     }
-    if (scheme != "nuvio") return null
+    // morivia:// is Morivia's own scheme; nuvio:// links from websites and the sign-in keep working.
+    if (scheme != "morivia" && scheme != "nuvio") return null
 
     return when (host) {
         "meta" -> {

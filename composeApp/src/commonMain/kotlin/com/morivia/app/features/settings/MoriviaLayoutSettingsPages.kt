@@ -70,7 +70,7 @@ private fun HeroPlaybackRows(layout: MoriviaLayoutSettings, isTablet: Boolean) {
 
 /**
  * The earlier Morivia app's Home & Layout page: one place for the hero, posters, Continue
- * Watching and rows. Settings Nuvio already has are shown here too and change the same values.
+ * Watching and rows. Settings that also exist elsewhere are shown here too and change the same values.
  */
 internal fun LazyListScope.moriviaHomeLayoutContent(
     isTablet: Boolean,

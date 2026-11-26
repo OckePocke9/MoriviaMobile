@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 internal actual object SimklSyncStorage {
-    private const val PREFERENCES_NAME = "nuvio_simkl_sync"
+    private const val PREFERENCES_NAME = "morivia_simkl_sync"
     private const val PAYLOAD_KEY = "simkl_sync_snapshot"
 
     private var preferences: SharedPreferences? = null

@@ -8,7 +8,7 @@ import platform.Foundation.NSUserDefaults
 
 internal actual object DownloadsLiveStatusPlatform {
     private const val notificationName = "MoriviaDownloadsLiveStatusUpdated"
-    private const val userDefaultsPayloadKey = "nuvio.downloads.live_status.payload"
+    private const val userDefaultsPayloadKey = "morivia.downloads.live_status.payload"
 
     private val json = Json {
         encodeDefaults = true

@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 actual object StreamLinkCacheStorage {
-    private const val preferencesName = "nuvio_stream_link_cache"
+    private const val preferencesName = "morivia_stream_link_cache"
 
     private var preferences: SharedPreferences? = null
 

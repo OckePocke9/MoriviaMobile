@@ -34,7 +34,7 @@ class PlayerEngineSwitchTrackPreferenceTest {
     @Before
     fun initialize() {
         val context = RuntimeEnvironment.getApplication()
-        listOf("nuvio_player_track_preferences", "nuvio_watch_progress").forEach {
+        listOf("morivia_player_track_preferences", "morivia_watch_progress").forEach {
             context.getSharedPreferences(it, android.content.Context.MODE_PRIVATE).edit().clear().commit()
         }
         PlayerTrackPreferenceStorage.initialize(context)

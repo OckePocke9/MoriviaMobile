@@ -16,7 +16,7 @@ internal actual object PlatformMdbListAuthPersistence : MdbListAuthPersistence {
     private lateinit var preferences: android.content.SharedPreferences
 
     fun initialize(context: Context) {
-        preferences = context.applicationContext.getSharedPreferences("nuvio_mdblist_auth", Context.MODE_PRIVATE)
+        preferences = context.applicationContext.getSharedPreferences("morivia_mdblist_auth", Context.MODE_PRIVATE)
     }
 
     private val lock = Any()

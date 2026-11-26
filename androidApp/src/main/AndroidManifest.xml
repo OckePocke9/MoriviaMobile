@@ -78,6 +78,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="morivia" />
+
+                <!-- Links from websites and the Nuvio sign-in still use nuvio://. -->
+
                 <data android:scheme="nuvio" />
             </intent-filter>
             <intent-filter>

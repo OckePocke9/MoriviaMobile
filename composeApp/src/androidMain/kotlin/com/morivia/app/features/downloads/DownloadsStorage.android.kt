@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 internal actual object DownloadsStorage {
-    private const val preferencesName = "nuvio_downloads"
+    private const val preferencesName = "morivia_downloads"
     private const val payloadKey = "downloads_payload"
 
     private var preferences: SharedPreferences? = null

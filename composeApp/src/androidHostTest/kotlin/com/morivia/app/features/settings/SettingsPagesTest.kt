@@ -52,7 +52,7 @@ class SettingsPagesTest {
     @BeforeTest
     fun initialize() {
         val context = RuntimeEnvironment.getApplication()
-        context.getSharedPreferences("nuvio_player_settings", Context.MODE_PRIVATE).edit().clear().commit()
+        context.getSharedPreferences("morivia_player_settings", Context.MODE_PRIVATE).edit().clear().commit()
         PlayerSettingsStorage.initialize(context)
         PlayerSettingsRepository.clearLocalState()
         ThemeSettingsStorage.initialize(context)

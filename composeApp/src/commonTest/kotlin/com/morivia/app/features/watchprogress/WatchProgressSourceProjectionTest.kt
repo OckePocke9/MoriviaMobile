@@ -9,7 +9,7 @@ class WatchProgressSourceProjectionTest {
     fun `remote source excludes every Nuvio progress entry`() {
         val moriviaEntries = listOf(
             entry(parentMetaId = "shared", updatedAt = 200L),
-            entry(parentMetaId = "nuvio-only", updatedAt = 300L),
+            entry(parentMetaId = "morivia-only", updatedAt = 300L),
         )
         val providerEntries = listOf(
             entry(parentMetaId = "shared", updatedAt = 100L),

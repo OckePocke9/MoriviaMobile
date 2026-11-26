@@ -142,7 +142,7 @@ class ExternalPlaybackProgressTest {
 
     private fun clearPreferences() {
         val context = RuntimeEnvironment.getApplication()
-        listOf("nuvio_watch_progress", "nuvio_player_settings").forEach {
+        listOf("morivia_watch_progress", "morivia_player_settings").forEach {
             context.getSharedPreferences(it, Context.MODE_PRIVATE).edit().clear().commit()
         }
     }

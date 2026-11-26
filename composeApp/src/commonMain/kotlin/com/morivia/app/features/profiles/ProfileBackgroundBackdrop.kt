@@ -167,7 +167,7 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawMoriviaGlow(
     val h = canvas.height
     drawRect(Color.Black, size = canvas)
     if (rightGlow.alpha < 1f) {
-        // A theme colour, as Nuvio draws it (owner, 2026-11-23): a soft, dark glow of the colour from the
+        // A theme colour (owner, 2026-11-23): a soft, dark glow of the colour from the
         // top left across the top of the screen, fading into black about halfway down.
         drawRect(Color.Black, size = canvas)
         drawRect(

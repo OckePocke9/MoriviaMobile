@@ -24,6 +24,17 @@ import io.ktor.client.engine.okhttp.OkHttp
  */
 class MoriviaApplication : Application(), SingletonImageLoader.Factory {
 
+    override fun attachBaseContext(base: android.content.Context) {
+        super.attachBaseContext(base)
+        // Before anything reads saved data: move it to its Morivia names once (build 198).
+        com.morivia.app.core.storage.LegacyStorageMigration.run(base)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        com.morivia.app.core.storage.LegacyStorageMigration.cleanUpSystemEntries(this)
+    }
+
     override fun newImageLoader(context: android.content.Context): ImageLoader {
         return ImageLoader.Builder(context)
             .crossfade(true)

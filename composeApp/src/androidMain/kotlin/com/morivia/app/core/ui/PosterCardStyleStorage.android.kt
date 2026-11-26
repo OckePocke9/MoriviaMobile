@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 actual object PosterCardStyleStorage {
-    private const val preferencesName = "nuvio_poster_card_style"
+    private const val preferencesName = "morivia_poster_card_style"
     private const val payloadKey = "poster_card_style_payload"
 
     private var preferences: SharedPreferences? = null

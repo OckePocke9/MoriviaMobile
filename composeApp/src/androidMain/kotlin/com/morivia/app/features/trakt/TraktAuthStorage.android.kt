@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 internal actual object TraktAuthStorage {
-    private const val preferencesName = "nuvio_trakt_auth"
+    private const val preferencesName = "morivia_trakt_auth"
     private const val payloadKey = "trakt_auth_payload"
 
     private var preferences: SharedPreferences? = null

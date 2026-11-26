@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 actual object DiscoverSelectionStorage {
-    private const val preferencesName = "nuvio_discover_selection"
+    private const val preferencesName = "morivia_discover_selection"
     private const val catalogKey = "discover_catalog_key"
 
     private var preferences: SharedPreferences? = null

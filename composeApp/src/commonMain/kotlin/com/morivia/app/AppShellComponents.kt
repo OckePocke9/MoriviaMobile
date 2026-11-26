@@ -215,7 +215,7 @@ internal fun AppLoadingContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // As large as Nuvio shows its wordmark on the loading screen (51 dp tall on a phone).
+            // The loading-screen wordmark is 51 dp tall on a phone.
             AppBrandWordmark(
                 contentDescription = stringResource(Res.string.app_brand_name),
                 modifier = Modifier.height(51.dp),

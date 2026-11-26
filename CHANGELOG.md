@@ -35,11 +35,11 @@ Watch Party
 - Cap rooms at six viewers in the app, including the host, and accept 0 and 1 in room codes, pasted codes and invite links.
 
 Profiles
-- The profile chooser has tinted, outlined initials circles, Nuvio typography, white pencil buttons and outlined Manage Profiles / Done controls. Add Profile matches those controls. Morivia's name, logo and background are kept.
+- The profile chooser has tinted, outlined initials circles, the original typography, white pencil buttons and outlined Manage Profiles / Done controls. Add Profile matches those controls. Morivia's name, logo and background are kept.
 - Editing opens only from the themed pencil. Avatar choices are grouped on theme-aware cards.
 - Initials use exactly the Appearance presets and look the same in the profile chooser, profile editing, the in-app profile switcher and Party avatars. The first letter appears as the name is typed, and previews stay empty before that.
 - The PIN prompt animates open and stays open between entry and confirmation.
-- Editing a profile no longer turns off "uses primary plugins" on Nuvio. A failed save keeps you on the screen with a message, and a new profile only gets its PIN once it is really created. Profile sync also clears cached PINs changed or removed on another device.
+- Editing a profile no longer turns off "uses primary plugins" on the account. A failed save keeps you on the screen with a message, and a new profile only gets its PIN once it is really created. Profile sync also clears cached PINs changed or removed on another device.
 - Nuvio sign-in stays independent of Morivia's theme and AMOLED settings, with the fixed Nuvio wordmark and layout.
 
 Languages
@@ -63,7 +63,7 @@ Search and Library
 - Library (saved titles): the Library pill, chips for Recently Added, Movies, TV Shows and Continue Watching, the section name with "N movies · M shows", a Sort pill (Added, Name, Recently Watched) and a grid of three posters per row with titles and watched checks. A Library settings page sets the start section, sort and watched marks.
 
 Profiles
-- Profile picker in Nuvio's layout and heights, without rings; Manage Profiles opens and closes editing and Add Profile; long press or Manage opens Edit Profile only after the PIN of a locked profile; the account status line is gone.
+- Profile picker in the original layout and heights, without rings; Manage Profiles opens and closes editing and Add Profile; long press or Manage opens Edit Profile only after the PIN of a locked profile; the account status line is gone.
 - Add and Edit Profile: Confirm PIN after a new PIN; guests cannot set a PIN; cards follow AMOLED Black; a divider between Use initials and the pictures; initials colours are Morivia's theme colours with Original as the default (dark letters on light colours); the header hides content scrolling under it (also in Settings).
 - The picker shows the theme and app icon of the profile used last; signed out, the app uses Original. New guests and accounts start with only Add Profile.
 
@@ -99,7 +99,7 @@ App
 
 ## 1.2
 
-- Player: back to Nuvio's original controls in every player (ExoPlayer, libmpv on Android and iOS). The "Bio Pro" design (`PlayerCinemaControls`) and its strings are removed, because it covered too much of the film.
+- Player: back to the original controls in every player (ExoPlayer, libmpv on Android and iOS). The "Bio Pro" design (`PlayerCinemaControls`) and its strings are removed, because it covered too much of the film.
 - Kept from 1.1: whole-film speech sync for subtitles, Fit as the start mode and no stretching (Fill crops), and every other 1.1 change.
 - Raise both platforms to version 1.2, build 14.
 
@@ -109,34 +109,34 @@ App
 - Subtitles follow the speech for the whole film: `AudioSubtitleSync.follow` checks the last four minutes of audio every minute and shifts the rest of the subtitle when the same drift is measured twice in a row (lyrics and voices alike). It also runs when the whole-film match finds nothing or the subtitle is already in sync. Wired into the libmpv coordinator and the ExoPlayer sidecar and libass paths; libmpv keeps the track's title and language when it replaces an earlier AutoSync copy (Android and iOS).
 - Picture: every film starts in Fit; Fill now fills the screen with the right proportions by cropping (ExoPlayer `RESIZE_MODE_ZOOM`, libmpv `panscan=1`) and nothing stretches the picture; the resize button switches between Fit and Fill.
 - Home without catalogs: the top bar respects the inset the update banner already uses, so it sits right under it; the wordmark (34 dp) and the refresh arrow are equally far from the screen edges.
-- Wordmark sizes like Nuvio's: loading screen 51 dp, Who's watching 40 dp (48 dp on tablets), Profile footer 40 dp (48 dp).
+- Wordmark sizes as in the original app: loading screen 51 dp, Who's watching 40 dp (48 dp on tablets), Profile footer 40 dp (48 dp).
 - `docs/subtitle-autosync.md` describes the follow-up. New strings in English, Swedish and Finnish.
 - Raise both platforms to version 1.1, build 13.
 
 ## 1.0
 
-- Text styles: back to Nuvio's typography everywhere – bold page headings (the Settings sidebar title too), "Who's watching?" 30 sp bold, the profile name on the Profile tab SemiBold, the version line in Nuvio's small style, and Nuvio's card styles for "No content sources", its message and the Add Addon button.
-- New Morivia wordmark images (`app_logo_wordmark*.png`, every icon colour): the Morivia logo with "morivia" on its right, drawn in the rounded, heavy lowercase style of Nuvio's wordmark and sized to match it. `scripts/generate-wordmarks.ps1` draws them.
-- The wordmark replaces the separate icon and "Morivia" text on the Profile tab footer (Nuvio's size, 26/30 dp), the profile selection screen (34/42 dp) and the Home top bar without catalogs (26 dp); the loading screen uses it too.
+- Text styles: back to the original typography everywhere – bold page headings (the Settings sidebar title too), "Who's watching?" 30 sp bold, the profile name on the Profile tab SemiBold, the version line in the original small style, and the original card styles for "No content sources", its message and the Add Addon button.
+- New Morivia wordmark images (`app_logo_wordmark*.png`, every icon colour): the Morivia logo with "morivia" on its right, drawn in the rounded, heavy lowercase style of the original wordmark and sized to match it. `scripts/generate-wordmarks.ps1` draws them.
+- The wordmark replaces the separate icon and "Morivia" text on the Profile tab footer (original size, 26/30 dp), the profile selection screen (34/42 dp) and the Home top bar without catalogs (26 dp); the loading screen uses it too.
 - Raise both platforms to version 1.0, build 12.
 
 ## 0.9
 
-- Fix: "No content sources" flashed on Home, Search and Library at start-up, after a profile switch and while addons were pulled from Nuvio, because the addon list is briefly empty then. The empty view now appears only after there has been no catalog source for 1.5 seconds; until the first source state is known the screens stay blank.
+- Fix: "No content sources" flashed on Home, Search and Library at start-up, after a profile switch and while addons were pulled from the account, because the addon list is briefly empty then. The empty view now appears only after there has been no catalog source for 1.5 seconds; until the first source state is known the screens stay blank.
 - Fix: Add Profile offered a PIN lock to guests, where Nuvio cannot store it, and silently ignored a failed PIN. The PIN card on Add Profile now appears only when signed in to a Nuvio account, and a failed PIN shows a message (the profile is still created).
 - The update-check error no longer asks to sign in to the private MoriviaMobile repository; it says GitHub could not be reached (English, Swedish, Finnish).
 - Raise both platforms to version 0.9, build 11.
 
 ## 0.8
 
-- In-app updates: the updater reads releases from the new public repository `OckePocke9/MoriviaUpdates` instead of the private MoriviaMobile repository, which GitHub hides from the app. The update banner now appears at the top of the app when a new version is out and downloads and installs the APK, as in Nuvio.
+- In-app updates: the updater reads releases from the new public repository `OckePocke9/MoriviaUpdates` instead of the private MoriviaMobile repository, which GitHub hides from the app. The update banner now appears at the top of the app when a new version is out and downloads and installs the APK, as in the original app.
 - `scripts/publish-update-mirror.ps1` copies a published release (APK, checksums and notes only) to MoriviaUpdates; `scripts/publish-release.ps1` runs it after every release. 0.7 was copied there too.
 - README: install links point to MoriviaUpdates; release steps in README and AGENTS.md describe the copy.
 - Raise both platforms to version 0.8, build 10.
 
 ## 0.7
 
-- New `Original` theme from the Morivia logo colours (violet #9A15F9, #6B4BF5, blue #3182F6, cyan #01E8F6). It is the default for new installs and profiles without a saved theme, comes first among the standard themes and uses the default launcher icon. The theme name is synced; Nuvio's own apps fall back to their default theme for it.
+- New `Original` theme from the Morivia logo colours (violet #9A15F9, #6B4BF5, blue #3182F6, cyan #01E8F6). It is the default for new installs and profiles without a saved theme, comes first among the standard themes and uses the default launcher icon. The theme name is synced; other apps on the same account fall back to their default theme for it.
 - Android launcher icon: solid black background instead of the leftover green Android Studio grid for every icon; the default icon shows the original logo and alternative app icons keep their own colours.
 - AMOLED black now makes cards and surfaces pure black and tints the screen background with the selected theme.
 - Profile selection: "Morivia" as text (24 sp, normal weight) instead of the wordmark image; "Who's watching?" 38 sp, normal weight; the standard background follows the theme instead of the profile colour (supporter background images are unchanged).
@@ -175,7 +175,7 @@ App
 - iOS: the foldable iPhone hinge and vertical bar code needs the iOS 27.1 SDK; `scripts/build-ios-ipa.sh` builds it only when Xcode has that SDK (condition `MORIVIA_IOS_27_1_SDK`), so the app also builds with Xcode 26 on GitHub's Intel Macs.
 - Release workflow: the iOS job gives Gradle and Kotlin/Native 9 GB, because linking the release framework ran out of the 4 GB that Android builds use. 0.4 and 0.4 were never published because their iOS builds did not finish (no free Apple silicon runner, then this memory limit); 0.4 is the first release with both apps and contains all of their changes.
 
-Brings in all 47 changes from Nuvio 0.4-beta.1 while keeping Morivia's branding and fixes:
+Brings in all 47 changes from the original project's 0.4-beta.1 release while keeping Morivia's branding and fixes:
 
 - Library: remember the selected list and type; filter by genre, year and watched status.
 - Addons: support Stremio player and library tracking addons, with a consent prompt; events are queued per addon and not sent for series watched reconciliation.
@@ -185,15 +185,15 @@ Brings in all 47 changes from Nuvio 0.4-beta.1 while keeping Morivia's branding 
 - iOS: keep downloads out of iCloud and computer backups.
 - Languages: add Simplified Chinese and Ukrainian (Android and iOS); complete Brazilian Portuguese; update Hebrew, Portuguese, French and Urdu; fix mixed right-to-left and left-to-right text in Search and Watch Party.
 - New and updated translations use the Morivia name, except where they refer to Nuvio's own services.
-- Nuvio's AltStore source (`store.json`) is not included: AltStore needs public downloads, and this repository is private.
+- The original project's AltStore source (`store.json`) is not included: AltStore needs public downloads, and this repository is private.
 
 - New: Morivia for iPhone and iPad. Every release now contains an unsigned iOS app (`Morivia-iOS-X.Y.Z.ipa`, iOS/iPadOS 16.1 or newer) next to the Android app for phones and tablets.
 - The iOS app uses the Morivia name, icon and bundle ID `com.morivia.app`, with the same features as the full Android app.
 - Android and iOS share one version: `scripts/bump-version.py` updates both.
 - Releases are now named "Morivia X.Y.Z" and are built by one workflow that tests Android, builds both apps and publishes them together.
 - Rewritten README with download and install steps for Android and iOS.
-- Removed leftover workflows from the original project that closed new issues and pull requests with Nuvio messages, and one-time setup workflows.
-- Issue template links now point to Morivia's releases and README instead of Nuvio's.
+- Removed leftover workflows from the original project that closed new issues and pull requests with messages from the original project, and one-time setup workflows.
+- Issue template links now point to Morivia's releases and README instead of the original project's.
 - `.gitignore` no longer hides AGENTS.md, the scripts folder or the docs folder.
 - The debug log script uses Morivia's app ID by default.
 

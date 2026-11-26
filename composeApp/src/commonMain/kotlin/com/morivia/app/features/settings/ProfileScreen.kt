@@ -31,7 +31,7 @@ internal fun ProfileScreen(
     onAccount: () -> Unit,
     onSettings: () -> Unit,
 ) {
-    // Profile uses the same Nuvio colours as Settings (owner's request, 2026-11-22).
+    // Profile uses the same colours as Settings (owner's request, 2026-11-22).
     SettingsBackground(modifier = modifier.fillMaxSize()) {
         ProfileScreenContent(
             modifier = Modifier.fillMaxSize(),

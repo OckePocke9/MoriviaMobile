@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.morivia.app.core.storage.ProfileScopedKey
 
 actual object CollectionMobileSettingsStorage {
-    private const val preferencesName = "nuvio_collection_mobile_settings"
+    private const val preferencesName = "morivia_collection_mobile_settings"
     private const val payloadKey = "collection_mobile_settings_payload"
 
     private var preferences: SharedPreferences? = null

@@ -303,7 +303,7 @@ internal fun settingsSearchEntries(
         category = aboutCategory,
     )
     listOf(
-        PlaybackSearchRow("nuvio-license", stringResource(Res.string.settings_licenses_attributions_morivia_title), stringResource(Res.string.settings_licenses_attributions_morivia_license)),
+        PlaybackSearchRow("morivia-license", stringResource(Res.string.settings_licenses_attributions_morivia_title), stringResource(Res.string.settings_licenses_attributions_morivia_license)),
         PlaybackSearchRow("tmdb-attribution", stringResource(Res.string.settings_licenses_attributions_tmdb_title), stringResource(Res.string.settings_licenses_attributions_tmdb_body)),
         PlaybackSearchRow("trakt-attribution", stringResource(Res.string.settings_licenses_attributions_trakt_title), stringResource(Res.string.settings_licenses_attributions_trakt_body)),
         PlaybackSearchRow("simkl-attribution", stringResource(Res.string.settings_licenses_attributions_simkl_title), stringResource(Res.string.settings_licenses_attributions_simkl_body)),

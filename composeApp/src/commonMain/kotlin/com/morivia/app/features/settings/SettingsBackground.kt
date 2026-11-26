@@ -12,7 +12,7 @@ import com.morivia.app.core.ui.LocalAmoled
 import com.morivia.app.core.ui.LocalMoriviaThemeTokens
 import com.morivia.app.core.ui.MoriviaTheme
 
-/** Nuvio's original Settings colours, measured from the owner's reference screenshot. */
+/** The original Settings colours, measured from the owner's reference screenshot. */
 internal val SettingsMoriviaBackground = Color(0xFF0E0C0E)
 internal val SettingsMoriviaCard = Color(0xFF1A191B)
 
@@ -20,8 +20,8 @@ internal val SettingsMoriviaCard = Color(0xFF1A191B)
 internal fun settingsBackgroundColor(): Color = if (LocalAmoled.current) Color.Black else SettingsMoriviaBackground
 
 /**
- * Settings looks like Nuvio's original app whatever theme is picked (owner's request,
- * 2026-11-22): background #0E0C0E, grey cards #1A191B and white icons on grey tiles (Nuvio's
+ * Settings keeps its original colours whatever theme is picked (owner's request,
+ * 2026-11-22): background #0E0C0E, grey cards #1A191B and white icons on grey tiles (the
  * neutral White accent). The AMOLED setting only turns the background pure black; the cards
  * stay grey. The rest of the app keeps following the chosen theme.
  */
@@ -56,6 +56,6 @@ internal fun SettingsBackground(
     }
 }
 
-/** Card colour for Settings groups: Nuvio's grey, also with AMOLED. */
+/** Card colour for Settings groups: the original grey, also with AMOLED. */
 @Composable
 internal fun settingsCardColor(): Color = SettingsMoriviaCard

@@ -29,7 +29,7 @@ import kotlin.text.Charsets
 import java.util.concurrent.TimeUnit
 
 actual object AddonStorage {
-    private const val preferencesName = "nuvio_addons"
+    private const val preferencesName = "morivia_addons"
     private const val addonUrlsKey = "installed_manifest_urls"
     private const val addonEnabledStatesKey = "installed_manifest_enabled_states"
 

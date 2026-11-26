@@ -40,8 +40,8 @@ enum class MoriviaLibrarySection { RECENTLY_ADDED, MOVIES, SHOWS, CONTINUE_WATCH
 enum class MoriviaLibrarySort { ADDED, NAME, RECENTLY_WATCHED }
 
 /**
- * Morivia's own Home, Search and Library settings (from the earlier Morivia app) that Nuvio has
- * no setting for. They are kept per profile on this device and are not synced to Nuvio.
+ * Morivia's own Home, Search and Library settings (from the earlier Morivia app) that the account
+ * settings do not cover. They are kept per profile on this device and are not synced to the account.
  */
 @Serializable
 data class MoriviaLayoutSettings(

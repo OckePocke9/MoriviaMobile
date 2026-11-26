@@ -75,7 +75,7 @@ internal enum class CatalogSourceState {
 
 /**
  * The addon list is briefly empty at start-up, after a profile switch and while it is pulled from
- * Nuvio. "None" is therefore shown only after it has lasted [NoSourcesDelayMillis], so people with
+ * the account. "None" is therefore shown only after it has lasted [NoSourcesDelayMillis], so people with
  * Cinemeta never see "No content sources" flash by. Other states apply at once.
  */
 @Composable
@@ -140,7 +140,7 @@ internal fun MoriviaHomeTopBar(
             .height(48.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // The Morivia wordmark (logo with the name on its right), as Nuvio shows its own.
+        // The Morivia wordmark (logo with the name on its right).
         com.morivia.app.features.settings.MemberBrandWordmark(height = 34.dp)
         Spacer(modifier = Modifier.weight(1f))
         Box(
@@ -200,7 +200,7 @@ internal fun NoCatalogSourcesContent(
                 modifier = Modifier.size(48.dp),
             )
         }
-        // Nuvio's text styles (as in its "No content sources" card).
+        // The app's text styles (as in its "No content sources" card).
         Text(
             text = stringResource(Res.string.home_empty_no_sources_title),
             style = MaterialTheme.typography.titleLarge,

@@ -66,7 +66,7 @@ class RetimedAssSubtitleParserTest {
 
     @Test
     fun libassTrackIdMatchesTheConfigurationIdWithOrWithoutAPrefix() {
-        val id = "nuvio_addon_subtitle:1a2b3c"
+        val id = "morivia_addon_subtitle:1a2b3c"
 
         assertEquals(id, AutoSyncLibassSubtitles.libassTrackId(id, setOf("other", id)))
         assertEquals("1:$id", AutoSyncLibassSubtitles.libassTrackId(id, setOf("other", "1:$id")))

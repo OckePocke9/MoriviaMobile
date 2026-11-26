@@ -29,7 +29,7 @@ internal actual object SimklPkceCrypto {
 }
 
 internal actual object SimklAuthStorage {
-    private const val PREFERENCES_NAME = "nuvio_simkl_auth"
+    private const val PREFERENCES_NAME = "morivia_simkl_auth"
     private const val METADATA_KEY = "simkl_auth_metadata"
     private const val ACCESS_TOKEN_KEY = "simkl_access_token"
     private const val REFRESH_TOKEN_KEY = "simkl_refresh_token"

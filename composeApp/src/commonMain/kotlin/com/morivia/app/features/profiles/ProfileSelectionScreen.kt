@@ -186,8 +186,8 @@ private fun ProfileSelectionScreenContent(
             exit = fadeOut(tween(200, easing = androidx.compose.animation.core.FastOutLinearInEasing)),
             modifier = Modifier.fillMaxSize(),
         ) {
-            // Nuvio's layout on a phone: the content starts at the top (60 dp below the status bar) and
-            // every part sits at the same height as in Nuvio's picker; it scrolls with many profiles.
+            // The phone layout: the content starts at the top (60 dp below the status bar) and
+            // every part sits at a fixed height; it scrolls with many profiles.
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -217,7 +217,7 @@ private fun ProfileSelectionScreenContent(
                 Spacer(modifier = Modifier.height(if (isTabletLayout) 0.dp else 60.dp))
 
                 // The logo and name from the earlier Morivia app (a 34 x 28 symbol, 8 dp gap, "Morivia"
-                // at 25 sp) in the 40 dp row where Nuvio shows its wordmark, then "Who's watching?"
+                // at 25 sp) in the 40 dp wordmark row, then "Who's watching?"
                 // Keep Morivia's branding, with the reference's compact gap before the heading.
                 Row(
                     modifier = Modifier.height(40.dp).graphicsLayer {
@@ -513,7 +513,7 @@ private fun ProfileAvatarCard(
             modifier = Modifier.size(104.dp),
             contentAlignment = Alignment.Center,
         ) {
-            // Nuvio's tinted initials circle and subtle outline; photo avatars retain their image.
+            // A tinted initials circle and subtle outline; photo avatars retain their image.
             Box(
                 modifier = Modifier
                     .size(100.dp)

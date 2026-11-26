@@ -50,6 +50,6 @@ class BackgroundDownloadTest {
     )
 
     companion object {
-        private const val FIXTURE_ID = "nuvio-background-download-fixture"
+        private const val FIXTURE_ID = "morivia-background-download-fixture"
     }
 }

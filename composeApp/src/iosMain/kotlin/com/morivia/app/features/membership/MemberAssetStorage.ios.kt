@@ -21,9 +21,9 @@ import platform.posix.rewind
 internal actual object MemberAssetStorage {
     private const val accessPayloadKey = "member_access_payload"
     private const val backgroundCatalogPayloadKey = "member_background_catalog_payload"
-    private val backgroundDirectory = "${NSHomeDirectory()}/Library/Caches/NuvioMemberBackgrounds"
-    private val avatarDirectory = "${NSHomeDirectory()}/Library/Caches/NuvioMemberAvatars"
-    private val legacyBrandingPath = "${NSHomeDirectory()}/Library/Application Support/NuvioMembership/branding.png"
+    private val backgroundDirectory = "${NSHomeDirectory()}/Library/Caches/MoriviaMemberBackgrounds"
+    private val avatarDirectory = "${NSHomeDirectory()}/Library/Caches/MoriviaMemberAvatars"
+    private val legacyBrandingPath = "${NSHomeDirectory()}/Library/Application Support/MoriviaMembership/branding.png"
 
     actual fun loadAccessPayload(): String? =
         NSUserDefaults.standardUserDefaults.stringForKey(accessPayloadKey)

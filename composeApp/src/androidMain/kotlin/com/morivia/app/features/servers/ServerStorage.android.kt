@@ -18,7 +18,7 @@ internal actual object ServerStorage {
     private val lock = Any()
 
     fun initialize(context: Context) {
-        preferences = context.applicationContext.getSharedPreferences("nuvio_servers", Context.MODE_PRIVATE)
+        preferences = context.applicationContext.getSharedPreferences("morivia_servers", Context.MODE_PRIVATE)
     }
 
     actual fun read(key: String): String? = synchronized(lock) {

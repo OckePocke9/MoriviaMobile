@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
 internal const val NOW_PLAYING_TAG = "MoriviaNowPlaying"
-internal const val NOW_PLAYING_CHANNEL_ID = "nuvio_playback"
+internal const val NOW_PLAYING_CHANNEL_ID = "morivia_playback"
 internal const val NOW_PLAYING_NOTIFICATION_ID = 0x4E55
 private const val ACTION_START_FOREGROUND = "com.morivia.app.nowplaying.START_FOREGROUND"
 private const val EXTRA_START_NOTIFICATION = "com.morivia.app.nowplaying.START_NOTIFICATION"

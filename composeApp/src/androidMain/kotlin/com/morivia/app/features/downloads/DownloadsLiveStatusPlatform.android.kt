@@ -19,7 +19,7 @@ import org.jetbrains.compose.resources.getString
 
 internal actual object DownloadsLiveStatusPlatform {
     private const val channelId = "downloads_live_status"
-    private const val notificationsPrefName = "nuvio_download_live_notifications"
+    private const val notificationsPrefName = "morivia_download_live_notifications"
     private const val trackedDownloadIdsKey = "tracked_download_ids"
 
     private var appContext: Context? = null

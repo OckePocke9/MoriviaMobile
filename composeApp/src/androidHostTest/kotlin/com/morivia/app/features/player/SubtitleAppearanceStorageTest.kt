@@ -22,7 +22,7 @@ class SubtitleAppearanceStorageTest {
     @BeforeTest
     fun initialize() {
         val context = RuntimeEnvironment.getApplication()
-        context.getSharedPreferences("nuvio_player_settings", Context.MODE_PRIVATE).edit().clear().commit()
+        context.getSharedPreferences("morivia_player_settings", Context.MODE_PRIVATE).edit().clear().commit()
         PlayerSettingsStorage.initialize(context)
         PlayerSettingsRepository.clearLocalState()
     }
@@ -49,7 +49,7 @@ class SubtitleAppearanceStorageTest {
 
     @Test
     fun olderSyncClearsAppearanceOnlyForActiveProfile() {
-        val preferences = RuntimeEnvironment.getApplication().getSharedPreferences("nuvio_player_settings", Context.MODE_PRIVATE)
+        val preferences = RuntimeEnvironment.getApplication().getSharedPreferences("morivia_player_settings", Context.MODE_PRIVATE)
         val otherKey = ProfileScopedKey.of("subtitle_appearance", 99)
         val saved = SubtitleAppearance(fontId = "mono").encode()
         preferences.edit().putString(otherKey, saved).commit()

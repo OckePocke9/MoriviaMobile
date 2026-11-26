@@ -42,7 +42,7 @@ import kotlinx.coroutines.withContext
 
 internal actual object EpisodeReleaseNotificationPlatform {
     private const val permissionRequestCode = 4607
-    private const val platformPreferencesName = "nuvio_episode_release_notifications_platform"
+    private const val platformPreferencesName = "morivia_episode_release_notifications_platform"
     private const val scheduledIdsKey = "scheduled_episode_release_ids"
     private const val workTag = "episode_release_notifications"
     internal const val channelId = "episode_release_notifications"

@@ -61,7 +61,7 @@ class CustomPosterUrlResolverTest {
         assertEquals("tt0137523", ids.imdbId)
     }
 
-    // -- Nuvio native placeholders --
+    // -- Native placeholders --
 
     @Test
     fun resolve_morivia_native_pattern_with_IMDb_id() {

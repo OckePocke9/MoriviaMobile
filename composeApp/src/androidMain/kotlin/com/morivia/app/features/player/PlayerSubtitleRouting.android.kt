@@ -11,7 +11,7 @@ import androidx.media3.datasource.TransferListener
 import com.morivia.app.features.streams.StreamSubtitle
 
 /** Same marker as NuvioTV: an addon subtitle URL the player must not load like the stream. */
-private const val SUBTITLE_URI_MARKER = "nuvio_type=subtitle"
+private const val SUBTITLE_URI_MARKER = "morivia_type=subtitle"
 
 /** Marks an HTTP(S) addon subtitle URL so [SubtitleRoutingDataSourceFactory] fetches it on its own. */
 internal fun markedSubtitleUri(url: String): Uri {
@@ -30,7 +30,7 @@ internal fun markedSubtitleUri(url: String): Uri {
  * id is never rendered. Same scheme as NuvioTV's `buildAddonSubtitleTrackId`.
  */
 internal fun addonSubtitleTrackId(url: String): String =
-    "nuvio_addon_subtitle:${url.hashCode().toUInt().toString(16)}"
+    "morivia_addon_subtitle:${url.hashCode().toUInt().toString(16)}"
 
 /** The original URL of a marked subtitle URI, keeping its query encoding; null when not marked. */
 internal fun Uri.withoutSubtitleMarker(): Uri? {
