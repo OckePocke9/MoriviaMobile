@@ -1034,8 +1034,8 @@ private fun HomeScreenWithCatalogs(
         val row = ((load?.row ?: emptyList()) + all).distinctBy { it.id }.take(GENRE_ROW_HOME_LIMIT)
         return copy(items = all, rowItems = row)
     }
-    val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, movieGenreLoad) {
-        if (true) {
+    val movieRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, movieGenreLoad, moriviaLayout.moviesByGenres) {
+        if (moriviaLayout.moviesByGenres) {
             (
                 buildGenreRecommendation(isSeries = false, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
                     ?: latestMovie?.let { GenreRecommendation(key = if (false) "morivia_series_by_genres" else "morivia_movies_by_genres", isSeries = false, source = it, items = emptyList()) }
@@ -1044,8 +1044,8 @@ private fun HomeScreenWithCatalogs(
             null
         }
     }
-    val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, seriesGenreLoad) {
-        if (true) {
+    val seriesRecommendation = remember(watchHistory, homeUiState.sections, genreSnapshot, seriesGenreLoad, moriviaLayout.seriesByGenres) {
+        if (moriviaLayout.seriesByGenres) {
             (
                 buildGenreRecommendation(isSeries = true, history = watchHistory, sections = homeUiState.sections, genresById = genreSnapshot)
                     ?: latestSeries?.let { GenreRecommendation(key = if (true) "morivia_series_by_genres" else "morivia_movies_by_genres", isSeries = true, source = it, items = emptyList()) }
