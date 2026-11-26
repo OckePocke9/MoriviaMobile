@@ -11,7 +11,7 @@ Morivia is an Android app for phones and tablets, built with Kotlin Multiplatfor
 5. Publish from the PC with `.\scripts\publish-release.ps1`. It refuses to run until the README and changelog are written and `main` is pushed, runs the Android host tests, builds and checks the signed APK, and publishes the release `Morivia Android vX.Y` (tag `vX.Y` on the pushed commit, marked Latest) with the APK, README.md, CHANGELOG.md, LICENSE and SHA256SUMS.txt. This public repository is Morivia's official repository, and the in-app updater reads its latest release. Releases from 1.6 are signed with the private release key (kept outside Git, set up in `local.properties` as `NUVIO_RELEASE_*`); the script refuses an APK signed with another key.
 6. Never overwrite or delete a published version. If the build or tests fail, nothing is published: fix it and run the script again.
 
-**GitHub Actions is turned off for this repository and must stay off** (the owner's decision on 2026-11-17, after the free Actions minutes ran out). Do not enable Actions or add automatic triggers (push, pull_request, schedule, release) to workflows. The files in `.github/workflows/` only run when started by hand, which needs Actions turned on again by the owner.
+**iPhone and iPad builds run on GitHub Actions** (the owner's decision on 2026-11-26): the repository is public, so GitHub's macOS runners are free. `.github/workflows/morivia-ios.yml` builds an unsigned IPA when started by hand. Only the owner turns Actions on and starts a run, and only when the owner says so. Do not add automatic triggers (push, pull_request, schedule, release) to workflows.
 
 ## Branding
 

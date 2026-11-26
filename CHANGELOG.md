@@ -3,7 +3,7 @@
 ## 1.9
 
 - Restore Morivia for iPhone and iPad, including the mpv player and the shared library, profiles and watch progress.
-- Add an unsigned arm64 IPA for iOS and iPadOS 16.1 or newer and a manual Codemagic build for installation with Sideloadly.
+- Add an unsigned arm64 IPA for iOS and iPadOS 16.1 or newer and a manual GitHub Actions build for installation with Sideloadly.
 - Use Morivia’s own Trakt and SIMKL sign-in links. The Trakt settings card shows status and supports manual sync, and the SIMKL card shows its last sync.
 - Renew expired SIMKL access tokens when the service has provided a refresh token. Save refresh tokens per profile in the platform’s secure storage.
 - Adjust Trakt authorization and progress refresh handling.

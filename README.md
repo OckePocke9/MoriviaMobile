@@ -59,11 +59,11 @@ The APK is written to `androidApp/build/outputs/apk/full/release/`.
 
 ### iPhone and iPad test build
 
-Run the **Morivia iPhone and iPad (Sideloadly)** workflow manually in Codemagic. It uses a Mac mini M2 and saves an unsigned device IPA in the build artifacts. To install it, connect your iPhone or iPad to your Windows PC, open the IPA in [Sideloadly](https://sideloadly.io/), and sign in with your Apple Account. A free account can sign the app for seven days at a time.
+Run the **Morivia iPhone and iPad** workflow by hand in GitHub Actions (Actions, Morivia iPhone and iPad, Run workflow). It builds on GitHub's free macOS runners and saves an unsigned device IPA in the workflow artifacts. To install it, connect your iPhone or iPad to your Windows PC, open the IPA in [Sideloadly](https://sideloadly.io/), and sign in with your Apple Account. A free account can sign the app for seven days at a time.
 
 ### Releases
 
-Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …). The Android APK is built on a PC, and the iOS IPA is built manually in Codemagic. Attach the matching IPA with `scripts/publish-release.ps1 -IpaPath <file>`. GitHub Actions remains off. See [AGENTS.md](AGENTS.md) for the full process.
+Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …). The Android APK is built on a PC, and the iOS IPA is built by hand with the **Morivia iPhone and iPad** workflow in GitHub Actions. Attach the matching IPA with `scripts/publish-release.ps1 -IpaPath <file>`. See [AGENTS.md](AGENTS.md) for the full process.
 
 ## Contributors
 
