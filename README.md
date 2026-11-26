@@ -67,8 +67,8 @@ Releases are named **Morivia Android vX.Y** and go up by 0.1 (0.9, 1.0, 1.1 …)
 
 ## Contributors
 
-- [OckePocke9](https://github.com/OckePocke9) – owner, design and testing
-- [Claude](https://claude.com/claude-code) by Anthropic – development, releases and documentation
+- [Claude](https://claude.com/claude-code) by Anthropic – builds Morivia: development, design, releases and documentation
+- [OckePocke9](https://github.com/OckePocke9) – owner
 
 ## License
 

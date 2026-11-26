@@ -336,7 +336,6 @@
     <string name="collections_pinned">Fixado</string>
     <string name="collections_tab_all">Todos</string>
     <string name="collections_your_collections">Suas coleções</string>
-    <string name="compose_about_made_with">Feito com ❤️ por Tapframe e amigos</string>
     <string name="compose_about_version_format">Versão %1$s (%2$s)</string>
     <string name="compose_action_off">Desativado</string>
     <string name="compose_action_on">Ativado</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">Usado para efeitos de desfoque de fundo. Criado por Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Licenciado sob a Licença Apache, Versão 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Código-fonte e termos de licença estão disponíveis no repositório do projeto.</string>
     <string name="settings_licenses_attributions_morivia_license">Licenciado sob a GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">O Morivia usa a API do TMDB para metadados de filmes e séries, artes, trailers, elenco, detalhes de produção, coleções e recomendações. Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.</string>

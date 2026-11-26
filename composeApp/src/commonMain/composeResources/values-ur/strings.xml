@@ -336,7 +336,6 @@
     <string name="collections_pinned">Pin شدہ</string>
     <string name="collections_tab_all">تمام</string>
     <string name="collections_your_collections">آپ کے کلیکشنز</string>
-    <string name="compose_about_made_with">Tapframe اور دوستوں نے ❤️ کے ساتھ بنایا</string>
     <string name="compose_about_version_format">ورژن %1$s (%2$s)</string>
     <string name="compose_action_off">بند</string>
     <string name="compose_action_on">چالو</string>
@@ -578,7 +577,6 @@
     <string name="settings_licenses_attributions_haze_body">پس منظر کے blur effects کے لیے استعمال ہوتا ہے۔ Chris Banes نے بنایا۔</string>
     <string name="settings_licenses_attributions_haze_license">Apache License، Version 2.0 کے تحت لائسنس یافتہ۔</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">سورس کوڈ اور لائسنس کی شرائط project repository میں دستیاب ہیں۔</string>
     <string name="settings_licenses_attributions_morivia_license">GNU General Public License v3.0 کے تحت لائسنس یافتہ۔</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia فلم اور TV metadata، artwork، trailers، cast، production details، collections اور recommendations کے لیے TMDB API استعمال کرتا ہے۔ یہ پروڈکٹ TMDB API استعمال کرتا ہے لیکن TMDB کی جانب سے endorsed یا certified نہیں ہے۔</string>

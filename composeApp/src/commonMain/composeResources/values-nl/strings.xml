@@ -336,7 +336,6 @@
     <string name="collections_pinned">Vastgezet</string>
     <string name="collections_tab_all">Alles</string>
     <string name="collections_your_collections">Jouw collecties</string>
-    <string name="compose_about_made_with">Gemaakt met ❤️ door Tapframe en vrienden</string>
     <string name="compose_about_version_format">Versie %1$s (%2$s)</string>
     <string name="compose_action_off">Uit</string>
     <string name="compose_action_on">Aan</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">Wordt gebruikt om achtergronden te vervagen. Gemaakt door Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Uitgebracht onder de Apache-licentie, versie 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Broncode en licentievoorwaarden zijn beschikbaar in de projectrepository.</string>
     <string name="settings_licenses_attributions_morivia_license">Uitgebracht onder de GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia gebruikt de TMDB API voor film- en tv-metadata, artwork, trailers, cast, productiedetails, collecties en aanbevelingen. Dit product gebruikt de TMDB API maar wordt niet goedgekeurd of gecertificeerd door TMDB.</string>

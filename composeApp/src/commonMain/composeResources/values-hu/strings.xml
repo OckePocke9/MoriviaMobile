@@ -283,7 +283,6 @@
     <string name="collections_pinned">Kitűzött</string>
     <string name="collections_tab_all">Összes</string>
     <string name="collections_your_collections">Gyűjteményeid</string>
-    <string name="compose_about_made_with">Készítette ❤️-vel a Tapframe és barátai</string>
     <string name="compose_about_version_format">Verzió: %1$s (%2$s)</string>
     <string name="compose_action_off">Ki</string>
     <string name="compose_action_on">Be</string>
@@ -419,7 +418,6 @@
     <string name="settings_licenses_attributions_section_data">ADATOK &amp; SZOLGÁLTATÁSOK</string>
     <string name="settings_licenses_attributions_section_playback">LEJÁTSZÁSI LICENC</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">A forráskód és a licencfeltételek elérhetők a projekt tárolóján (repository).</string>
     <string name="settings_licenses_attributions_morivia_license">A GNU General Public License v3.0 feltételei szerint licencelve.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">A Morivia a TMDB API-t használja a filmek és TV-műsorok metaadataihoz, borítóképeihez, előzeteseihez, stáblistáihoz, gyártási adataihoz, gyűjteményeihez és ajánlásaihoz. Ez a termék a TMDB API-t használja, de a TMDB nem támogatja és nem tanúsítja azt.</string>

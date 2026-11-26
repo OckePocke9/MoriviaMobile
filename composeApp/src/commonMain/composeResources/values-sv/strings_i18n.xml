@@ -234,7 +234,6 @@
     <string name="settings_licenses_attributions_section_ui">UI-BIBLIOTEK</string>
     <string name="settings_licenses_attributions_haze_body">Används för bakgrundsoskärpa. Skapat av Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Licensierat under Apache License, version 2.0.</string>
-    <string name="settings_licenses_attributions_morivia_body">Källkod och licensvillkor finns i projektets kodförråd.</string>
     <string name="settings_licenses_attributions_morivia_license">Licensierat under GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia använder TMDB:s API för metadata om filmer och tv, bilder, trailers, rollista, produktionsuppgifter, samlingar och rekommendationer. Den här produkten använder TMDB:s API men är inte godkänd eller certifierad av TMDB.</string>
     <string name="settings_licenses_attributions_imdb_title">IMDb:s icke-kommersiella dataset</string>

@@ -336,7 +336,6 @@
     <string name="collections_pinned">ピン留め</string>
     <string name="collections_tab_all">すべて</string>
     <string name="collections_your_collections">マイコレクション</string>
-    <string name="compose_about_made_with">❤️ Tapframe とフレンズが制作</string>
     <string name="compose_about_version_format">バージョン %1$s (%2$s)</string>
     <string name="compose_action_off">オフ</string>
     <string name="compose_action_on">オン</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">背景のぼかし効果に使用。作者：Chris Banes。</string>
     <string name="settings_licenses_attributions_haze_license">Apache License, Version 2.0のもとでライセンスされています。</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">ソースコードとライセンス条件はプロジェクトリポジトリで確認できます。</string>
     <string name="settings_licenses_attributions_morivia_license">GNU General Public License v3.0のもとでライセンスされています。</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">MoriviaはTMDB APIを使用して、映画・TV番組のメタデータ、アートワーク、予告編、キャスト、制作詳細、コレクション、おすすめ作品を取得しています。本製品はTMDB APIを使用していますが、TMDBの公式承認・認定を受けたものではありません。</string>

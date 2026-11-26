@@ -336,7 +336,6 @@
     <string name="collections_pinned">Prikvačeno</string>
     <string name="collections_tab_all">Sve</string>
     <string name="collections_your_collections">Vaše zbirke</string>
-    <string name="compose_about_made_with">Napravljeno s ❤️ od strane Tapframe i prijatelja</string>
     <string name="compose_about_version_format">Verzija %1$s (%2$s)</string>
     <string name="compose_action_off">Isključeno</string>
     <string name="compose_action_on">Uključeno</string>
@@ -578,7 +577,6 @@
     <string name="settings_licenses_attributions_haze_body">Koristi se za efekte zamućenja pozadine. Autor: Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Licencirano pod licencom Apache License, verzija 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Izvorni kôd i uvjeti licenciranja dostupni su u repozitoriju projekta.</string>
     <string name="settings_licenses_attributions_morivia_license">Licencirano pod licencom GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia koristi TMDB API za metapodatke o filmovima i TV emisijama, ilustracije, najave, glumačku postavu, pojedinosti produkcije, zbirke i preporuke. Ovaj proizvod koristi TMDB API, ali nije podržan niti certificiran od strane TMDB-a.</string>

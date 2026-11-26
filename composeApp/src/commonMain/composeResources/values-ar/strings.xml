@@ -337,7 +337,6 @@
     <string name="collections_pinned">مثبّتة</string>
     <string name="collections_tab_all">الكل</string>
     <string name="collections_your_collections">مجموعاتك</string>
-    <string name="compose_about_made_with">صنع بكل ❤️ بواسطة Tapframe والأصدقاء</string>
     <string name="compose_about_version_format">الإصدار %1$s (%2$s)</string>
     <string name="compose_action_off">معطل</string>
     <string name="compose_action_on">مفعل</string>
@@ -583,7 +582,6 @@
     <string name="settings_licenses_attributions_haze_body">يُستخدم لتأثيرات تمويه الخلفية. من إنشاء Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">مرخص بموجب رخصة Apache، الإصدار 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">يتوفر الكود المصدري وشروط الترخيص في مستودع المشروع.</string>
     <string name="settings_licenses_attributions_morivia_license">مرخّص بموجب رخصة GNU العامة الإصدار 3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">يستخدم Morivia واجهة TMDB API للبيانات الوصفية للأفلام والمسلسلات والصور والإعلانات وطاقم التمثيل وتفاصيل الإنتاج والمجموعات والتوصيات. يستخدم هذا المنتج واجهة TMDB API لكنه غير معتمد أو مصدّق من TMDB.</string>

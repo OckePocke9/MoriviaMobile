@@ -336,7 +336,6 @@
     <string name="collections_pinned">Đã ghim</string>
     <string name="collections_tab_all">Tất cả</string>
     <string name="collections_your_collections">Bộ sưu tập của bạn</string>
-    <string name="compose_about_made_with">Được tạo bằng ❤️ bởi Tapframe và bạn bè</string>
     <string name="compose_about_version_format">Phiên bản %1$s (%2$s)</string>
     <string name="compose_action_off">Tắt</string>
     <string name="compose_action_on">Bật</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">Dùng cho hiệu ứng làm mờ ảnh nền. Được tạo bởi Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Được cấp phép theo Giấy phép Apache, Phiên bản 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Mã nguồn và điều khoản cấp phép có trong kho lưu trữ của dự án</string>
     <string name="settings_licenses_attributions_morivia_license">Cấp phép theo GNU General Public License v3.0</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia sử dụng API TMDB để lấy dữ liệu phim và TV, ảnh hiển thị, trailer, diễn viên, thông tin sản xuất, bộ sưu tập và đề xuất. Sản phẩm này sử dụng API TMDB nhưng không được TMDB xác thực hoặc chứng nhận.</string>

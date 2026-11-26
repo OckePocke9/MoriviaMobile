@@ -336,7 +336,6 @@
     <string name="collections_pinned">Закріплено</string>
     <string name="collections_tab_all">Усі</string>
     <string name="collections_your_collections">Ваші колекції</string>
-    <string name="compose_about_made_with">Створено з ❤️ Tapframe та друзями</string>
     <string name="compose_about_version_format">Версія %1$s (%2$s)</string>
     <string name="compose_action_off">Вимк.</string>
     <string name="compose_action_on">Увімк.</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">Використовується для ефектів розмиття фону. Автор: Кріс Бейнс (Chris Banes).</string>
     <string name="settings_licenses_attributions_haze_license">Ліцензовано за Apache License, версія 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Вихідний код і умови ліцензії доступні в репозиторії проєкту.</string>
     <string name="settings_licenses_attributions_morivia_license">Ліцензовано за GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia використовує API TMDB для метаданих фільмів і серіалів, обкладинок, трейлерів, акторського складу, інформації про виробництво, колекцій і рекомендацій. Цей продукт використовує API TMDB, але не схвалений і не сертифікований TMDB.</string>

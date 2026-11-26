@@ -308,7 +308,6 @@
     <string name="collections_pinned">Fixate</string>
     <string name="collections_tab_all">Toate</string>
     <string name="collections_your_collections">Colecțiile tale</string>
-    <string name="compose_about_made_with">Creat cu ❤️ de Tapframe și prieteni</string>
     <string name="compose_about_version_format">Versiunea %1$s (%2$s)</string>
     <string name="compose_action_off">Oprit</string>
     <string name="compose_action_on">Pornit</string>
@@ -487,7 +486,6 @@
     <string name="settings_licenses_attributions_section_data">DATE ȘI SERVICII</string>
     <string name="settings_licenses_attributions_section_playback">LICENȚĂ REDARE</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Codul sursă și termenii licenței sunt disponibili în depozitul proiectului.</string>
     <string name="settings_licenses_attributions_morivia_license">Licențiat sub GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia utilizează API-ul TMDB pentru metadate de filme și seriale, imagini, trailere, distribuție, detalii de producție, colecții și recomandări. Acest produs folosește API-ul TMDB, dar nu este aprobat sau certificat de către TMDB.</string>

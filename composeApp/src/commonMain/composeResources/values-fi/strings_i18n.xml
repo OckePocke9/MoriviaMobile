@@ -234,7 +234,6 @@
     <string name="settings_licenses_attributions_section_ui">KÄYTTÖLIITTYMÄKIRJASTOT</string>
     <string name="settings_licenses_attributions_haze_body">Käytetään taustan sumennukseen. Tekijä Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">Lisensoitu Apache License -lisenssillä, versio 2.0.</string>
-    <string name="settings_licenses_attributions_morivia_body">Lähdekoodi ja lisenssiehdot löytyvät projektin koodivarastosta.</string>
     <string name="settings_licenses_attributions_morivia_license">Lisensoitu GNU General Public License v3.0 -lisenssillä.</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia käyttää TMDB:n API:a elokuvien ja TV-sarjojen metatietoihin, kuviin, trailereihin, näyttelijöihin, tuotantotietoihin, kokoelmiin ja suosituksiin. Tämä tuote käyttää TMDB:n API:a, mutta TMDB ei ole hyväksynyt tai sertifioinut sitä.</string>
     <string name="settings_licenses_attributions_imdb_title">IMDb:n ei-kaupalliset tietoaineistot</string>

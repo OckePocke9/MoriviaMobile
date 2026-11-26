@@ -301,7 +301,6 @@
     <string name="collections_pinned">Pripnuté</string>
     <string name="collections_tab_all">Všetky</string>
     <string name="collections_your_collections">Vaše kolekcie</string>
-    <string name="compose_about_made_with">Vytvorené s ❤️ od Tapframe a priateľov</string>
     <string name="compose_about_version_format">Verzia %1$s (%2$s)</string>
     <string name="compose_action_off">Vypnuté</string>
     <string name="compose_action_on">Zapnuté</string>
@@ -462,7 +461,6 @@
     <string name="settings_licenses_attributions_section_data">DÁTA A SLUŽBY</string>
     <string name="settings_licenses_attributions_section_playback">LICENCIA PREHRÁVANIA</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">Zdrojový kód a licenčné podmienky sú dostupné v repozitári projektu.</string>
     <string name="settings_licenses_attributions_morivia_license">Licencované pod GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia používa API TMDB pre metadáta filmov a TV, umelecké diela, trailery, obsadenie, produkčné detaily, kolekcie a odporúčania. Tento produkt používa API TMDB, ale nie je schválený ani certifikovaný spoločnosťou TMDB.</string>

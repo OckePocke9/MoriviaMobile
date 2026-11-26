@@ -336,7 +336,6 @@
     <string name="collections_pinned">מוצמד</string>
     <string name="collections_tab_all">הכול</string>
     <string name="collections_your_collections">האוספים שלך</string>
-    <string name="compose_about_made_with">נוצר באהבה ❤️ על ידי Tapframe וחברים</string>
     <string name="compose_about_version_format">גרסה %1$s (%2$s)</string>
     <string name="compose_action_off">כבוי</string>
     <string name="compose_action_on">פועל</string>
@@ -586,7 +585,6 @@
     <string name="settings_licenses_attributions_haze_body">משמש לאפקטי טשטוש ברקע. נוצר על ידי Chris Banes.</string>
     <string name="settings_licenses_attributions_haze_license">ברישיון Apache License, גרסה 2.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">קוד המקור ותנאי הרישיון זמינים במאגר הפרויקט.</string>
     <string name="settings_licenses_attributions_morivia_license">ברישיון GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia משתמשת ב-API של TMDB עבור מטא-דאטה של סרטים וסדרות, תמונות, טריילרים, שחקנים, פרטי הפקה, אוספים והמלצות. מוצר זה משתמש ב-API של TMDB אך אינו מאושר או מאומת על ידי TMDB.</string>

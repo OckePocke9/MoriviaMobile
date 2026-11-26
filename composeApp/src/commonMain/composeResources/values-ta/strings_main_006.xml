@@ -84,7 +84,6 @@
     <string name="settings_licenses_attributions_haze_body">பின்னணி மங்கலாக்கும் விளைவுகளுக்குப் பயன்படுத்தப்படுகிறது. Chris Banes உருவாக்கியது.</string>
     <string name="settings_licenses_attributions_haze_license">Apache License, Version 2.0-இன் கீழ் உரிமம் பெற்றது.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">மூலக் குறியீடும் உரிம விதிகளும் திட்டத்தின் repository-யில் கிடைக்கின்றன.</string>
     <string name="settings_licenses_attributions_morivia_license">GNU General Public License v3.0-இன் கீழ் உரிமம் பெற்றது.</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">திரைப்பட மற்றும் தொலைக்காட்சி மெட்டாடேட்டா, படங்கள், டிரெய்லர்கள், நடிகர்கள், தயாரிப்பு விவரங்கள், தொகுப்புகள் மற்றும் பரிந்துரைகளுக்கு Morivia TMDB API-ஐப் பயன்படுத்துகிறது. இந்தத் தயாரிப்பு TMDB API-ஐப் பயன்படுத்துகிறது; ஆனால் TMDB இதை ஆதரிக்கவோ சான்றளிக்கவோ இல்லை.</string>

@@ -337,7 +337,6 @@
     <string name="collections_pinned">পিন করা</string>
     <string name="collections_tab_all">সব</string>
     <string name="collections_your_collections">আপনার কালেকশনসমূহ</string>
-    <string name="compose_about_made_with">Tapframe এবং বন্ধুদের দ্বারা ❤️ দিয়ে তৈরি</string>
     <string name="compose_about_version_format">সংস্করণ %1$s (%2$s)</string>
     <string name="compose_action_off">বন্ধ</string>
     <string name="compose_action_on">চালু</string>
@@ -579,7 +578,6 @@
     <string name="settings_licenses_attributions_haze_body">ব্যাকগ্রাউন্ড ব্লার ইফেক্টের জন্য ব্যবহার করা হয়। ক্রিস ব্যানস দ্বারা নির্মিত।</string>
     <string name="settings_licenses_attributions_haze_license">Apache লাইসেন্সের অধীনে লাইসেন্সকৃত, সংস্করণ 2.0।</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia মোবাইল</string>
-    <string name="settings_licenses_attributions_morivia_body">সোর্স কোড এবং লাইসেন্সের শর্তাবলী প্রকল্পের রিপোজিটরিতে উপলব্ধ।</string>
     <string name="settings_licenses_attributions_morivia_license">GNU জেনারেল পাবলিক লাইসেন্স v3.0-এর অধীনে লাইসেন্সপ্রাপ্ত।</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia মুভি এবং টিভি মেটাডেটা, আর্টওয়ার্ক, ট্রেলার, কাস্ট, প্রোডাকশন বিবরণ, কালেকশন এবং রেকমেন্ডেশনের জন্য TMDB API ব্যবহার করে। এই পণ্যটি TMDB API ব্যবহার করে কিন্তু TMDB দ্বারা অনুমোদিত বা প্রত্যয়িত নয়।</string>

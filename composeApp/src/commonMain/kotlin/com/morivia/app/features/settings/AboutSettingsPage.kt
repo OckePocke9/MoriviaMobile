@@ -22,7 +22,6 @@ import com.morivia.app.core.build.AppVersionConfig
 import morivia.composeapp.generated.resources.Res
 import morivia.composeapp.generated.resources.about_licenses_attributions_subtitle
 import morivia.composeapp.generated.resources.about_supporters_contributors_subtitle
-import morivia.composeapp.generated.resources.compose_about_made_with
 import morivia.composeapp.generated.resources.compose_about_version_format
 import morivia.composeapp.generated.resources.compose_settings_page_licenses_attributions
 import morivia.composeapp.generated.resources.compose_settings_page_privacy_policy

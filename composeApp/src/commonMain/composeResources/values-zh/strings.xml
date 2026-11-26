@@ -336,7 +336,6 @@
     <string name="collections_pinned">已置顶</string>
     <string name="collections_tab_all">全部</string>
     <string name="collections_your_collections">你的合集</string>
-    <string name="compose_about_made_with">由 Tapframe 和朋友们用 ❤️ 制作</string>
     <string name="compose_about_version_format">版本 %1$s（%2$s）</string>
     <string name="compose_action_off">关</string>
     <string name="compose_action_on">开</string>
@@ -582,7 +581,6 @@
     <string name="settings_licenses_attributions_haze_body">用于背景模糊效果。由 Chris Banes 开发。</string>
     <string name="settings_licenses_attributions_haze_license">基于 Apache License 2.0 授权。</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
-    <string name="settings_licenses_attributions_morivia_body">源代码与许可条款可在项目仓库中查看。</string>
     <string name="settings_licenses_attributions_morivia_license">基于 GNU General Public License v3.0 授权。</string>
     <string name="settings_licenses_attributions_tmdb_title">The Movie Database（TMDB）</string>
     <string name="settings_licenses_attributions_tmdb_body">Morivia 使用 TMDB API 获取电影和电视的元数据、图片、预告片、演员、制作信息、合集和推荐。本产品使用 TMDB API，但未获 TMDB 认可或认证。</string>

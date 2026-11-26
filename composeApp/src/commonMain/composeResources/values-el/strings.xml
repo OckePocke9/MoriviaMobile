@@ -124,7 +124,6 @@
     <string name="collections_pinned">Καρφιτσωμένα</string>
     <string name="collections_tab_all">Όλα</string>
     <string name="collections_your_collections">Οι συλλογές σας</string>
-    <string name="compose_about_made_with">Φτιαγμένο με ❤️ από την Tapframe και φίλους</string>
     <string name="compose_about_version_format">Έκδοση %1$s (%2$s)</string>
     <string name="compose_action_off">Απενεργοποίηση</string>
     <string name="compose_action_on">Ενεργοποίηση</string>
@@ -2145,7 +2144,6 @@
     <string name="settings_licenses_attributions_mpvkit_body">Χρησιμοποιείται για αναπαραγωγή σε εκδόσεις iOS.</string>
     <string name="settings_licenses_attributions_mpvkit_license">Ο πηγαίος κώδικας του MPVKit μόνο είναι αδειοδοτημένος υπό LGPL v3.0. Τα πακέτα MPVKit, συμπεριλαμβανομένων των βιβλιοθηκών libmpv και FFmpeg, είναι επίσης αδειοδοτημένα υπό LGPL v3.0.</string>
     <string name="settings_licenses_attributions_mpvkit_title">MPVKit</string>
-    <string name="settings_licenses_attributions_morivia_body">Ο πηγαίος κώδικας και οι όροι αδειοδότησης είναι διαθέσιμοι στο αποθετήριο του έργου.</string>
     <string name="settings_licenses_attributions_morivia_license">Αδειοδοτείται υπό την GNU General Public License v3.0.</string>
     <string name="settings_licenses_attributions_morivia_title">Morivia Mobile</string>
     <string name="settings_licenses_attributions_section_app">ΑΔΕΙΑ ΕΦΑΡΜΟΓΗΣ</string>
