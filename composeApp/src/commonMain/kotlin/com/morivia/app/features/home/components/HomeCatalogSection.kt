@@ -239,7 +239,8 @@ private fun RankedCard(
                     lineHeight = 44.sp,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                     color = androidx.compose.ui.graphics.Color.White,
-                    platformStyle = androidx.compose.ui.text.PlatformTextStyle(includeFontPadding = false),
+                    // No font padding is already the default on Android, and iOS has none, so the
+                    // rank looks the same on every device.
                     lineHeightStyle = androidx.compose.ui.text.style.LineHeightStyle(
                         alignment = androidx.compose.ui.text.style.LineHeightStyle.Alignment.Center,
                         trim = androidx.compose.ui.text.style.LineHeightStyle.Trim.Both,
