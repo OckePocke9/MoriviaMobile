@@ -1,0 +1,5 @@
+subfont.ttf is Droid Sans Fallback, the fallback subtitle font Morivia also uses on Android
+(from the mpv-android library). It covers Chinese, Japanese and Korean subtitles.
+
+Copyright (C) 2008 The Android Open Source Project
+Licensed under the Apache License, Version 2.0: https://www.apache.org/licenses/LICENSE-2.0

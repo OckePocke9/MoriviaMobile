@@ -24,7 +24,6 @@ See the [changelog](CHANGELOG.md) for every change.
   - `Morivia-Android-X.Y-arm64-v8a.apk` – almost every phone and tablet from about 2017 on. Take this one if unsure.
   - `Morivia-Android-X.Y-armeabi-v7a.apk` – older or low-cost phones, tablets and TV boxes with 32-bit Android.
   - `Morivia-Android-X.Y-x86_64.apk` – Chromebooks with Intel or AMD processors and Android emulators.
-  - `Morivia-Android-X.Y-x86.apk` – old Intel tablets and older emulators.
   - `Morivia-Android-X.Y-universal.apk` – works on all of them, but is larger.
 - **iPhone and iPad:** Download `Morivia-iOS-X.Y-release.ipa` from the same release. Requires iOS or iPadOS 16.1 or newer. Install the unsigned IPA with [Sideloadly](https://sideloadly.io/) on a PC or Mac and sign it with your Apple Account.
 - A fresh install starts signed out: sign in with your Nuvio account or continue as a guest.

@@ -107,7 +107,7 @@ if (-not $env:ANDROID_HOME) { $env:ANDROID_HOME = Join-Path $env:LOCALAPPDATA 'A
 if (-not (Test-Path 'local.properties')) { New-Item -ItemType File 'local.properties' | Out-Null }
 # One APK per processor type and a universal one, so Morivia runs on every phone and tablet
 # (owner, 2026-11-26). The in-app updater picks the right one by its name.
-$abis = @('arm64-v8a', 'armeabi-v7a', 'x86_64', 'x86', 'universal')
+$abis = @('arm64-v8a', 'armeabi-v7a', 'x86_64', 'universal')
 $apkDirectory = 'androidApp/build/outputs/apk/full/release'
 if ($ApkPath) {
     $apkDirectory = $ApkPath
@@ -154,7 +154,6 @@ $download = "`n`n## Download`n`nAndroid phones and tablets with Android 7.0 or n
     "- ``Morivia-Android-$version-arm64-v8a.apk``: almost every phone and tablet from about 2017 on (Samsung Galaxy, Pixel, OnePlus, Xiaomi and others). Take this one if unsure.`n" +
     "- ``Morivia-Android-$version-armeabi-v7a.apk``: older or low-cost phones, tablets and TV boxes with 32-bit Android.`n" +
     "- ``Morivia-Android-$version-x86_64.apk``: Chromebooks with Intel or AMD processors and Android emulators.`n" +
-    "- ``Morivia-Android-$version-x86.apk``: old Intel tablets and older emulators.`n" +
     "- ``Morivia-Android-$version-universal.apk``: works on all of them, but is larger.`n`n" +
     "Morivia's in-app updates pick the right file for the device by themselves.`n"
 if ($ipa) {

@@ -89,13 +89,14 @@ android {
         }
         jniLibs {
             useLegacyPackaging = true
-            pickFirsts += listOf(
-                "lib/*/libc++_shared.so",
-                "lib/*/libavcodec.so",
-                "lib/*/libavutil.so",
-                "lib/*/libswscale.so",
-                "lib/*/libswresample.so"
-            )
+            // No 32-bit Intel (x86): practically no x86 device runs Android 7 or newer, and leaving it out
+            // makes the universal APK about 25 MB smaller (owner, 2026-11-27).
+            excludes += "lib/x86/**"
+            // Listed per processor type: a "lib/*/" pattern would win over the x86 exclusion above.
+            pickFirsts += listOf("arm64-v8a", "armeabi-v7a", "x86_64").flatMap { abi ->
+                listOf("libc++_shared", "libavcodec", "libavutil", "libswscale", "libswresample")
+                    .map { "lib/$abi/$it.so" }
+            }
         }
     }
 
@@ -109,7 +110,7 @@ android {
             reset()
             // Every phone and tablet (owner, 2026-11-26): one APK per processor type, and a universal
             // APK for anyone unsure which to take. The in-app updater picks the one for the device.
-            include("arm64-v8a", "armeabi-v7a", "x86_64", "x86")
+            include("arm64-v8a", "armeabi-v7a", "x86_64")
             isUniversalApk = true
         }
     }
