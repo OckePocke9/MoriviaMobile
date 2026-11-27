@@ -9,7 +9,7 @@
   logo's average at that place, so the darker ribbon and the light play button stay visible.
 
   Reads the *_original images and writes, for every theme colour:
-    composeResources/drawable/morivia_symbol_<c>.png, app_icon_<c>.webp, morivia_brand_symbol_<c>.webp
+    assets/branding/theme-symbols/morivia_symbol_<c>.png (master) and composeResources/drawable/morivia_symbol_<c>.webp, app_icon_<c>.webp, morivia_brand_symbol_<c>.webp
     androidMain/res/drawable-nodpi/morivia_foreground_<c>.webp, morivia_launcher_<c>.webp
   The WebP files are lossless and need Google's cwebp (see scripts/webp.ps1).
   Run scripts/generate-wordmarks.ps1 afterwards to redraw the wordmarks.
@@ -107,6 +107,7 @@ public static class MoriviaRecolor {
 
 $root = Split-Path -Parent $PSScriptRoot
 $drawable = Join-Path $root 'composeApp/src/commonMain/composeResources/drawable'
+$symbols = Join-Path $root 'assets/branding/theme-symbols'
 $nodpi = Join-Path $root 'composeApp/src/androidMain/res/drawable-nodpi'
 $themeSource = Get-Content -Raw (Join-Path $root 'composeApp/src/commonMain/kotlin/com/morivia/app/core/ui/ThemeColors.kt')
 
@@ -183,13 +184,15 @@ function Save-OnBlack($symbol, [string]$to, [int]$size) {
 foreach ($key in $themes.Keys) {
     if ($Only -and $key -notin $Only) { continue }
     $stops = Get-Stops $themes[$key]
-    $symbol = Save-Recolored (Join-Path $drawable 'morivia_symbol_original.png') (Join-Path $drawable "morivia_symbol_$key.png") $stops
+    $symbol = Save-Recolored (Join-Path $symbols 'morivia_symbol_original.png') (Join-Path $symbols "morivia_symbol_$key.png") $stops
+    Copy-Item (Join-Path $symbols "morivia_symbol_$key.png") (Join-Path $drawable "morivia_symbol_$key.png")
+    Convert-ToWebp (Join-Path $drawable "morivia_symbol_$key.png")
     Save-OnBlack $symbol (Join-Path $drawable "app_icon_$key.png") 512
     Save-OnBlack $symbol (Join-Path $nodpi "morivia_launcher_$key.png") 512
     $symbol.Dispose()
     (Save-Recolored (Join-Path $nodpi 'morivia_foreground_original.png') (Join-Path $nodpi "morivia_foreground_$key.png") $stops).Dispose()
     (Save-Recolored (Join-Path $drawable 'morivia_brand_symbol.png') (Join-Path $drawable "morivia_brand_symbol_$key.png") $stops).Dispose()
-    # morivia_symbol_<c> stays PNG: generate-wordmarks.ps1 reads it. The rest ship as lossless WebP.
+    # The PNG masters of morivia_symbol_<c> stay in assets/branding/theme-symbols (generate-wordmarks.ps1 reads them); the app ships lossless WebP.
     Convert-ToWebp (Join-Path $drawable "app_icon_$key.png")
     Convert-ToWebp (Join-Path $nodpi "morivia_launcher_$key.png")
     Convert-ToWebp (Join-Path $nodpi "morivia_foreground_$key.png")

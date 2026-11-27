@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Téma igazítása az alkalmazásikonhoz</string>
-    <string name="morivia_appearance_match_theme_description">A kiválasztott alkalmazásikonhoz illő téma használata.</string>
     <string name="settings_tracking_ratings">Értékelések</string>
     <string name="settings_tracking_ratings_description">Hová mentődnek és honnan jelennek meg az értékeléseid</string>
     <string name="settings_tracking_ratings_picker_subtitle">Értékeld a címeket a részletes oldalukon. Az értékeléseid a választott szolgáltatásba mentődnek, és onnan jelennek meg.</string>

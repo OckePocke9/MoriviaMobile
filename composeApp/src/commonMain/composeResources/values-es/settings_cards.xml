@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Mirad juntos sincronizados y chatea con amigos</string>
     <string name="settings_appearance_card_description">Color del tema, icono de la app, idioma y diseño</string>
     <string name="settings_theme_card_title">Tema</string>
-    <string name="profile_initial_colour">Color de la inicial</string>
-    <string name="profile_background_colour">Color de fondo</string>
     <string name="profile_background_black">Negro</string>
 </resources>

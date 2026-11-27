@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Смотрите вместе синхронно и общайтесь с друзьями</string>
     <string name="settings_appearance_card_description">Цвет темы, значок приложения, язык и макет</string>
     <string name="settings_theme_card_title">Тема</string>
-    <string name="profile_initial_colour">Цвет инициала</string>
-    <string name="profile_background_colour">Цвет фона</string>
     <string name="profile_background_black">Чёрный</string>
 </resources>

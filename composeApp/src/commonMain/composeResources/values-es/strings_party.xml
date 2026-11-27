@@ -6,7 +6,6 @@
     <string name="party_start_action">Iniciar una sesión para ver en grupo</string>
     <string name="party_sign_in_required">Inicia sesión en tu cuenta de Morivia para usar las sesiones para ver en grupo.</string>
     <string name="party_unavailable">Las sesiones para ver en grupo no están disponibles en este momento.</string>
-    <string name="party_experimental">Las sesiones para ver en grupo son experimentales y podrían no funcionar como se espera.</string>
     <string name="party_code_label">Código de grupo</string>
     <string name="party_copy_invite">Copiar invitación</string>
     <string name="party_invite_copied">Invitación copiada</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">Esta sesión para ver en grupo ha finalizado.</string>
     <string name="party_error_rate_limited">Demasiados intentos. Vuelve a intentarlo en unos minutos.</string>
     <string name="party_error_network">No se ha podido conectar con la sesión para ver en grupo. Comprueba tu conexión.</string>
-    <string name="party_settings_description">Únete a tus amigos con un código de grupo</string>
     <string name="party_source">Fuente del grupo</string>
     <string name="party_episode_format">T%1$d E%2$d</string>
     <string name="party_host_only_title">Solo yo puedo controlar la reproducción</string>

@@ -5,7 +5,6 @@
     <string name="party_start_action">Spustiť spoločné sledovanie</string>
     <string name="party_sign_in_required">Ak chcete používať spoločné sledovanie, prihláste sa do svojho účtu Morivia.</string>
     <string name="party_unavailable">Spoločné sledovanie momentálne nie je k dispozícii.</string>
-    <string name="party_experimental">Spoločné sledovanie je vo fáze testovania a nemusí fungovať podľa očakávaní.</string>
     <string name="party_code_label">Kód skupiny</string>
     <string name="party_copy_invite">Kopírovať pozvánku</string>
     <string name="party_invite_copied">Pozvánka skopírovaná</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">Toto spoločné sledovanie sa už skončilo.</string>
     <string name="party_error_rate_limited">Príliš veľa pokusov. Skúste to znova o niekoľko minút.</string>
     <string name="party_error_network">Nepodarilo sa spojiť so spoločným sledovaním. Skontrolujte svoje pripojenie.</string>
-    <string name="party_settings_description">Pripojte sa k priateľom pomocou kódu</string>
     <string name="party_source">Zdroj skupiny</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Iba ja môžem ovládať prehrávanie</string>

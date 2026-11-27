@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Νέο</string>
     <string name="morivia_off">Ανενεργό</string>
     <string name="morivia_hl_title">Αρχική και διάταξη</string>
-    <string name="morivia_hl_description">Προβολή, αφίσες, Συνέχεια παρακολούθησης και σειρές</string>
     <string name="morivia_hl_section_hero">ΠΡΟΒΟΛΗ</string>
     <string name="morivia_hl_hero_source">Πηγή προβολής</string>
     <string name="morivia_hl_hero_source_sub">Επιλέξτε τους καταλόγους της προβολής</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Αρχικό</string>
     <string name="profile_use_initials">Χρήση αρχικών</string>
     <string name="profile_use_initials_description">Χρησιμοποιεί το εναλλακτικό χρώμα παραπάνω</string>
-    <string name="profile_fallback_colour">Εναλλακτικό χρώμα</string>
     <string name="morivia_add_addon">Προσθήκη πρόσθετου</string>
     <string name="morivia_refresh">Ανανέωση</string>
     <string name="profile_confirm_pin">Επιβεβαίωση PIN</string>
     <string name="profile_pin_mismatch">Τα PIN δεν ταιριάζουν. Δοκιμάστε ξανά.</string>
-    <string name="morivia_appearance_current_theme">Τρέχον θέμα</string>
     <string name="morivia_theme_reset_original">Επαναφορά σε Αρχικό</string>
     <string name="morivia_theme_custom">Προσαρμοσμένο θέμα</string>
     <string name="morivia_theme_show_more">Περισσότερα θέματα</string>
     <string name="morivia_theme_show_fewer">Λιγότερα θέματα</string>
-    <string name="morivia_appearance_match_icon">Εικονίδιο εφαρμογής ίδιο με το θέμα</string>
-    <string name="morivia_appearance_match_icon_description">Χρήση του χρώματος του τρέχοντος θέματος για το εικονίδιο της εφαρμογής.</string>
     <string name="morivia_appearance_preview_title">ΠΡΟΕΠΙΣΚΟΠΗΣΗ ΘΕΜΑΤΟΣ</string>
     <string name="morivia_appearance_preview_icon">Εικονίδιο εφαρμογής · %1$s</string>
     <string name="morivia_appearance_preview_text">Κείμενο και φόντο</string>

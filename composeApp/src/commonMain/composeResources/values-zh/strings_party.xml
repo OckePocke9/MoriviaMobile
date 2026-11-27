@@ -5,7 +5,6 @@
     <string name="party_start_action">发起一起看</string>
     <string name="party_sign_in_required">请先登录 Morivia 账号才能使用一起看。</string>
     <string name="party_unavailable">一起看功能当前不可用。</string>
-    <string name="party_experimental">一起看仍处于实验阶段，可能无法按预期工作。</string>
     <string name="party_code_label">房间代码</string>
     <string name="party_copy_invite">复制邀请</string>
     <string name="party_invite_copied">邀请已复制</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">该一起看已结束。</string>
     <string name="party_error_rate_limited">尝试次数过多，请几分钟后再试。</string>
     <string name="party_error_network">无法连接一起看，请检查网络。</string>
-    <string name="party_settings_description">使用房间代码与好友一起看</string>
     <string name="party_source">房间的播放源</string>
     <string name="party_episode_format">第 %1$d 季 第 %2$d 集</string>
     <string name="party_host_only_title">只有我能控制播放</string>

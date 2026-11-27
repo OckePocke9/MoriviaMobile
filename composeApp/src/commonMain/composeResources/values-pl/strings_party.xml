@@ -5,7 +5,6 @@
     <string name="party_start_action">Rozpocznij wspólne oglądanie</string>
     <string name="party_sign_in_required">Zaloguj się na konto Morivia, aby korzystać ze wspólnego oglądania.</string>
     <string name="party_unavailable">Wspólne oglądanie jest teraz niedostępne.</string>
-    <string name="party_experimental">Wspólne oglądanie jest funkcją eksperymentalną i może nie działać zgodnie z oczekiwaniami.</string>
     <string name="party_code_label">Kod grupy</string>
     <string name="party_copy_invite">Kopiuj zaproszenie</string>
     <string name="party_invite_copied">Skopiowano zaproszenie</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">To wspólne oglądanie zostało zakończone.</string>
     <string name="party_error_rate_limited">Zbyt wiele prób. Spróbuj ponownie za kilka minut.</string>
     <string name="party_error_network">Nie udało się połączyć ze wspólnym oglądaniem. Sprawdź połączenie.</string>
-    <string name="party_settings_description">Dołącz do znajomych za pomocą kodu grupy</string>
     <string name="party_source">Źródło grupy</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Tylko ja steruję odtwarzaniem</string>

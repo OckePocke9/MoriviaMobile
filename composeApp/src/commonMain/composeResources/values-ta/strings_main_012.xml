@@ -22,13 +22,6 @@
     <string name="settings_playback_option_original_hint">TMDB கூடுதல் விவரங்கள் இயக்கப்பட்டிருக்க வேண்டும்</string>
     <string name="settings_playback_option_forced">கட்டாயம்</string>
     <string name="settings_playback_option_none">எதுவுமில்லை</string>
-    <string name="settings_playback_addon_subtitle_startup_all">அனைத்து துணைநிரல் வசன வரிகளும்</string>
-    <string name="settings_playback_addon_subtitle_startup_all_description">பிளேபேக்கிற்கு முன் அனைத்து துணைநிரல் வசன வரிகளையும் முன்கூட்டியே பெற்று இணைக்கவும். தொடக்கம் மிகவும் மெதுவாக இருக்கும்.</string>
-    <string name="settings_playback_addon_subtitle_startup_fast">விரைவான தொடக்கம்</string>
-    <string name="settings_playback_addon_subtitle_startup_fast_description">உடனடியாக பிளேபேக்கைத் தொடங்கவும். துணைநிரல் வசன வரிகளைத் தேர்ந்தெடுத்தால் பிளேயர் ஒருமுறை மீண்டும் ஏற்றப்படலாம்.</string>
-    <string name="settings_playback_addon_subtitle_startup_mode">துணைநிரல் வசன வரி ஏற்றுதல்</string>
-    <string name="settings_playback_addon_subtitle_startup_preferred">விருப்பமான மொழிகள்</string>
-    <string name="settings_playback_addon_subtitle_startup_preferred_description">பிளேபேக்கிற்கு முன் துணைநிரல் வசன வரிகளைப் பெற்று, விருப்பமான/இரண்டாம் மொழிப் பாதைகளை இணைக்கவும்.</string>
     <string name="settings_playback_prefer_binge_group">Binge குழுவிற்கு முன்னுரிமை (அடுத்த எபிசோடு)</string>
     <string name="settings_playback_prefer_binge_group_description">சாதாரண தானியங்கி இயக்க விதிகளுக்கு முன் அதே ஆதாரச் சுயவிவரத்தை (அதே துணைநிரல்/தரக் குழு) முயற்சிக்கவும்.</string>
     <string name="settings_playback_reuse_binge_group">Binge குழுவை மீண்டும் பயன்படுத்து</string>
@@ -54,9 +47,7 @@
     <string name="settings_playback_regex_preset_quality_4k_remux">4K / Remux</string>
     <string name="settings_playback_regex_preset_quality_720p_smaller">720p / குறைந்த அளவு</string>
     <string name="settings_playback_regex_preset_web_sources">WEB ஆதாரங்கள்</string>
-    <string name="settings_playback_render_type">Libass காட்சி முறை</string>
     <string name="settings_playback_render_scale">வசன வரி காட்சி தீர்மானம்</string>
-    <string name="settings_playback_render_scale_description">கூர்மை குறையும்; ஆனால் அதிக அமைப்புள்ள வசனங்களில் குறைந்த தீர்மானம் செயல்திறனை மேம்படுத்தும்</string>
     <string name="settings_playback_render_mode">ASS காட்சி முறை</string>
     <string name="settings_playback_render_mode_description">ASS/SSA வசன வரிகள் வீடியோவில் எவ்வாறு வரையப்படுகின்றன</string>
     <string name="settings_playback_render_mode_tunneled">Tunneled பிளேபேக் வீடியோ விளைவு செயல்முறையைத் தவிர்க்கிறது. Overlay தானாகப் பயன்படுத்தப்படும்.</string>
@@ -97,7 +88,6 @@
     <string name="settings_playback_parental_guide_description">பிளேபேக் தொடங்கும்போது பெற்றோர் வழிகாட்டல் Overlay-ஐக் காட்டவும்.</string>
     <string name="settings_playback_subtitle_background_color">பின்னணி நிறம்</string>
     <string name="settings_playback_subtitle_bold">தடிமன்</string>
-    <string name="settings_playback_subtitle_bold_description">அதிக தடிமனான வசன எழுத்துருவைப் பயன்படுத்தவும்.</string>
     <string name="settings_playback_subtitle_color_transparent">ஒளிபுகா</string>
     <string name="settings_playback_subtitle_outline">வெளிக்கோடு</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">مطابقة السمة مع أيقونة التطبيق</string>
-    <string name="morivia_appearance_match_theme_description">استخدام السمة المطابقة لأيقونة التطبيق المختارة.</string>
     <string name="settings_tracking_ratings">التقييمات</string>
     <string name="settings_tracking_ratings_description">أين تُحفظ تقييماتك ومن أين تُعرض</string>
     <string name="settings_tracking_ratings_picker_subtitle">قيّم العناوين من صفحة تفاصيلها. تُحفظ تقييماتك في الخدمة التي تختارها وتُعرض منها.</string>

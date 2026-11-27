@@ -5,7 +5,6 @@
     <string name="party_start_action">Kijksessie starten</string>
     <string name="party_sign_in_required">Log in bij je Morivia-account om samen te kijken.</string>
     <string name="party_unavailable">Samen kijken is momenteel niet beschikbaar.</string>
-    <string name="party_experimental">Samen kijken is experimenteel en werkt mogelijk anders dan verwacht.</string>
     <string name="party_code_label">Sessiecode</string>
     <string name="party_copy_invite">Uitnodiging kopiëren</string>
     <string name="party_invite_copied">Uitnodiging gekopieerd</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">Deze kijksessie is afgelopen.</string>
     <string name="party_error_rate_limited">Te veel pogingen. Probeer het over een paar minuten opnieuw.</string>
     <string name="party_error_network">Er kon geen verbinding worden gemaakt met de kijksessie. Controleer je verbinding.</string>
-    <string name="party_settings_description">Kijk mee met vrienden via een sessiecode</string>
     <string name="party_source">Bron van de kijksessie</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Alleen ik bedien het afspelen</string>

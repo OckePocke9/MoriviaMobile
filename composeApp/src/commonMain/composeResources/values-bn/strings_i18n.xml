@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">নতুন</string>
     <string name="morivia_off">বন্ধ</string>
     <string name="morivia_hl_title">হোম ও লেআউট</string>
-    <string name="morivia_hl_description">হিরো, পোস্টার, দেখা চালিয়ে যান ও সারি</string>
     <string name="morivia_hl_section_hero">হিরো</string>
     <string name="morivia_hl_hero_source">হিরোর উৎস</string>
     <string name="morivia_hl_hero_source_sub">হিরোর জন্য ক্যাটালগ বেছে নিন</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">অরিজিনাল</string>
     <string name="profile_use_initials">আদ্যক্ষর ব্যবহার করুন</string>
     <string name="profile_use_initials_description">উপরের বিকল্প রং ব্যবহার করে</string>
-    <string name="profile_fallback_colour">বিকল্প রং</string>
     <string name="morivia_add_addon">অ্যাড-অন যোগ করুন</string>
     <string name="morivia_refresh">রিফ্রেশ</string>
     <string name="profile_confirm_pin">PIN নিশ্চিত করুন</string>
     <string name="profile_pin_mismatch">PIN মিলছে না। আবার চেষ্টা করুন।</string>
-    <string name="morivia_appearance_current_theme">বর্তমান থিম</string>
     <string name="morivia_theme_reset_original">অরিজিনালে রিসেট করুন</string>
     <string name="morivia_theme_custom">কাস্টম থিম</string>
     <string name="morivia_theme_show_more">আরও থিম দেখান</string>
     <string name="morivia_theme_show_fewer">কম থিম দেখান</string>
-    <string name="morivia_appearance_match_icon">অ্যাপ আইকন থিমের সাথে মেলান</string>
-    <string name="morivia_appearance_match_icon_description">অ্যাপ আইকনের জন্য বর্তমান থিমের রং ব্যবহার করুন।</string>
     <string name="morivia_appearance_preview_title">থিম প্রিভিউ</string>
     <string name="morivia_appearance_preview_icon">অ্যাপ আইকন · %1$s</string>
     <string name="morivia_appearance_preview_text">টেক্সট ও ব্যাকগ্রাউন্ড</string>

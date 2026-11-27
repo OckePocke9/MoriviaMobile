@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">புதியது</string>
     <string name="morivia_off">முடக்கம்</string>
     <string name="morivia_hl_title">முகப்பு மற்றும் அமைப்பு</string>
-    <string name="morivia_hl_description">ஹீரோ, போஸ்டர்கள், தொடர்ந்து பார் மற்றும் வரிசைகள்</string>
     <string name="morivia_hl_section_hero">ஹீரோ</string>
     <string name="morivia_hl_hero_source">ஹீரோ மூலம்</string>
     <string name="morivia_hl_hero_source_sub">ஹீரோவுக்கான பட்டியல்களைத் தேர்வுசெய்க</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">அசல்</string>
     <string name="profile_use_initials">முதலெழுத்துகளைப் பயன்படுத்து</string>
     <string name="profile_use_initials_description">மேலே உள்ள மாற்று நிறத்தைப் பயன்படுத்தும்</string>
-    <string name="profile_fallback_colour">மாற்று நிறம்</string>
     <string name="morivia_add_addon">சேர்க்கையைச் சேர்</string>
     <string name="morivia_refresh">புதுப்பி</string>
     <string name="profile_confirm_pin">PIN ஐ உறுதிசெய்க</string>
     <string name="profile_pin_mismatch">PIN கள் பொருந்தவில்லை. மீண்டும் முயலவும்.</string>
-    <string name="morivia_appearance_current_theme">தற்போதைய தீம்</string>
     <string name="morivia_theme_reset_original">அசலுக்கு மீட்டமை</string>
     <string name="morivia_theme_custom">தனிப்பயன் தீம்</string>
     <string name="morivia_theme_show_more">மேலும் தீம்களைக் காட்டு</string>
     <string name="morivia_theme_show_fewer">குறைவான தீம்களைக் காட்டு</string>
-    <string name="morivia_appearance_match_icon">ஆப் ஐகானைத் தீமுடன் பொருத்து</string>
-    <string name="morivia_appearance_match_icon_description">ஆப் ஐகானுக்குத் தற்போதைய தீம் நிறத்தைப் பயன்படுத்து.</string>
     <string name="morivia_appearance_preview_title">தீம் முன்னோட்டம்</string>
     <string name="morivia_appearance_preview_icon">ஆப் ஐகான் · %1$s</string>
     <string name="morivia_appearance_preview_text">உரை மற்றும் பின்னணி</string>

@@ -6,7 +6,6 @@
     <string name="party_start_action">Birlikte izlemeyi başlat</string>
     <string name="party_sign_in_required">Birlikte izlemeyi kullanmak için Morivia hesabınıza giriş yapın.</string>
     <string name="party_unavailable">Birlikte izleme şu anda kullanılamıyor.</string>
-    <string name="party_experimental">Birlikte izleme deneme aşamasında; her zaman beklendiği gibi çalışmayabilir.</string>
     <string name="party_code_label">Oda kodu</string>
     <string name="party_copy_invite">Daveti kopyala</string>
     <string name="party_invite_copied">Davet kopyalandı</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">Bu birlikte izleme sona erdi.</string>
     <string name="party_error_rate_limited">Çok fazla deneme. Birkaç dakika sonra tekrar deneyin.</string>
     <string name="party_error_network">Odaya ulaşılamadı. Bağlantınızı kontrol edin.</string>
-    <string name="party_settings_description">Oda koduyla arkadaşlarınıza katılın</string>
     <string name="party_source">Odanın kaynağı</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Oynatmayı yalnızca ben yöneteyim</string>

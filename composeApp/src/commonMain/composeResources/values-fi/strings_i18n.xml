@@ -422,9 +422,6 @@
     <string name="settings_continue_watching_use_episode_thumbnails_description">Käytä jaksojen pienoiskuvia, kun niitä on saatavilla.</string>
     <string name="settings_continue_watching_use_episode_thumbnails_title">Suosi jaksojen pienoiskuvia Jatka katselua -rivillä</string>
     <string name="settings_content_discovery_section_sources">LÄHTEET</string>
-    <string name="settings_content_discovery_section_search">HAKU</string>
-    <string name="settings_content_discovery_recent_searches">Viimeisimmät haut</string>
-    <string name="settings_content_discovery_recent_searches_description">Tallenna viimeisimmät haut ja näytä ne, kun hakupalkki on kohdistettuna.</string>
     <string name="settings_content_discovery_homescreen_description">Säädä Kodin asettelua, sisällön näkyvyyttä ja julisteiden toimintaa</string>
     <string name="settings_content_discovery_meta_screen_description">Tieto- ja jaksosivujen asetukset.</string>
     <string name="settings_content_discovery_collections_description">Luo omia katalogiryhmiä kansioilla, jotka näkyvät Kodissa.</string>
@@ -1449,7 +1446,6 @@
     <string name="party_error_ended">Nämä katselujuhlat ovat päättyneet.</string>
     <string name="party_error_rate_limited">Liikaa yrityksiä. Yritä uudelleen muutaman minuutin kuluttua.</string>
     <string name="party_error_network">Katselujuhlia ei tavoitettu. Tarkista yhteys.</string>
-    <string name="party_settings_description">Liity ystävien seuraan juhlakoodilla</string>
     <string name="party_source">Juhlien lähde</string>
     <string name="party_episode_format">K%1$d J%2$d</string>
     <string name="party_host_only_title">Vain minä voin ohjata toistoa</string>

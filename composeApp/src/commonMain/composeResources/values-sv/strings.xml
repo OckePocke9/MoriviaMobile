@@ -33,7 +33,6 @@
     <string name="action_save">Spara</string>
     <string name="action_saving">Sparar…</string>
     <string name="action_switch">Byt</string>
-    <string name="action_validate">Kontrollera</string>
     <string name="addon_title">Tillägg</string>
     <string name="addons_badge_catalogs">%1$d kataloger</string>
     <string name="addons_badge_disabled">Inaktiverad</string>
@@ -51,7 +50,6 @@
     <string name="collections_editor_cover_none">Ingen</string>
     <string name="collections_editor_cover">Omslag</string>
     <string name="collections_editor_create_collection">Skapa samling</string>
-    <string name="collections_editor_done">Klart</string>
     <string name="collections_editor_edit_collection">Redigera samling</string>
     <string name="collections_editor_edit_folder">Redigera mapp</string>
     <string name="collections_editor_folder_empty_subtitle">Lägg till en för att komma igång.</string>
@@ -177,7 +175,6 @@
     <string name="compose_settings_page_account">Konto</string>
     <string name="compose_settings_page_addons">Tillägg</string>
     <string name="compose_settings_page_advanced">Avancerat</string>
-    <string name="compose_settings_page_appearance">Layout</string>
     <string name="compose_settings_page_content_discovery">Innehåll och upptäck</string>
     <string name="compose_settings_page_continue_watching">Fortsätt titta</string>
     <string name="compose_settings_page_debrid">Anslutna tjänster</string>
@@ -202,17 +199,10 @@
     <string name="compose_settings_root_account_description">Konto och synkroniseringsstatus</string>
     <string name="compose_settings_root_account_section">KONTO</string>
     <string name="compose_settings_root_advanced_description">Appstart och profilbeteende.</string>
-    <string name="compose_settings_root_advanced_section">AVANCERAT</string>
-    <string name="compose_settings_root_appearance_description">Startsida, strömmar, samlingar och detaljsidor</string>
     <string name="compose_settings_root_check_updates_description">Ladda ner senaste versionen</string>
     <string name="compose_settings_root_check_updates_title">Sök efter uppdateringar</string>
     <string name="compose_settings_root_content_discovery_description">Hantera tillägg och innehållskällor.</string>
-    <string name="compose_settings_root_content_discovery_description_appstore">Hantera tillägg och välj vad som visas i Morivia.</string>
-    <string name="compose_settings_root_downloads_description">Hantera dina nedladdade filmer och avsnitt.</string>
-    <string name="compose_settings_root_downloads_description_appstore">Hantera det du sparat på enheten.</string>
     <string name="compose_settings_root_downloads_title">Nedladdningar</string>
-    <string name="compose_settings_root_general_section">ALLMÄNT</string>
-    <string name="compose_settings_root_integrations_description">Hantera tillgängliga integrationer</string>
     <string name="settings_connections_title">Anslutningar</string>
     <string name="settings_system_description">Aviseringar, avancerade inställningar och appinfo</string>
     <string name="settings_connections_integrations_description">Metadata från TMDB, betyg från MDBList och ditt Torbox-moln</string>
@@ -223,14 +213,12 @@
     <string name="compose_settings_root_streams_description">Visning av strömresultat och regler för märkesadresser.</string>
     <string name="compose_settings_root_switch_profile_description">Byt till en annan profil.</string>
     <string name="compose_settings_root_switch_profile_title">Byt profil</string>
-    <string name="compose_settings_root_trakt_description">Öppna Trakt-anslutningen</string>
     <string name="compose_settings_root_tracking_description">Anslut spårningstjänster och välj vilken som används för Bibliotek och Fortsätt titta.</string>
     <string name="action_donate">Donera</string>
     <string name="cw_action_remove">Ta bort</string>
     <string name="detail_btn_play">Spela upp</string>
     <string name="downloads_section_movies">Filmer</string>
     <string name="episodes_cd_watched">Sedd</string>
-    <string name="settings_account">Konto</string>
     <string name="settings_account_email">E-post</string>
     <string name="settings_account_sign_out">Logga ut</string>
     <string name="settings_appearance_amoled_black">AMOLED-svart</string>
@@ -252,7 +240,6 @@
     <string name="settings_appearance_app_language_restart_title">Omstart krävs</string>
     <string name="settings_appearance_app_language_restart_message">Stäng och öppna appen igen för att uppdatera layouten för språket.</string>
     <string name="settings_appearance_nav_bar_style">Navigationsfält</string>
-    <string name="settings_appearance_nav_bar_style_sheet_title">Navigationsfältets stil</string>
     <string name="settings_appearance_continue_watching_description">Inställningar för Fortsätt titta.</string>
     <string name="settings_appearance_liquid_glass">Liquid Glass</string>
     <string name="settings_appearance_liquid_glass_description">Använd iPhones inbyggda flikfält på iOS 26 och senare.</string>
@@ -276,7 +263,6 @@
     <string name="settings_continue_watching_sort_mode_default">Standard</string>
     <string name="settings_continue_watching_style_poster">Affisch</string>
     <string name="settings_continue_watching_style_wide">Bred</string>
-    <string name="settings_content_discovery_section_home">HEM</string>
     <string name="settings_debrid_connected">Ansluten</string>
     <string name="settings_debrid_disconnect">Koppla från</string>
     <string name="settings_stream_display_section">VISNING</string>
@@ -312,7 +298,6 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Använd initialer</string>
     <string name="profile_use_initials_description">Använder reservfärgen ovanför</string>
-    <string name="profile_fallback_colour">Reservfärg</string>
     <string name="morivia_add_addon">Lägg till addon</string>
     <string name="morivia_refresh">Uppdatera</string>
     <string name="theme_custom">Anpassat</string>
@@ -350,7 +335,6 @@
     <string name="lang_vietnamese">Vietnamesiska</string>
     <string name="action_clear">Rensa</string>
     <string name="action_continue">Fortsätt</string>
-    <string name="action_ignore">Ignorera</string>
     <string name="action_install">Installera</string>
     <string name="action_later">Senare</string>
     <string name="action_no">Nej</string>
@@ -369,14 +353,10 @@
     <string name="profile_manage_profiles">Hantera profiler</string>
     <string name="profile_confirm_pin">Bekräfta PIN-kod</string>
     <string name="profile_pin_mismatch">PIN-koderna är inte lika. Försök igen.</string>
-    <string name="profile_custom_colour_hex">Valfri färg (#RRGGBB)</string>
-    <string name="morivia_appearance_current_theme">Nuvarande tema</string>
     <string name="morivia_theme_reset_original">Återställ till Original</string>
     <string name="morivia_theme_custom">Eget tema</string>
     <string name="morivia_theme_show_more">Visa fler teman</string>
     <string name="morivia_theme_show_fewer">Visa färre teman</string>
-    <string name="morivia_appearance_match_icon">Appikonen följer temat</string>
-    <string name="morivia_appearance_match_icon_description">Använd temats färg för appikonen.</string>
     <string name="morivia_appearance_preview_title">FÖRHANDSVISNING AV TEMAT</string>
     <string name="morivia_appearance_preview_icon">Appikon · %1$s</string>
     <string name="morivia_appearance_preview_text">Text och bakgrund</string>
@@ -387,8 +367,6 @@
     <string name="updates_repository_access">Morivia kunde inte nå sin uppdateringssida på GitHub. Kontrollera internetanslutningen och försök igen, eller öppna GitHub och ladda ner den senaste versionen.</string>
     <string name="updates_open_github">Öppna GitHub</string>
     <string name="updates_download_failed">Nedladdningen misslyckades</string>
-    <string name="updates_download_empty_body">Nedladdningen är tom</string>
-    <string name="updates_download_file_missing">Den nedladdade uppdateringsfilen saknas.</string>
     <string name="updates_downloading_progress">Laddar ner %1$d%</string>
     <string name="updates_debug_test_complete">Bannertestet är klart</string>
     <string name="updates_debug_test_description">Förhandsvisa bannern och en simulerad nedladdning.</string>
@@ -396,8 +374,6 @@
     <string name="updates_install_failed">Kunde inte starta installationen</string>
     <string name="updates_latest_version">Du använder den senaste versionen.</string>
     <string name="updates_message_allow_installs">Tillåt att Morivia installerar appar och kom sedan tillbaka för att fortsätta.</string>
-    <string name="updates_message_downloading">Laddar ner uppdatering…</string>
-    <string name="updates_message_no_updates">Inga uppdateringar hittades.</string>
     <string name="updates_message_ready">En ny version är klar att installeras.</string>
     <string name="updates_not_available">Uppdateringar i appen är inte tillgängliga i detta bygge.</string>
     <string name="updates_no_release_notes">Ingen versionsinformation finns.</string>
@@ -405,12 +381,9 @@
     <string name="updates_release_notes">Versionsinformation</string>
     <string name="updates_title_allow_installs">Tillåt installationer för att fortsätta</string>
     <string name="updates_title_available">Uppdatering tillgänglig</string>
-    <string name="updates_title_status">Uppdateringsstatus</string>
     <string name="download_failed">Nedladdningen misslyckades</string>
     <string name="downloads_channel_name">Nedladdningar</string>
     <string name="downloads_live_failed">Nedladdningen misslyckades</string>
-    <string name="library_remove_confirm">Ta bort</string>
-    <string name="action_saved">Sparat</string>
     <string name="action_play_episode">Spela upp %1$s</string>
     <string name="action_resume_episode">Fortsätt %1$s</string>
     <string name="collections_import_error_empty_json">JSON är tom.</string>
@@ -437,12 +410,10 @@
     <string name="settings_debrid_selection_count">%1$d valda</string>
     <string name="collections_editor_media_movies_suffix">Filmer</string>
     <string name="collections_editor_media_series_suffix">Serier</string>
-    <string name="updates_apk_asset_missing">Ingen APK-fil hittades i releasen</string>
     <string name="updates_download_failed_http">Nedladdningen misslyckades med HTTP %1$d</string>
     <string name="updates_downloaded_file_missing">Den nedladdade uppdateringsfilen saknas.</string>
     <string name="updates_empty_download_body">Nedladdningen är tom</string>
     <string name="updates_github_api_error">Fel i GitHubs release-API: %1$d</string>
-    <string name="updates_no_channel_release">Ingen uppdatering har publicerats ännu.</string>
     <string name="updates_channel_title">Uppdateringskanal</string>
     <string name="updates_channel_description">Välj vilken typ av appuppdateringar du vill få</string>
     <string name="updates_channel_stable">Stabil</string>
@@ -450,7 +421,6 @@
     <string name="updates_channel_stable_description">Avsedd för daglig användning.</string>
     <string name="updates_channel_beta_description">Tidiga uppdateringar som kan innehålla fel, störa funktioner eller fungera oväntat.</string>
     <string name="updates_waiting_for_stable">Du får nästa stabila version när den blir tillgänglig</string>
-    <string name="updates_release_missing_title">Releasen saknar tagg eller namn</string>
     <string name="p2p_consent_cancel">Avbryt</string>
     <string name="entity_browse_type">Typ</string>
     <string name="entity_browse_about">Om appen</string>
@@ -472,7 +442,6 @@
     <string name="settings_playback_page_subtitles">Undertexter</string>
     <string name="settings_appearance_description">Teman, appikon och språk</string>
     <string name="settings_appearance_title">Utseende</string>
-    <string name="subtitle_appearance">Utseende</string>
     <string name="subtitle_font_default">Standard</string>
     <string name="party_code_label">Watch Party-kod</string>
     <string name="party_you">Du</string>

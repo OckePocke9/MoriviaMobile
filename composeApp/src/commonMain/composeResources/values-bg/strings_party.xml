@@ -5,7 +5,6 @@
     <string name="party_start_action">Стартирайте парти за гледане</string>
     <string name="party_sign_in_required">Влезте в профила си в Morivia, за да използвате партитата за гледане.</string>
     <string name="party_unavailable">Партитата за гледане не са достъпни в момента.</string>
-    <string name="party_experimental">Груповото гледане е експериментална функция и може да не работи както се очаква.</string>
     <string name="party_code_label">Код на групата</string>
     <string name="party_copy_invite">Копирай покана</string>
     <string name="party_invite_copied">Поканата е копирана</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">ова парти е приключило.</string>
     <string name="party_error_rate_limited">Прекалено много опити. Опитайте отново след няколко минути.</string>
     <string name="party_error_network">Не може да се установи връзка с партито. Проверете връзката си.</string>
-    <string name="party_settings_description">Присъединете се към приятели с код на групата</string>
     <string name="party_source">Източник на групата</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Само аз мога да контролирам възпроизвеждането</string>

@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Yeni</string>
     <string name="morivia_off">Kapalı</string>
     <string name="morivia_hl_title">Ana sayfa ve düzen</string>
-    <string name="morivia_hl_description">Vitrin, afişler, İzlemeye devam et ve satırlar</string>
     <string name="morivia_hl_section_hero">VİTRİN</string>
     <string name="morivia_hl_hero_source">Vitrin kaynağı</string>
     <string name="morivia_hl_hero_source_sub">Vitrin için katalogları seçin</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Orijinal</string>
     <string name="profile_use_initials">Baş harfleri kullan</string>
     <string name="profile_use_initials_description">Yukarıdaki yedek rengi kullanır</string>
-    <string name="profile_fallback_colour">Yedek renk</string>
     <string name="morivia_add_addon">Eklenti ekle</string>
     <string name="morivia_refresh">Yenile</string>
     <string name="profile_confirm_pin">PIN'i onayla</string>
     <string name="profile_pin_mismatch">PIN'ler eşleşmiyor. Tekrar deneyin.</string>
-    <string name="morivia_appearance_current_theme">Geçerli tema</string>
     <string name="morivia_theme_reset_original">Orijinal'e sıfırla</string>
     <string name="morivia_theme_custom">Özel tema</string>
     <string name="morivia_theme_show_more">Daha fazla tema göster</string>
     <string name="morivia_theme_show_fewer">Daha az tema göster</string>
-    <string name="morivia_appearance_match_icon">Uygulama simgesini temaya uydur</string>
-    <string name="morivia_appearance_match_icon_description">Uygulama simgeniz için geçerli tema rengini kullanın.</string>
     <string name="morivia_appearance_preview_title">TEMA ÖNİZLEMESİ</string>
     <string name="morivia_appearance_preview_icon">Uygulama simgesi · %1$s</string>
     <string name="morivia_appearance_preview_text">Metin ve arka plan</string>

@@ -5,7 +5,6 @@
     <string name="party_start_action">Tạo phòng xem chung</string>
     <string name="party_sign_in_required">Đăng nhập vào tài khoản Morivia để sử dụng phòng xem chung.</string>
     <string name="party_unavailable">Xem chung hiện không có sẵn.</string>
-    <string name="party_experimental">Xem chung đang ở giai đoạn thử nghiệm và có thể không hoạt động như mong đợi.</string>
     <string name="party_code_label">Mã phòng</string>
     <string name="party_copy_invite">Sao chép lời mời</string>
     <string name="party_invite_copied">Đã sao chép lời mời</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">Phòng xem chung này đã kết thúc.</string>
     <string name="party_error_rate_limited">Quá nhiều lần thử. Vui lòng thử lại sau ít phút.</string>
     <string name="party_error_network">Không thể kết nối với phòng xem chung. Vui lòng kiểm tra kết nối của bạn.</string>
-    <string name="party_settings_description">Tham gia cùng bạn bè bằng mã phòng</string>
     <string name="party_source">Nguồn phòng</string>
     <string name="party_episode_format">M%1$d T%2$d</string>
     <string name="party_host_only_title">Chỉ tôi có thể điều khiển phát lại</string>

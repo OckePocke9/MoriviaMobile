@@ -25,14 +25,6 @@
     <string name="downloads_enqueue_replaced">முந்தைய பதிவிறக்கம் மாற்றப்பட்டது</string>
     <string name="downloads_enqueue_started">பதிவிறக்கம் தொடங்கியது</string>
     <string name="downloads_enqueue_unsupported_format">இந்த ஸ்ட்ரீம் வடிவத்தைப் பதிவிறக்க ஆதரிக்கவில்லை</string>
-    <string name="downloads_error_empty_body">பதில் உள்ளடக்கம் காலியாக உள்ளது</string>
-    <string name="downloads_error_finalize_failed">பதிவிறக்கக் கோப்பை நிறைவு செய்ய முடியவில்லை</string>
-    <string name="downloads_error_http_failed">HTTP %1$d காரணமாக கோரிக்கை தோல்வியடைந்தது</string>
-    <string name="downloads_error_not_initialized">பதிவிறக்க அமைப்பு தொடங்கப்படவில்லை</string>
-    <string name="downloads_error_open_partial_failed">பகுதி பதிவிறக்கக் கோப்பைத் திறக்க முடியவில்லை</string>
-    <string name="downloads_error_partial_not_open">பகுதி பதிவிறக்கக் கோப்பு திறக்கப்படவில்லை</string>
-    <string name="downloads_error_request_failed">பதிவிறக்கக் கோரிக்கை தோல்வியடைந்தது</string>
-    <string name="downloads_error_write_partial_failed">பகுதி பதிவிறக்கக் கோப்பில் எழுத முடியவில்லை</string>
     <string name="home_catalog_default_title">%1$s - %2$s</string>
     <string name="library_empty_message">விவரத் திரையில் சேமி என்பதைத் தட்டிய பிறகு சேமித்த தலைப்புகள் இங்கே தோன்றும்.</string>
     <string name="library_empty_title">உங்கள் நூலகம் காலியாக உள்ளது</string>
@@ -40,8 +32,6 @@
     <string name="library_filter_list">பட்டியலைத் தேர்ந்தெடுக்கவும்</string>
     <string name="library_filter_sort">நூலகத்தை வரிசைப்படுத்து</string>
     <string name="library_filter_type">வகையைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="library_layout_show_horizontal">கிடைமட்ட அலமாரிகளைக் காட்டு</string>
-    <string name="library_layout_show_vertical">செங்குத்து கட்டத்தைக் காட்டு</string>
     <string name="library_load_failed">நூலகத்தை ஏற்ற முடியவில்லை</string>
     <string name="library_other">மற்றவை</string>
     <string name="library_sort_added_asc">முதலில் சேர்க்கப்பட்டவை</string>

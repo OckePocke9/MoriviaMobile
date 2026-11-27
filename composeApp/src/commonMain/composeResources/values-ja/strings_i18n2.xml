@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">テーマをアプリアイコンに合わせる</string>
-    <string name="morivia_appearance_match_theme_description">選択したアプリアイコンに合うテーマを使用します。</string>
     <string name="settings_tracking_ratings">評価</string>
     <string name="settings_tracking_ratings_description">評価の保存先と表示元</string>
     <string name="settings_tracking_ratings_picker_subtitle">作品の詳細ページから評価できます。評価は選んだサービスに保存され、そこから表示されます。</string>

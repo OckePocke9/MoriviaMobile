@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Uskladi temu s ikonom aplikacije</string>
-    <string name="morivia_appearance_match_theme_description">Koristi temu koja odgovara odabranoj ikoni aplikacije.</string>
     <string name="settings_tracking_ratings">Ocjene</string>
     <string name="settings_tracking_ratings_description">Gdje se vaše ocjene spremaju i odakle se prikazuju</string>
     <string name="settings_tracking_ratings_picker_subtitle">Ocjenjujte naslove na njihovoj stranici s pojedinostima. Ocjene se spremaju u odabranu uslugu i prikazuju iz nje.</string>

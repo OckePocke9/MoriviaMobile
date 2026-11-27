@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nouveau</string>
     <string name="morivia_off">Désactivé</string>
     <string name="morivia_hl_title">Accueil et mise en page</string>
-    <string name="morivia_hl_description">Hero, affiches, Reprendre la lecture et rangées</string>
     <string name="morivia_hl_section_hero">HERO</string>
     <string name="morivia_hl_hero_source">Source du hero</string>
     <string name="morivia_hl_hero_source_sub">Choisir les catalogues du hero</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Utiliser les initiales</string>
     <string name="profile_use_initials_description">Utilise la couleur de secours ci-dessus</string>
-    <string name="profile_fallback_colour">Couleur de secours</string>
     <string name="morivia_add_addon">Ajouter un add-on</string>
     <string name="morivia_refresh">Actualiser</string>
     <string name="profile_confirm_pin">Confirmer le code PIN</string>
     <string name="profile_pin_mismatch">Les codes PIN ne correspondent pas. Réessayez.</string>
-    <string name="morivia_appearance_current_theme">Thème actuel</string>
     <string name="morivia_theme_reset_original">Revenir à Original</string>
     <string name="morivia_theme_custom">Thème personnalisé</string>
     <string name="morivia_theme_show_more">Afficher plus de thèmes</string>
     <string name="morivia_theme_show_fewer">Afficher moins de thèmes</string>
-    <string name="morivia_appearance_match_icon">Adapter l’icône de l’app au thème</string>
-    <string name="morivia_appearance_match_icon_description">Utiliser la couleur du thème actuel pour l’icône de l’app.</string>
     <string name="morivia_appearance_preview_title">APERÇU DU THÈME</string>
     <string name="morivia_appearance_preview_icon">Icône de l’app · %1$s</string>
     <string name="morivia_appearance_preview_text">Texte et arrière-plan</string>

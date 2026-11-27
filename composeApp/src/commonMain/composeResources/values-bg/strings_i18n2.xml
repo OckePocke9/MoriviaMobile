@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Темата да следва иконата на приложението</string>
-    <string name="morivia_appearance_match_theme_description">Използване на темата, която отговаря на избраната икона.</string>
     <string name="settings_tracking_ratings">Оценки</string>
     <string name="settings_tracking_ratings_description">Къде се запазват и откъде се показват оценките ви</string>
     <string name="settings_tracking_ratings_picker_subtitle">Оценявайте заглавия от страницата им с подробности. Оценките се запазват в избраната услуга и се показват от нея.</string>

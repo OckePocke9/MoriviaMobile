@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Novo</string>
     <string name="morivia_off">Isključeno</string>
     <string name="morivia_hl_title">Početna i izgled</string>
-    <string name="morivia_hl_description">Istaknuto, plakati, Nastavi gledati i redovi</string>
     <string name="morivia_hl_section_hero">ISTAKNUTO</string>
     <string name="morivia_hl_hero_source">Izvor istaknutog</string>
     <string name="morivia_hl_hero_source_sub">Odaberite kataloge za istaknuto</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Izvorna</string>
     <string name="profile_use_initials">Koristi inicijale</string>
     <string name="profile_use_initials_description">Koristi zamjensku boju iznad</string>
-    <string name="profile_fallback_colour">Zamjenska boja</string>
     <string name="morivia_add_addon">Dodaj dodatak</string>
     <string name="morivia_refresh">Osvježi</string>
     <string name="profile_confirm_pin">Potvrdi PIN</string>
     <string name="profile_pin_mismatch">PIN-ovi se ne podudaraju. Pokušajte ponovno.</string>
-    <string name="morivia_appearance_current_theme">Trenutačna tema</string>
     <string name="morivia_theme_reset_original">Vrati na Izvornu</string>
     <string name="morivia_theme_custom">Prilagođena tema</string>
     <string name="morivia_theme_show_more">Prikaži više tema</string>
     <string name="morivia_theme_show_fewer">Prikaži manje tema</string>
-    <string name="morivia_appearance_match_icon">Uskladi ikonu aplikacije s temom</string>
-    <string name="morivia_appearance_match_icon_description">Koristi boju trenutačne teme za ikonu aplikacije.</string>
     <string name="morivia_appearance_preview_title">PRETPREGLED TEME</string>
     <string name="morivia_appearance_preview_icon">Ikona aplikacije · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst i pozadina</string>
@@ -201,7 +196,6 @@
     <string name="settings_group_watch">Mediji</string>
     <string name="settings_group_services">Usluge</string>
     <string name="settings_group_system">Sustav</string>
-    <string name="subtitle_appearance">Izgled</string>
     <string name="subtitle_preview">Pretpregled</string>
     <string name="subtitle_preview_text">Svaka priča počinje s malo znatiželje.</string>
     <string name="subtitle_appearance_hint">Odnosi se na tekstualne titlove. Stilizirani ASS i slikovni titlovi zadržavaju izvorni izgled.</string>

@@ -58,11 +58,8 @@
     <string name="collections_editor_trakt_sort_popular">பிரபலமானது</string>
     <string name="collections_editor_trakt_sort_percentage">சதவீதம்</string>
     <string name="collections_editor_trakt_sort_votes">வாக்குகள்</string>
-    <string name="collections_editor_trakt_enter_name_url_or_id">Trakt பட்டியலின் பெயர், URL அல்லது ID-ஐ உள்ளிடவும்</string>
-    <string name="collections_editor_trakt_enter_id_or_url">Trakt பட்டியல் ID அல்லது URL-ஐ உள்ளிடவும்</string>
     <string name="collections_editor_trakt_load_failed">Trakt பட்டியலை ஏற்ற முடியவில்லை</string>
     <string name="collections_editor_trakt_no_lists_found">Trakt பட்டியல்கள் எதுவும் கிடைக்கவில்லை</string>
-    <string name="collections_editor_trakt_resolved_subtitle">கண்டறியப்பட்ட Trakt பட்டியல்</string>
     <string name="collections_editor_trakt_fallback_title">Trakt பட்டியல் %1$d</string>
     <string name="collections_editor_tmdb_genre_action">அதிரடி</string>
     <string name="collections_editor_tmdb_genre_adventure">சாகசம்</string>

@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nové</string>
     <string name="morivia_off">Vypnuto</string>
     <string name="morivia_hl_title">Domů a rozvržení</string>
-    <string name="morivia_hl_description">Banner, plakáty, Pokračovat ve sledování a řady</string>
     <string name="morivia_hl_section_hero">BANNER</string>
     <string name="morivia_hl_hero_source">Zdroj banneru</string>
     <string name="morivia_hl_hero_source_sub">Vyberte katalogy pro banner</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Původní</string>
     <string name="profile_use_initials">Použít iniciály</string>
     <string name="profile_use_initials_description">Použije náhradní barvu výše</string>
-    <string name="profile_fallback_colour">Náhradní barva</string>
     <string name="morivia_add_addon">Přidat doplněk</string>
     <string name="morivia_refresh">Obnovit</string>
     <string name="profile_confirm_pin">Potvrdit PIN</string>
     <string name="profile_pin_mismatch">PINy se neshodují. Zkuste to znovu.</string>
-    <string name="morivia_appearance_current_theme">Aktuální motiv</string>
     <string name="morivia_theme_reset_original">Obnovit Původní</string>
     <string name="morivia_theme_custom">Vlastní motiv</string>
     <string name="morivia_theme_show_more">Zobrazit více motivů</string>
     <string name="morivia_theme_show_fewer">Zobrazit méně motivů</string>
-    <string name="morivia_appearance_match_icon">Přizpůsobit ikonu aplikace motivu</string>
-    <string name="morivia_appearance_match_icon_description">Použít barvu aktuálního motivu pro ikonu aplikace.</string>
     <string name="morivia_appearance_preview_title">NÁHLED MOTIVU</string>
     <string name="morivia_appearance_preview_icon">Ikona aplikace · %1$s</string>
     <string name="morivia_appearance_preview_text">Text a pozadí</string>
@@ -244,7 +239,6 @@
     <string name="party_error_ended">Toto společné sledování skončilo.</string>
     <string name="party_error_rate_limited">Příliš mnoho pokusů. Zkuste to za pár minut.</string>
     <string name="party_error_network">Ke společnému sledování se nepodařilo připojit. Zkontrolujte připojení.</string>
-    <string name="party_settings_description">Připojte se k přátelům pomocí kódu</string>
     <string name="party_source">Zdroj skupiny</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Přehrávání ovládám jen já</string>
@@ -445,7 +439,6 @@
     <string name="settings_playback_page_p2p_description">Přehrávání torrentů, profil a mezipaměť</string>
     <string name="settings_appearance_description">Motivy, ikona aplikace a jazyk</string>
     <string name="settings_appearance_title">Vzhled</string>
-    <string name="subtitle_appearance">Vzhled</string>
     <string name="subtitle_preview">Náhled</string>
     <string name="subtitle_preview_text">Každý příběh začíná trochou zvědavosti.</string>
     <string name="subtitle_appearance_hint">Platí pro textové titulky. Stylizované titulky ASS a obrázkové titulky si zachovají původní vzhled.</string>
@@ -471,9 +464,6 @@
     <string name="settings_nav_bar_glow_off">Záře vypnuta</string>
     <string name="settings_nav_bar_preview_hint">Klepněte na lištu a vyzkoušejte ji. Posouváním náhledu vyzkoušíte přizpůsobivou velikost.</string>
     <string name="settings_nav_bar_preview_tap_hint">Klepněte na lištu a vyzkoušejte ji.</string>
-    <string name="settings_content_discovery_section_search">HLEDÁNÍ</string>
-    <string name="settings_content_discovery_recent_searches">Nedávná hledání</string>
-    <string name="settings_content_discovery_recent_searches_description">Ukládat nedávná hledání a zobrazovat je při aktivaci vyhledávacího pole.</string>
     <string name="settings_stream_background_title">Pozadí</string>
     <string name="settings_playback_pause_overlay">Překrytí při pozastavení</string>
     <string name="settings_playback_pause_overlay_description">Po 5 sekundách pozastavení zobrazit podrobnosti.</string>

@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Samakan tema dengan ikon aplikasi</string>
-    <string name="morivia_appearance_match_theme_description">Gunakan tema yang cocok dengan ikon aplikasi yang dipilih.</string>
     <string name="settings_tracking_ratings">Rating</string>
     <string name="settings_tracking_ratings_description">Tempat rating Anda disimpan dan ditampilkan</string>
     <string name="settings_tracking_ratings_picker_subtitle">Beri rating judul dari halaman detailnya. Rating disimpan di layanan yang Anda pilih dan ditampilkan dari sana.</string>
@@ -108,13 +106,6 @@
     <string name="settings_simkl_authorization_expired">Kode Simkl kedaluwarsa. Mulai lagi.</string>
     <string name="settings_simkl_sign_in_failed">Tidak dapat menyelesaikan proses masuk Simkl. Coba lagi.</string>
     <string name="settings_simkl_sync_now">Sinkronkan sekarang</string>
-    <string name="settings_simkl_sync_info_action">Cara kerja sinkronisasi</string>
-    <string name="settings_simkl_sync_info_title">Cara kerja sinkronisasi Simkl</string>
-    <string name="settings_simkl_sync_info_description">Morivia memeriksa Simkl secara otomatis paling sering setiap %1$d menit. Perubahan dari aplikasi lain atau situs Simkl bisa memerlukan waktu selama itu untuk muncul.</string>
-    <string name="settings_simkl_sync_info_activity">Setiap pembaruan terlebih dulu memeriksa apakah Simkl melaporkan perubahan, lalu hanya mengunduh pembaruannya. Ini mengikuti aturan API Simkl, mengurangi penggunaan data, dan menjaga layanan tetap stabil.</string>
-    <string name="settings_simkl_sync_info_manual">Perubahan di Morivia langsung dikirim ke Simkl. Gunakan Sinkronkan sekarang jika Anda ingin Morivia memeriksa perubahan lebih cepat.</string>
-    <string name="settings_simkl_sync_info_library_statuses">Acara di daftar On Hold atau Dropped di Simkl disembunyikan dari Lanjutkan menonton selama masih ada di salah satu daftar itu.</string>
-    <string name="settings_simkl_sync_info_docs">Baca panduan sinkronisasi Simkl</string>
     <string name="settings_simkl_authorization_revoked">Otorisasi Simkl dicabut. Hubungkan lagi.</string>
     <string name="tracking_watch_progress_dialog_subtitle">Pilih layanan yang dibaca Morivia untuk melanjutkan dan Lanjutkan menonton. Scrobbling tetap aktif untuk setiap layanan yang terhubung.</string>
     <string name="tracking_lists_update_failed">Gagal memperbarui daftar pelacakan</string>

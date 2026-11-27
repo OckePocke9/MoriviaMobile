@@ -34,7 +34,6 @@
     <string name="action_save">Spremi</string>
     <string name="action_saving">Spremanje…</string>
     <string name="action_switch">Prebaci</string>
-    <string name="action_validate">Provjeri valjanost</string>
     <string name="addon_installing">Instaliranje</string>
     <string name="addon_title">Dodaci</string>
     <string name="addons_badge_active">Aktivno</string>
@@ -52,8 +51,6 @@
     <string name="addons_appstore_empty_title">Prilagodite Morivia sebi.</string>
     <string name="addons_appstore_input_placeholder">URL dodatka</string>
     <string name="addons_appstore_install_button">Dodaj dodatak</string>
-    <string name="store_empty_unavailable_title">Ovdje još nema ničega</string>
-    <string name="store_empty_unavailable_message">Vaši trenutni dodaci nemaju ništa za prikazati ovdje.</string>
     <string name="addons_empty_subtitle">Dodajte URL manifesta kako biste započeli učitavanje kataloga, metapodataka, streamova ili titlova u Morivia.</string>
     <string name="addons_empty_title">Još nema instaliranih dodataka.</string>
     <string name="addons_error_enter_url">Unesite URL dodatka.</string>
@@ -93,7 +90,6 @@
     <string name="collections_editor_cover_none">Nema</string>
     <string name="collections_editor_cover">Naslovnica</string>
     <string name="collections_editor_create_collection">Stvori zbirku</string>
-    <string name="collections_editor_done">Gotovo</string>
     <string name="collections_editor_edit_collection">Uredi zbirku</string>
     <string name="collections_editor_edit_folder">Uredi mapu</string>
     <string name="collections_editor_folder_editor_help">Postavite identitet mape, izgled i izvore kataloga istom strukturom kao u glavnom uređivaču zbirki.</string>
@@ -256,11 +252,8 @@
     <string name="collections_editor_trakt_sort_popular">Popularno</string>
     <string name="collections_editor_trakt_sort_percentage">Postotak</string>
     <string name="collections_editor_trakt_sort_votes">Glasovi</string>
-    <string name="collections_editor_trakt_enter_name_url_or_id">Unesite naziv Trakt popisa, URL ili ID</string>
-    <string name="collections_editor_trakt_enter_id_or_url">Unesite Trakt ID popisa ili URL</string>
     <string name="collections_editor_trakt_load_failed">Nije uspjelo učitavanje Trakt popisa</string>
     <string name="collections_editor_trakt_no_lists_found">Nisu pronađeni Trakt popisi</string>
-    <string name="collections_editor_trakt_resolved_subtitle">Razriješeni Trakt popis</string>
     <string name="collections_editor_trakt_fallback_title">Trakt popis %1$d</string>
     <string name="collections_editor_tmdb_genre_action">Akcija</string>
     <string name="collections_editor_tmdb_genre_adventure">Pustolovina</string>
@@ -343,7 +336,6 @@
     <string name="trailer_enter_fullscreen">Puni zaslon</string>
     <string name="trailer_exit_fullscreen">Izađi iz punog zaslona</string>
     <string name="player_seek_position">Položaj reprodukcije</string>
-    <string name="compose_action_reload">Ponovno učitaj</string>
     <string name="compose_auth_already_have_account">Već imate račun? </string>
     <string name="compose_auth_continue_without_account">Nastavi bez računa</string>
     <string name="compose_auth_create_account">Stvori račun</string>
@@ -426,7 +418,6 @@
     <string name="compose_player_capture_line">Snimi</string>
     <string name="compose_player_close">Zatvori reproduktor</string>
     <string name="compose_player_color">Boja</string>
-    <string name="compose_player_currently_playing">Trenutačno se reproducira</string>
     <string name="compose_player_episode_code_episode_only">E%1$d</string>
     <string name="compose_player_episode_code_full">S%1$d E%2$d</string>
     <string name="compose_player_episode_title_format">S%1$d E%2$d • %3$s</string>
@@ -453,7 +444,6 @@
     <string name="compose_player_go_back">Idi natrag</string>
     <string name="compose_player_reload">Ponovno učitaj</string>
     <string name="compose_player_reset">Poništi</string>
-    <string name="compose_player_reset_defaults">Vrati na zadano</string>
     <string name="compose_player_resize_fill">Ispuni</string>
     <string name="compose_player_resize_fit">Prilagodi</string>
     <string name="compose_player_resize_zoom">Zumiraj</string>
@@ -485,8 +475,6 @@
     <string name="compose_search_discover_title">Istraži</string>
     <string name="compose_search_empty_failed_message">Instalirani dodaci nisu uspjeli vratiti valjane rezultate pretraživanja.</string>
     <string name="compose_search_empty_failed_title">Pretraživanje nije uspjelo</string>
-    <string name="compose_search_empty_no_active_addons_message">Omogućite ili dodajte dodatak prije pretraživanja.</string>
-    <string name="compose_search_empty_no_active_addons_title">Nema aktivnih dodataka</string>
     <string name="compose_search_empty_no_results_message">Instalirani pretraživi katalozi nisu pronašli podudaranja za ovaj upit.</string>
     <string name="compose_search_empty_no_results_title">Nema pronađenih rezultata</string>
     <string name="compose_search_empty_no_search_catalogs_message">Vaši omogućeni dodaci ne podržavaju pretraživanje kataloga.</string>
@@ -495,11 +483,9 @@
     <string name="compose_search_recent_searches">Nedavna pretraživanja</string>
     <string name="compose_search_remove_recent_search">Ukloni nedavno pretraživanje</string>
     <string name="compose_settings_category_about">O aplikaciji</string>
-    <string name="compose_settings_category_general">Općenito</string>
     <string name="compose_settings_page_account">Račun</string>
     <string name="compose_settings_page_addons">Dodaci</string>
     <string name="compose_settings_page_advanced">Napredno</string>
-    <string name="compose_settings_page_appearance">Izgled</string>
     <string name="compose_settings_page_content_discovery">Sadržaj i otkrivanje</string>
     <string name="compose_settings_page_continue_watching">Nastavi gledati</string>
     <string name="compose_settings_page_debrid">Povezane usluge</string>
@@ -519,29 +505,20 @@
     <string name="settings_appearance_section_streams">STREAMOVI</string>
     <string name="compose_settings_page_supporters_contributors">Podupiratelji i suradnici</string>
     <string name="compose_settings_page_tmdb_enrichment">TMDB obogaćivanje</string>
-    <string name="compose_settings_page_trakt">Trakt</string>
     <string name="compose_settings_page_tracking">Praćenje</string>
     <string name="compose_settings_root_about_section">O APLIKACIJI</string>
     <string name="compose_settings_root_account_description">Račun i status sinkronizacije</string>
     <string name="compose_settings_root_account_section">RAČUN</string>
     <string name="compose_settings_root_advanced_description">Pokretanje i ponašanje profila.</string>
-    <string name="compose_settings_root_advanced_section">NAPREDNO</string>
-    <string name="compose_settings_root_appearance_description">Početna, streamovi, zbirke i stranice s pojedinostima</string>
     <string name="compose_settings_root_check_updates_description">Preuzmite najnovije izdanje</string>
     <string name="compose_settings_root_check_updates_title">Provjeri ažuriranja</string>
     <string name="compose_settings_root_content_discovery_description">Upravljajte dodacima i izvorima za otkrivanje.</string>
-    <string name="compose_settings_root_content_discovery_description_appstore">Upravljajte dodacima i odaberite što se prikazuje u Nuviju.</string>
-    <string name="compose_settings_root_downloads_description">Upravljajte preuzetim filmovima i epizodama.</string>
-    <string name="compose_settings_root_downloads_description_appstore">Upravljajte onime što ste spremili na ovaj uređaj.</string>
     <string name="compose_settings_root_downloads_title">Preuzimanja</string>
-    <string name="compose_settings_root_general_section">OPĆENITO</string>
-    <string name="compose_settings_root_integrations_description">Upravljajte dostupnim integracijama</string>
     <string name="compose_settings_root_notifications_description">Upravljajte upozorenjima o izlasku epizoda i pošaljite probnu obavijest.</string>
     <string name="compose_settings_root_privacy_policy_description">Saznajte kako Morivia postupa s vašim podacima</string>
     <string name="compose_settings_root_streams_description">Prikaz rezultata streama i pravila za oznake URL-a.</string>
     <string name="compose_settings_root_switch_profile_description">Prebacite se na drugi profil.</string>
     <string name="compose_settings_root_switch_profile_title">Promijeni profil</string>
-    <string name="compose_settings_root_trakt_description">Otvori zaslon za povezivanje s Traktom</string>
     <string name="compose_settings_root_tracking_description">Povežite pružatelje usluga praćenja i odaberite koji pokreće vašu Medijateku i Nastavi gledati.</string>
     <string name="settings_search_empty">Nema pronađenih postavki.</string>
     <string name="settings_search_placeholder">Pretražite postavke...</string>
@@ -598,19 +575,15 @@
     <string name="settings_licenses_attributions_exoplayer_title">AndroidX Media3 ExoPlayer 1.8.0</string>
     <string name="settings_licenses_attributions_exoplayer_body">Koristi se za reprodukciju na Android verzijama.</string>
     <string name="settings_licenses_attributions_exoplayer_license">Licencirano pod licencom Apache License, verzija 2.0.</string>
-    <string name="compose_trakt_list_picker_loading">Učitavanje vaših Trakt popisa…</string>
-    <string name="compose_trakt_list_picker_subtitle">Odaberite gdje želite spremiti ovaj naslov na Traktu</string>
     <string name="compose_tracking_list_picker_loading">Učitavanje popisa…</string>
     <string name="compose_tracking_list_picker_subtitle">Odaberite gdje želite spremiti ovaj naslov</string>
     <string name="action_donate">Doniraj</string>
-    <string name="action_support_morivia">Podrži Morivia</string>
     <string name="cw_action_go_to_details">Idi na pojedinosti</string>
     <string name="cw_action_remove">Ukloni</string>
     <string name="cw_action_start_from_beginning">Pokreni od početka</string>
     <string name="detail_btn_play">Reproduciraj</string>
     <string name="detail_comments_badge_rating">%1$d/10</string>
     <string name="detail_comments_badge_review">Recenzija</string>
-    <string name="detail_comments_badge_spoiler">Spojler</string>
     <string name="detail_comments_empty">Još nema dostupnih Trakt recenzija.</string>
     <string name="detail_comments_likes">%1$d sviđanja</string>
     <string name="detail_comments_spoiler_card">Ovaj komentar sadrži spojlere.</string>
@@ -643,7 +616,6 @@
     <string name="home_view_all">Prikaži sve</string>
     <string name="play_manually">Reproduciraj ručno</string>
     <string name="poster_logo_content_description">%1$s logotip</string>
-    <string name="settings_account">Račun</string>
     <string name="settings_account_delete_account">Izbriši račun</string>
     <string name="settings_account_delete_account_description">Ovo će trajno izbrisati vaš račun i sve povezane podatke.</string>
     <string name="settings_account_delete_confirm_message">Ova se radnja ne može poništiti. Svi vaši podaci, profili i povijest sinkronizacije bit će trajno uklonjeni.</string>
@@ -675,7 +647,6 @@
     <string name="settings_appearance_app_language_restart_title">Potrebno ponovno pokretanje</string>
     <string name="settings_appearance_app_language_restart_message">Zatvorite i ponovno otvorite aplikaciju kako biste ažurirali izgled za ovaj jezik.</string>
     <string name="settings_appearance_nav_bar_style">Navigacijska traka</string>
-    <string name="settings_appearance_nav_bar_style_sheet_title">Stil navigacijske trake</string>
     <string name="settings_nav_bar_glow">Sjaj stakla</string>
     <string name="settings_nav_bar_glow_description">Dodaje blagi sjaj oko plutajuće trake.</string>
     <string name="settings_nav_bar_glow_on">Sjaj uključen</string>
@@ -786,7 +757,6 @@
     <string name="settings_custom_poster_description">Navedite predložak URL-a plakata s vanjske usluge. Ako rezervirano mjesto nema vrijednost za zadani naslov, umjesto toga koristi se izvorni plakat.</string>
     <string name="settings_custom_poster_placeholder">https://example.com/poster?id={id}&amp;id_type={id_type}&amp;type={type}</string>
     <string name="settings_custom_poster_active">Prilagođeni izvor plakata je aktivan</string>
-    <string name="settings_custom_poster_none">Nema konfiguriranog predloška</string>
     <string name="settings_custom_poster_save">Spremi</string>
     <string name="settings_custom_poster_clear">Očisti</string>
     <!-- Prilagođeni URL plakata - Prekidači zaslona -->
@@ -829,11 +799,7 @@
     <string name="settings_continue_watching_up_next_title">Sljedeća epizoda prema najdaljoj</string>
     <string name="settings_continue_watching_use_episode_thumbnails_description">Preferiraj sličice epizoda kada su dostupne.</string>
     <string name="settings_continue_watching_use_episode_thumbnails_title">Preferiraj sličice epizoda u Nastavi gledati</string>
-    <string name="settings_content_discovery_section_home">POČETNA</string>
     <string name="settings_content_discovery_section_sources">IZVORI</string>
-    <string name="settings_content_discovery_section_search">PRETRAŽIVANJE</string>
-    <string name="settings_content_discovery_recent_searches">Nedavna pretraživanja</string>
-    <string name="settings_content_discovery_recent_searches_description">Spremaj nedavna pretraživanja i prikaži ih kada je traka za pretraživanje u fokusu.</string>
     <string name="settings_content_discovery_addons_description">Instalirajte, uklonite, osvježite i sortirajte svoje izvore sadržaja.</string>
     <string name="settings_content_discovery_addons_description_appstore">Dodajte i upravljajte dodacima koje koristite s aplikacijom Morivia.</string>
     <string name="settings_content_discovery_plugins_description">Instalirajte repozitorije JavaScript strugača i interno testirajte pružatelje.</string>
@@ -843,7 +809,6 @@
     <string name="settings_integrations_section_title">INTEGRACIJE</string>
     <string name="settings_integrations_tmdb_description">Kontrole obogaćivanja metapodataka</string>
     <string name="settings_integrations_mdblist_description">Vanjski pružatelji ocjena</string>
-    <string name="settings_integrations_debrid_description">Povežite račune za poveznice i pristup medijateci</string>
     <string name="settings_debrid_section_title">POVEZANE USLUGE</string>
     <string name="settings_debrid_cloud_library">Medijateka u oblaku</string>
     <string name="settings_debrid_cloud_library_description">Pregledavajte i reproducirajte datoteke koje se već nalaze na vašim povezanim računima.</string>
@@ -925,9 +890,7 @@
     <string name="settings_fusion_badge_preview_empty">Nema slika oznaka u stilu Fusion na ovom URL-u.</string>
     <string name="settings_fusion_badge_group_title">Grupa %1$d</string>
     <string name="settings_fusion_badge_other_group_title">Ostale Fusion oznake</string>
-    <string name="settings_debrid_key_valid">API ključ je potvrđen.</string>
     <string name="settings_debrid_key_invalid">Nije moguće potvrditi ovaj API ključ.</string>
-    <string name="settings_mdb_add_api_key_first">Dodajte svoj MDBList API ključ u nastavku prije uključivanja ocjena.</string>
     <string name="settings_mdb_api_key_description">Potrebno za dohvaćanje ocjena s usluge MDBList</string>
     <string name="settings_mdb_api_key_label">API ključ</string>
     <string name="settings_mdb_api_key_title">API ključ</string>
@@ -942,8 +905,6 @@
     <string name="settings_meta_actions_description">Kontrole reprodukcije i spremanja.</string>
     <string name="settings_meta_cast">Glumačka postava</string>
     <string name="settings_meta_cast_description">Glavna glumačka postava.</string>
-    <string name="settings_meta_cinematic_background">Kinematografska pozadina</string>
-    <string name="settings_meta_cinematic_background_description">Zamućena pozadinska slika iza sadržaja, slično zaslonu streama.</string>
     <string name="settings_meta_background_mode">Način pozadine</string>
     <string name="settings_meta_background_mode_description">Odaberite kako se ilustracije prikazuju iza stranica s pojedinostima.</string>
     <string name="settings_meta_poster_transition">Prijelaz plakata</string>
@@ -999,8 +960,6 @@
     <string name="settings_notifications_test_for_title">Pošaljite lokalnu probnu obavijest za %1$s.</string>
     <string name="settings_notifications_test_requires_saved_show">Prvo spremite seriju u svoju medijateku kako biste testirali obavijesti.</string>
     <string name="settings_notifications_test_title">Probna obavijest</string>
-    <string name="community_section_title">Zajednica</string>
-    <string name="community_section_description">Upoznajte ljude koji stvaraju i podržavaju Morivia na mobilnim uređajima, televizorima i webu.</string>
     <string name="community_membership_title">Nuvio članstvo podupiratelja</string>
     <string name="community_membership_description">Podrška Nuviju pomaže u pokrivanju infrastrukture i tekućeg razvoja, dok osnovno iskustvo ostaje besplatno za sve.</string>
     <string name="community_view_supporter_membership">Pregledaj članstvo podupiratelja</string>
@@ -1024,7 +983,6 @@
     <string name="community_tab_supporters">Podupiratelji</string>
     <string name="community_open_github">Otvori GitHub</string>
     <string name="community_github_profile_unavailable">GitHub profil nije dostupan</string>
-    <string name="community_no_message_attached">Nema priložene poruke.</string>
     <string name="community_loading_contributors">Učitavanje suradnika...</string>
     <string name="community_loading_supporters">Učitavanje podupiratelja...</string>
     <string name="community_load_contributors_failed">Nije uspjelo učitavanje suradnika</string>
@@ -1035,7 +993,6 @@
     <string name="community_error_unable_load_supporters">Nije moguće učitati podupiratelje.</string>
     <string name="community_error_contributors_request_failed">Trenutačno nije moguće učitati suradnike.</string>
     <string name="community_error_supporters_request_failed">Trenutačno nije moguće učitati podupiratelje.</string>
-    <string name="community_total_commits">%1$d ukupno predaja</string>
     <string name="community_month_jan">Sij</string>
     <string name="community_month_feb">Velj</string>
     <string name="community_month_mar">Ožu</string>
@@ -1069,7 +1026,6 @@
     <string name="settings_playback_decoder_prefer_app">Preferiraj dekodere aplikacije (FFmpeg)</string>
     <string name="settings_playback_decoder_prefer_device">Preferiraj dekodere uređaja</string>
     <string name="settings_playback_decoder_priority">Prioritet dekodera</string>
-    <string name="settings_playback_dialog_close">Dodirnite izvan za zatvaranje</string>
     <string name="settings_playback_dialog_save_close">Dodirnite izvan za spremanje i zatvaranje</string>
     <string name="settings_playback_duration_day_one">%1$d dan</string>
     <string name="settings_playback_duration_days">%1$d dana</string>
@@ -1080,7 +1036,6 @@
     <string name="settings_playback_external_player">Vanjski reproduktor</string>
     <string name="settings_playback_external_player_app">Aplikacija vanjskog reproduktora</string>
     <string name="settings_playback_external_player_description_android">Otvori novu reprodukciju pomoću zadane video aplikacije za Android ili birača sustava.</string>
-    <string name="settings_playback_external_player_description_ios">Otvori novu reprodukciju s odabranim instaliranim reproduktorom.</string>
     <string name="settings_playback_external_player_forward_subtitles">Proslijedi titlove vanjskom reproduktoru</string>
     <string name="settings_playback_external_player_forward_subtitles_description">Dohvati titlove dodataka na vašem željenom jeziku i proslijedi ih vanjskom reproduktoru.</string>
     <string name="settings_playback_external_player_send_skip_segments">Pošalji vremenske oznake za uvod i odjavu</string>
@@ -1110,13 +1065,6 @@
     <string name="settings_playback_option_original_hint">Zahtijeva omogućeno TMDB obogaćivanje</string>
     <string name="settings_playback_option_forced">Prisilni</string>
     <string name="settings_playback_option_none">Ništa</string>
-    <string name="settings_playback_addon_subtitle_startup_all">Svi titlovi dodataka</string>
-    <string name="settings_playback_addon_subtitle_startup_all_description">Unaprijed dohvati i priloži sve titlove dodataka prije reprodukcije. Najsporije pokretanje.</string>
-    <string name="settings_playback_addon_subtitle_startup_fast">Brzo pokretanje</string>
-    <string name="settings_playback_addon_subtitle_startup_fast_description">Odmah započni reprodukciju. Odabir titlova dodatka može jednom ponovno učitati reproduktor.</string>
-    <string name="settings_playback_addon_subtitle_startup_mode">Učitavanje titlova dodataka</string>
-    <string name="settings_playback_addon_subtitle_startup_preferred">Željeni jezici</string>
-    <string name="settings_playback_addon_subtitle_startup_preferred_description">Unaprijed dohvati titlove dodataka prije reprodukcije i priloži zapise za željeni/sekundarni jezik.</string>
     <string name="settings_playback_prefer_binge_group">Preferiraj binge grupu (sljedeća epizoda)</string>
     <string name="settings_playback_prefer_binge_group_description">Prvo isprobaj isti profil izvora (isti dodatak/grupa kvalitete) prije standardnih pravila automatske reprodukcije.</string>
     <string name="settings_playback_reuse_binge_group">Ponovno koristi binge grupu</string>
@@ -1142,9 +1090,7 @@
     <string name="settings_playback_regex_preset_quality_4k_remux">4K / Remux</string>
     <string name="settings_playback_regex_preset_quality_720p_smaller">720p / Manje</string>
     <string name="settings_playback_regex_preset_web_sources">WEB izvori</string>
-    <string name="settings_playback_render_type">Način renderiranja za Libass</string>
     <string name="settings_playback_render_scale">Razlučivost renderiranja titlova</string>
-    <string name="settings_playback_render_scale_description">Niža razlučivost poboljšava performanse kod zahtjevnog tipografskog oblikovanja, uz gubitak oštrine</string>
     <string name="settings_playback_reuse_last_link">Ponovno koristi zadnju poveznicu</string>
     <string name="settings_playback_reuse_last_link_description">Automatski reproduciraj zadnji ispravan stream za isti film/epizodu dok je predmemorija još valjana</string>
     <string name="settings_playback_secondary_audio_language">Sekundarni jezik zvuka</string>
@@ -1176,11 +1122,9 @@
     <string name="settings_playback_parental_guide_description">Prikaži roditeljski vodič pri pokretanju reprodukcije.</string>
     <string name="settings_playback_subtitle_background_color">Boja pozadine</string>
     <string name="settings_playback_subtitle_bold">Podebljano</string>
-    <string name="settings_playback_subtitle_bold_description">Koristi deblji font za titlove.</string>
     <string name="settings_playback_subtitle_color_transparent">Prozirno</string>
     <string name="settings_playback_subtitle_outline">Obrub</string>
     <string name="settings_playback_subtitle_outline_color">Boja obruba</string>
-    <string name="settings_playback_subtitle_outline_description">Iscrtaj rub oko teksta titlova.</string>
     <string name="settings_playback_subtitle_show_preferred_only">Prikaži samo željene jezike</string>
     <string name="settings_playback_subtitle_show_preferred_only_description">Prikaži samo titlove koji odgovaraju vašim željenim jezicima titlova.</string>
     <string name="settings_playback_subtitle_size">Veličina titla</string>
@@ -1210,7 +1154,6 @@
     <string name="settings_playback_stream_selection_mode_regex_description">Pokreni prvi izvor čiji tekst odgovara vašem regex uzorku.</string>
     <string name="settings_playback_stream_timeout">Vrijeme čekanja za odabir streama</string>
     <string name="settings_playback_stream_timeout_description">Vrijeme čekanja na dodatke prije odabira.</string>
-    <string name="settings_playback_threshold_minutes">Prag u minutama</string>
     <string name="settings_playback_threshold_mode">Način praga za sljedeću epizodu</string>
     <string name="settings_playback_threshold_mode_minutes_before_end">Minute prije kraja</string>
     <string name="settings_playback_threshold_mode_percentage">Postotak</string>
@@ -1279,7 +1222,6 @@
     <string name="settings_tmdb_section_modules">MODULI</string>
     <string name="settings_tmdb_section_title">TMDB OBOGAĆIVANJE</string>
     <string name="settings_trakt_approval_redirect">Nakon odobrenja automatski ćete biti preusmjereni natrag.</string>
-    <string name="settings_trakt_authentication">AUTENTIFIKACIJA</string>
     <string name="settings_trakt_comments">Komentari</string>
     <string name="settings_trakt_comments_description">Prikaži Trakt recenzije na stranicama s pojedinostima</string>
     <string name="settings_trakt_connect">Poveži Trakt</string>
@@ -1287,7 +1229,6 @@
     <string name="settings_trakt_default_user">Trakt korisnik</string>
     <string name="settings_trakt_disconnect">Prekini vezu</string>
     <string name="settings_trakt_failed_open_browser">Nije uspjelo otvaranje preglednika</string>
-    <string name="settings_trakt_features">ZNAČAJKE</string>
     <string name="settings_trakt_finish_sign_in">Dovrši odobrenje veze</string>
     <string name="settings_trakt_intro_description">Sinkronizirajte svoj popis za gledanje, napredak gledanja, popis Nastavi gledati, scrobblove i osobne popise s Traktom.</string>
     <string name="settings_trakt_missing_credentials">Nedostaju TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET u local.properties.</string>
@@ -1348,18 +1289,9 @@
     <string name="settings_simkl_authorization_expired">Simkl kôd je istekao. Započnite ponovno.</string>
     <string name="settings_simkl_sign_in_failed">Nije uspjelo dovršavanje prijave na Simkl. Pokušajte ponovno.</string>
     <string name="settings_simkl_sync_now">Sinkroniziraj sada</string>
-    <string name="settings_simkl_sync_info_action">Kako sinkronizacija radi</string>
-    <string name="settings_simkl_sync_info_title">Kako funkcionira Simkl sinkronizacija</string>
-    <string name="settings_simkl_sync_info_description">Morivia automatski provjerava Simkl najviše jednom svakih %1$d minuta. Promjenama napravljenim putem druge aplikacije ili Simkl web stranice može trebati toliko vremena da se pojave.</string>
-    <string name="settings_simkl_sync_info_activity">Svako osvježavanje prvo provjerava javlja li Simkl ikakve promjene i preuzima samo ažuriranja. To prati Simkl API pravila, smanjuje nepotrebnu potrošnju podataka i pomaže u održavanju stabilnosti usluge.</string>
-    <string name="settings_simkl_sync_info_manual">Promjene napravljene u Nuviju šalju se na Simkl odmah. Koristite Sinkroniziraj sada kada želite da Morivia ranije provjeri udaljene promjene.</string>
-    <string name="settings_simkl_sync_info_library_statuses">Serije stavljene na Simklove popise Na čekanju ili Odbačeno skrivene su iz Nastavi gledati. Ostaju skrivene sve dok se nalaze na bilo kojem od ta dva popisa.</string>
-    <string name="settings_simkl_sync_info_docs">Pročitajte Simkl vodič za sinkronizaciju</string>
     <string name="settings_simkl_authorization_revoked">Simkl autorizacija je opozvana. Povežite se ponovno.</string>
     <string name="settings_tracking_not_connected">Nije povezano</string>
     <string name="tracking_source_simkl">Simkl</string>
-    <string name="tracking_library_source_simkl_selected">Simkl popis za gledanje odabran</string>
-    <string name="tracking_watch_progress_simkl_selected">Izvor napretka gledanja postavljen na Simkl</string>
     <string name="tracking_watch_progress_dialog_subtitle">Odaberite uslugu koju Morivia čita za nastavak i Nastavi gledati. Scrobblanje ostaje aktivno za svaku povezanu uslugu.</string>
     <string name="trakt_library_source_title">Izvor medijateke</string>
     <string name="trakt_library_source_subtitle">Odaberite koji izvor Morivia čita za vašu medijateku</string>
@@ -1367,16 +1299,11 @@
     <string name="trakt_library_source_dialog_subtitle">Odaberite uslugu koju Morivia čita za vašu medijateku. Reprodukcija se scrobbla na svaku povezanu uslugu.</string>
     <string name="trakt_library_source_trakt">Trakt</string>
     <string name="trakt_library_source_morivia">Morivia medijateka</string>
-    <string name="trakt_library_source_trakt_selected">Trakt medijateka odabrana</string>
-    <string name="trakt_library_source_morivia_selected">Morivia medijateka odabrana</string>
     <string name="trakt_watch_progress_title">Napredak gledanja</string>
     <string name="trakt_watch_progress_subtitle">Odaberite koji izvor napretka pokreće nastavak i Nastavi gledati</string>
     <string name="trakt_watch_progress_dialog_title">Napredak gledanja</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Odaberite trebaju li nastavak i Nastavi gledati koristiti Trakt ili Morivia Sync dok Trakt scrobblanje ostaje aktivno.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
     <string name="trakt_watch_progress_source_morivia">Morivia Sync</string>
-    <string name="trakt_watch_progress_trakt_selected">Izvor napretka gledanja postavljen na Trakt</string>
-    <string name="trakt_watch_progress_morivia_selected">Izvor napretka gledanja postavljen na Morivia Sync</string>
     <string name="trakt_more_like_this_source_title">Izvor za „Sličan sadržaj”</string>
     <string name="trakt_more_like_this_source_subtitle">Odaberite odakle dolaze preporuke na stranicama s pojedinostima</string>
     <string name="trakt_more_like_this_source_dialog_title">Izvor za „Sličan sadržaj”</string>
@@ -1517,7 +1444,6 @@
     <string name="lang_zulu">Zulu</string>
     <string name="action_clear">Očisti</string>
     <string name="action_continue">Nastavi</string>
-    <string name="action_ignore">Zanemari</string>
     <string name="action_install">Instaliraj</string>
     <string name="action_later">Kasnije</string>
     <string name="action_no">Ne</string>
@@ -1558,7 +1484,6 @@
     <string name="discover_empty_no_catalogs_title">Nema kataloga za otkrivanje</string>
     <string name="discover_empty_no_results_message">Odabrani katalog i filtri nisu vratili nijednu stavku.</string>
     <string name="discover_empty_no_results_title">Nisu pronađeni naslovi</string>
-    <string name="discover_empty_no_active_addons_message">Omogućite ili dodajte dodatak prije pregledavanja odjeljka Otkrivanje.</string>
     <string name="discover_select_catalog">Odaberi katalog</string>
     <string name="discover_select_genre">Odaberi žanr</string>
     <string name="discover_select_type">Odaberi vrstu</string>
@@ -1574,7 +1499,6 @@
     <string name="home_continue_watching_watched">%1$s pogledano</string>
     <string name="home_continue_watching_hours_minutes_left">Preostalo %1$dh %2$dm</string>
     <string name="home_continue_watching_minutes_left">Preostalo %1$dm</string>
-    <string name="home_empty_no_active_addons_message">Omogućite ili dodajte dodatak kako biste vidjeli kataloge na početnom zaslonu.</string>
     <string name="home_empty_no_rows_message">Vaši omogućeni dodaci ne pružaju kataloge koji se mogu prikazati na početnom zaslonu.</string>
     <string name="home_empty_no_rows_title">Nema dostupnog sadržaja na početnom zaslonu</string>
     <string name="home_load_failed_title">Nije uspjelo učitavanje početnog zaslona</string>
@@ -1597,8 +1521,6 @@
     <string name="meta_section_trailers_description">Traka s najavama i prečaci za reprodukciju.</string>
     <string name="network_back_online">Ponovno na mreži</string>
     <string name="network_cannot_reach_servers">Nije moguće dosegnuti poslužitelje</string>
-    <string name="network_error_empty_response_body">Prazno tijelo odgovora</string>
-    <string name="network_error_request_failed_http">Zahtjev nije uspio s HTTP statusom %1$d</string>
     <string name="network_no_internet_connection">Nema internetske veze</string>
     <string name="person_age">(dob: %1$d)</string>
     <string name="person_born">Rođen/a %1$s%2$s</string>
@@ -1664,9 +1586,6 @@
     <string name="streams_empty_load_failed_title">Nije uspjelo učitavanje streamova</string>
     <string name="playback_unavailable">Reprodukcija nije dostupna</string>
     <string name="playback_unavailable_message">Reprodukcija nije dostupna za ovaj naslov s vašom trenutnom konfiguracijom.</string>
-    <string name="streams_empty_no_addons_message">Prvo instalirajte dodatak kako biste učitali streamove za ovaj naslov.</string>
-    <string name="streams_empty_no_stream_addon_message">Vaši instalirani dodaci ne pružaju streamove za ovu vrstu naslova.</string>
-    <string name="streams_empty_no_stream_addon_title">Nema dostupnih dodataka za stream</string>
     <string name="streams_empty_no_streams_message">Nijedan od vaših instaliranih dodataka nije vratio streamove za ovaj naslov.</string>
     <string name="streams_episode_badge">S%1$d E%2$d</string>
     <string name="streams_episode_fallback_title">Epizoda</string>
@@ -1707,7 +1626,6 @@
     <string name="trailer_close">Zatvori najavu</string>
     <string name="trailer_unable_to_play">Nije moguće reproducirati najavu</string>
     <string name="trakt_lists_load_failed">Nije uspjelo učitavanje Trakt popisa</string>
-    <string name="trakt_lists_update_failed">Nije uspjelo ažuriranje Trakt popisa</string>
     <string name="tracking_lists_update_failed">Nije uspjelo ažuriranje popisa za praćenje</string>
     <string name="tracking_list_status_rewritten">%1$s je postavio ovaj naslov u %2$s umjesto u %3$s</string>
     <string name="tracking_remove_confirmation_title">Ukloniti iz %1$s?</string>
@@ -1715,11 +1633,8 @@
     <string name="tracking_removal_impact_history">povijest gledanja</string>
     <string name="tracking_removal_impact_rating">ocjenu</string>
     <string name="tracking_removal_impact_history_and_rating">povijest gledanja i ocjenu</string>
-    <string name="updates_asset_line">%1$s • %2$s</string>
     <string name="updates_check_failed">Provjera ažuriranja nije uspjela</string>
     <string name="updates_download_failed">Preuzimanje nije uspjelo</string>
-    <string name="updates_download_empty_body">Prazno tijelo preuzimanja</string>
-    <string name="updates_download_file_missing">Preuzeta datoteka ažuriranja nedostaje.</string>
     <string name="updates_downloading_progress">Preuzimanje %1$d%%</string>
     <string name="updates_debug_test_complete">Test natpisa je dovršen</string>
     <string name="updates_debug_test_description">Pregledajte natpis i simulirani napredak preuzimanja.</string>
@@ -1727,8 +1642,6 @@
     <string name="updates_install_failed">Nije moguće pokrenuti instalaciju</string>
     <string name="updates_latest_version">Koristite najnoviju verziju.</string>
     <string name="updates_message_allow_installs">Omogućite instalaciju aplikacija za Morivia, zatim se vratite i nastavite.</string>
-    <string name="updates_message_downloading">Preuzimanje ažuriranja...</string>
-    <string name="updates_message_no_updates">Nema pronađenih ažuriranja.</string>
     <string name="updates_message_ready">Nova verzija je spremna za instalaciju.</string>
     <string name="updates_not_available">Ažuriranja unutar aplikacije nisu dostupna u ovoj verziji.</string>
     <string name="updates_no_release_notes">Nema priloženih bilješki o izdanju.</string>
@@ -1736,7 +1649,6 @@
     <string name="updates_release_notes">Bilješke o izdanju</string>
     <string name="updates_title_allow_installs">Dopusti instalacije za nastavak</string>
     <string name="updates_title_available">Ažuriranje je dostupno</string>
-    <string name="updates_title_status">Status ažuriranja</string>
     <string name="addon_already_installed">Taj je dodatak već instaliran.</string>
     <string name="addon_invalid_url">Unesite valjani URL dodatka</string>
     <string name="addon_load_manifest_failed">Nije uspjelo učitavanje manifesta</string>
@@ -1761,10 +1673,6 @@
     <string name="downloads_live_downloading_with_total">Preuzimanje %1$s • %2$s / %3$s</string>
     <string name="downloads_live_failed">Preuzimanje nije uspjelo</string>
     <string name="downloads_live_paused">Pauzirano %1$s</string>
-    <string name="library_remove_confirm">Ukloni</string>
-    <string name="library_remove_from_list_message">Ukloniti %1$s iz %2$s?</string>
-    <string name="library_remove_message">Ukloniti %1$s iz vaše medijateke?</string>
-    <string name="library_remove_title">Ukloniti iz medijateke?</string>
     <string name="media_movie">Film</string>
     <string name="notifications_channel_episode_releases_description">Obavještava kada izađe nova epizoda spremljene serije.</string>
     <string name="notifications_test_preview_body">Pretpregled upozorenja o izlasku epizode.</string>
@@ -1778,7 +1686,6 @@
     <string name="player_error_stream_blocked">Izvor streama je blokiran ili ograničen. Isprobaj drugi izvor.</string>
     <string name="player_error_source_invalid_content">Pogreška izvora: izvor streama vratio je neispravan sadržaj ili sadržaj koji se ne može reproducirati. Poveznica je možda istekla ili je poslužitelj umjesto videa vratio stranicu s pogreškom.\n\nIsprobaj drugi izvor. [%1$s]</string>
     <string name="player_error_unsupported_format">Ovaj stream koristi format koji tvoj uređaj možda ne podržava. Isprobaj drugi izvor. [%1$s]</string>
-    <string name="player_engine_unavailable_rebuild">MPV pogon reproduktora nije dostupan. Ponovno izgradite aplikaciju.</string>
     <string name="profile_pin_changed_requires_refresh">PIN ovog profila je promijenjen. Povežite se s internetom jednom radi osvježavanja zaključavanja na ovom uređaju.</string>
     <string name="profile_pin_clear_failed">Uklanjanje zaključavanja PIN-om nije uspjelo. Pokušajte ponovno.</string>
     <string name="profile_pin_clear_requires_internet">Povežite se s internetom za uklanjanje zaključavanja PIN-om.</string>
@@ -1787,13 +1694,10 @@
     <string name="profile_pin_set_requires_internet">Povežite se s internetom za postavljanje PIN-a.</string>
     <string name="profile_primary_addons_required">Ovaj profil koristi primarne dodatke.</string>
     <string name="streams_failed_to_load_scraper">Nije uspjelo učitavanje %1$s</string>
-    <string name="stream_default_name">Stream</string>
     <string name="source_embedded">Ugrađeno</string>
     <string name="trakt_authorization_denied">Autorizacija je odbijena</string>
     <string name="trakt_authorization_expired_reconnect">Vaša Trakt autorizacija više nije valjana. Ponovno povežite svoj Trakt račun.</string>
     <string name="trakt_complete_sign_in_browser">Dovršite prijavu na Trakt u svom pregledniku</string>
-    <string name="trakt_connected">Povezano s Traktom</string>
-    <string name="trakt_disconnected">Odspojeno s Trakta</string>
     <string name="trakt_invalid_callback">Nevaljani Trakt povratni poziv</string>
     <string name="trakt_invalid_callback_state">Nevaljano stanje Trakt povratnog poziva</string>
     <string name="trakt_invalid_token_response">Nevaljani odgovor Trakt tokena</string>
@@ -1802,16 +1706,6 @@
     <string name="trakt_missing_auth_code">Trakt nije vratio autorizacijski kôd</string>
     <string name="trakt_missing_credentials">Nedostaju Trakt vjerodajnice</string>
     <string name="trakt_progress_load_failed">Nije uspjelo učitavanje Trakt napretka</string>
-    <string name="trakt_public_list">Trakt javni popis</string>
-    <string name="trakt_public_list_enter_valid_id_or_url">Unesite valjani Trakt ID popisa ili URL</string>
-    <string name="trakt_public_list_items_count">%1$d stavki</string>
-    <string name="trakt_public_list_likes_count">%1$d sviđanja</string>
-    <string name="trakt_public_list_missing_credentials">Nedostaju Trakt vjerodajnice u local.properties (TRAKT_CLIENT_ID).</string>
-    <string name="trakt_public_list_missing_id">Nedostaje ID Trakt popisa</string>
-    <string name="trakt_public_list_missing_numeric_id">Trakt popis ne sadrži brojčani ID</string>
-    <string name="trakt_public_list_not_found_or_not_public">Trakt popis nije pronađen ili nije javan</string>
-    <string name="trakt_public_list_rate_limit_reached">Dosegnuto je ograničenje učestalosti Trakt zahtjeva</string>
-    <string name="trakt_public_list_request_failed">Trakt zahtjev nije uspio</string>
     <string name="trakt_sign_in_complete_failed">Dovršavanje prijave na Trakt nije uspjelo</string>
     <string name="trakt_user_fallback">Trakt korisnik</string>
     <string name="trakt_watchlist">Popis za gledanje</string>
@@ -1825,29 +1719,9 @@
     <string name="trakt_error_add_list_failed">Dodavanje na Trakt popis nije uspjelo</string>
     <string name="trakt_error_missing_ids">Nedostaju kompatibilni Trakt ID-ovi</string>
     <string name="trakt_error_empty_response">Prazno tijelo odgovora</string>
-    <string name="tmdb_sources_collection_fallback_title">TMDB zbirka %1$d</string>
-    <string name="tmdb_sources_collection_not_found">TMDB zbirka nije pronađena</string>
-    <string name="tmdb_sources_company_fallback_title">TMDB produkcija %1$d</string>
-    <string name="tmdb_sources_company_not_found">TMDB tvrtka nije pronađena</string>
-    <string name="tmdb_sources_director_fallback_title">TMDB redatelj %1$d</string>
-    <string name="tmdb_sources_discover_no_data">TMDB otkrivanje nije vratilo podatke</string>
-    <string name="tmdb_sources_discover_title">TMDB otkrivanje</string>
-    <string name="tmdb_sources_invalid_id_or_url">Unesite valjani TMDB ID ili URL.</string>
-    <string name="tmdb_sources_list_fallback_title">TMDB popis %1$d</string>
-    <string name="tmdb_sources_list_not_found">TMDB popis nije pronađen</string>
-    <string name="tmdb_sources_load_failed">Nije uspjelo učitavanje TMDB izvora</string>
-    <string name="tmdb_sources_missing_collection_id">Nedostaje ID TMDB zbirke</string>
-    <string name="tmdb_sources_missing_list_id">Nedostaje ID TMDB popisa</string>
-    <string name="tmdb_sources_missing_person_id">Nedostaje TMDB ID osobe</string>
-    <string name="tmdb_sources_network_fallback_title">TMDB mreža %1$d</string>
-    <string name="tmdb_sources_network_not_found">TMDB mreža nije pronađena</string>
-    <string name="tmdb_sources_person_credits_not_found">Zasluge TMDB osobe nisu pronađene</string>
-    <string name="tmdb_sources_person_fallback_title">TMDB osoba %1$d</string>
-    <string name="tmdb_sources_person_not_found">TMDB osoba nije pronađena</string>
     <string name="generic_trailer">Najava</string>
     <string name="generic_unknown">Nepoznato</string>
     <string name="generic_addon">Dodatak</string>
-    <string name="action_saved">Spremljeno</string>
     <string name="action_play_episode">Reproduciraj %1$s</string>
     <string name="action_resume_episode">Nastavi %1$s</string>
     <string name="collections_import_error_empty_json">JSON je prazan.</string>
@@ -1910,14 +1784,6 @@
     <string name="downloads_enqueue_replaced">Zamijenjeno prethodno preuzimanje</string>
     <string name="downloads_enqueue_started">Preuzimanje započeto</string>
     <string name="downloads_enqueue_unsupported_format">Nepodržani format streama za preuzimanja</string>
-    <string name="downloads_error_empty_body">Prazno tijelo odgovora</string>
-    <string name="downloads_error_finalize_failed">Dovršavanje datoteke preuzimanja nije uspjelo</string>
-    <string name="downloads_error_http_failed">Zahtjev nije uspio s HTTP statusom %1$d</string>
-    <string name="downloads_error_not_initialized">Sustav preuzimanja nije inicijaliziran</string>
-    <string name="downloads_error_open_partial_failed">Otvaranje djelomične datoteke preuzimanja nije uspjelo</string>
-    <string name="downloads_error_partial_not_open">Djelomična datoteka preuzimanja nije otvorena</string>
-    <string name="downloads_error_request_failed">Zahtjev za preuzimanje nije uspio</string>
-    <string name="downloads_error_write_partial_failed">Zapisivanje u djelomičnu datoteku preuzimanja nije uspjelo</string>
     <string name="home_catalog_default_title">%1$s - %2$s</string>
     <string name="library_empty_message">Spremljeni naslovi pojavit će se ovdje nakon što dodirnete Spremi na zaslonu s pojedinostima.</string>
     <string name="library_empty_title">Vaša medijateka je prazna</string>
@@ -1925,8 +1791,6 @@
     <string name="library_filter_list">Odaberi popis</string>
     <string name="library_filter_sort">Poredaj medijateku</string>
     <string name="library_filter_type">Odaberi vrstu</string>
-    <string name="library_layout_show_horizontal">Prikaži vodoravne police</string>
-    <string name="library_layout_show_vertical">Prikaži okomitu mrežu</string>
     <string name="library_load_failed">Nije uspjelo učitavanje medijateke</string>
     <string name="library_other">Ostalo</string>
     <string name="library_sort_added_asc">Najstarije dodano</string>
@@ -2014,7 +1878,6 @@
     <string name="unit_bytes_mb">MB</string>
     <string name="unit_bytes_gb">GB</string>
     <!-- Pristupačnost kontrola reproduktora -->
-    <string name="player_action_submit_intro">Pošalji uvod</string>
     <string name="player_action_video_settings">Video postavke</string>
     <!-- Medijateka u oblaku -->
     <string name="cloud_library_provider_unavailable">Medijateka u oblaku nije dostupna za %1$s.</string>
@@ -2148,14 +2011,9 @@
     <string name="settings_debrid_rule_excluded_release_groups_desc">Sakrij odabrane grupe izdanja.</string>
     <!-- Dijaloški okvir za slanje uvoda/rekapitulacije/odjave -->
     <string name="submit_intro_title">Slanje vremenskih oznaka</string>
-    <string name="submit_intro_segment_type">VRSTA SEGMENTA</string>
     <string name="submit_intro_segment_intro">Uvod</string>
     <string name="submit_intro_segment_recap">Rekapitulacija</string>
     <string name="submit_intro_segment_outro">Odjava</string>
-    <string name="submit_intro_start_time">POČETNO VRIJEME (MM:SS)</string>
-    <string name="submit_intro_end_time">ZAVRŠNO VRIJEME (MM:SS)</string>
-    <string name="submit_intro_submit">Pošalji</string>
-    <string name="submit_intro_capture">Snimi</string>
     <!-- iOS napredna reprodukcija -->
     <string name="settings_playback_ios_hw_decoder_dialog">Hardverski dekoder</string>
     <string name="settings_playback_ios_audio_output_dialog">Audio izlaz</string>
@@ -2164,7 +2022,6 @@
     <!-- Uređivač zbirki -->
     <string name="collections_editor_resolved_trakt_list">Razriješeni Trakt popis</string>
     <string name="collections_editor_tmdb_discover">TMDB otkrivanje</string>
-    <string name="collections_editor_watch_region_placeholder">HR, US, KR, JP</string>
     <!-- Poruke o pogreškama u uređivaču zbirki -->
     <string name="collections_editor_trakt_input_required">Unesite naziv Trakt popisa, URL ili ID</string>
     <string name="collections_editor_tmdb_invalid_id_error">Unesite valjani TMDB ID ili URL.</string>
@@ -2181,17 +2038,13 @@
     <!-- Medijateka u oblaku -->
     <string name="cloud_library_playback_disabled">Medijateka u oblaku je onemogućena.</string>
     <!-- Postavke za IntroDB -->
-    <string name="settings_playback_introdb_invalid_api_key">Nevaljani API ključ ili veza nije uspjela</string>
     <string name="addons_manifest_missing_field">U manifestu nedostaje „%1$s”</string>
     <string name="collections_editor_tmdb_collection_title_format">TMDB zbirka %1$s</string>
     <string name="collections_editor_tmdb_director_title_format">TMDB redatelj %1$s</string>
-    <string name="collections_editor_tmdb_discover_title">TMDB otkrivanje</string>
-    <string name="collections_editor_tmdb_invalid_id_or_url">Unesite valjani TMDB ID ili URL.</string>
     <string name="collections_editor_tmdb_list_title_format">TMDB popis %1$s</string>
     <string name="collections_editor_tmdb_network_title_format">TMDB mreža %1$s</string>
     <string name="collections_editor_tmdb_person_title_format">TMDB osoba %1$s</string>
     <string name="collections_editor_tmdb_production_title_format">TMDB produkcija %1$s</string>
-    <string name="collections_editor_tmdb_source_load_failed">Nije uspjelo učitavanje TMDB izvora</string>
     <string name="collections_editor_trakt_list_id_format">ID %1$s</string>
     <string name="collections_tmdb_collection_not_found">TMDB zbirka nije pronađena</string>
     <string name="collections_tmdb_company_not_found">TMDB tvrtka nije pronađena</string>
@@ -2246,19 +2099,13 @@
     <string name="plugins_empty_repos_title">Još nema instaliranih repozitorija priključaka.</string>
     <string name="plugins_enable_globally_desc">Koristi pružatelje priključaka tijekom otkrivanja streamova.</string>
     <string name="plugins_enable_globally_title">Omogući pružatelje priključaka globalno</string>
-    <string name="plugins_error_already_installed">Taj je repozitorij priključaka već instaliran.</string>
     <string name="plugins_error_enter_repo_url">Unesite URL repozitorija priključaka.</string>
     <string name="plugins_error_enter_valid_url">Unesite valjani URL priključka.</string>
-    <string name="plugins_error_install_failed">Nije uspjela instalacija repozitorija priključaka</string>
     <string name="plugins_error_provider_not_found">Pružatelj nije pronađen</string>
-    <string name="plugins_error_refresh_failed">Nije uspjelo osvježavanje repozitorija</string>
     <string name="plugins_error_unavailable_build">Priključci nisu dostupni u ovoj verziji.</string>
     <string name="plugins_group_by_repo_desc">U Streamovima, prikaži jednog pružatelja po repozitoriju umjesto jednog po izvoru.</string>
     <string name="plugins_group_by_repo_title">Grupiraj pružatelje priključaka po repozitoriju</string>
     <string name="plugins_input_manifest_placeholder">URL manifesta priključka</string>
-    <string name="plugins_manifest_error_name_missing">Nedostaje naziv manifesta.</string>
-    <string name="plugins_manifest_error_no_providers">Manifest nema pružatelja.</string>
-    <string name="plugins_manifest_error_version_missing">Nedostaje verzija manifesta.</string>
     <string name="plugins_manifest_name_missing">Nedostaje naziv manifesta.</string>
     <string name="plugins_manifest_no_providers">Manifest nema pružatelja.</string>
     <string name="plugins_manifest_version_missing">Nedostaje verzija manifesta.</string>
@@ -2290,12 +2137,10 @@
     <string name="trakt_connected_status">Povezano s Traktom</string>
     <string name="trakt_disconnected_status">Odspojeno s Trakta</string>
     <string name="unit_bytes_tb">TB</string>
-    <string name="updates_apk_asset_missing">Nije pronađena APK datoteka u izdanju</string>
     <string name="updates_download_failed_http">Preuzimanje nije uspjelo s HTTP statusom %1$d</string>
     <string name="updates_downloaded_file_missing">Preuzeta datoteka ažuriranja nedostaje.</string>
     <string name="updates_empty_download_body">Prazno tijelo preuzimanja</string>
     <string name="updates_github_api_error">Pogreška GitHub releases API-ja: %1$d</string>
-    <string name="updates_no_channel_release">Nijedno ažuriranje još nije objavljeno.</string>
     <string name="updates_channel_title">Kanal ažuriranja</string>
     <string name="updates_channel_description">Odaberite vrstu ažuriranja aplikacije koju želite primati</string>
     <string name="updates_channel_stable">Stabilna verzija</string>
@@ -2303,7 +2148,6 @@
     <string name="updates_channel_stable_description">Namijenjeno za svakodnevnu upotrebu.</string>
     <string name="updates_channel_beta_description">Rana ažuriranja koja mogu sadržavati pogreške, kvariti značajke ili se ponašati neočekivano.</string>
     <string name="updates_waiting_for_stable">Primit ćete sljedeće stabilno izdanje kada postane dostupno</string>
-    <string name="updates_release_missing_title">Izdanje nema oznaku ili naziv</string>
     <!-- Prikaz datuma emitiranja u Nastavi gledati -->
     <string name="cw_airs_date">Prikazuje se %1$s</string>
     <string name="cw_airs_today">Prikazuje se danas</string>
@@ -2312,14 +2156,6 @@
         <item quantity="one">Prikazuje se za %1$d dan</item>
         <item quantity="few">Prikazuje se za %1$d dana</item>
         <item quantity="other">Prikazuje se za %1$d dana</item>
-    </plurals>
-    <string name="cw_airs_date_short">%1$s</string>
-    <string name="cw_airs_today_short">Danas</string>
-    <string name="cw_airs_tomorrow_short">Sutra</string>
-    <plurals name="cw_airs_in_days_short">
-        <item quantity="one">Za %1$d dan</item>
-        <item quantity="few">Za %1$d dana</item>
-        <item quantity="other">Za %1$d dana</item>
     </plurals>
     <string name="cw_new_episode">Nova epizoda</string>
     <string name="cw_new_season">Nova sezona</string>
@@ -2356,10 +2192,7 @@
     <string name="settings_p2p_clear_cache_done">Očišćeno %1$s neaktivnih torrent podataka</string>
     <string name="settings_p2p_clear_cache_failed">Nije uspjelo čišćenje torrent predmemorije</string>
     <string name="player_torrent_peer_info">%1$d seedera · %2$d peera</string>
-    <string name="player_torrent_buffered_status">%1$s u međuspremniku · %2$s · %3$s</string>
-    <string name="player_torrent_status">%1$s · %2$s</string>
     <string name="player_torrent_stats">%1$d peera · %2$d seedera · %3$d%%</string>
-    <string name="player_torrent_connecting_peers">Povezivanje s korisnicima…</string>
     <string name="player_torrent_starting_engine">Pokretanje P2P pogona…</string>
     <string name="player_torrent_fetching_metadata">Dohvaćanje torrent metapodataka…</string>
     <string name="player_torrent_preparing_stream">Priprema torrent streama…</string>
@@ -2405,7 +2238,6 @@
     <string name="layout_ratings_hide_unwatched">Sakrij nepogledano</string>
     <string name="settings_playback_legacy_layout">Klasični izgled</string>
     <string name="settings_playback_legacy_layout_description">Koristi izvorne kontrole reproduktora.</string>
-    <string name="compose_player_episode_code">S%1$d E%2$d</string>
     <string name="compose_player_more_actions">Više kontrola</string>
     <string name="compose_player_fewer_actions">Manje kontrola</string>
     <string name="compose_player_speed">Brzina reprodukcije</string>

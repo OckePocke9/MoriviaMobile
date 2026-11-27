@@ -5,7 +5,6 @@
     <string name="party_start_action">Έναρξη πάρτι προβολής</string>
     <string name="party_sign_in_required">Συνδεθείτε στον λογαριασμό σας Morivia για να χρησιμοποιήσετε τα πάρτι προβολής.</string>
     <string name="party_unavailable">Τα πάρτι προβολής δεν είναι διαθέσιμα αυτή τη στιγμή.</string>
-    <string name="party_experimental">Τα πάρτι προβολής είναι πειραματικά και ενδέχεται να μη λειτουργήσουν όπως αναμένεται.</string>
     <string name="party_code_label">Κωδικός πάρτι</string>
     <string name="party_copy_invite">Αντιγραφή πρόσκλησης</string>
     <string name="party_invite_copied">Η πρόσκληση αντιγράφηκε</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">Αυτό το πάρτι προβολής έχει ολοκληρωθεί.</string>
     <string name="party_error_rate_limited">Πολλές προσπάθειες. Δοκιμάστε ξανά σε λίγα λεπτά.</string>
     <string name="party_error_network">Δεν ήταν δυνατή η πρόσβαση στο πάρτι προβολής. Ελέγξτε τη σύνδεσή σας.</string>
-    <string name="party_settings_description">Συμμετέχετε με φίλους χρησιμοποιώντας έναν κωδικό πάρτι</string>
     <string name="party_source">Πηγή του πάρτι</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Μόνο εγώ μπορώ να ελέγχω την αναπαραγωγή</string>

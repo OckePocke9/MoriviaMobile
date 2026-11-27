@@ -18,7 +18,6 @@
     <string name="settings_playback_page_p2p_description">Torrent பிளேபேக், சுயவிவரம் மற்றும் cache</string>
     <string name="settings_appearance_description">தீம்கள், பயன்பாட்டு ஐகான் மற்றும் மொழி</string>
     <string name="settings_appearance_title">தோற்றம்</string>
-    <string name="subtitle_appearance">தோற்றம்</string>
     <string name="subtitle_preview">முன்னோட்டம்</string>
     <string name="subtitle_preview_text">ஒவ்வொரு கதையும் சிறிய ஆர்வத்துடன் தொடங்குகிறது.</string>
     <string name="subtitle_appearance_hint">உரை வசன வரிகளுக்கு இது பொருந்தும். பாணியமைக்கப்பட்ட ASS மற்றும் பட வசனங்கள் அவற்றின் அசல் தோற்றத்தைத் தக்கவைக்கும்.</string>

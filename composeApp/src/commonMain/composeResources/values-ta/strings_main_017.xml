@@ -19,8 +19,6 @@
     <string name="meta_section_trailers_description">டிரெய்லர் வரிசை மற்றும் பிளேபேக் குறுக்குவழிகள்.</string>
     <string name="network_back_online">மீண்டும் இணையத்தில்</string>
     <string name="network_cannot_reach_servers">சேவையகங்களை அணுக முடியவில்லை</string>
-    <string name="network_error_empty_response_body">பதில் உள்ளடக்கம் காலியாக உள்ளது</string>
-    <string name="network_error_request_failed_http">HTTP %1$d காரணமாக கோரிக்கை தோல்வியடைந்தது</string>
     <string name="network_no_internet_connection">இணைய இணைப்பு இல்லை</string>
     <string name="person_age">(வயது %1$d)</string>
     <string name="person_born">பிறந்தது %1$s%2$s</string>
@@ -86,9 +84,6 @@
     <string name="streams_empty_load_failed_title">ஸ்ட்ரீம்களை ஏற்ற முடியவில்லை</string>
     <string name="playback_unavailable">பிளேபேக் கிடைக்கவில்லை</string>
     <string name="playback_unavailable_message">உங்கள் தற்போதைய அமைப்பில் இந்தத் தலைப்பை இயக்க முடியாது.</string>
-    <string name="streams_empty_no_addons_message">இந்தத் தலைப்பிற்கான ஸ்ட்ரீம்களை ஏற்ற முதலில் ஒரு துணைநிரலை நிறுவவும்.</string>
-    <string name="streams_empty_no_stream_addon_message">இந்த வகை தலைப்பிற்கான ஸ்ட்ரீம்களை உங்கள் நிறுவப்பட்ட துணைநிரல்கள் வழங்கவில்லை.</string>
-    <string name="streams_empty_no_stream_addon_title">ஸ்ட்ரீம் துணைநிரல் இல்லை</string>
     <string name="streams_empty_no_streams_message">இந்தத் தலைப்பிற்காக நிறுவப்பட்ட துணைநிரல்கள் எதுவும் ஸ்ட்ரீம்களை வழங்கவில்லை.</string>
     <string name="streams_episode_badge">சீ.%1$d எபி.%2$d</string>
     <string name="streams_episode_fallback_title">எபிசோடு</string>

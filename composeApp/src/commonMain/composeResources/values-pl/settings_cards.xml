@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Oglądajcie razem w synchronizacji i czatuj ze znajomymi</string>
     <string name="settings_appearance_card_description">Kolor motywu, ikona aplikacji, język i układ</string>
     <string name="settings_theme_card_title">Motyw</string>
-    <string name="profile_initial_colour">Kolor inicjału</string>
-    <string name="profile_background_colour">Kolor tła</string>
     <string name="profile_background_black">Czarny</string>
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_playback_subtitle_outline_color">வெளிக்கோட்டின் நிறம்</string>
-    <string name="settings_playback_subtitle_outline_description">வசன வரி எழுத்துகளைச் சுற்றி ஓரக்கோடு வரையவும்.</string>
     <string name="settings_playback_subtitle_show_preferred_only">விருப்ப மொழிகளை மட்டும் காட்டு</string>
     <string name="settings_playback_subtitle_show_preferred_only_description">உங்கள் விருப்பமான வசன மொழிகளுடன் பொருந்தும் வசன வரிகளை மட்டும் காட்டவும்.</string>
     <string name="settings_playback_subtitle_size">வசன வரி அளவு</string>
@@ -31,7 +30,6 @@
     <string name="settings_playback_stream_selection_mode_regex_description">உங்கள் regex வடிவத்துடன் பொருந்தும் முதல் ஆதாரத்தை இயக்கவும்.</string>
     <string name="settings_playback_stream_timeout">ஸ்ட்ரீம் தேர்வு காலவரம்பு</string>
     <string name="settings_playback_stream_timeout_description">தேர்ந்தெடுப்பதற்கு முன் துணைநிரல்களுக்காகக் காத்திருக்கும் நேரம்.</string>
-    <string name="settings_playback_threshold_minutes">நிமிட வரம்பு</string>
     <string name="settings_playback_threshold_mode">அடுத்த எபிசோடு வரம்பு முறை</string>
     <string name="settings_playback_threshold_mode_minutes_before_end">முடிவிற்கு முன் நிமிடங்கள்</string>
     <string name="settings_playback_threshold_mode_percentage">சதவீதம்</string>

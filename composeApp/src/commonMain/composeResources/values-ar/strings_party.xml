@@ -6,7 +6,6 @@
     <string name="party_start_action">بدء حفلة مشاهدة</string>
     <string name="party_sign_in_required">سجّل الدخول إلى حسابك في Morivia لاستخدام حفلات المشاهدة.</string>
     <string name="party_unavailable">حفلات المشاهدة غير متاحة حاليًا.</string>
-    <string name="party_experimental">حفلات المشاهدة تجريبية وقد لا تعمل كما هو متوقع.</string>
     <string name="party_code_label">رمز الحفلة</string>
     <string name="party_copy_invite">نسخ الدعوة</string>
     <string name="party_invite_copied">تم نسخ الدعوة</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">انتهت حفلة المشاهدة هذه.</string>
     <string name="party_error_rate_limited">محاولات كثيرة جدًا. حاول مرة أخرى بعد بضع دقائق.</string>
     <string name="party_error_network">تعذر الوصول إلى حفلة المشاهدة. تحقق من اتصالك.</string>
-    <string name="party_settings_description">انضم إلى أصدقائك برمز الحفلة</string>
     <string name="party_source">مصدر الحفلة</string>
     <string name="party_episode_format">م%1$d ح%2$d</string>
     <string name="party_host_only_title">أنا فقط أتحكم في التشغيل</string>

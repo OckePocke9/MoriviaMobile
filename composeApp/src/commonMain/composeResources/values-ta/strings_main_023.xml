@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="collections_editor_tmdb_discover_title">TMDB கண்டறிதல்</string>
-    <string name="collections_editor_tmdb_invalid_id_or_url">சரியான TMDB ID அல்லது URL-ஐ உள்ளிடவும்.</string>
     <string name="collections_editor_tmdb_list_title_format">TMDB பட்டியல் %1$s</string>
     <string name="collections_editor_tmdb_network_title_format">TMDB நெட்வொர்க் %1$s</string>
     <string name="collections_editor_tmdb_person_title_format">TMDB நபர் %1$s</string>
     <string name="collections_editor_tmdb_production_title_format">TMDB தயாரிப்பு நிறுவனம் %1$s</string>
-    <string name="collections_editor_tmdb_source_load_failed">TMDB ஆதாரத்தை ஏற்ற முடியவில்லை</string>
     <string name="collections_editor_trakt_list_id_format">ID %1$s</string>
     <string name="collections_tmdb_collection_not_found">TMDB தொகுப்பு கிடைக்கவில்லை</string>
     <string name="collections_tmdb_company_not_found">TMDB நிறுவனம் கிடைக்கவில்லை</string>
@@ -61,19 +58,13 @@
     <string name="plugins_empty_repos_title">இதுவரை செருகுநிரல் repository-கள் நிறுவப்படவில்லை.</string>
     <string name="plugins_enable_globally_desc">ஸ்ட்ரீம் கண்டறிதலின்போது செருகுநிரல் வழங்குநர்களைப் பயன்படுத்தவும்.</string>
     <string name="plugins_enable_globally_title">செருகுநிரல் வழங்குநர்களை முழுமையாக இயக்கு</string>
-    <string name="plugins_error_already_installed">இந்தச் செருகுநிரல் repository ஏற்கனவே நிறுவப்பட்டுள்ளது.</string>
     <string name="plugins_error_enter_repo_url">செருகுநிரல் repository URL-ஐ உள்ளிடவும்.</string>
     <string name="plugins_error_enter_valid_url">சரியான செருகுநிரல் URL-ஐ உள்ளிடவும்.</string>
-    <string name="plugins_error_install_failed">செருகுநிரல் repository-ஐ நிறுவ முடியவில்லை</string>
     <string name="plugins_error_provider_not_found">வழங்குநர் கிடைக்கவில்லை</string>
-    <string name="plugins_error_refresh_failed">repository-ஐப் புதுப்பிக்க முடியவில்லை</string>
     <string name="plugins_error_unavailable_build">இந்த build-இல் செருகுநிரல்கள் கிடைக்கவில்லை.</string>
     <string name="plugins_group_by_repo_desc">Streams பகுதியில் ஒவ்வொரு ஆதாரத்திற்குப் பதிலாக repository ஒன்றுக்கு ஒரு வழங்குநரைக் காட்டவும்.</string>
     <string name="plugins_group_by_repo_title">repository அடிப்படையில் செருகுநிரல் வழங்குநர்களைக் குழுவாக்கு</string>
     <string name="plugins_input_manifest_placeholder">செருகுநிரல் manifest URL</string>
-    <string name="plugins_manifest_error_name_missing">Manifest பெயர் இல்லை.</string>
-    <string name="plugins_manifest_error_no_providers">Manifest-இல் வழங்குநர்கள் இல்லை.</string>
-    <string name="plugins_manifest_error_version_missing">Manifest பதிப்பு இல்லை.</string>
     <string name="plugins_manifest_name_missing">Manifest பெயர் இல்லை.</string>
     <string name="plugins_manifest_no_providers">Manifest-இல் வழங்குநர்கள் இல்லை.</string>
     <string name="plugins_manifest_version_missing">Manifest பதிப்பு இல்லை.</string>

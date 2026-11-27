@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Ny</string>
     <string name="morivia_off">Av</string>
     <string name="morivia_hl_title">Hjem og oppsett</string>
-    <string name="morivia_hl_description">Toppbanner, plakater, Fortsett å se og rader</string>
     <string name="morivia_hl_section_hero">TOPPBANNER</string>
     <string name="morivia_hl_hero_source">Kilde for toppbanner</string>
     <string name="morivia_hl_hero_source_sub">Velg katalogene for toppbanneret</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Bruk initialer</string>
     <string name="profile_use_initials_description">Bruker reservefargen over</string>
-    <string name="profile_fallback_colour">Reservefarge</string>
     <string name="morivia_add_addon">Legg til tillegg</string>
     <string name="morivia_refresh">Oppdater</string>
     <string name="profile_confirm_pin">Bekreft PIN-kode</string>
     <string name="profile_pin_mismatch">PIN-kodene samsvarer ikke. Prøv igjen.</string>
-    <string name="morivia_appearance_current_theme">Gjeldende tema</string>
     <string name="morivia_theme_reset_original">Tilbakestill til Original</string>
     <string name="morivia_theme_custom">Eget tema</string>
     <string name="morivia_theme_show_more">Vis flere temaer</string>
     <string name="morivia_theme_show_fewer">Vis færre temaer</string>
-    <string name="morivia_appearance_match_icon">Tilpass appikonet til temaet</string>
-    <string name="morivia_appearance_match_icon_description">Bruk fargen til gjeldende tema på appikonet.</string>
     <string name="morivia_appearance_preview_title">FORHÅNDSVISNING AV TEMA</string>
     <string name="morivia_appearance_preview_icon">Appikon · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst og bakgrunn</string>
@@ -244,7 +239,6 @@
     <string name="party_error_ended">Denne seefesten er avsluttet.</string>
     <string name="party_error_rate_limited">For mange forsøk. Prøv igjen om noen minutter.</string>
     <string name="party_error_network">Kunne ikke nå seefesten. Sjekk tilkoblingen.</string>
-    <string name="party_settings_description">Bli med venner med en festkode</string>
     <string name="party_source">Festens kilde</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Bare jeg kan styre avspillingen</string>
@@ -498,7 +492,6 @@
     <string name="settings_playback_page_p2p_description">Torrentavspilling, profil og buffer</string>
     <string name="settings_appearance_description">Temaer, appikon og språk</string>
     <string name="settings_appearance_title">Utseende</string>
-    <string name="subtitle_appearance">Utseende</string>
     <string name="subtitle_preview">Forhåndsvisning</string>
     <string name="subtitle_preview_text">Hver historie begynner med litt nysgjerrighet.</string>
     <string name="subtitle_appearance_hint">Gjelder tekstundertekster. Formaterte ASS- og bildeundertekster beholder sitt opprinnelige utseende.</string>

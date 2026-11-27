@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">نیا</string>
     <string name="morivia_off">بند</string>
     <string name="morivia_hl_title">ہوم اور ترتیب</string>
-    <string name="morivia_hl_description">ہیرو، پوسٹرز، دیکھنا جاری رکھیں اور قطاریں</string>
     <string name="morivia_hl_section_hero">ہیرو</string>
     <string name="morivia_hl_hero_source">ہیرو کا ماخذ</string>
     <string name="morivia_hl_hero_source_sub">ہیرو کے لیے کیٹلاگ منتخب کریں</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">اصل</string>
     <string name="profile_use_initials">ابتدائی حروف استعمال کریں</string>
     <string name="profile_use_initials_description">اوپر والا متبادل رنگ استعمال کرتا ہے</string>
-    <string name="profile_fallback_colour">متبادل رنگ</string>
     <string name="morivia_add_addon">ایڈ آن شامل کریں</string>
     <string name="morivia_refresh">تازہ کریں</string>
     <string name="profile_confirm_pin">PIN کی تصدیق کریں</string>
     <string name="profile_pin_mismatch">PIN مماثل نہیں ہیں۔ دوبارہ کوشش کریں۔</string>
-    <string name="morivia_appearance_current_theme">موجودہ تھیم</string>
     <string name="morivia_theme_reset_original">اصل پر ری سیٹ کریں</string>
     <string name="morivia_theme_custom">حسب ضرورت تھیم</string>
     <string name="morivia_theme_show_more">مزید تھیمز دکھائیں</string>
     <string name="morivia_theme_show_fewer">کم تھیمز دکھائیں</string>
-    <string name="morivia_appearance_match_icon">ایپ آئیکن کو تھیم سے ملائیں</string>
-    <string name="morivia_appearance_match_icon_description">اپنے ایپ آئیکن کے لیے موجودہ تھیم کا رنگ استعمال کریں۔</string>
     <string name="morivia_appearance_preview_title">تھیم کا پیش منظر</string>
     <string name="morivia_appearance_preview_icon">ایپ آئیکن · %1$s</string>
     <string name="morivia_appearance_preview_text">متن اور پس منظر</string>
@@ -222,7 +217,6 @@
     <string name="party_error_ended">یہ واچ پارٹی ختم ہو چکی ہے۔</string>
     <string name="party_error_rate_limited">بہت زیادہ کوششیں۔ چند منٹ بعد دوبارہ کوشش کریں۔</string>
     <string name="party_error_network">واچ پارٹی تک نہیں پہنچ سکے۔ اپنا کنکشن چیک کریں۔</string>
-    <string name="party_settings_description">پارٹی کوڈ سے دوستوں کے ساتھ شامل ہوں</string>
     <string name="party_source">پارٹی کا ماخذ</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">صرف میں پلے بیک کنٹرول کر سکتا ہوں</string>
@@ -439,7 +433,6 @@
     <string name="settings_playback_page_p2p_description">ٹورینٹ پلے بیک، پروفائل اور کیش</string>
     <string name="settings_appearance_description">تھیمز، ایپ آئیکن اور زبان</string>
     <string name="settings_appearance_title">ظاہری شکل</string>
-    <string name="subtitle_appearance">ظاہری شکل</string>
     <string name="subtitle_preview">پیش منظر</string>
     <string name="subtitle_preview_text">ہر کہانی تھوڑے سے تجسس سے شروع ہوتی ہے۔</string>
     <string name="subtitle_appearance_hint">متنی سب ٹائٹلز پر لاگو ہوتا ہے۔ اسٹائل والے ASS اور تصویری سب ٹائٹلز اپنی اصل شکل برقرار رکھتے ہیں۔</string>

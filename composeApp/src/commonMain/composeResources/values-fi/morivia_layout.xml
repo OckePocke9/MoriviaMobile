@@ -3,20 +3,9 @@
     <string name="morivia_show_all">Näytä kaikki</string>
     <string name="morivia_poster_new">Uusi</string>
     <string name="morivia_off">Pois</string>
-    <string name="morivia_to_watch_after_movies">%1$s-elokuvia katsottavaksi %2$s jälkeen</string>
-    <string name="morivia_to_watch_after_shows">%1$s-sarjoja katsottavaksi %2$s jälkeen</string>
 
     <string name="morivia_hl_title">Etusivu ja asettelu</string>
-    <string name="morivia_hl_description">Hero, julisteet, Jatka katsomista ja rivit</string>
     <string name="morivia_hl_section_hero">HERO</string>
-    <string name="morivia_hl_hero_layout">Hero-tila</string>
-    <string name="morivia_hl_hero_layout_sub">Miten hero vaihtaa nimikkeitä</string>
-    <string name="morivia_hl_hero_rolling">Vaihtuva</string>
-    <string name="morivia_hl_hero_rolling_sub">Vaihtaa seuraavaan 8 sekunnin välein, traileria toistettaessa 45 sekunnin välein.</string>
-    <string name="morivia_hl_hero_pinned">Kiinteä</string>
-    <string name="morivia_hl_hero_pinned_sub">Pysyy nimikkeessä, kunnes pyyhkäiset.</string>
-    <string name="morivia_hl_hero_hybrid">Hybridi</string>
-    <string name="morivia_hl_hero_hybrid_sub">Vaihtuu ensimmäiseen pyyhkäisyyn asti ja pysyy sitten paikallaan.</string>
     <string name="morivia_hl_hero_source">Heron lähde</string>
     <string name="morivia_hl_hero_source_sub">Valitse heron katalogit</string>
     <string name="morivia_hl_hero_video">Toista trailerit herossa</string>
@@ -50,8 +39,6 @@
     <string name="morivia_hl_countdown">Seuraavan jakson laskuri</string>
     <string name="morivia_hl_countdown_sub">Näytä, milloin seuraava jakso esitetään</string>
     <string name="morivia_hl_section_rows">RIVIT</string>
-    <string name="morivia_hl_to_watch_after">\"Katso seuraavaksi\" -rivit</string>
-    <string name="morivia_hl_to_watch_after_sub">Näyttää ehdotuksia viimeksi loppuun katsomiesi nimikkeiden perusteella</string>
     <string name="morivia_hl_home_rows">Etusivun rivit</string>
     <string name="morivia_hl_home_rows_sub">Järjestä, nimeä uudelleen tai piilota katalogirivejä</string>
     <string name="morivia_hl_collections">Kokoelmat</string>

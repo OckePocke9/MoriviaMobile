@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Abbina il tema all’icona dell’app</string>
-    <string name="morivia_appearance_match_theme_description">Usa il tema che corrisponde all’icona dell’app scelta.</string>
     <string name="settings_tracking_ratings">Valutazioni</string>
     <string name="settings_tracking_ratings_description">Dove vengono salvate e mostrate le tue valutazioni</string>
     <string name="settings_tracking_ratings_picker_subtitle">Valuta i titoli dalla loro pagina dei dettagli. Le valutazioni vengono salvate nel servizio scelto e mostrate da lì.</string>

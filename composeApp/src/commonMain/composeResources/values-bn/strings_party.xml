@@ -6,7 +6,6 @@
     <string name="party_start_action">ওয়াচ পার্টি শুরু করুন</string>
     <string name="party_sign_in_required">ওয়াচ পার্টি ব্যবহার করতে আপনার Morivia অ্যাকাউন্টে সাইন ইন করুন।</string>
     <string name="party_unavailable">ওয়াচ পার্টি এই মুহূর্তে উপলব্ধ নেই।</string>
-    <string name="party_experimental">ওয়াচ পার্টি পরীক্ষামূলক পর্যায়ে রয়েছে এবং প্রত্যাশিতভাবে কাজ নাও করতে পারে।</string>
     <string name="party_code_label">পার্টি কোড</string>
     <string name="party_copy_invite">আমন্ত্রণ কপি করুন</string>
     <string name="party_invite_copied">আমন্ত্রণ কপি করা হয়েছে</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">এই ওয়াচ পার্টিটি শেষ হয়ে গেছে।</string>
     <string name="party_error_rate_limited">অতিরিক্ত সংখ্যক প্রচেষ্টা। কয়েক মিনিট পর আবার চেষ্টা করুন।</string>
     <string name="party_error_network">ওয়াচ পার্টির সাথে সংযোগ করা যায়নি। আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন।</string>
-    <string name="party_settings_description">পার্টি কোড দিয়ে বন্ধুদের সাথে যোগ দিন</string>
     <string name="party_source">পার্টির সোর্স</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">কেবল আমি প্লেব্যাক নিয়ন্ত্রণ করতে পারি</string>

@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Ново</string>
     <string name="morivia_off">Изкл.</string>
     <string name="morivia_hl_title">Начало и оформление</string>
-    <string name="morivia_hl_description">Банер, плакати, Продължи гледането и редове</string>
     <string name="morivia_hl_section_hero">БАНЕР</string>
     <string name="morivia_hl_hero_source">Източник на банера</string>
     <string name="morivia_hl_hero_source_sub">Изберете каталозите за банера</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Оригинална</string>
     <string name="profile_use_initials">Използване на инициали</string>
     <string name="profile_use_initials_description">Използва резервния цвят по-горе</string>
-    <string name="profile_fallback_colour">Резервен цвят</string>
     <string name="morivia_add_addon">Добавяне на добавка</string>
     <string name="morivia_refresh">Опресняване</string>
     <string name="profile_confirm_pin">Потвърдете ПИН</string>
     <string name="profile_pin_mismatch">ПИН кодовете не съвпадат. Опитайте отново.</string>
-    <string name="morivia_appearance_current_theme">Текуща тема</string>
     <string name="morivia_theme_reset_original">Връщане към Оригинална</string>
     <string name="morivia_theme_custom">Персонализирана тема</string>
     <string name="morivia_theme_show_more">Още теми</string>
     <string name="morivia_theme_show_fewer">По-малко теми</string>
-    <string name="morivia_appearance_match_icon">Иконата на приложението да следва темата</string>
-    <string name="morivia_appearance_match_icon_description">Използване на цвета на текущата тема за иконата на приложението.</string>
     <string name="morivia_appearance_preview_title">ПРЕГЛЕД НА ТЕМАТА</string>
     <string name="morivia_appearance_preview_icon">Икона на приложението · %1$s</string>
     <string name="morivia_appearance_preview_text">Текст и фон</string>

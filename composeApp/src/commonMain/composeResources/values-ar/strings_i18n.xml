@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">جديد</string>
     <string name="morivia_off">إيقاف</string>
     <string name="morivia_hl_title">الرئيسية والتخطيط</string>
-    <string name="morivia_hl_description">الواجهة، الملصقات، متابعة المشاهدة والصفوف</string>
     <string name="morivia_hl_section_hero">الواجهة</string>
     <string name="morivia_hl_hero_source">مصدر الواجهة</string>
     <string name="morivia_hl_hero_source_sub">اختر الكتالوجات للواجهة</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">الأصلي</string>
     <string name="profile_use_initials">استخدام الأحرف الأولى</string>
     <string name="profile_use_initials_description">يستخدم اللون الاحتياطي أعلاه</string>
-    <string name="profile_fallback_colour">اللون الاحتياطي</string>
     <string name="morivia_add_addon">إضافة إضافة</string>
     <string name="morivia_refresh">تحديث</string>
     <string name="profile_confirm_pin">تأكيد رمز PIN</string>
     <string name="profile_pin_mismatch">رموز PIN غير متطابقة. حاول مرة أخرى.</string>
-    <string name="morivia_appearance_current_theme">السمة الحالية</string>
     <string name="morivia_theme_reset_original">إعادة التعيين إلى الأصلي</string>
     <string name="morivia_theme_custom">سمة مخصصة</string>
     <string name="morivia_theme_show_more">عرض سمات أكثر</string>
     <string name="morivia_theme_show_fewer">عرض سمات أقل</string>
-    <string name="morivia_appearance_match_icon">مطابقة أيقونة التطبيق مع السمة</string>
-    <string name="morivia_appearance_match_icon_description">استخدام لون السمة الحالية لأيقونة التطبيق.</string>
     <string name="morivia_appearance_preview_title">معاينة السمة</string>
     <string name="morivia_appearance_preview_icon">أيقونة التطبيق · %1$s</string>
     <string name="morivia_appearance_preview_text">النص والخلفية</string>

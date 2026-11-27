@@ -5,7 +5,6 @@
     <string name="party_start_action">Iniciar sessão em grupo</string>
     <string name="party_sign_in_required">Entre na sua conta Morivia para usar as sessões em grupo.</string>
     <string name="party_unavailable">As sessões em grupo não estão disponíveis no momento.</string>
-    <string name="party_experimental">As sessões em grupo são experimentais e podem não funcionar como esperado.</string>
     <string name="party_code_label">Código da sessão</string>
     <string name="party_copy_invite">Copiar convite</string>
     <string name="party_invite_copied">Convite copiado</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">Esta sessão em grupo foi encerrada.</string>
     <string name="party_error_rate_limited">Muitas tentativas. Tente novamente em alguns minutos.</string>
     <string name="party_error_network">Não foi possível conectar à sessão em grupo. Verifique sua conexão.</string>
-    <string name="party_settings_description">Junte-se a amigos com um código da sessão</string>
     <string name="party_source">Fonte da sessão</string>
     <string name="party_episode_format">T%1$d E%2$d</string>
     <string name="party_host_only_title">Apenas eu posso controlar a reprodução</string>

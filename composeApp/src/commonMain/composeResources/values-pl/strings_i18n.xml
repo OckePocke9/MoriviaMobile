@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nowość</string>
     <string name="morivia_off">Wył.</string>
     <string name="morivia_hl_title">Strona główna i układ</string>
-    <string name="morivia_hl_description">Baner, plakaty, Kontynuuj oglądanie i rzędy</string>
     <string name="morivia_hl_section_hero">BANER</string>
     <string name="morivia_hl_hero_source">Źródło banera</string>
     <string name="morivia_hl_hero_source_sub">Wybierz katalogi dla banera</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Oryginalny</string>
     <string name="profile_use_initials">Użyj inicjałów</string>
     <string name="profile_use_initials_description">Używa koloru zastępczego powyżej</string>
-    <string name="profile_fallback_colour">Kolor zastępczy</string>
     <string name="morivia_add_addon">Dodaj dodatek</string>
     <string name="morivia_refresh">Odśwież</string>
     <string name="profile_confirm_pin">Potwierdź PIN</string>
     <string name="profile_pin_mismatch">Kody PIN nie są zgodne. Spróbuj ponownie.</string>
-    <string name="morivia_appearance_current_theme">Bieżący motyw</string>
     <string name="morivia_theme_reset_original">Przywróć Oryginalny</string>
     <string name="morivia_theme_custom">Motyw własny</string>
     <string name="morivia_theme_show_more">Pokaż więcej motywów</string>
     <string name="morivia_theme_show_fewer">Pokaż mniej motywów</string>
-    <string name="morivia_appearance_match_icon">Dopasuj ikonę aplikacji do motywu</string>
-    <string name="morivia_appearance_match_icon_description">Użyj koloru bieżącego motywu dla ikony aplikacji.</string>
     <string name="morivia_appearance_preview_title">PODGLĄD MOTYWU</string>
     <string name="morivia_appearance_preview_icon">Ikona aplikacji · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst i tło</string>

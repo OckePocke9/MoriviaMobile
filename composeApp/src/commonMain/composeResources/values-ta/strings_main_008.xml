@@ -96,7 +96,6 @@
     <string name="settings_custom_poster_description">வெளிப்புற சேவையிலிருந்து போஸ்டர் URL வடிவத்தை வழங்கவும். குறிப்பிட்ட தலைப்புக்கு placeholder மதிப்பு இல்லையெனில், அசல் போஸ்டர் பயன்படுத்தப்படும்.</string>
     <string name="settings_custom_poster_placeholder">https://example.com/poster?id={id}&amp;id_type={id_type}&amp;type={type}</string>
     <string name="settings_custom_poster_active">தனிப்பயன் போஸ்டர் ஆதாரம் செயலில் உள்ளது</string>
-    <string name="settings_custom_poster_none">வடிவம் அமைக்கப்படவில்லை</string>
     <string name="settings_custom_poster_save">சேமி</string>
     <string name="settings_custom_poster_clear">அழி</string>
 </resources>

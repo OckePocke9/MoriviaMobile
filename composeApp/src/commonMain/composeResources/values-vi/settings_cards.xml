@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Cùng xem đồng bộ và trò chuyện với bạn bè</string>
     <string name="settings_appearance_card_description">Màu chủ đề, biểu tượng ứng dụng, ngôn ngữ và bố cục</string>
     <string name="settings_theme_card_title">Chủ đề</string>
-    <string name="profile_initial_colour">Màu chữ cái đầu</string>
-    <string name="profile_background_colour">Màu nền</string>
     <string name="profile_background_black">Đen</string>
 </resources>

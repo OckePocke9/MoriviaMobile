@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">থিম অ্যাপ আইকনের সাথে মেলান</string>
-    <string name="morivia_appearance_match_theme_description">বেছে নেওয়া অ্যাপ আইকনের সাথে মেলে এমন থিম ব্যবহার করুন।</string>
     <string name="settings_tracking_ratings">রেটিং</string>
     <string name="settings_tracking_ratings_description">আপনার রেটিং কোথায় সংরক্ষিত হয় এবং কোথা থেকে দেখানো হয়</string>
     <string name="settings_tracking_ratings_picker_subtitle">বিস্তারিত পেজ থেকে শিরোনামে রেটিং দিন। আপনার রেটিং বেছে নেওয়া পরিষেবায় সংরক্ষিত হয় এবং সেখান থেকে দেখানো হয়।</string>

@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">与好友同步观看并聊天</string>
     <string name="settings_appearance_card_description">主题颜色、应用图标、语言和布局</string>
     <string name="settings_theme_card_title">主题</string>
-    <string name="profile_initial_colour">首字母颜色</string>
-    <string name="profile_background_colour">背景颜色</string>
     <string name="profile_background_black">黑色</string>
 </resources>

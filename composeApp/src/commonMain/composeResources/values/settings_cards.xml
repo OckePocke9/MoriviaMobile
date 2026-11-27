@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Watch together in sync and chat with friends</string>
     <string name="settings_appearance_card_description">Theme colour, app icon, language and layout</string>
     <string name="settings_theme_card_title">Theme</string>
-    <string name="profile_initial_colour">Initial colour</string>
-    <string name="profile_background_colour">Background colour</string>
     <string name="profile_background_black">Black</string>
 </resources>

@@ -5,7 +5,6 @@
     <string name="party_start_action">Start watch party</string>
     <string name="party_sign_in_required">Sign in to your Morivia account to use watch parties.</string>
     <string name="party_unavailable">Watch parties aren't available right now.</string>
-    <string name="party_experimental">Watch parties are experimental and may not work as expected.</string>
     <string name="party_code_label">Party code</string>
     <string name="party_copy_invite">Copy invite</string>
     <string name="party_invite_copied">Invite copied</string>
@@ -48,7 +47,6 @@
     <string name="party_error_ended">This watch party has ended.</string>
     <string name="party_error_rate_limited">Too many attempts. Try again in a few minutes.</string>
     <string name="party_error_network">Couldn't reach the watch party. Check your connection.</string>
-    <string name="party_settings_description">Join friends with a party code</string>
     <string name="party_source">Party's source</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Only I can control playback</string>

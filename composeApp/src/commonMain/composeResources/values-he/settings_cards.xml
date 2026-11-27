@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">צפו יחד בסנכרון ושוחחו עם חברים</string>
     <string name="settings_appearance_card_description">צבע ערכת הנושא, סמל האפליקציה, שפה ופריסה</string>
     <string name="settings_theme_card_title">ערכת נושא</string>
-    <string name="profile_initial_colour">צבע האות הראשונה</string>
-    <string name="profile_background_colour">צבע רקע</string>
     <string name="profile_background_black">שחור</string>
 </resources>

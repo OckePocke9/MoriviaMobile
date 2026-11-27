@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">தீமை ஆப் ஐகானுடன் பொருத்து</string>
-    <string name="morivia_appearance_match_theme_description">தேர்ந்தெடுத்த ஆப் ஐகானுக்குப் பொருந்தும் தீமைப் பயன்படுத்து.</string>
     <string name="settings_tracking_ratings">மதிப்பீடுகள்</string>
     <string name="settings_tracking_ratings_description">உங்கள் மதிப்பீடுகள் எங்கே சேமிக்கப்பட்டு எங்கிருந்து காட்டப்படுகின்றன</string>
     <string name="settings_tracking_ratings_picker_subtitle">தலைப்புகளை அவற்றின் விவரப் பக்கத்திலிருந்து மதிப்பிடுங்கள். நீங்கள் தேர்ந்த சேவையில் மதிப்பீடுகள் சேமிக்கப்பட்டு அங்கிருந்து காட்டப்படும்.</string>

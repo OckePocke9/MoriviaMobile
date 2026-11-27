@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">חדש</string>
     <string name="morivia_off">כבוי</string>
     <string name="morivia_hl_title">בית ופריסה</string>
-    <string name="morivia_hl_description">באנר, פוסטרים, המשך צפייה ושורות</string>
     <string name="morivia_hl_section_hero">באנר</string>
     <string name="morivia_hl_hero_source">מקור הבאנר</string>
     <string name="morivia_hl_hero_source_sub">בחירת הקטלוגים לבאנר</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">מקורי</string>
     <string name="profile_use_initials">שימוש בראשי תיבות</string>
     <string name="profile_use_initials_description">משתמש בצבע החלופי שלמעלה</string>
-    <string name="profile_fallback_colour">צבע חלופי</string>
     <string name="morivia_add_addon">הוספת תוסף</string>
     <string name="morivia_refresh">רענון</string>
     <string name="profile_confirm_pin">אישור קוד PIN</string>
     <string name="profile_pin_mismatch">קודי ה-PIN אינם תואמים. נסה שוב.</string>
-    <string name="morivia_appearance_current_theme">ערכת הנושא הנוכחית</string>
     <string name="morivia_theme_reset_original">איפוס למקורי</string>
     <string name="morivia_theme_custom">ערכת נושא מותאמת</string>
     <string name="morivia_theme_show_more">הצג עוד ערכות נושא</string>
     <string name="morivia_theme_show_fewer">הצג פחות ערכות נושא</string>
-    <string name="morivia_appearance_match_icon">התאמת סמל האפליקציה לערכת הנושא</string>
-    <string name="morivia_appearance_match_icon_description">שימוש בצבע ערכת הנושא הנוכחית לסמל האפליקציה.</string>
     <string name="morivia_appearance_preview_title">תצוגה מקדימה של ערכת הנושא</string>
     <string name="morivia_appearance_preview_icon">סמל האפליקציה · %1$s</string>
     <string name="morivia_appearance_preview_text">טקסט ורקע</string>

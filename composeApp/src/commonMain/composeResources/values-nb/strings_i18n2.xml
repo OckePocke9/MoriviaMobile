@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Tilpass temaet til appikonet</string>
-    <string name="morivia_appearance_match_theme_description">Bruk temaet som passer til det valgte appikonet.</string>
     <string name="settings_tracking_ratings">Vurderinger</string>
     <string name="settings_tracking_ratings_description">Hvor vurderingene dine lagres og vises fra</string>
     <string name="settings_tracking_ratings_picker_subtitle">Vurder titler fra detaljsiden. Vurderingene lagres i og vises fra tjenesten du velger.</string>

@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Δείτε μαζί συγχρονισμένα και συνομιλήστε με φίλους</string>
     <string name="settings_appearance_card_description">Χρώμα θέματος, εικονίδιο εφαρμογής, γλώσσα και διάταξη</string>
     <string name="settings_theme_card_title">Θέμα</string>
-    <string name="profile_initial_colour">Χρώμα αρχικού</string>
-    <string name="profile_background_colour">Χρώμα φόντου</string>
     <string name="profile_background_black">Μαύρο</string>
 </resources>

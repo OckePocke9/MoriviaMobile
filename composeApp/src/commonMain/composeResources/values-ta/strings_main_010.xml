@@ -37,9 +37,7 @@
     <string name="settings_fusion_badge_preview_empty">இந்த URL-இல் Fusion பாணி பேட்ஜ் படங்கள் இல்லை.</string>
     <string name="settings_fusion_badge_group_title">குழு %1$d</string>
     <string name="settings_fusion_badge_other_group_title">பிற Fusion பேட்ஜ்கள்</string>
-    <string name="settings_debrid_key_valid">API விசை சரிபார்க்கப்பட்டது.</string>
     <string name="settings_debrid_key_invalid">இந்த API விசையைச் சரிபார்க்க முடியவில்லை.</string>
-    <string name="settings_mdb_add_api_key_first">மதிப்பீடுகளை இயக்குவதற்கு முன் கீழே MDBList API விசையைச் சேர்க்கவும்.</string>
     <string name="settings_mdb_api_key_description">MDBList-இலிருந்து மதிப்பீடுகளைப் பெற இது தேவை.</string>
     <string name="settings_mdb_api_key_label">API விசை</string>
     <string name="settings_mdb_api_key_title">API விசை</string>
@@ -54,8 +52,6 @@
     <string name="settings_meta_actions_description">இயக்க மற்றும் சேமிப்பு கட்டுப்பாடுகள்.</string>
     <string name="settings_meta_cast">நடிகர்கள்</string>
     <string name="settings_meta_cast_description">முக்கிய நடிகர்கள் பட்டியல்.</string>
-    <string name="settings_meta_cinematic_background">திரைப்பட பாணிப் பின்னணி</string>
-    <string name="settings_meta_cinematic_background_description">ஸ்ட்ரீம் திரையைப் போன்ற உள்ளடக்கத்திற்குப் பின்னால் மங்கலான பின்னணி.</string>
     <string name="settings_meta_background_mode">பின்னணி முறை</string>
     <string name="settings_meta_background_mode_description">விவரப் பக்கங்களின் பின்னால் படங்கள் எவ்வாறு தோன்ற வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்.</string>
     <string name="settings_meta_poster_transition">போஸ்டர் மாற்றம்</string>

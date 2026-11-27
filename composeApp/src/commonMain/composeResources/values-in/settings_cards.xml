@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Tonton bersama secara sinkron dan mengobrol dengan teman</string>
     <string name="settings_appearance_card_description">Warna tema, ikon aplikasi, bahasa, dan tata letak</string>
     <string name="settings_theme_card_title">Tema</string>
-    <string name="profile_initial_colour">Warna inisial</string>
-    <string name="profile_background_colour">Warna latar</string>
     <string name="profile_background_black">Hitam</string>
 </resources>

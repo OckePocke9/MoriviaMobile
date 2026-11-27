@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Přizpůsobit motiv ikoně aplikace</string>
-    <string name="morivia_appearance_match_theme_description">Použít motiv, který odpovídá vybrané ikoně aplikace.</string>
     <string name="settings_tracking_ratings">Hodnocení</string>
     <string name="settings_tracking_ratings_description">Kam se ukládají a odkud se zobrazují vaše hodnocení</string>
     <string name="settings_tracking_ratings_picker_subtitle">Hodnoťte tituly na jejich stránce s podrobnostmi. Hodnocení se ukládají do vybrané služby a zobrazují se z ní.</string>

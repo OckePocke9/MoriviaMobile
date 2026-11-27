@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nieuw</string>
     <string name="morivia_off">Uit</string>
     <string name="morivia_hl_title">Start en indeling</string>
-    <string name="morivia_hl_description">Hero, posters, Verder kijken en rijen</string>
     <string name="morivia_hl_section_hero">HERO</string>
     <string name="morivia_hl_hero_source">Bron van de hero</string>
     <string name="morivia_hl_hero_source_sub">Kies de catalogi voor de hero</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Origineel</string>
     <string name="profile_use_initials">Initialen gebruiken</string>
     <string name="profile_use_initials_description">Gebruikt de reservekleur hierboven</string>
-    <string name="profile_fallback_colour">Reservekleur</string>
     <string name="morivia_add_addon">Add-on toevoegen</string>
     <string name="morivia_refresh">Vernieuwen</string>
     <string name="profile_confirm_pin">Pincode bevestigen</string>
     <string name="profile_pin_mismatch">De pincodes komen niet overeen. Probeer het opnieuw.</string>
-    <string name="morivia_appearance_current_theme">Huidig thema</string>
     <string name="morivia_theme_reset_original">Terug naar Origineel</string>
     <string name="morivia_theme_custom">Eigen thema</string>
     <string name="morivia_theme_show_more">Meer thema's tonen</string>
     <string name="morivia_theme_show_fewer">Minder thema's tonen</string>
-    <string name="morivia_appearance_match_icon">App-icoon afstemmen op thema</string>
-    <string name="morivia_appearance_match_icon_description">De kleur van het huidige thema gebruiken voor je app-icoon.</string>
     <string name="morivia_appearance_preview_title">THEMAVOORBEELD</string>
     <string name="morivia_appearance_preview_icon">App-icoon · %1$s</string>
     <string name="morivia_appearance_preview_text">Tekst en achtergrond</string>

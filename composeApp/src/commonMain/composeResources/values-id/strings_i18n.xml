@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Baru</string>
     <string name="morivia_off">Mati</string>
     <string name="morivia_hl_title">Beranda &amp; tata letak</string>
-    <string name="morivia_hl_description">Hero, poster, Lanjutkan menonton, dan baris</string>
     <string name="morivia_hl_section_hero">HERO</string>
     <string name="morivia_hl_hero_source">Sumber hero</string>
     <string name="morivia_hl_hero_source_sub">Pilih katalog untuk hero</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Asli</string>
     <string name="profile_use_initials">Gunakan inisial</string>
     <string name="profile_use_initials_description">Menggunakan warna cadangan di atas</string>
-    <string name="profile_fallback_colour">Warna cadangan</string>
     <string name="morivia_add_addon">Tambah add-on</string>
     <string name="morivia_refresh">Segarkan</string>
     <string name="profile_confirm_pin">Konfirmasi PIN</string>
     <string name="profile_pin_mismatch">PIN tidak cocok. Coba lagi.</string>
-    <string name="morivia_appearance_current_theme">Tema saat ini</string>
     <string name="morivia_theme_reset_original">Setel ulang ke Asli</string>
     <string name="morivia_theme_custom">Tema kustom</string>
     <string name="morivia_theme_show_more">Tampilkan lebih banyak tema</string>
     <string name="morivia_theme_show_fewer">Tampilkan lebih sedikit tema</string>
-    <string name="morivia_appearance_match_icon">Samakan ikon aplikasi dengan tema</string>
-    <string name="morivia_appearance_match_icon_description">Gunakan warna tema saat ini untuk ikon aplikasi Anda.</string>
     <string name="morivia_appearance_preview_title">PRATINJAU TEMA</string>
     <string name="morivia_appearance_preview_icon">Ikon aplikasi · %1$s</string>
     <string name="morivia_appearance_preview_text">Teks dan latar belakang</string>
@@ -244,7 +239,6 @@
     <string name="party_error_ended">Nonton bareng ini sudah berakhir.</string>
     <string name="party_error_rate_limited">Terlalu banyak percobaan. Coba lagi dalam beberapa menit.</string>
     <string name="party_error_network">Tidak dapat menjangkau nonton bareng. Periksa koneksi Anda.</string>
-    <string name="party_settings_description">Bergabung dengan teman menggunakan kode grup</string>
     <string name="party_source">Sumber grup</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Hanya saya yang mengontrol pemutaran</string>
@@ -457,7 +451,6 @@
     <string name="settings_playback_page_p2p_description">Pemutaran torrent, profil, dan cache</string>
     <string name="settings_appearance_description">Tema, ikon aplikasi, dan bahasa</string>
     <string name="settings_appearance_title">Tampilan</string>
-    <string name="subtitle_appearance">Tampilan</string>
     <string name="subtitle_preview">Pratinjau</string>
     <string name="subtitle_preview_text">Setiap cerita dimulai dengan sedikit rasa ingin tahu.</string>
     <string name="subtitle_appearance_hint">Berlaku untuk subtitle teks. Subtitle ASS bergaya dan subtitle gambar mempertahankan tampilan aslinya.</string>
@@ -482,9 +475,6 @@
     <string name="settings_nav_bar_glow_off">Cahaya mati</string>
     <string name="settings_nav_bar_preview_hint">Ketuk bilah untuk mencobanya. Gulir pratinjau untuk mencoba ukuran adaptif.</string>
     <string name="settings_nav_bar_preview_tap_hint">Ketuk bilah untuk mencobanya.</string>
-    <string name="settings_content_discovery_section_search">PENCARIAN</string>
-    <string name="settings_content_discovery_recent_searches">Pencarian terbaru</string>
-    <string name="settings_content_discovery_recent_searches_description">Simpan pencarian terbaru dan tampilkan saat bilah pencarian difokuskan.</string>
     <string name="settings_meta_poster_transition">Transisi poster</string>
     <string name="settings_meta_poster_transition_description">Perbesar dan blur poster saat membuka detail.</string>
     <string name="settings_playback_pause_overlay">Overlay jeda</string>

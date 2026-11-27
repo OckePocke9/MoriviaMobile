@@ -422,9 +422,6 @@
     <string name="settings_continue_watching_use_episode_thumbnails_description">Använd avsnittsminiatyrer när de finns.</string>
     <string name="settings_continue_watching_use_episode_thumbnails_title">Föredra avsnittsminiatyrer i Fortsätt titta</string>
     <string name="settings_content_discovery_section_sources">KÄLLOR</string>
-    <string name="settings_content_discovery_section_search">SÖK</string>
-    <string name="settings_content_discovery_recent_searches">Senaste sökningar</string>
-    <string name="settings_content_discovery_recent_searches_description">Spara senaste sökningar och visa dem när sökfältet är i fokus.</string>
     <string name="settings_content_discovery_homescreen_description">Justera layouten på Hem, vad som visas och hur affischer beter sig</string>
     <string name="settings_content_discovery_meta_screen_description">Inställningar för detalj- och avsnittssidorna.</string>
     <string name="settings_content_discovery_collections_description">Skapa egna katalogsamlingar med mappar som visas på Hem.</string>
@@ -1441,7 +1438,6 @@
     <string name="party_error_ended">Tittarfesten är slut.</string>
     <string name="party_error_rate_limited">För många försök. Försök igen om några minuter.</string>
     <string name="party_error_network">Det gick inte att nå tittarfesten. Kontrollera anslutningen.</string>
-    <string name="party_settings_description">Titta med vänner med en festkod</string>
     <string name="party_source">Tittarfestens källa</string>
     <string name="party_episode_format">S%1$d A%2$d</string>
     <string name="party_host_only_title">Bara jag kan styra uppspelningen</string>

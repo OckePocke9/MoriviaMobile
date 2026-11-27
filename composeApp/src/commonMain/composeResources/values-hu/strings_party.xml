@@ -6,7 +6,6 @@
     <string name="party_start_action">Nézőparti indítása</string>
     <string name="party_sign_in_required">Lépj be a Morivia fiókodba a Nézőparti használatához.</string>
     <string name="party_unavailable">A Nézőparti jelenleg nem érhető el.</string>
-    <string name="party_experimental">A Nézőparti még kísérleti fázisban van, így előfordulhatnak hibák.</string>
     <string name="party_code_label">Partikód</string>
     <string name="party_copy_invite">Meghívó másolása</string>
     <string name="party_invite_copied">Meghívó másolva</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">Ez a Nézőparti már véget ért.</string>
     <string name="party_error_rate_limited">Túl sok próbálkozás. Próbáld újra néhány perc múlva.</string>
     <string name="party_error_network">Nem sikerült elérni a Nézőpartit. Ellenőrizd a hálózati kapcsolatot.</string>
-    <string name="party_settings_description">Csatlakozás barátokhoz partikóddal</string>
     <string name="party_source">Parti forrása</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Csak én vezérelhessem a lejátszást</string>

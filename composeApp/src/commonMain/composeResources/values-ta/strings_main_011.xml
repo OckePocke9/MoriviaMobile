@@ -11,8 +11,6 @@
     <string name="settings_notifications_test_for_title">%1$s-க்கான உள்ளூர் சோதனை அறிவிப்பை அனுப்பு.</string>
     <string name="settings_notifications_test_requires_saved_show">அறிவிப்புகளைச் சோதிக்க முதலில் ஒரு தொடரை உங்கள் நூலகத்தில் சேமிக்கவும்.</string>
     <string name="settings_notifications_test_title">சோதனை அறிவிப்பு</string>
-    <string name="community_section_title">சமூகம்</string>
-    <string name="community_section_description">Mobile, TV மற்றும் Web-இல் Morivia-வை உருவாக்கி ஆதரிக்கும் நபர்களைப் பாருங்கள்.</string>
     <string name="community_membership_title">Nuvio ஆதரவாளர் உறுப்பினர் திட்டம்</string>
     <string name="community_membership_description">Nuvio-வை ஆதரிப்பது, அனைவருக்கும் அடிப்படை அனுபவத்தை இலவசமாக வைத்துக்கொண்டு, உள்கட்டமைப்பு மற்றும் தொடர்ச்சியான மேம்பாட்டுச் செலவுகளை ஈடுகட்ட உதவும்.</string>
     <string name="community_view_supporter_membership">ஆதரவாளர் உறுப்பினர் திட்டத்தைப் பார்க்கவும்</string>
@@ -36,7 +34,6 @@
     <string name="community_tab_supporters">ஆதரவாளர்கள்</string>
     <string name="community_open_github">GitHub-ஐத் திற</string>
     <string name="community_github_profile_unavailable">GitHub சுயவிவரம் கிடைக்கவில்லை</string>
-    <string name="community_no_message_attached">செய்தி இணைக்கப்படவில்லை.</string>
     <string name="community_loading_contributors">பங்களிப்பாளர்களை ஏற்றுகிறது...</string>
     <string name="community_loading_supporters">ஆதரவாளர்களை ஏற்றுகிறது...</string>
     <string name="community_load_contributors_failed">பங்களிப்பாளர்களை ஏற்ற முடியவில்லை</string>
@@ -47,7 +44,6 @@
     <string name="community_error_unable_load_supporters">ஆதரவாளர்களை ஏற்ற முடியவில்லை.</string>
     <string name="community_error_contributors_request_failed">இப்போது பங்களிப்பாளர்களை ஏற்ற முடியவில்லை.</string>
     <string name="community_error_supporters_request_failed">இப்போது ஆதரவாளர்களை ஏற்ற முடியவில்லை.</string>
-    <string name="community_total_commits">%1$d மொத்த commits</string>
     <string name="community_month_jan">ஜன</string>
     <string name="community_month_feb">பிப்</string>
     <string name="community_month_mar">மார்</string>
@@ -81,7 +77,6 @@
     <string name="settings_playback_decoder_prefer_app">பயன்பாட்டு decoder-களுக்கு முன்னுரிமை (FFmpeg)</string>
     <string name="settings_playback_decoder_prefer_device">சாதன decoder-களுக்கு முன்னுரிமை</string>
     <string name="settings_playback_decoder_priority">Decoder முன்னுரிமை</string>
-    <string name="settings_playback_dialog_close">மூட வெளியே தட்டவும்</string>
     <string name="settings_playback_dialog_save_close">சேமித்து மூட வெளியே தட்டவும்</string>
     <string name="settings_playback_duration_day_one">%1$d நாள்</string>
     <string name="settings_playback_duration_days">%1$d நாட்கள்</string>
@@ -92,7 +87,6 @@
     <string name="settings_playback_external_player">வெளிப்புற பிளேயர்</string>
     <string name="settings_playback_external_player_app">வெளிப்புற பிளேயர் பயன்பாடு</string>
     <string name="settings_playback_external_player_description_android">Android-இன் இயல்புநிலை வீடியோ பயன்பாடு அல்லது கணினித் தேர்வி மூலம் புதிய பிளேபேக்கைத் திறக்கவும்.</string>
-    <string name="settings_playback_external_player_description_ios">தேர்ந்தெடுத்த நிறுவப்பட்ட பிளேயரில் புதிய பிளேபேக்கைத் திறக்கவும்.</string>
     <string name="settings_playback_external_player_forward_subtitles">வசன வரிகளை வெளிப்புற பிளேயருக்கு அனுப்பு</string>
     <string name="settings_playback_external_player_forward_subtitles_description">விருப்பமான மொழியில் துணைநிரல் வசன வரிகளைப் பெற்று வெளிப்புற பிளேயருக்கு அனுப்பவும்.</string>
     <string name="settings_playback_external_player_send_skip_segments">Intro மற்றும் Outro நேரக் குறியீடுகளை அனுப்பு</string>

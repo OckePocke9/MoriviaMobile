@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Новое</string>
     <string name="morivia_off">Выкл.</string>
     <string name="morivia_hl_title">Главная и оформление</string>
-    <string name="morivia_hl_description">Баннер, постеры, «Продолжить просмотр» и ряды</string>
     <string name="morivia_hl_section_hero">БАННЕР</string>
     <string name="morivia_hl_hero_source">Источник баннера</string>
     <string name="morivia_hl_hero_source_sub">Выберите каталоги для баннера</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Оригинальная</string>
     <string name="profile_use_initials">Использовать инициалы</string>
     <string name="profile_use_initials_description">Использует резервный цвет выше</string>
-    <string name="profile_fallback_colour">Резервный цвет</string>
     <string name="morivia_add_addon">Добавить дополнение</string>
     <string name="morivia_refresh">Обновить</string>
     <string name="profile_confirm_pin">Подтвердите PIN-код</string>
     <string name="profile_pin_mismatch">PIN-коды не совпадают. Попробуйте ещё раз.</string>
-    <string name="morivia_appearance_current_theme">Текущая тема</string>
     <string name="morivia_theme_reset_original">Сбросить на Оригинальную</string>
     <string name="morivia_theme_custom">Своя тема</string>
     <string name="morivia_theme_show_more">Показать больше тем</string>
     <string name="morivia_theme_show_fewer">Показать меньше тем</string>
-    <string name="morivia_appearance_match_icon">Значок приложения в цвет темы</string>
-    <string name="morivia_appearance_match_icon_description">Использовать цвет текущей темы для значка приложения.</string>
     <string name="morivia_appearance_preview_title">ПРЕДПРОСМОТР ТЕМЫ</string>
     <string name="morivia_appearance_preview_icon">Значок приложения · %1$s</string>
     <string name="morivia_appearance_preview_text">Текст и фон</string>
@@ -245,7 +240,6 @@
     <string name="party_error_ended">Этот совместный просмотр завершён.</string>
     <string name="party_error_rate_limited">Слишком много попыток. Повторите через несколько минут.</string>
     <string name="party_error_network">Не удалось подключиться к совместному просмотру. Проверьте соединение.</string>
-    <string name="party_settings_description">Присоединяйтесь к друзьям по коду</string>
     <string name="party_source">Источник просмотра</string>
     <string name="party_episode_format">С%1$d Э%2$d</string>
     <string name="party_host_only_title">Воспроизведением управляю только я</string>
@@ -459,7 +453,6 @@
     <string name="settings_playback_page_p2p_description">Воспроизведение торрентов, профиль и кэш</string>
     <string name="settings_appearance_description">Темы, значок приложения и язык</string>
     <string name="settings_appearance_title">Внешний вид</string>
-    <string name="subtitle_appearance">Внешний вид</string>
     <string name="subtitle_preview">Предпросмотр</string>
     <string name="subtitle_preview_text">Каждая история начинается с капли любопытства.</string>
     <string name="subtitle_appearance_hint">Применяется к текстовым субтитрам. Оформленные ASS и графические субтитры сохраняют исходный вид.</string>
@@ -485,9 +478,6 @@
     <string name="settings_nav_bar_glow_off">Свечение выкл.</string>
     <string name="settings_nav_bar_preview_hint">Нажмите на панель, чтобы попробовать. Прокрутите предпросмотр, чтобы проверить адаптивный размер.</string>
     <string name="settings_nav_bar_preview_tap_hint">Нажмите на панель, чтобы попробовать.</string>
-    <string name="settings_content_discovery_section_search">ПОИСК</string>
-    <string name="settings_content_discovery_recent_searches">Недавние запросы</string>
-    <string name="settings_content_discovery_recent_searches_description">Сохранять недавние запросы и показывать их при фокусе на строке поиска.</string>
     <string name="settings_meta_poster_transition">Переход постера</string>
     <string name="settings_meta_poster_transition_description">Увеличивать и размывать постер при открытии подробностей.</string>
     <string name="settings_playback_pause_overlay">Экран паузы</string>

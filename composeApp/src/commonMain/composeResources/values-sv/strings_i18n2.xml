@@ -46,7 +46,6 @@
     <string name="settings_integrations_section_title">INTEGRATIONER</string>
     <string name="settings_integrations_tmdb_description">Inställningar för berikning av metadata</string>
     <string name="settings_integrations_mdblist_description">Externa betygskällor</string>
-    <string name="settings_integrations_debrid_description">Anslut konton för länkar och biblioteksåtkomst</string>
     <string name="settings_debrid_section_title">ANSLUTNA TJÄNSTER</string>
     <string name="settings_debrid_cloud_library">Molnbibliotek</string>
     <string name="settings_debrid_cloud_library_description">Bläddra i och spela filer som redan finns i dina anslutna konton.</string>
@@ -199,13 +198,6 @@
     <string name="settings_simkl_invalid_callback">Simkl godkände inte inloggningssvaret. Försök igen.</string>
     <string name="settings_simkl_authorization_expired">Simkl-koden har gått ut. Börja om.</string>
     <string name="settings_simkl_sign_in_failed">Det gick inte att slutföra inloggningen på Simkl. Försök igen.</string>
-    <string name="settings_simkl_sync_info_action">Så fungerar synken</string>
-    <string name="settings_simkl_sync_info_title">Så fungerar synken med Simkl</string>
-    <string name="settings_simkl_sync_info_description">Morivia kontrollerar Simkl automatiskt högst en gång var %1$d:e minut. Ändringar gjorda i en annan app eller på Simkls webbplats kan ta så lång tid att synas.</string>
-    <string name="settings_simkl_sync_info_activity">Varje uppdatering kontrollerar först om Simkl rapporterar några ändringar och laddar bara ned dem. Det följer Simkls API-regler, minskar onödig dataanvändning och håller tjänsten stabil.</string>
-    <string name="settings_simkl_sync_info_manual">Ändringar som görs i Morivia skickas till Simkl direkt. Använd Synka nu när du vill att Morivia ska kontrollera ändringar tidigare.</string>
-    <string name="settings_simkl_sync_info_library_statuses">Serier i Simkls listor Pausad eller Avbruten döljs i Fortsätt titta så länge de ligger i någon av listorna.</string>
-    <string name="settings_simkl_sync_info_docs">Läs Simkls guide för synk</string>
     <string name="settings_simkl_authorization_revoked">Simkls behörighet har återkallats. Anslut igen.</string>
     <string name="tracking_watch_progress_dialog_subtitle">Välj tjänsten Morivia läser för att fortsätta och för Fortsätt titta. Scrobbling är fortfarande aktiv för alla anslutna tjänster.</string>
     <string name="trakt_library_source_title">Källa för biblioteket</string>

@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Mới</string>
     <string name="morivia_off">Tắt</string>
     <string name="morivia_hl_title">Trang chủ và bố cục</string>
-    <string name="morivia_hl_description">Banner, áp phích, Tiếp tục xem và các hàng</string>
     <string name="morivia_hl_section_hero">BANNER</string>
     <string name="morivia_hl_hero_source">Nguồn banner</string>
     <string name="morivia_hl_hero_source_sub">Chọn danh mục cho banner</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Nguyên bản</string>
     <string name="profile_use_initials">Dùng chữ cái đầu</string>
     <string name="profile_use_initials_description">Dùng màu dự phòng ở trên</string>
-    <string name="profile_fallback_colour">Màu dự phòng</string>
     <string name="morivia_add_addon">Thêm tiện ích bổ sung</string>
     <string name="morivia_refresh">Làm mới</string>
     <string name="profile_confirm_pin">Xác nhận mã PIN</string>
     <string name="profile_pin_mismatch">Mã PIN không khớp. Hãy thử lại.</string>
-    <string name="morivia_appearance_current_theme">Chủ đề hiện tại</string>
     <string name="morivia_theme_reset_original">Đặt lại về Nguyên bản</string>
     <string name="morivia_theme_custom">Chủ đề tùy chỉnh</string>
     <string name="morivia_theme_show_more">Hiện thêm chủ đề</string>
     <string name="morivia_theme_show_fewer">Hiện ít chủ đề hơn</string>
-    <string name="morivia_appearance_match_icon">Biểu tượng ứng dụng theo chủ đề</string>
-    <string name="morivia_appearance_match_icon_description">Dùng màu chủ đề hiện tại cho biểu tượng ứng dụng.</string>
     <string name="morivia_appearance_preview_title">XEM TRƯỚC CHỦ ĐỀ</string>
     <string name="morivia_appearance_preview_icon">Biểu tượng ứng dụng · %1$s</string>
     <string name="morivia_appearance_preview_text">Chữ và nền</string>

@@ -6,7 +6,6 @@
     <string name="party_start_action">ஒன்றாகப் பார்க்கும் அறையைத் தொடங்கு</string>
     <string name="party_sign_in_required">ஒன்றாகப் பார்க்கும் வசதியைப் பயன்படுத்த உங்கள் Morivia கணக்கில் உள்நுழையவும்.</string>
     <string name="party_unavailable">ஒன்றாகப் பார்க்கும் அறைகள் தற்போது கிடைக்கவில்லை.</string>
-    <string name="party_experimental">இந்த வசதி சோதனை நிலையில் உள்ளது; எதிர்பார்த்தபடி செயல்படாமல் இருக்கலாம்.</string>
     <string name="party_code_label">அறைக் குறியீடு</string>
     <string name="party_copy_invite">அழைப்பை நகலெடு</string>
     <string name="party_invite_copied">அழைப்பு நகலெடுக்கப்பட்டது</string>
@@ -49,7 +48,6 @@
     <string name="party_error_ended">இந்த அறை முடிந்துவிட்டது.</string>
     <string name="party_error_rate_limited">பலமுறை முயற்சித்துள்ளீர்கள். சில நிமிடங்கள் கழித்து முயற்சிக்கவும்.</string>
     <string name="party_error_network">அறையை அணுக முடியவில்லை. உங்கள் இணைய இணைப்பைச் சரிபார்க்கவும்.</string>
-    <string name="party_settings_description">அறைக் குறியீட்டைப் பயன்படுத்தி நண்பர்களுடன் சேரவும்</string>
     <string name="party_source">அறையின் ஆதாரம்</string>
     <string name="party_episode_format">சீசன் %1$d · எபிசோடு %2$d</string>
     <string name="party_host_only_title">பிளேபேக்கைக் கட்டுப்படுத்துவது நான் மட்டுமே</string>

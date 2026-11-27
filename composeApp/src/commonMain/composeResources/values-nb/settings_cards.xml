@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Se sammen synkront og chat med venner</string>
     <string name="settings_appearance_card_description">Temafarge, appikon, språk og oppsett</string>
     <string name="settings_theme_card_title">Tema</string>
-    <string name="profile_initial_colour">Farge på initial</string>
-    <string name="profile_background_colour">Bakgrunnsfarge</string>
     <string name="profile_background_black">Svart</string>
 </resources>

@@ -19,6 +19,7 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $root = Split-Path -Parent $PSScriptRoot
 $drawable = Join-Path $root 'composeApp/src/commonMain/composeResources/drawable'
+$symbols = Join-Path $root 'assets/branding/theme-symbols'
 
 # Letter geometry in units: stroke centre lines, x-height from y=13 to y=100, stroke 26.
 $stroke = 33.0
@@ -54,7 +55,7 @@ function New-Letter([string]$ch) {
 }
 
 function Write-Wordmark([string]$symbolName, [string]$outName) {
-    $symbol = [System.Drawing.Image]::FromFile((Join-Path $drawable "$symbolName.png"))
+    $symbol = [System.Drawing.Image]::FromFile((Join-Path $symbols "$symbolName.png"))
     $height = 282
     # Like Nuvio's wordmark: the logo fills the height, the lettering's x-height matches Nuvio's (about 31 % of the logo height).
     $logoHeight = 260
@@ -114,7 +115,7 @@ function Write-Wordmark([string]$symbolName, [string]$outName) {
 
 if (-not $Only) {
     Write-Wordmark 'morivia_symbol_original' 'app_logo_wordmark'
-    $Only = @(Get-ChildItem $drawable -Filter 'morivia_symbol_*.png' | ForEach-Object { $_.BaseName.Substring(15) })
+    $Only = @(Get-ChildItem $symbols -Filter 'morivia_symbol_*.png' | ForEach-Object { $_.BaseName.Substring(15) })
 }
 foreach ($c in $Only) {
     Write-Wordmark "morivia_symbol_$c" "app_logo_wordmark_$c"

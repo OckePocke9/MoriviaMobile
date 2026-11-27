@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Тема в колір значка застосунку</string>
-    <string name="morivia_appearance_match_theme_description">Використовувати тему, що відповідає вибраному значку застосунку.</string>
     <string name="settings_tracking_ratings">Оцінки</string>
     <string name="settings_tracking_ratings_description">Де зберігаються і звідки показуються ваші оцінки</string>
     <string name="settings_tracking_ratings_picker_subtitle">Оцінюйте тайтли на сторінці подробиць. Оцінки зберігаються у вибраному сервісі й показуються звідти.</string>

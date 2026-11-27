@@ -39,11 +39,7 @@
     <string name="settings_continue_watching_up_next_title">அதிக தூரம் பார்த்த எபிசோடிலிருந்து அடுத்தது</string>
     <string name="settings_continue_watching_use_episode_thumbnails_description">கிடைக்கும்போது எபிசோடு சிறுபடங்களுக்கு முன்னுரிமை கொடு.</string>
     <string name="settings_continue_watching_use_episode_thumbnails_title">தொடர்ந்து பார்ப்பதில் எபிசோடு சிறுபடங்களுக்கு முன்னுரிமை</string>
-    <string name="settings_content_discovery_section_home">முகப்பு</string>
     <string name="settings_content_discovery_section_sources">ஆதாரங்கள்</string>
-    <string name="settings_content_discovery_section_search">தேடல்</string>
-    <string name="settings_content_discovery_recent_searches">சமீபத்திய தேடல்கள்</string>
-    <string name="settings_content_discovery_recent_searches_description">சமீபத்திய தேடல்களைச் சேமித்து, தேடல் பட்டியைத் தேர்ந்தெடுக்கும்போது காட்டவும்.</string>
     <string name="settings_content_discovery_addons_description">உள்ளடக்க ஆதாரங்களை நிறுவவும், அகற்றவும், புதுப்பிக்கவும் மற்றும் வரிசைப்படுத்தவும்.</string>
     <string name="settings_content_discovery_addons_description_appstore">Morivia-வில் நீங்கள் பயன்படுத்தும் துணைநிரல்களைச் சேர்த்து நிர்வகிக்கவும்.</string>
     <string name="settings_content_discovery_plugins_description">JavaScript scraper repository-களை நிறுவி வழங்குநர்களை உள்நாட்டில் சோதிக்கவும்.</string>
@@ -53,7 +49,6 @@
     <string name="settings_integrations_section_title">ஒருங்கிணைப்புகள்</string>
     <string name="settings_integrations_tmdb_description">மெட்டாடேட்டா மேம்பாட்டு கட்டுப்பாடுகள்</string>
     <string name="settings_integrations_mdblist_description">வெளிப்புற மதிப்பீட்டு வழங்குநர்கள்</string>
-    <string name="settings_integrations_debrid_description">இணைப்புகள் மற்றும் நூலக அணுகலுக்குக் கணக்குகளை இணைக்கவும்</string>
     <string name="settings_debrid_section_title">இணைக்கப்பட்ட சேவைகள்</string>
     <string name="settings_debrid_cloud_library">கிளவுட் நூலகம்</string>
     <string name="settings_debrid_cloud_library_description">இணைக்கப்பட்ட கணக்குகளில் ஏற்கனவே உள்ள கோப்புகளை உலாவி இயக்கவும்.</string>

@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">دوستوں کے ساتھ ہم آہنگ ہو کر دیکھیں اور چیٹ کریں</string>
     <string name="settings_appearance_card_description">تھیم کا رنگ، ایپ آئیکن، زبان اور لے آؤٹ</string>
     <string name="settings_theme_card_title">تھیم</string>
-    <string name="profile_initial_colour">ابتدائی حرف کا رنگ</string>
-    <string name="profile_background_colour">پس منظر کا رنگ</string>
     <string name="profile_background_black">سیاہ</string>
 </resources>

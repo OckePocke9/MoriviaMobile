@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Dopasuj motyw do ikony aplikacji</string>
-    <string name="morivia_appearance_match_theme_description">Użyj motywu pasującego do wybranej ikony aplikacji.</string>
     <string name="settings_tracking_ratings">Oceny</string>
     <string name="settings_tracking_ratings_description">Gdzie są zapisywane i skąd są pokazywane Twoje oceny</string>
     <string name="settings_tracking_ratings_picker_subtitle">Oceniaj tytuły na ich stronie szczegółów. Oceny są zapisywane w wybranej usłudze i z niej pokazywane.</string>

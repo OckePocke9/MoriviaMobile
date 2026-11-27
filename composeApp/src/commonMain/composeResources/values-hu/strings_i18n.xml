@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Új</string>
     <string name="morivia_off">Ki</string>
     <string name="morivia_hl_title">Kezdőlap és elrendezés</string>
-    <string name="morivia_hl_description">Kiemelt, plakátok, Megtekintés folytatása és sorok</string>
     <string name="morivia_hl_section_hero">KIEMELT</string>
     <string name="morivia_hl_hero_source">Kiemelt forrása</string>
     <string name="morivia_hl_hero_source_sub">Válaszd ki a kiemelt rész katalógusait</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Eredeti</string>
     <string name="profile_use_initials">Monogram használata</string>
     <string name="profile_use_initials_description">A fenti tartalék színt használja</string>
-    <string name="profile_fallback_colour">Tartalék szín</string>
     <string name="morivia_add_addon">Kiegészítő hozzáadása</string>
     <string name="morivia_refresh">Frissítés</string>
     <string name="profile_confirm_pin">PIN megerősítése</string>
     <string name="profile_pin_mismatch">A PIN-kódok nem egyeznek. Próbáld újra.</string>
-    <string name="morivia_appearance_current_theme">Jelenlegi téma</string>
     <string name="morivia_theme_reset_original">Visszaállítás Eredetire</string>
     <string name="morivia_theme_custom">Egyéni téma</string>
     <string name="morivia_theme_show_more">Több téma</string>
     <string name="morivia_theme_show_fewer">Kevesebb téma</string>
-    <string name="morivia_appearance_match_icon">Alkalmazásikon igazítása a témához</string>
-    <string name="morivia_appearance_match_icon_description">A jelenlegi téma színének használata az alkalmazásikonhoz.</string>
     <string name="morivia_appearance_preview_title">TÉMA ELŐNÉZETE</string>
     <string name="morivia_appearance_preview_icon">Alkalmazásikon · %1$s</string>
     <string name="morivia_appearance_preview_text">Szöveg és háttér</string>
@@ -205,7 +200,6 @@
     <string name="settings_group_watch">Média</string>
     <string name="settings_group_services">Szolgáltatások</string>
     <string name="settings_group_system">Rendszer</string>
-    <string name="subtitle_appearance">Megjelenés</string>
     <string name="subtitle_preview">Előnézet</string>
     <string name="subtitle_preview_text">Minden történet egy kis kíváncsisággal kezdődik.</string>
     <string name="subtitle_appearance_hint">A szöveges feliratokra vonatkozik. A formázott ASS- és képfeliratok megtartják eredeti megjelenésüket.</string>

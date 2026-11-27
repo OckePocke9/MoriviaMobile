@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Kijk samen synchroon en chat met vrienden</string>
     <string name="settings_appearance_card_description">Themakleur, app-icoon, taal en indeling</string>
     <string name="settings_theme_card_title">Thema</string>
-    <string name="profile_initial_colour">Kleur van initiaal</string>
-    <string name="profile_background_colour">Achtergrondkleur</string>
     <string name="profile_background_black">Zwart</string>
 </resources>

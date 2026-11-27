@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">主题跟随应用图标</string>
-    <string name="morivia_appearance_match_theme_description">使用与所选应用图标相匹配的主题。</string>
     <string name="settings_tracking_ratings">评分</string>
     <string name="settings_tracking_ratings_description">评分的保存位置和显示来源</string>
     <string name="settings_tracking_ratings_picker_subtitle">在影片的详情页评分。评分会保存到您选择的服务，并从中显示。</string>

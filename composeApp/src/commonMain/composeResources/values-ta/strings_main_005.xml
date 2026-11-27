@@ -29,7 +29,6 @@
     <string name="compose_player_capture_line">வரி பிடிப்பு</string>
     <string name="compose_player_close">பிளேயரை மூடு</string>
     <string name="compose_player_color">நிறம்</string>
-    <string name="compose_player_currently_playing">தற்போது இயங்குகிறது</string>
     <string name="compose_player_episode_code_episode_only">எபி. %1$d</string>
     <string name="compose_player_episode_code_full">சீ. %1$d எபி. %2$d</string>
     <string name="compose_player_episode_title_format">சீ. %1$d எபி. %2$d • %3$s</string>
@@ -60,7 +59,6 @@
     <string name="compose_player_go_back">பின்செல்</string>
     <string name="compose_player_reload">மீண்டும் ஏற்று</string>
     <string name="compose_player_reset">மீட்டமை</string>
-    <string name="compose_player_reset_defaults">இயல்புநிலைகளை மீட்டமை</string>
     <string name="compose_player_resize_fill">நிரப்பு</string>
     <string name="compose_player_resize_fit">பொருத்து</string>
     <string name="compose_player_resize_zoom">பெரிதாக்கு</string>
@@ -92,8 +90,6 @@
     <string name="compose_search_discover_title">கண்டறி</string>
     <string name="compose_search_empty_failed_message">நிறுவப்பட்ட துணைநிரல்கள் சரியான தேடல் முடிவுகளை வழங்கவில்லை.</string>
     <string name="compose_search_empty_failed_title">தேடல் தோல்வியடைந்தது</string>
-    <string name="compose_search_empty_no_active_addons_message">தேடுவதற்கு முன் துணைநிரலை இயக்கவும் அல்லது சேர்க்கவும்.</string>
-    <string name="compose_search_empty_no_active_addons_title">செயலில் உள்ள துணைநிரல்கள் இல்லை</string>
     <string name="compose_search_empty_no_results_message">நிறுவப்பட்ட தேடக்கூடிய பட்டியல்களில் இந்தத் தேடலுக்குப் பொருத்தங்கள் இல்லை.</string>
     <string name="compose_search_empty_no_results_title">முடிவுகள் இல்லை</string>
     <string name="compose_search_empty_no_search_catalogs_message">இயக்கப்பட்ட துணைநிரல்கள் பட்டியல் தேடலை ஆதரிக்கவில்லை.</string>

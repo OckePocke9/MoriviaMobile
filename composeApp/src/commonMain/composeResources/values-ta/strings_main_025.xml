@@ -17,7 +17,6 @@
     <string name="layout_ratings_hide_unwatched">பார்க்காதவற்றை மறை</string>
     <string name="settings_playback_legacy_layout">பழைய அமைப்பு</string>
     <string name="settings_playback_legacy_layout_description">அசல் பிளேயர் கட்டுப்பாடுகளைப் பயன்படுத்தவும்.</string>
-    <string name="compose_player_episode_code">சீ.%1$d எபி.%2$d</string>
     <string name="compose_player_more_actions">மேலும் கட்டுப்பாடுகள்</string>
     <string name="compose_player_fewer_actions">குறைந்த கட்டுப்பாடுகள்</string>
     <string name="compose_player_speed">பிளேபேக் வேகம்</string>

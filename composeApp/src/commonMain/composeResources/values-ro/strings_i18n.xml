@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nou</string>
     <string name="morivia_off">Dezactivat</string>
     <string name="morivia_hl_title">Acasă și aspect</string>
-    <string name="morivia_hl_description">Banner, postere, Continuă vizionarea și rânduri</string>
     <string name="morivia_hl_section_hero">BANNER</string>
     <string name="morivia_hl_hero_source">Sursa bannerului</string>
     <string name="morivia_hl_hero_source_sub">Alege cataloagele pentru banner</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Folosește inițialele</string>
     <string name="profile_use_initials_description">Folosește culoarea de rezervă de mai sus</string>
-    <string name="profile_fallback_colour">Culoare de rezervă</string>
     <string name="morivia_add_addon">Adaugă supliment</string>
     <string name="morivia_refresh">Reîmprospătează</string>
     <string name="profile_confirm_pin">Confirmă PIN-ul</string>
     <string name="profile_pin_mismatch">PIN-urile nu se potrivesc. Încearcă din nou.</string>
-    <string name="morivia_appearance_current_theme">Tema actuală</string>
     <string name="morivia_theme_reset_original">Resetează la Original</string>
     <string name="morivia_theme_custom">Temă personalizată</string>
     <string name="morivia_theme_show_more">Afișează mai multe teme</string>
     <string name="morivia_theme_show_fewer">Afișează mai puține teme</string>
-    <string name="morivia_appearance_match_icon">Potrivește pictograma aplicației cu tema</string>
-    <string name="morivia_appearance_match_icon_description">Folosește culoarea temei actuale pentru pictograma aplicației.</string>
     <string name="morivia_appearance_preview_title">PREVIZUALIZARE TEMĂ</string>
     <string name="morivia_appearance_preview_icon">Pictograma aplicației · %1$s</string>
     <string name="morivia_appearance_preview_text">Text și fundal</string>
@@ -244,7 +239,6 @@
     <string name="party_error_ended">Această vizionare în grup s-a încheiat.</string>
     <string name="party_error_rate_limited">Prea multe încercări. Încearcă din nou peste câteva minute.</string>
     <string name="party_error_network">Nu am putut accesa vizionarea în grup. Verifică conexiunea.</string>
-    <string name="party_settings_description">Alătură-te prietenilor cu un cod de grup</string>
     <string name="party_source">Sursa grupului</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Doar eu controlez redarea</string>
@@ -484,7 +478,6 @@
     <string name="settings_playback_page_p2p_description">Redare torrent, profil și cache</string>
     <string name="settings_appearance_description">Teme, pictograma aplicației și limbă</string>
     <string name="settings_appearance_title">Aspect</string>
-    <string name="subtitle_appearance">Aspect</string>
     <string name="subtitle_preview">Previzualizare</string>
     <string name="subtitle_preview_text">Orice poveste începe cu puțină curiozitate.</string>
     <string name="subtitle_appearance_hint">Se aplică subtitrărilor text. Subtitrările ASS stilizate și cele imagine își păstrează aspectul original.</string>
@@ -509,9 +502,6 @@
     <string name="settings_nav_bar_glow_off">Strălucire dezactivată</string>
     <string name="settings_nav_bar_preview_hint">Atinge bara ca s-o încerci. Derulează previzualizarea pentru dimensiunea adaptivă.</string>
     <string name="settings_nav_bar_preview_tap_hint">Atinge bara ca s-o încerci.</string>
-    <string name="settings_content_discovery_section_search">CĂUTARE</string>
-    <string name="settings_content_discovery_recent_searches">Căutări recente</string>
-    <string name="settings_content_discovery_recent_searches_description">Salvează căutările recente și afișează-le când bara de căutare este activă.</string>
     <string name="settings_meta_poster_transition">Tranziția posterului</string>
     <string name="settings_meta_poster_transition_description">Mărește și estompează posterele la deschiderea detaliilor.</string>
     <string name="settings_playback_pause_overlay">Suprapunere la pauză</string>

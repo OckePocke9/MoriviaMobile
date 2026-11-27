@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">新着</string>
     <string name="morivia_off">オフ</string>
     <string name="morivia_hl_title">ホームとレイアウト</string>
-    <string name="morivia_hl_description">ヒーロー、ポスター、視聴を続ける、行</string>
     <string name="morivia_hl_section_hero">ヒーロー</string>
     <string name="morivia_hl_hero_source">ヒーローのソース</string>
     <string name="morivia_hl_hero_source_sub">ヒーローに使うカタログを選択</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">オリジナル</string>
     <string name="profile_use_initials">イニシャルを使用</string>
     <string name="profile_use_initials_description">上の代替色を使用します</string>
-    <string name="profile_fallback_colour">代替色</string>
     <string name="morivia_add_addon">アドオンを追加</string>
     <string name="morivia_refresh">更新</string>
     <string name="profile_confirm_pin">PIN を確認</string>
     <string name="profile_pin_mismatch">PIN が一致しません。もう一度お試しください。</string>
-    <string name="morivia_appearance_current_theme">現在のテーマ</string>
     <string name="morivia_theme_reset_original">オリジナルに戻す</string>
     <string name="morivia_theme_custom">カスタムテーマ</string>
     <string name="morivia_theme_show_more">テーマをもっと表示</string>
     <string name="morivia_theme_show_fewer">表示するテーマを減らす</string>
-    <string name="morivia_appearance_match_icon">アプリアイコンをテーマに合わせる</string>
-    <string name="morivia_appearance_match_icon_description">現在のテーマの色をアプリアイコンに使用します。</string>
     <string name="morivia_appearance_preview_title">テーマのプレビュー</string>
     <string name="morivia_appearance_preview_icon">アプリアイコン · %1$s</string>
     <string name="morivia_appearance_preview_text">テキストと背景</string>
@@ -232,7 +227,6 @@
     <string name="party_error_ended">このウォッチパーティーは終了しました。</string>
     <string name="party_error_rate_limited">試行回数が多すぎます。数分後にもう一度お試しください。</string>
     <string name="party_error_network">ウォッチパーティーに接続できませんでした。接続を確認してください。</string>
-    <string name="party_settings_description">パーティーコードで友達と参加</string>
     <string name="party_source">パーティーのソース</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">再生操作は自分だけ</string>

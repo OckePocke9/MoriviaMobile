@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Novo</string>
     <string name="morivia_off">Desativado</string>
     <string name="morivia_hl_title">Início e esquema</string>
-    <string name="morivia_hl_description">Destaque, cartazes, Continuar a ver e filas</string>
     <string name="morivia_hl_section_hero">DESTAQUE</string>
     <string name="morivia_hl_hero_source">Fonte do destaque</string>
     <string name="morivia_hl_hero_source_sub">Escolha os catálogos do destaque</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Usar iniciais</string>
     <string name="profile_use_initials_description">Usa a cor alternativa acima</string>
-    <string name="profile_fallback_colour">Cor alternativa</string>
     <string name="morivia_add_addon">Adicionar extra</string>
     <string name="morivia_refresh">Atualizar</string>
     <string name="profile_confirm_pin">Confirmar PIN</string>
     <string name="profile_pin_mismatch">Os PIN não coincidem. Tente novamente.</string>
-    <string name="morivia_appearance_current_theme">Tema atual</string>
     <string name="morivia_theme_reset_original">Repor Original</string>
     <string name="morivia_theme_custom">Tema personalizado</string>
     <string name="morivia_theme_show_more">Mostrar mais temas</string>
     <string name="morivia_theme_show_fewer">Mostrar menos temas</string>
-    <string name="morivia_appearance_match_icon">Combinar ícone da app com o tema</string>
-    <string name="morivia_appearance_match_icon_description">Usar a cor do tema atual no ícone da app.</string>
     <string name="morivia_appearance_preview_title">PRÉ-VISUALIZAÇÃO DO TEMA</string>
     <string name="morivia_appearance_preview_icon">Ícone da app · %1$s</string>
     <string name="morivia_appearance_preview_text">Texto e fundo</string>
@@ -232,7 +227,6 @@
     <string name="party_error_ended">Esta sessão de grupo terminou.</string>
     <string name="party_error_rate_limited">Demasiadas tentativas. Tente novamente dentro de alguns minutos.</string>
     <string name="party_error_network">Não foi possível aceder à sessão de grupo. Verifique a ligação.</string>
-    <string name="party_settings_description">Junte-se a amigos com um código de grupo</string>
     <string name="party_source">Fonte do grupo</string>
     <string name="party_episode_format">T%1$d E%2$d</string>
     <string name="party_host_only_title">Só eu controlo a reprodução</string>
@@ -439,7 +433,6 @@
     <string name="settings_playback_page_p2p_description">Reprodução de torrents, perfil e cache</string>
     <string name="settings_appearance_description">Temas, ícone da app e idioma</string>
     <string name="settings_appearance_title">Aspeto</string>
-    <string name="subtitle_appearance">Aspeto</string>
     <string name="subtitle_preview">Pré-visualização</string>
     <string name="subtitle_preview_text">Todas as histórias começam com um pouco de curiosidade.</string>
     <string name="subtitle_appearance_hint">Aplica-se a legendas de texto. As legendas ASS estilizadas e as de imagem mantêm o aspeto original.</string>
@@ -465,9 +458,6 @@
     <string name="settings_nav_bar_glow_off">Brilho desativado</string>
     <string name="settings_nav_bar_preview_hint">Toque na barra para experimentar. Deslize a pré-visualização para experimentar o tamanho adaptável.</string>
     <string name="settings_nav_bar_preview_tap_hint">Toque na barra para experimentar.</string>
-    <string name="settings_content_discovery_section_search">PESQUISA</string>
-    <string name="settings_content_discovery_recent_searches">Pesquisas recentes</string>
-    <string name="settings_content_discovery_recent_searches_description">Guardar as pesquisas recentes e mostrá-las quando a barra de pesquisa estiver ativa.</string>
     <string name="settings_meta_poster_transition">Transição do cartaz</string>
     <string name="settings_meta_poster_transition_description">Ampliar e desfocar os cartazes ao abrir os detalhes.</string>
     <string name="settings_playback_pause_overlay">Sobreposição de pausa</string>

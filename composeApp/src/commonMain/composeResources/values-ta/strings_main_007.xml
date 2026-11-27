@@ -8,19 +8,15 @@
     <string name="settings_licenses_attributions_exoplayer_title">AndroidX Media3 ExoPlayer 1.8.0</string>
     <string name="settings_licenses_attributions_exoplayer_body">Android பதிப்புகளில் பிளேபேக்கிற்குப் பயன்படுத்தப்படுகிறது.</string>
     <string name="settings_licenses_attributions_exoplayer_license">Apache License, Version 2.0-இன் கீழ் உரிமம் பெற்றது.</string>
-    <string name="compose_trakt_list_picker_loading">உங்கள் Trakt பட்டியல்களை ஏற்றுகிறது…</string>
-    <string name="compose_trakt_list_picker_subtitle">இந்தத் தலைப்பை Trakt-இல் எங்கு சேமிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</string>
     <string name="compose_tracking_list_picker_loading">பட்டியல்களை ஏற்றுகிறது…</string>
     <string name="compose_tracking_list_picker_subtitle">இந்தத் தலைப்பை எங்கு சேமிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</string>
     <string name="action_donate">நன்கொடை</string>
-    <string name="action_support_morivia">Morivia-வை ஆதரிக்கவும்</string>
     <string name="cw_action_go_to_details">விவரங்களுக்குச் செல்</string>
     <string name="cw_action_remove">அகற்று</string>
     <string name="cw_action_start_from_beginning">தொடக்கத்திலிருந்து தொடங்கு</string>
     <string name="detail_btn_play">இயக்கு</string>
     <string name="detail_comments_badge_rating">%1$d/10</string>
     <string name="detail_comments_badge_review">விமர்சனம்</string>
-    <string name="detail_comments_badge_spoiler">கதை வெளிப்பாடு</string>
     <string name="detail_comments_empty">இதுவரை Trakt விமர்சனங்கள் இல்லை.</string>
     <string name="detail_comments_likes">%1$d விருப்பங்கள்</string>
     <string name="detail_comments_spoiler_card">இந்தக் கருத்தில் கதையின் முக்கிய விவரங்கள் உள்ளன.</string>
@@ -54,7 +50,6 @@
     <string name="home_view_all">அனைத்தையும் காண்க</string>
     <string name="play_manually">கைமுறையாக இயக்கு</string>
     <string name="poster_logo_content_description">%1$s லோகோ</string>
-    <string name="settings_account">கணக்கு</string>
     <string name="settings_account_delete_account">கணக்கை நீக்கு</string>
     <string name="settings_account_delete_account_description">இது உங்கள் கணக்கையும் அதனுடன் தொடர்புடைய அனைத்து தரவையும் நிரந்தரமாக நீக்கும்.</string>
     <string name="settings_account_delete_confirm_message">இந்தச் செயலை மாற்ற முடியாது. உங்கள் தரவு, சுயவிவரங்கள் மற்றும் ஒத்திசைவு வரலாறு அனைத்தும் நிரந்தரமாக நீக்கப்படும்.</string>
@@ -86,7 +81,6 @@
     <string name="settings_appearance_app_language_restart_title">மறுதொடக்கம் தேவை</string>
     <string name="settings_appearance_app_language_restart_message">இந்த மொழிக்கான அமைப்பைப் புதுப்பிக்க பயன்பாட்டை மூடி மீண்டும் திறக்கவும்.</string>
     <string name="settings_appearance_nav_bar_style">வழிசெலுத்தல் பட்டி</string>
-    <string name="settings_appearance_nav_bar_style_sheet_title">வழிசெலுத்தல் பட்டி பாணி</string>
     <string name="settings_nav_bar_glow">கண்ணாடி ஒளிர்வு</string>
     <string name="settings_nav_bar_glow_description">மிதக்கும் பட்டியைச் சுற்றி மென்மையான ஒளியைச் சேர்க்கிறது.</string>
     <string name="settings_nav_bar_glow_on">ஒளிர்வு இயக்கம்</string>

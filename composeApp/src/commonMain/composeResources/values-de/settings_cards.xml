@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Synchron gemeinsam schauen und mit Freunden chatten</string>
     <string name="settings_appearance_card_description">Designfarbe, App-Symbol, Sprache und Layout</string>
     <string name="settings_theme_card_title">Design</string>
-    <string name="profile_initial_colour">Farbe der Initiale</string>
-    <string name="profile_background_colour">Hintergrundfarbe</string>
     <string name="profile_background_black">Schwarz</string>
 </resources>

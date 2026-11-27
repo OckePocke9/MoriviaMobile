@@ -28,7 +28,6 @@
     <string name="unit_bytes_kb">KB</string>
     <string name="unit_bytes_mb">MB</string>
     <string name="unit_bytes_gb">GB</string>
-    <string name="player_action_submit_intro">Intro-ஐச் சமர்ப்பி</string>
     <string name="player_action_video_settings">வீடியோ அமைப்புகள்</string>
     <string name="cloud_library_provider_unavailable">%1$s-க்கு கிளவுட் நூலகம் கிடைக்கவில்லை.</string>
     <string name="player_video_settings_title">வீடியோ</string>

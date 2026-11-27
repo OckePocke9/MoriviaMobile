@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="morivia_appearance_match_theme">Thema afstemmen op app-icoon</string>
-    <string name="morivia_appearance_match_theme_description">Het thema gebruiken dat bij het gekozen app-icoon hoort.</string>
     <string name="addons_tracking_consent_title">Tracking-add-on</string>
     <string name="addons_tracking_consent_body">%1$s is een tracking-add-on. Morivia stuurt je activiteit ernaar: wat je afspeelt, pauzeert en stopt met de afspeelpositie, wat je aan je bibliotheek toevoegt of eruit verwijdert en wat je als bekeken of niet bekeken markeert. Deze gegevens verlaten Morivia en worden verwerkt door de ontwikkelaar van de add-on en de dienst waarmee die verbindt.</string>
     <string name="addons_tracking_consent_checkbox">Ik ga akkoord met het delen van mijn kijkactiviteit en bibliotheek met deze add-on</string>

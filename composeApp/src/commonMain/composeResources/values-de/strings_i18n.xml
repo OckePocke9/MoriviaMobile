@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Neu</string>
     <string name="morivia_off">Aus</string>
     <string name="morivia_hl_title">Startseite &amp; Layout</string>
-    <string name="morivia_hl_description">Hero, Poster, Weiterschauen und Reihen</string>
     <string name="morivia_hl_section_hero">HERO</string>
     <string name="morivia_hl_hero_source">Hero-Quelle</string>
     <string name="morivia_hl_hero_source_sub">Kataloge für den Hero auswählen</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Original</string>
     <string name="profile_use_initials">Initialen verwenden</string>
     <string name="profile_use_initials_description">Verwendet die Ersatzfarbe oben</string>
-    <string name="profile_fallback_colour">Ersatzfarbe</string>
     <string name="morivia_add_addon">Add-on hinzufügen</string>
     <string name="morivia_refresh">Aktualisieren</string>
     <string name="profile_confirm_pin">PIN bestätigen</string>
     <string name="profile_pin_mismatch">Die PINs stimmen nicht überein. Versuche es erneut.</string>
-    <string name="morivia_appearance_current_theme">Aktuelles Design</string>
     <string name="morivia_theme_reset_original">Auf Original zurücksetzen</string>
     <string name="morivia_theme_custom">Eigenes Design</string>
     <string name="morivia_theme_show_more">Mehr Designs zeigen</string>
     <string name="morivia_theme_show_fewer">Weniger Designs zeigen</string>
-    <string name="morivia_appearance_match_icon">App-Symbol an Design anpassen</string>
-    <string name="morivia_appearance_match_icon_description">Die aktuelle Designfarbe für dein App-Symbol verwenden.</string>
     <string name="morivia_appearance_preview_title">DESIGN-VORSCHAU</string>
     <string name="morivia_appearance_preview_icon">App-Symbol · %1$s</string>
     <string name="morivia_appearance_preview_text">Text und Hintergrund</string>
@@ -339,7 +334,6 @@
     <string name="party_error_ended">Diese Watch-Party ist beendet.</string>
     <string name="party_error_rate_limited">Zu viele Versuche. Versuche es in ein paar Minuten erneut.</string>
     <string name="party_error_network">Die Watch-Party ist nicht erreichbar. Prüfe deine Verbindung.</string>
-    <string name="party_settings_description">Mit einem Party-Code mit Freunden schauen</string>
     <string name="party_source">Quelle der Party</string>
     <string name="party_episode_format">S%1$d E%2$d</string>
     <string name="party_host_only_title">Nur ich steuere die Wiedergabe</string>
@@ -552,7 +546,6 @@
     <string name="settings_playback_page_p2p_description">Torrent-Wiedergabe, Profil und Cache</string>
     <string name="settings_appearance_description">Designs, App-Symbol und Sprache</string>
     <string name="settings_appearance_title">Darstellung</string>
-    <string name="subtitle_appearance">Darstellung</string>
     <string name="subtitle_preview">Vorschau</string>
     <string name="subtitle_preview_text">Jede Geschichte beginnt mit ein wenig Neugier.</string>
     <string name="subtitle_appearance_hint">Gilt für Textuntertitel. Formatierte ASS- und Bilduntertitel behalten ihr ursprüngliches Aussehen.</string>
@@ -578,9 +571,6 @@
     <string name="settings_nav_bar_glow_off">Leuchten aus</string>
     <string name="settings_nav_bar_preview_hint">Tippe auf die Leiste, um sie auszuprobieren. Scrolle die Vorschau, um die adaptive Größe zu testen.</string>
     <string name="settings_nav_bar_preview_tap_hint">Tippe auf die Leiste, um sie auszuprobieren.</string>
-    <string name="settings_content_discovery_section_search">SUCHE</string>
-    <string name="settings_content_discovery_recent_searches">Letzte Suchen</string>
-    <string name="settings_content_discovery_recent_searches_description">Letzte Suchen speichern und anzeigen, wenn die Suchleiste aktiv ist.</string>
     <string name="settings_meta_poster_transition">Poster-Übergang</string>
     <string name="settings_meta_poster_transition_description">Poster beim Öffnen der Details vergrößern und weichzeichnen.</string>
     <string name="settings_playback_pause_overlay">Pause-Overlay</string>

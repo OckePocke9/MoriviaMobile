@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Urmăriți împreună sincronizat și discută cu prietenii</string>
     <string name="settings_appearance_card_description">Culoarea temei, pictograma aplicației, limba și aspectul</string>
     <string name="settings_theme_card_title">Temă</string>
-    <string name="profile_initial_colour">Culoarea inițialei</string>
-    <string name="profile_background_colour">Culoarea fundalului</string>
     <string name="profile_background_black">Negru</string>
 </resources>

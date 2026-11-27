@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">বন্ধুদের সাথে একসাথে সিঙ্কে দেখুন ও চ্যাট করুন</string>
     <string name="settings_appearance_card_description">থিমের রং, অ্যাপ আইকন, ভাষা ও লেআউট</string>
     <string name="settings_theme_card_title">থিম</string>
-    <string name="profile_initial_colour">আদ্যক্ষরের রং</string>
-    <string name="profile_background_colour">পটভূমির রং</string>
     <string name="profile_background_black">কালো</string>
 </resources>

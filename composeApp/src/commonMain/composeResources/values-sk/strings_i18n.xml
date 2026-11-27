@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">Nové</string>
     <string name="morivia_off">Vypnuté</string>
     <string name="morivia_hl_title">Domov a rozloženie</string>
-    <string name="morivia_hl_description">Banner, plagáty, Pokračovať v sledovaní a rady</string>
     <string name="morivia_hl_section_hero">BANNER</string>
     <string name="morivia_hl_hero_source">Zdroj banneru</string>
     <string name="morivia_hl_hero_source_sub">Vyberte katalógy pre banner</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">Pôvodný</string>
     <string name="profile_use_initials">Použiť iniciály</string>
     <string name="profile_use_initials_description">Použije náhradnú farbu vyššie</string>
-    <string name="profile_fallback_colour">Náhradná farba</string>
     <string name="morivia_add_addon">Pridať doplnok</string>
     <string name="morivia_refresh">Obnoviť</string>
     <string name="profile_confirm_pin">Potvrdiť PIN</string>
     <string name="profile_pin_mismatch">PIN kódy sa nezhodujú. Skúste to znova.</string>
-    <string name="morivia_appearance_current_theme">Aktuálna téma</string>
     <string name="morivia_theme_reset_original">Obnoviť Pôvodný</string>
     <string name="morivia_theme_custom">Vlastná téma</string>
     <string name="morivia_theme_show_more">Zobraziť viac tém</string>
     <string name="morivia_theme_show_fewer">Zobraziť menej tém</string>
-    <string name="morivia_appearance_match_icon">Prispôsobiť ikonu aplikácie téme</string>
-    <string name="morivia_appearance_match_icon_description">Použiť farbu aktuálnej témy pre ikonu aplikácie.</string>
     <string name="morivia_appearance_preview_title">NÁHĽAD TÉMY</string>
     <string name="morivia_appearance_preview_icon">Ikona aplikácie · %1$s</string>
     <string name="morivia_appearance_preview_text">Text a pozadie</string>

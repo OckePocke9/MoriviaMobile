@@ -4,20 +4,9 @@
     <string name="morivia_show_all">Show all</string>
     <string name="morivia_poster_new">New</string>
     <string name="morivia_off">Off</string>
-    <string name="morivia_to_watch_after_movies">%1$s Movies to Watch After %2$s</string>
-    <string name="morivia_to_watch_after_shows">%1$s Shows to Watch After %2$s</string>
 
     <string name="morivia_hl_title">Home &amp; Layout</string>
-    <string name="morivia_hl_description">Hero, posters, Continue Watching and rows</string>
     <string name="morivia_hl_section_hero">HERO</string>
-    <string name="morivia_hl_hero_layout">Hero layout</string>
-    <string name="morivia_hl_hero_layout_sub">How the hero moves between titles</string>
-    <string name="morivia_hl_hero_rolling">Rolling</string>
-    <string name="morivia_hl_hero_rolling_sub">Moves to the next title every 8 seconds, or 45 while a trailer plays.</string>
-    <string name="morivia_hl_hero_pinned">Pinned Focus</string>
-    <string name="morivia_hl_hero_pinned_sub">Stays on a title until you swipe.</string>
-    <string name="morivia_hl_hero_hybrid">Hybrid</string>
-    <string name="morivia_hl_hero_hybrid_sub">Rolls until your first swipe, then stays where you swiped.</string>
     <string name="morivia_hl_hero_source">Hero source</string>
     <string name="morivia_hl_hero_source_sub">Choose the catalogs for the hero</string>
     <string name="morivia_hl_hero_video">Play Trailers in Hero</string>
@@ -51,8 +40,6 @@
     <string name="morivia_hl_countdown">Upcoming episode countdown</string>
     <string name="morivia_hl_countdown_sub">Show when the next episode airs</string>
     <string name="morivia_hl_section_rows">ROWS</string>
-    <string name="morivia_hl_to_watch_after">\"To Watch After\" rows</string>
-    <string name="morivia_hl_to_watch_after_sub">Shows picks like \"Comedies to Watch After …\" based on the last titles you finished</string>
     <string name="morivia_hl_home_rows">Home rows</string>
     <string name="morivia_hl_home_rows_sub">Reorder, rename or hide catalog rows</string>
     <string name="morivia_hl_collections">Collections</string>
@@ -107,10 +94,8 @@
     <string name="morivia_movies_by_genres_sub">Movies with the genres of the movie you watched last</string>
     <string name="morivia_series_by_genres">Series Based on Your Genres</string>
     <string name="morivia_series_by_genres_sub">Series with the genres of the series you watched last</string>
-    <string name="morivia_android_layout_title">Layout</string>
     <string name="morivia_android_home_layout_title">Home Layout</string>
     <string name="morivia_android_home_layout_description">Adjust home layout, content visibility, and poster behavior</string>
-    <string name="morivia_catalog_card_style">Catalog Card Style</string>
     <string name="morivia_catalog_card_style_description">Order Home catalogs and customize their cards</string>
     <string name="morivia_home_catalogs">Home Catalogs</string>
     <string name="morivia_hero_settings_title">Hero</string>
@@ -118,7 +103,6 @@
     <string name="morivia_home_settings_title">Home</string>
     <string name="morivia_home_settings_description">Collections and collection artwork</string>
     <string name="morivia_catalogs_title">Catalogs</string>
-    <string name="morivia_appearance_title">Appearance</string>
     <string name="morivia_catalog_show_all">Show All</string>
     <string name="morivia_catalog_popular_movies">Popular Movies</string>
     <string name="morivia_catalog_popular_series">Popular Series</string>
@@ -127,5 +111,4 @@
     <string name="morivia_catalog_poster">Poster</string>
     <string name="morivia_catalog_landscape">Landscape</string>
 
-    <string name="morivia_appearance_layout_description">Themes, app icons, navigation, and screen layout</string>
 </resources>

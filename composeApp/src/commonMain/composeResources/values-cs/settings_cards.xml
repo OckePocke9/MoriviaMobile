@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Sledujte společně synchronizovaně a chatujte s přáteli</string>
     <string name="settings_appearance_card_description">Barva motivu, ikona aplikace, jazyk a rozvržení</string>
     <string name="settings_theme_card_title">Motiv</string>
-    <string name="profile_initial_colour">Barva iniciály</string>
-    <string name="profile_background_colour">Barva pozadí</string>
     <string name="profile_background_black">Černá</string>
 </resources>

@@ -4,7 +4,6 @@
     <string name="morivia_poster_new">新</string>
     <string name="morivia_off">关闭</string>
     <string name="morivia_hl_title">首页与布局</string>
-    <string name="morivia_hl_description">横幅、海报、继续观看和行</string>
     <string name="morivia_hl_section_hero">横幅</string>
     <string name="morivia_hl_hero_source">横幅来源</string>
     <string name="morivia_hl_hero_source_sub">选择横幅使用的目录</string>
@@ -96,18 +95,14 @@
     <string name="theme_original">原版</string>
     <string name="profile_use_initials">使用首字母</string>
     <string name="profile_use_initials_description">使用上方的备用颜色</string>
-    <string name="profile_fallback_colour">备用颜色</string>
     <string name="morivia_add_addon">添加插件</string>
     <string name="morivia_refresh">刷新</string>
     <string name="profile_confirm_pin">确认 PIN</string>
     <string name="profile_pin_mismatch">PIN 不一致，请重试。</string>
-    <string name="morivia_appearance_current_theme">当前主题</string>
     <string name="morivia_theme_reset_original">重置为原版</string>
     <string name="morivia_theme_custom">自定义主题</string>
     <string name="morivia_theme_show_more">显示更多主题</string>
     <string name="morivia_theme_show_fewer">显示更少主题</string>
-    <string name="morivia_appearance_match_icon">应用图标跟随主题</string>
-    <string name="morivia_appearance_match_icon_description">使用当前主题颜色作为应用图标。</string>
     <string name="morivia_appearance_preview_title">主题预览</string>
     <string name="morivia_appearance_preview_icon">应用图标 · %1$s</string>
     <string name="morivia_appearance_preview_text">文字和背景</string>

@@ -40,7 +40,6 @@
     <string name="lang_zulu">ஜூலு</string>
     <string name="action_clear">அழி</string>
     <string name="action_continue">தொடரவும்</string>
-    <string name="action_ignore">புறக்கணி</string>
     <string name="action_install">நிறுவு</string>
     <string name="action_later">பிறகு</string>
     <string name="action_no">இல்லை</string>
@@ -80,7 +79,6 @@
     <string name="discover_empty_no_catalogs_title">Discover பட்டியல்கள் இல்லை</string>
     <string name="discover_empty_no_results_message">தேர்ந்தெடுத்த பட்டியலும் வடிகட்டிகளும் எந்த உருப்படியையும் வழங்கவில்லை.</string>
     <string name="discover_empty_no_results_title">தலைப்புகள் எதுவும் இல்லை</string>
-    <string name="discover_empty_no_active_addons_message">Discover-ஐ உலாவுவதற்கு முன் துணைநிரலை இயக்கவும் அல்லது சேர்க்கவும்.</string>
     <string name="discover_select_catalog">பட்டியலைத் தேர்ந்தெடுக்கவும்</string>
     <string name="discover_select_genre">வகையைத் தேர்ந்தெடுக்கவும்</string>
     <string name="discover_select_type">வகையைத் தேர்ந்தெடுக்கவும்</string>
@@ -96,7 +94,6 @@
     <string name="home_continue_watching_watched">%1$s பார்த்துவிட்டீர்கள்</string>
     <string name="home_continue_watching_hours_minutes_left">%1$d மணி %2$d நிமிடம் மீதம்</string>
     <string name="home_continue_watching_minutes_left">%1$d நிமிடம் மீதம்</string>
-    <string name="home_empty_no_active_addons_message">முகப்பில் பட்டியல்களைக் காண துணைநிரலை இயக்கவும் அல்லது சேர்க்கவும்.</string>
     <string name="home_empty_no_rows_message">இயக்கப்பட்ட துணைநிரல்கள் முகப்பில் காட்டக்கூடிய பட்டியல்களை வழங்கவில்லை.</string>
     <string name="home_empty_no_rows_title">முகப்பில் உள்ளடக்கம் இல்லை</string>
     <string name="home_load_failed_title">முகப்பை ஏற்ற முடியவில்லை</string>

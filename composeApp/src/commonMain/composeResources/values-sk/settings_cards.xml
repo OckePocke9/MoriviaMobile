@@ -3,7 +3,5 @@
     <string name="settings_watch_party_card_description">Pozerajte spolu synchronizovane a chatujte s priateľmi</string>
     <string name="settings_appearance_card_description">Farba motívu, ikona aplikácie, jazyk a rozloženie</string>
     <string name="settings_theme_card_title">Téma</string>
-    <string name="profile_initial_colour">Farba iniciály</string>
-    <string name="profile_background_colour">Farba pozadia</string>
     <string name="profile_background_black">Čierna</string>
 </resources>
